@@ -1,0 +1,15 @@
+node_modules/
+vendor/
+.DS_Store
+composer.lock
+*.js.map
+*.css.map
+yarn-error.log
+yarn.lock
+docker/
+docker-compose.yml
+.phpunit.result.cache
+public/
+.vscode/
+app/
+coverage/

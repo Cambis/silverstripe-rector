@@ -1,0 +1,7 @@
+{
+  "name": "silverstripe-rector-rules",
+  "version": "0.0.1",
+  "description": "Rector rules for Silverstripe.",
+  "author": "Cameron Bryers",
+  "license": "MIT"
+}
