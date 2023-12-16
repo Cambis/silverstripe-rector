@@ -5,32 +5,17 @@ namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use PHPStan\Reflection\ReflectionProvider;
-use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
-use Rector\Comments\NodeDocBlock\DocBlockUpdater;
-use Rector\Core\NodeAnalyzer\ClassAnalyzer;
-use Rector\Core\Rector\AbstractRector;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
+use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use SilverStripe\Core\Extensible;
-use SilverstripeRector\DocBlock\DocBlockHelper;
-use SilverstripeRector\NodeAnalyzer\ConfigurableAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\AddExtensionMixinAnnotationsToExtensibleRectorTest
  */
-final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractRector
+final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractAddAnnotationsRector
 {
-    public function __construct(
-        private readonly ConfigurableAnalyzer $configurableAnalyzer,
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly ClassAnalyzer $classAnalyzer,
-        private readonly PhpDocInfoFactory $phpDocInfoFactory,
-        private readonly DocBlockUpdater $docBlockUpdater,
-        private readonly DocBlockHelper $docBlockHelper
-    ) {
-    }
-
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -58,61 +43,29 @@ CODE_SAMPLE
         ]);
     }
 
-    /**
-     * @return array<class-string<Node>>
-     */
-    public function getNodeTypes(): array
+    protected function addTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
-        return [Class_::class];
+        $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@mixin', $phpDocTagValueNode));
     }
 
     /**
-     * @param Class_ $node
+     * @return PhpDocTagValueNode[]
      */
-    public function refactor(Node $node): ?Node
+    protected function getNewDocTagValueNodes(Node $node): array
     {
-        if ($this->shouldSkipClass($node)) {
-            return null;
-        }
-
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
         $mixinProperties = $this->configurableAnalyzer->extractMixinTypesFromExtensions($classConst);
-        $newDocTagValueNodes = [
+
+        return [
             ...$this->docBlockHelper->convertTypesToMixinTagValueNodes(
                 $mixinProperties
             ),
         ];
-
-        if ($newDocTagValueNodes === []) {
-            return null;
-        }
-
-        $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
-        $phpDocInfo->getPhpDocNode();
-
-        $newDocTagValueNodes = $this->docBlockHelper->filterOutExistingAnnotations(
-            $node,
-            $phpDocInfo,
-            $newDocTagValueNodes
-        );
-
-        if ($newDocTagValueNodes === []) {
-            return null;
-        }
-
-        foreach ($newDocTagValueNodes as $newDocTagValueNode) {
-            $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@mixin', $newDocTagValueNode));
-        }
-
-        $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
-
-        return $node;
     }
 
-    private function shouldSkipClass(Class_ $class): bool
+    protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {
             return true;
