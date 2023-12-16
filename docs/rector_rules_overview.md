@@ -1,4 +1,4 @@
-# 13 Rules Overview
+# 15 Rules Overview
 
 ## AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
@@ -76,6 +76,23 @@ Add missing dynamic annotations.
      private static array $db = [
          'Bar' => 'Varchar(255)',
      ];
+ }
+```
+
+<br>
+
+## AddExtendsAnnotationToExtensionsRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionsRector.php)
+
+```diff
++/**
++ * @extends \SilverStripe\Core\Extension<static>
++ */
+ class Foo extends \SilverStripe\Core\Extension
+ {
  }
 ```
 
@@ -223,6 +240,23 @@ Change `new Injectable()` to use `Injectable::create()` instead.
 ```diff
 -$foo = new \SilverStripe\ORM\ArrayList();
 +$foo = \SilverStripe\ORM\ArrayList::create();
+```
+
+<br>
+
+## RemoveGetOwnerMethodAnnotationFromExtensionsRector
+
+Remove `getOwner()` method annotation.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector`](../rules/Silverstripe52/Rector/Class_/RemoveGetOwnerMethodAnnotationFromExtensionsRector.php)
+
+```diff
+-/**
+- * @method getOwner() $this
+- */
+ class Foo extends \SilverStripe\Core\Extension
+ {
+ }
 ```
 
 <br>
