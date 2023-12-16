@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\Reflection\ReflectionProvider;
+use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Core\NodeAnalyzer\ClassAnalyzer;
@@ -64,7 +65,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         }
 
         foreach ($newDocTagValueNodes as $newDocTagValueNode) {
-            $phpDocInfo->addTagValueNode($newDocTagValueNode);
+            $this->addTagValueNode($phpDocInfo, $newDocTagValueNode);
         }
 
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
@@ -72,6 +73,10 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         return $node;
     }
 
+    protected function addTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
+    {
+        $phpDocInfo->addTagValueNode($phpDocTagValueNode);
+    }
 
     /**
      * @return PhpDocTagValueNode[]

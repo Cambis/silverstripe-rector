@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use PhpParser\Node;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -41,7 +42,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return PHPDocTagValueNode[]
+     * @return PhpDocTagValueNode[]
      */
     protected function getNewDocTagValueNodes(Node $node): array
     {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\NodeAnalyzer;
 
+use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
@@ -12,6 +14,7 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\ThisType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
+use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
@@ -131,7 +134,7 @@ final class ConfigurableAnalyzer
      * @param class-string $className
      * @return Type[]
      */
-    public function extractPropertyTypesFromDependencies($className)
+    public function extractPropertyTypesFromDependencies($className): array
     {
         $properties = [];
 
@@ -153,16 +156,16 @@ final class ConfigurableAnalyzer
      * @param class-string $className
      * @return Type[]
      */
-    public function extractMixinTypesFromExtensions($className)
+    public function extractMixinTypesFromExtensions($className): array
     {
         $properties = [];
-        $extensions = $this->getConfig($className, SilverstripeConstants::EXTENSIONS);
+        $extensions = $this->getConfig($className, SilverstripeConstants::EXTENSIONS) ?? [];
 
-        if (!is_array($extensions) || $extensions === []) {
+        if ($extensions === []) {
             return $properties;
         }
 
-        foreach ($extensions as $extension) {
+        foreach (array_unique($extensions) as $extension) {
             $classReflection = $this->reflectionProvider->getClass($extension);
 
             if (!$classReflection->isSubclassOf(Extension::class)) {
@@ -179,14 +182,14 @@ final class ConfigurableAnalyzer
      * @param class-string $className extension name
      * @return Type[]
      */
-    public function extractMethodTypesFromOwners($className)
+    public function extractMethodTypesFromOwners($className): array
     {
         /** @var array<class-string> $owners */
         $owners = ClassInfo::classesWithExtension($className);
         $classReflection = $this->reflectionProvider->getClass($className);
         $thisType = new ThisType($classReflection);
 
-        if (!is_array($owners) || $owners === []) {
+        if ($owners === []) {
             return [
                 SilverstripeConstants::GET_OWNER => $thisType,
             ];
@@ -211,6 +214,38 @@ final class ConfigurableAnalyzer
         return [
             SilverstripeConstants::GET_OWNER => new UnionType($types),
         ];
+    }
+
+    /**
+     * @param class-string $className extension name
+     * @return TypeNode[]
+     */
+    public function extractExtendsTypeNodesFromOwners($className): array
+    {
+        /** @var array<class-string> $owners */
+        $owners = ClassInfo::classesWithExtension($className);
+
+        if ($owners === []) {
+            return [new IdentifierTypeNode('static')];
+        }
+
+        $owners = array_filter($owners, function (string $owner) use ($className): bool {
+            return in_array(
+                $className,
+                $this->getConfig($owner, SilverstripeConstants::EXTENSIONS) ?? [],
+                true
+            );
+        });
+
+        $types = [];
+
+        foreach ($owners as $owner) {
+            $types[] = new FullyQualifiedIdentifierTypeNode($owner);
+        }
+
+        $types[] = new IdentifierTypeNode('static');
+
+        return $types;
     }
 
     /**

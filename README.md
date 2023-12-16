@@ -8,6 +8,7 @@ See available [Silverstripe rules](docs/rector_rules_overview.md).
 
 ```sh
 silverstripe/framework ^4.0 || ^5.0
+silverstripe/cms ^4.0 || ^5.0
 ```
 
 ## Installation 👷‍♀️
