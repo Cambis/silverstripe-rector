@@ -65,7 +65,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         }
 
         foreach ($newDocTagValueNodes as $newDocTagValueNode) {
-            $this->addTagValueNode($phpDocInfo, $newDocTagValueNode);
+            $this->addDocTagValueNode($phpDocInfo, $newDocTagValueNode);
         }
 
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
@@ -73,7 +73,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         return $node;
     }
 
-    protected function addTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
+    protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addTagValueNode($phpDocTagValueNode);
     }
