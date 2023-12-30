@@ -1,16 +1,13 @@
+includes:
+  - phpstan-baseline.neon
 parameters:
   level: 8
   paths:
     - rules
     - src
     - tests
-  cognitive_complexity:
-    class: 40
-    function: 8
   excludePaths:
     - ecs.php
     - rector.php
     - '*/Fixture/*'
     - '*/Source/*'
-  ignoreErrors:
-    - '#Cognitive complexity for "SilverstripeRector\\DocBlock\\DocBlockHelper::filterOutExistingAnnotations\(\)" is 15, keep it under 8#'
