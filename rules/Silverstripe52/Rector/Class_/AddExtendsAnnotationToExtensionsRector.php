@@ -11,7 +11,7 @@ use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use SilverStripe\Core\Extension;
-use SilverstripeRector\Silverstripe413\Rector\Class_\AbstractAddAnnotationsRector;
+use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 

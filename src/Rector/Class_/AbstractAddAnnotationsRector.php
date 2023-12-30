@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace SilverstripeRector\Rector\Class_;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;

@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\Core\Extension;
+use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
