@@ -13,7 +13,7 @@ use Rector\Core\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\Core\Rector\AbstractRector;
 use Rector\PostRector\ValueObject\PropertyMetadata;
 use SilverStripe\Core\Injector\Injectable;
-use SilverstripeRector\NodeAnalyzer\ConfigurableAnalyzer;
+use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -26,7 +26,7 @@ use function is_null;
 final class CompleteDynamicInjectablePropertiesRector extends AbstractRector
 {
     public function __construct(
-        private readonly ConfigurableAnalyzer $configurableAnaylzer,
+        private readonly SilverstripeAnalyzer $configurableAnaylzer,
         private readonly ReflectionProvider $reflectionProvider,
         private readonly ClassAnalyzer $classAnalyzer,
         private readonly MissingPropertiesFactory $missingPropertiesFactory,

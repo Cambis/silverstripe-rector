@@ -14,13 +14,13 @@ use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Core\NodeAnalyzer\ClassAnalyzer;
 use Rector\Core\Rector\AbstractRector;
 use SilverstripeRector\DocBlock\DocBlockHelper;
-use SilverstripeRector\NodeAnalyzer\ConfigurableAnalyzer;
+use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 
 abstract class AbstractAddAnnotationsRector extends AbstractRector
 {
     public function __construct(
         protected readonly ClassAnalyzer $classAnalyzer,
-        protected readonly ConfigurableAnalyzer $configurableAnalyzer,
+        protected readonly SilverstripeAnalyzer $configurableAnalyzer,
         protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,

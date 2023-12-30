@@ -39,7 +39,7 @@ use function is_numeric;
 use function is_string;
 use function str_contains;
 
-final class ConfigurableAnalyzer
+final class SilverstripeAnalyzer
 {
     public function __construct(
         private readonly ReflectionProvider $reflectionProvider
