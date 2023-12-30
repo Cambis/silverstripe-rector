@@ -16,6 +16,8 @@ use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Extension;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+
+use function is_string;
 use function str_contains;
 
 /**

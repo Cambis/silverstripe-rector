@@ -1,8 +1,8 @@
 <?php
 
 declare(strict_types=1);
-use Rector\Config\RectorConfig;
 
+use Rector\Config\RectorConfig;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector;
 
 return static function (RectorConfig $rectorConfig): void {

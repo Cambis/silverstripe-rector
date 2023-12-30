@@ -17,6 +17,9 @@ use SilverstripeRector\NodeAnalyzer\ConfigurableAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
+use function array_keys;
+use function is_null;
+
 /**
  * @see SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */

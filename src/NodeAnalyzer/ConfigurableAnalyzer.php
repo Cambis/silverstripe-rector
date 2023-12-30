@@ -27,6 +27,18 @@ use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ManyManyThroughList;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
+use function array_filter;
+use function array_key_exists;
+use function array_unique;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_bool;
+use function is_null;
+use function is_numeric;
+use function is_string;
+use function str_contains;
+
 final class ConfigurableAnalyzer
 {
     public function __construct(
@@ -105,9 +117,9 @@ final class ConfigurableAnalyzer
         string $listName = DataList::class
     ): array {
         $properties = [];
-        $relation = $this->getConfig($className, $relationName);
+        $relation = $this->getConfig($className, $relationName) ?? [];
 
-        if (is_null($relation)) {
+        if ($relation === []) {
             return $properties;
         }
 

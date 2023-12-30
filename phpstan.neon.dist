@@ -8,6 +8,8 @@ parameters:
     class: 40
     function: 8
   excludePaths:
+    - ecs.php
+    - rector.php
     - '*/Fixture/*'
     - '*/Source/*'
   ignoreErrors:
