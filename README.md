@@ -1,4 +1,4 @@
-# Silverstripe Rector
+# Silverstripe Rector | Kaiako Ponga
 
 This project contains [Rector rules](https://github.com/rectorphp/rector) for [Silverstripe CMS](https://github.com/silverstripe).
 
