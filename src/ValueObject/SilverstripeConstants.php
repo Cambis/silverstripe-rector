@@ -14,7 +14,7 @@ use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBFloat;
 use SilverStripe\ORM\FieldType\DBInt;
 
-interface SilverstripeConstants
+final class SilverstripeConstants
 {
     public const BELONGS_TO = 'belongs_to';
 

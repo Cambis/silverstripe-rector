@@ -6,7 +6,7 @@ namespace SilverstripeRector\Tests\Set\Silverstripe413;
 
 use SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock;
 
-interface TestConst
+final class TestConstants
 {
     public const BELONGS_MANY_MANY_CONFIG = [
         'BelongsManyManyRelationship' => RelationMock::class,

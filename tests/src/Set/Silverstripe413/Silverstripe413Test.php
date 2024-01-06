@@ -27,43 +27,43 @@ final class Silverstripe413Test extends AbstractRectorTestCase
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::BELONGS_MANY_MANY,
-            TestConst::BELONGS_MANY_MANY_CONFIG,
+            TestConstants::BELONGS_MANY_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::BELONGS_TO,
-            TestConst::BELONGS_TO_CONFIG,
+            TestConstants::BELONGS_TO_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::DB,
-            TestConst::DB_CONFIG,
+            TestConstants::DB_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::HAS_ONE,
-            TestConst::HAS_ONE_CONFIG,
+            TestConstants::HAS_ONE_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::HAS_MANY,
-            TestConst::HAS_MANY_CONFIG,
+            TestConstants::HAS_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::MANY_MANY,
-            TestConst::MANY_MANY_CONFIG,
+            TestConstants::MANY_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataObjectMock::class,
             SilverstripeConstants::MANY_MANY,
-            TestConst::MANY_MANY_THROUGH_CONFIG,
+            TestConstants::MANY_MANY_THROUGH_CONFIG,
         );
 
         Config::modify()->merge(
@@ -77,43 +77,43 @@ final class Silverstripe413Test extends AbstractRectorTestCase
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::BELONGS_MANY_MANY,
-            TestConst::BELONGS_MANY_MANY_CONFIG,
+            TestConstants::BELONGS_MANY_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::BELONGS_TO,
-            TestConst::BELONGS_TO_CONFIG,
+            TestConstants::BELONGS_TO_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::DB,
-            TestConst::DB_CONFIG,
+            TestConstants::DB_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::HAS_ONE,
-            TestConst::HAS_ONE_CONFIG,
+            TestConstants::HAS_ONE_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::HAS_MANY,
-            TestConst::HAS_MANY_CONFIG,
+            TestConstants::HAS_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::MANY_MANY,
-            TestConst::MANY_MANY_CONFIG,
+            TestConstants::MANY_MANY_CONFIG,
         );
 
         Config::modify()->merge(
             DataExtensionMock::class,
             SilverstripeConstants::MANY_MANY,
-            TestConst::MANY_MANY_THROUGH_CONFIG,
+            TestConstants::MANY_MANY_THROUGH_CONFIG,
         );
 
         Config::modify()->merge(
