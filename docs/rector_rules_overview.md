@@ -1,4 +1,4 @@
-# 15 Rules Overview
+# 16 Rules Overview
 
 ## AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
@@ -144,6 +144,26 @@ Add missing dynamic annotations.
 ```diff
 +/**
 + * @method \SilverStripe\ORM\HasManyList|Bar[] Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $has_many = [
+         'Bars' => Bar::class,
+     ];
+ }
+```
+
+<br>
+
+## AddHasManyMethodAnnotationsToDataObjectRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
+
+```diff
++/**
++ * @method \SilverStripe\ORM\HasManyList<Bar> Bars()
 + */
  class Foo extends \SilverStripe\ORM\DataObject
  {

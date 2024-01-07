@@ -10,6 +10,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
+use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Type\Type;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\NodeTypeResolver\TypeComparator\TypeComparator;
@@ -64,6 +65,32 @@ final class DocBlockHelper
             $result[] = new MethodTagValueNode(
                 false,
                 $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type),
+                $name,
+                [],
+                '',
+                []
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param TypeNode[] $paramsNameToType
+     * @return PhpDocTagValueNode[]
+     */
+    public function convertTypeNodesToMethodTagValueNodes(array $paramsNameToType): array
+    {
+        $result = [];
+
+        if ($paramsNameToType === []) {
+            return $result;
+        }
+
+        foreach ($paramsNameToType as $name => $typeNode) {
+            $result[] = new MethodTagValueNode(
+                false,
+                $typeNode,
                 $name,
                 [],
                 '',

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use SilverStripe\ORM\ManyManyList;
+use SilverStripe\ORM\HasManyList;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest
+ * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\AddHasManyMethodAnnotationsToDataObjectRectorTest
  */
-final class AddBelongsManyManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
+final class AddHasManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
     public function getRuleDefinition(): RuleDefinition
     {
@@ -23,7 +23,7 @@ final class AddBelongsManyManyMethodAnnotationsToDataObjectRector extends Abstra
             <<<'CODE_SAMPLE'
 class Foo extends \SilverStripe\ORM\DataObject
 {
-    private static array $belongs_many_many = [
+    private static array $has_many = [
         'Bars' => Bar::class,
     ];
 }
@@ -31,11 +31,11 @@ CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
 /**
- * @method \SilverStripe\ORM\ManyManyList|Bar[] Bars()
+ * @method \SilverStripe\ORM\HasManyList<Bar> Bars()
  */
 class Foo extends \SilverStripe\ORM\DataObject
 {
-    private static array $belongs_many_many = [
+    private static array $has_many = [
         'Bars' => Bar::class,
     ];
 }
@@ -55,14 +55,14 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
 
 
-        $belongsManyManyMethods = $this->configurableAnalyzer->extractMethodUnionTypesFromManyRelation(
+        $hasManyMethods = $this->configurableAnalyzer->extractGenericMethodTypeNodesFromManyRelation(
             $classConst,
-            SilverstripeConstants::BELONGS_MANY_MANY,
-            ManyManyList::class
+            SilverstripeConstants::HAS_MANY,
+            HasManyList::class
         );
 
-        return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
-            $belongsManyManyMethods
+        return $this->docBlockHelper->convertTypeNodesToMethodTagValueNodes(
+            $hasManyMethods
         );
     }
 }

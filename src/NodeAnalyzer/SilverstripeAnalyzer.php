@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\NodeAnalyzer;
 
+use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Reflection\ReflectionProvider;
@@ -111,7 +112,7 @@ final class SilverstripeAnalyzer
      * @param class-string<DataList> $listName
      * @return Type[]
      */
-    public function extractMethodTypesFromManyRelation(
+    public function extractMethodUnionTypesFromManyRelation(
         string $className,
         string $relationName,
         string $listName = DataList::class
@@ -137,6 +138,46 @@ final class SilverstripeAnalyzer
                 new FullyQualifiedObjectType($listName),
                 new ArrayType(new IntegerType(), $relationFieldType),
             ]);
+        }
+
+        return $properties;
+    }
+
+    /**
+     * @param class-string $className
+     * @param class-string<DataList> $listName
+     * @return TypeNode[]
+     */
+    public function extractGenericMethodTypeNodesFromManyRelation(
+        string $className,
+        string $relationName,
+        string $listName = DataList::class
+    ): array {
+        $properties = [];
+        $relation = $this->getConfig($className, $relationName) ?? [];
+
+        if ($relation === []) {
+            return $properties;
+        }
+
+        foreach ($relation as $fieldName => $fieldType) {
+            $relationFieldType = $this->resolveRelationFieldType($fieldType);
+
+            if (!$relationFieldType instanceof FullyQualifiedObjectType) {
+                continue;
+            }
+
+            if (
+                is_array($fieldType) &&
+                array_key_exists('through', $fieldType) && $listName === ManyManyList::class
+            ) {
+                $listName = ManyManyThroughList::class;
+            }
+
+            $properties[$fieldName] = new GenericTypeNode(
+                new FullyQualifiedIdentifierTypeNode($listName),
+                [new FullyQualifiedIdentifierTypeNode($relationFieldType->getClassName())],
+            );
         }
 
         return $properties;
