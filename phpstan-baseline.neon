@@ -1,6 +1,0 @@
-parameters:
-	ignoreErrors:
-		-
-			message: "#^Cognitive complexity for \"SilverstripeRector\\\\DocBlock\\\\DocBlockHelper\\:\\:filterOutExistingAnnotations\\(\\)\" is 15, keep it under 9$#"
-			count: 1
-			path: src/DocBlock/DocBlockHelper.php

@@ -16,9 +16,7 @@ use SilverStripe\Core\Injector\Injectable;
 use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-
 use function array_keys;
-use function is_null;
 
 /**
  * @see SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
@@ -89,7 +87,7 @@ CODE_SAMPLE
             $classReflection,
             array_keys($dependencyProperties)
         );
-    
+
         $newProperties = $this->missingPropertiesFactory->create($dependencyProperties, $propertiesToComplete);
 
         if ($newProperties === []) {
@@ -109,7 +107,7 @@ CODE_SAMPLE
 
         $className = $this->nodeNameResolver->getName($class);
 
-        if (is_null($className)) {
+        if ($className === null) {
             return true;
         }
 
@@ -151,7 +149,7 @@ CODE_SAMPLE
 
             $missingPropertyNames[] = $propertyToComplete;
         }
-    
+
         return $missingPropertyNames;
     }
 }

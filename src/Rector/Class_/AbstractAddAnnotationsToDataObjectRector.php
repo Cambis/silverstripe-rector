@@ -8,8 +8,6 @@ use PhpParser\Node\Stmt\Class_;
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataObject;
 
-use function is_null;
-
 abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnotationsRector
 {
     protected function shouldSkipClass(Class_ $class): bool
@@ -20,7 +18,7 @@ abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnot
 
         $className = $this->nodeNameResolver->getName($class);
 
-        if (is_null($className)) {
+        if ($className === null) {
             return true;
         }
 

@@ -10,6 +10,7 @@ use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
+use PHPStan\Type\FloatType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\ThisType;
@@ -23,11 +24,14 @@ use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBBoolean;
+use SilverStripe\ORM\FieldType\DBDecimal;
 use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\ORM\FieldType\DBFloat;
+use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ManyManyThroughList;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
-
 use function array_filter;
 use function array_key_exists;
 use function array_unique;
@@ -35,13 +39,22 @@ use function explode;
 use function in_array;
 use function is_array;
 use function is_bool;
-use function is_null;
 use function is_numeric;
 use function is_string;
 use function str_contains;
 
 final class SilverstripeAnalyzer
 {
+    /**
+     * @var array<class-string<DBField>, class-string<Type>>
+     */
+    private const DBFIELD_TO_TYPE_MAPPING = [
+        DBBoolean::class => BooleanType::class,
+        DBDecimal::class => FloatType::class,
+        DBFloat::class => FloatType::class,
+        DBInt::class => IntegerType::class,
+    ];
+
     public function __construct(
         private readonly ReflectionProvider $reflectionProvider
     ) {
@@ -69,6 +82,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
+     * @param SilverstripeConstants::BELONGS_TO|SilverstripeConstants::HAS_ONE $relationName
      * @return Type[]
      */
     public function extractPropertyTypesFromSingleRelation(string $className, string $relationName): array
@@ -76,7 +90,7 @@ final class SilverstripeAnalyzer
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
 
-        if (is_null($relation)) {
+        if ($relation === null) {
             return $properties;
         }
 
@@ -89,6 +103,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
+     * @param SilverstripeConstants::BELONGS_TO|SilverstripeConstants::HAS_ONE $relationName
      * @return Type[]
      */
     public function extractMethodTypesFromSingleRelation(string $className, string $relationName): array
@@ -96,7 +111,7 @@ final class SilverstripeAnalyzer
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
 
-        if (is_null($relation)) {
+        if ($relation === null) {
             return $properties;
         }
 
@@ -109,6 +124,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
+     * @param SilverstripeConstants::BELONGS_MANY_MANY|SilverstripeConstants::HAS_MANY|SilverstripeConstants::MANY_MANY $relationName
      * @param class-string<DataList> $listName
      * @return Type[]
      */
@@ -145,6 +161,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
+     * @param SilverstripeConstants::BELONGS_MANY_MANY|SilverstripeConstants::HAS_MANY|SilverstripeConstants::MANY_MANY $relationName
      * @param class-string<DataList> $listName
      * @return TypeNode[]
      */
@@ -187,7 +204,7 @@ final class SilverstripeAnalyzer
      * @param class-string $className
      * @return Type[]
      */
-    public function extractPropertyTypesFromDependencies($className): array
+    public function extractPropertyTypesFromDependencies(string $className): array
     {
         $properties = [];
 
@@ -209,7 +226,7 @@ final class SilverstripeAnalyzer
      * @param class-string $className
      * @return Type[]
      */
-    public function extractMixinTypesFromExtensions($className): array
+    public function extractMixinTypesFromExtensions(string $className): array
     {
         $properties = [];
         $extensions = $this->getConfig($className, SilverstripeConstants::EXTENSIONS) ?? [];
@@ -235,7 +252,7 @@ final class SilverstripeAnalyzer
      * @param class-string $className extension name
      * @return Type[]
      */
-    public function extractMethodTypesFromOwners($className): array
+    public function extractMethodTypesFromOwners(string $className): array
     {
         /** @var array<class-string> $owners */
         $owners = ClassInfo::classesWithExtension($className);
@@ -273,7 +290,7 @@ final class SilverstripeAnalyzer
      * @param class-string $className extension name
      * @return TypeNode[]
      */
-    public function extractExtendsTypeNodesFromOwners($className): array
+    public function extractExtendsTypeNodesFromOwners(string $className): array
     {
         /** @var array<class-string> $owners */
         $owners = ClassInfo::classesWithExtension($className);
@@ -303,6 +320,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
+     * @param SilverstripeConstants::* $name
      * @return mixed
      */
     private function getConfig(string $className, string $name)
@@ -320,7 +338,10 @@ final class SilverstripeAnalyzer
         return Injector::inst()->create($className, $argument);
     }
 
-    private function resolveDependencyFieldType(bool|int|string $fieldType): Type
+    /**
+     * @param bool|int|string $fieldType
+     */
+    private function resolveDependencyFieldType($fieldType): Type
     {
         if (is_bool($fieldType)) {
             return new BooleanType();
@@ -352,7 +373,7 @@ final class SilverstripeAnalyzer
         $field = $this->make($fieldType, 'Temp');
         $classReflection = $this->reflectionProvider->getClass($field::class);
 
-        foreach (SilverstripeConstants::DBFIELD_TO_TYPE_MAPPING as $dbClass => $type) {
+        foreach (self::DBFIELD_TO_TYPE_MAPPING as $dbClass => $type) {
             if (!$this->reflectionProvider->hasClass($dbClass)) {
                 continue;
             }
@@ -368,9 +389,10 @@ final class SilverstripeAnalyzer
     }
 
     /**
+     * @param string[]|string $fieldType
      * @phpstan-param array{through: class-string<DataObject>, from: string, to: string}|string $fieldType
      */
-    private function resolveRelationFieldType(array|string $fieldType): Type
+    private function resolveRelationFieldType($fieldType): Type
     {
         $className = '';
 
@@ -394,7 +416,7 @@ final class SilverstripeAnalyzer
 
     private function resolvePrefixNotation(string $fieldType): string
     {
-        [$_, $class] = explode('%$', $fieldType, 2);
+        [$_, $class] = explode('%$', $fieldType, 2); // @phpstan-ignore-line
 
         return $class;
     }

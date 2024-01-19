@@ -1,7 +1,9 @@
 includes:
-  - phpstan-baseline.neon
+  - vendor/symplify/phpstan-rules/config/symplify-rules.neon
+  - vendor/symplify/phpstan-rules/config/rector-rules.neon
 parameters:
   level: 8
+  reportUnmatchedIgnoredErrors: false
   paths:
     - rules
     - src
@@ -9,5 +11,26 @@ parameters:
   excludePaths:
     - ecs.php
     - rector.php
-    - '*/Fixture/*'
-    - '*/Source/*'
+    - '*tests/*/Fixture/*'
+    - '*tests/*/Fixture*'
+    - '*tests/*/Source/*'
+    - '*tests/*/Source*'
+  ignoreErrors:
+      -
+        message: "#^Cognitive complexity for \"SilverstripeRector\\\\DocBlock\\\\DocBlockHelper\\:\\:filterOutExistingAnnotations\\(\\)\" is 15, keep it under 9$#"
+        count: 1
+        path: src/DocBlock/DocBlockHelper.php
+
+      -
+        message: "#^Instead of protected element, use private element or contract method$#"
+        count: 3
+        path: src/Rector/Class_/AbstractAddAnnotationsRector.php
+
+      -
+        message: "#^Use explicit interface contract or a service over unclear abstract methods$#"
+        count: 2
+        path: src/Rector/Class_/AbstractAddAnnotationsRector.php
+      
+      -
+        message: "#^Class with base .* name is already used in .*. Use unique name to make classes easy to recognize$#"
+        path: tests/rules/*

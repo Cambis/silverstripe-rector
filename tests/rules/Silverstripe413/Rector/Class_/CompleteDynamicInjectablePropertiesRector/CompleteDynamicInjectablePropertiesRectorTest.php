@@ -15,8 +15,6 @@ final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRector
 {
     /**
      * Load properties via {@see SilverStripe\Core\Config\Config::modify()} in order for this to work in this testing environment.
-     *
-     * {@inheritDoc}
      */
     protected function setUp(): void
     {

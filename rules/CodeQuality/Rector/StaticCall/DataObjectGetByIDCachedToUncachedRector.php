@@ -12,7 +12,6 @@ use SilverStripe\ORM\DataObject;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-
 use function is_string;
 
 /**

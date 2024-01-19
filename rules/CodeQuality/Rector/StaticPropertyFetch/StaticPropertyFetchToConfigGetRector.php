@@ -16,7 +16,6 @@ use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Extension;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-
 use function is_string;
 use function str_contains;
 
@@ -25,6 +24,11 @@ use function str_contains;
  */
 final class StaticPropertyFetchToConfigGetRector extends AbstractRector
 {
+    public function __construct(
+        private readonly ReflectionResolver $reflectionResolver,
+    ) {
+    }
+
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
@@ -56,11 +60,6 @@ CODE_SAMPLE
             ),
             ]
         );
-    }
-
-    public function __construct(
-        private readonly ReflectionResolver $reflectionResolver,
-    ) {
     }
 
     /**
@@ -103,7 +102,7 @@ CODE_SAMPLE
         if ($this->shouldSkipProperty($propertyReflection)) {
             return null;
         }
-        
+
         $configCall = $this->nodeFactory->createMethodCall('this', 'config');
 
         return $this->nodeFactory->createMethodCall($configCall, 'get', [$propertyName]);

@@ -11,6 +11,9 @@
   failOnRisky="true"
   failOnWarning="true"
 >
+  <php>
+    <ini name="memory_limit" value="-1"/>
+  </php>
   <testsuites>
 		<testsuite name="Rules">
 			<directory>tests/rules</directory>
@@ -20,3 +23,4 @@
 		</testsuite>
 	</testsuites>
 </phpunit>
+

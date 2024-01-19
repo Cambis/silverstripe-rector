@@ -4,16 +4,6 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\ValueObject;
 
-use PHPStan\Type\BooleanType;
-use PHPStan\Type\FloatType;
-use PHPStan\Type\IntegerType;
-use PHPStan\Type\Type;
-use SilverStripe\ORM\FieldType\DBBoolean;
-use SilverStripe\ORM\FieldType\DBDecimal;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\FieldType\DBFloat;
-use SilverStripe\ORM\FieldType\DBInt;
-
 final class SilverstripeConstants
 {
     public const BELONGS_TO = 'belongs_to';
@@ -41,14 +31,4 @@ final class SilverstripeConstants
     public const GET = 'get';
 
     public const BY_ID = 'byID';
-
-    /**
-     * @var array<class-string<DBField>, class-string<Type>>
-     */
-    public const DBFIELD_TO_TYPE_MAPPING = [
-        DBBoolean::class => BooleanType::class,
-        DBDecimal::class => FloatType::class,
-        DBFloat::class => FloatType::class,
-        DBInt::class => IntegerType::class,
-    ];
 }

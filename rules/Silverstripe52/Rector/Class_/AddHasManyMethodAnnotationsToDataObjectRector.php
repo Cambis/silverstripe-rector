@@ -44,7 +44,6 @@ CODE_SAMPLE
         ]);
     }
 
-
     /**
      * @return PhpDocTagValueNode[]
      */
@@ -53,7 +52,6 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
 
         $hasManyMethods = $this->configurableAnalyzer->extractGenericMethodTypeNodesFromManyRelation(
             $classConst,

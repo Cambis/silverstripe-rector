@@ -47,7 +47,6 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
