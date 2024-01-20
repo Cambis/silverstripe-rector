@@ -8,11 +8,13 @@ use SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotation
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector as LegacyAddHasManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector as LegacyAddManyManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
+use SilverstripeRector\Silverstripe52\Rector\Class_\DataListMethodAnnotationToGenericDataListMethodAnnotationRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->rules([
         AddHasManyMethodAnnotationsToDataObjectRector::class,
+        DataListMethodAnnotationToGenericDataListMethodAnnotationRector::class,
     ]);
     $rectorConfig->skip([
         LegacyAddBelongsManyManyMethodAnnotationsToDataObjectRector::class,

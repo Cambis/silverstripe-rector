@@ -52,7 +52,6 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         }
 
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
-        $phpDocInfo->getPhpDocNode();
 
         $newDocTagValueNodes = $this->docBlockHelper->filterOutExistingAnnotations(
             $node,

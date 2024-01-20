@@ -35,18 +35,8 @@ use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
-        SilverstripeLevelSetList::UP_TO_SS_4_13,
+        SilverstripeLevelSetList::UP_TO_SS_52,
         SilverstripeSetList::CODE_QUALITY,
     ]);
 };
 ```
-
-## TODO
-
-### SS52
-
-- RemoveGetOwnerMethodAnnotationFromExtensionsRector
-- AddGenericHasManyMethodAnnotationsToDataObjectRector
-- AddGenericBelongsManyManyMethodAnnotationsToDataObjectRector
-- AddGenericManyManyMethodAnnotationsToDataObjectRector
-- DataListMethodAnnotationToGenericDataListMethodAnnotationRector
