@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnota
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\Fixture\HasOneOwnerMock;
+use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\Fixture\HasOneOwner;
+use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\Fixture\HasOneOwnerComplete;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\Source\OwnerMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -24,7 +25,15 @@ final class AddExtendsAnnotationToExtensionsRectorTest extends AbstractRectorTes
             OwnerMock::class,
             SilverstripeConstants::EXTENSIONS,
             [
-                HasOneOwnerMock::class,
+                HasOneOwner::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            OwnerMock::class,
+            SilverstripeConstants::EXTENSIONS,
+            [
+                HasOneOwnerComplete::class,
             ]
         );
     }

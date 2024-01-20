@@ -9,6 +9,6 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\DataListMethodAn
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\ORM\DataObject> ManyManyRelationship()
  * @method \SilverStripe\ORM\ManyManyThroughList<\SilverStripe\ORM\DataObject> ManyManyThroughRelationship()
  */
-class HasManyMock extends \SilverStripe\ORM\DataObject
+class GenericComplete extends \SilverStripe\ORM\DataObject
 {
 }

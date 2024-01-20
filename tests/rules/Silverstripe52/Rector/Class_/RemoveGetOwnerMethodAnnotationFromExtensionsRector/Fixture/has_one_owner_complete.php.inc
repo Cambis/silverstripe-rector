@@ -4,6 +4,6 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMe
 /**
  * @method string someMethod()
  */
-class HasOneOwnerMock extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
+class HasOneOwnerComplete extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
 {
 }

@@ -2,7 +2,7 @@
 
 namespace SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
 
-class Configurable implements \SilverStripe\Dev\TestOnly
+class ConfigurableComplete implements \SilverStripe\Dev\TestOnly
 {
     use \SilverStripe\Core\Config\Configurable;
 

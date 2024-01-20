@@ -7,7 +7,9 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMix
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtension;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionComplete;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionShortname;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ExtensionMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +23,23 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
         parent::setUp();
 
         Config::modify()->merge(
-            HasOneExtensionMock::class,
+            HasOneExtension::class,
+            SilverstripeConstants::EXTENSIONS,
+            [
+                ExtensionMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasOneExtensionComplete::class,
+            SilverstripeConstants::EXTENSIONS,
+            [
+                ExtensionMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasOneExtensionShortname::class,
             SilverstripeConstants::EXTENSIONS,
             [
                 ExtensionMock::class,

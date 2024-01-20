@@ -7,7 +7,7 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOneProper
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture\HasOneMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture\HasOne;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +21,7 @@ final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends Abstra
         parent::setUp();
 
         Config::modify()->merge(
-            HasOneMock::class,
+            HasOne::class,
             SilverstripeConstants::HAS_ONE,
             [
                 'HasOneRelationship' => RelationMock::class,

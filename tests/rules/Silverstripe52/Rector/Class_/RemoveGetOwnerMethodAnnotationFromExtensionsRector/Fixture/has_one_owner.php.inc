@@ -5,7 +5,7 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMe
 /**
  * @method \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Source\OwnerMock|$this getOwner()
  */
-class HasOneOwnerMock extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
+class HasOneOwner extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
 {
 }
 
@@ -15,7 +15,7 @@ class HasOneOwnerMock extends \SilverStripe\ORM\DataExtension implements \Silver
 
 namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture;
 
-class HasOneOwnerMock extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
+class HasOneOwner extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
 {
 }
 

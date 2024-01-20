@@ -2,7 +2,7 @@
 
 namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture;
 
-class HasOneMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOne extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 
@@ -16,7 +16,7 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOneProper
  * @property int $HasOneRelationshipID
  * @method \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock HasOneRelationship()
  */
-class HasOneMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOne extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 

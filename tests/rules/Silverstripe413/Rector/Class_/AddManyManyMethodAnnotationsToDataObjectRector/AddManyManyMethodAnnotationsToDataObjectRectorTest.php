@@ -7,8 +7,10 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMeth
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyMock;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThroughMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyMany;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyComplete;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThrough;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThroughComplete;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -22,7 +24,7 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
         parent::setUp();
 
         Config::modify()->merge(
-            ManyManyMock::class,
+            ManyMany::class,
             SilverstripeConstants::MANY_MANY,
             [
                 'ManyManyRelationship' => RelationMock::class,
@@ -30,7 +32,27 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
         );
 
         Config::modify()->merge(
-            ManyManyThroughMock::class,
+            ManyManyComplete::class,
+            SilverstripeConstants::MANY_MANY,
+            [
+                'ManyManyRelationship' => RelationMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            ManyManyThrough::class,
+            SilverstripeConstants::MANY_MANY,
+            [
+                'ManyManyThroughRelationship' => [
+                    'through' => RelationMock::class,
+                    'from' => '',
+                    'to' => '',
+                ],
+            ]
+        );
+
+        Config::modify()->merge(
+            ManyManyThroughComplete::class,
             SilverstripeConstants::MANY_MANY,
             [
                 'ManyManyThroughRelationship' => [

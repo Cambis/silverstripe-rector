@@ -6,6 +6,6 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPro
  * @property int $BelongsToRelationshipID
  * @method \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock BelongsToRelationship()
  */
-class BelongsToMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class BelongsToComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

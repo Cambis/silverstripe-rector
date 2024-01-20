@@ -5,6 +5,6 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMetho
 /**
  * @method \SilverStripe\ORM\HasManyList|\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] HasManyRelationship()
  */
-class HasManyMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasManyComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

@@ -7,7 +7,9 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMetho
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasMany;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyComplete;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyShortname;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +23,23 @@ final class AddHasManyMethodAnnotationsToDataObjectRectorTest extends AbstractRe
         parent::setUp();
 
         Config::modify()->merge(
-            HasManyMock::class,
+            HasMany::class,
+            SilverstripeConstants::HAS_MANY,
+            [
+                'HasManyRelationship' => RelationMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasManyComplete::class,
+            SilverstripeConstants::HAS_MANY,
+            [
+                'HasManyRelationship' => RelationMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasManyShortname::class,
             SilverstripeConstants::HAS_MANY,
             [
                 'HasManyRelationship' => RelationMock::class,

@@ -5,6 +5,6 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMeth
 /**
  * @method \SilverStripe\ORM\ManyManyThroughList|\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] ManyManyThroughRelationship()
  */
-class ManyManyThroughMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class ManyManyThroughComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

@@ -39,3 +39,7 @@ parameters:
       -
         message: "#^Class with base .* name is already used in .*. Use unique name to make classes easy to recognize$#"
         path: tests/rules/*
+
+      -
+        message: "#^Class SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
+        path: tests/*

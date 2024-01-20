@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamic
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\Injectable;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableComplete;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +22,18 @@ final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRector
         parent::setUp();
 
         Config::modify()->merge(
-            InjectableMock::class,
+            Injectable::class,
+            SilverstripeConstants::DEPENDENCIES,
+            [
+                'dependency' => '%$' . DependencyMock::class,
+                'message' => 'This is a message',
+                'integer' => 1,
+                'boolean' => true,
+            ]
+        );
+
+        Config::modify()->merge(
+            InjectableComplete::class,
             SilverstripeConstants::DEPENDENCIES,
             [
                 'dependency' => '%$' . DependencyMock::class,

@@ -2,7 +2,7 @@
 
 namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
 
-class DataObjectMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class DataObject extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 
@@ -36,7 +36,7 @@ namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
  * @method \SilverStripe\ORM\ManyManyThroughList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyThroughRelationship()
  * @mixin \SilverstripeRector\Tests\Set\Silverstripe413\Source\ExtensionMock
  */
-class DataObjectMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class DataObject extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 

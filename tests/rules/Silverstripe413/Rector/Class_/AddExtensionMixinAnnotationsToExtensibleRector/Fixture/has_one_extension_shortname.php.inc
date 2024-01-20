@@ -7,7 +7,7 @@ use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnno
 /**
  * @mixin ExtensionMock
  */
-class HasOneExtensionMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOneExtensionShortname extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 
@@ -22,7 +22,7 @@ use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnno
 /**
  * @mixin ExtensionMock
  */
-class HasOneExtensionMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOneExtensionShortname extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 

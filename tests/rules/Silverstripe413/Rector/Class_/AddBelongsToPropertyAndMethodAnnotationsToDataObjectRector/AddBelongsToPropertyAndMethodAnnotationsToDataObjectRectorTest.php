@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPro
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector\Fixture\BelongsToMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector\Fixture\BelongsTo;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector\Fixture\BelongsToComplete;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +22,15 @@ final class AddBelongsToPropertyAndMethodAnnotationsToDataObjectRectorTest exten
         parent::setUp();
 
         Config::modify()->merge(
-            BelongsToMock::class,
+            BelongsTo::class,
+            SilverstripeConstants::BELONGS_TO,
+            [
+                'BelongsToRelationship' => RelationMock::class . '.Parent',
+            ]
+        );
+
+        Config::modify()->merge(
+            BelongsToComplete::class,
             SilverstripeConstants::BELONGS_TO,
             [
                 'BelongsToRelationship' => RelationMock::class . '.Parent',

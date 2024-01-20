@@ -28,6 +28,6 @@ namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
  * @method \SilverStripe\ORM\ManyManyThroughList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyThroughRelationship()
  * @mixin \SilverstripeRector\Tests\Set\Silverstripe413\Source\ExtensionMock
  */
-class DataObjectMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class DataObjectComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

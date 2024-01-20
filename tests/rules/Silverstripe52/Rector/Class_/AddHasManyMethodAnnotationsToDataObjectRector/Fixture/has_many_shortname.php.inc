@@ -8,6 +8,6 @@ use SilverStripe\ORM\HasManyList;
 /**
  * @method HasManyList<RelationMock> HasManyRelationship()
  */
-class HasManyMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasManyShortname extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

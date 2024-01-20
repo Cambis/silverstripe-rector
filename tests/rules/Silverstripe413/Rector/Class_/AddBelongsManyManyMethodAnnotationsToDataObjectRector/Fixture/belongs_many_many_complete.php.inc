@@ -5,6 +5,6 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyM
 /**
  * @method \SilverStripe\ORM\ManyManyList|\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] BelongsManyManyRelationship()
  */
-class BelongsManyManyMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class BelongsManyManyComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }

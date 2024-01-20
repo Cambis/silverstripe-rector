@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMe
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwnerMock;
+use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwner;
+use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwnerComplete;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Source\OwnerMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -24,7 +25,15 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends Abstr
             OwnerMock::class,
             SilverstripeConstants::EXTENSIONS,
             [
-                HasOneOwnerMock::class,
+                HasOneOwner::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            OwnerMock::class,
+            SilverstripeConstants::EXTENSIONS,
+            [
+                HasOneOwnerComplete::class,
             ]
         );
     }

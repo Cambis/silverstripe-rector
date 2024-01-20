@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPrope
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DB;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBComplete;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class AddDBFieldPropertyAnnotationsToDataObjectRectorTest extends AbstractRectorTestCase
@@ -20,7 +21,27 @@ final class AddDBFieldPropertyAnnotationsToDataObjectRectorTest extends Abstract
         parent::setUp();
 
         Config::modify()->merge(
-            DBMock::class,
+            DB::class,
+            SilverstripeConstants::DB,
+            [
+                'Boolean' => 'Boolean',
+                'Currency' => 'Currency',
+                'Date' => 'Date',
+                'Decimal' => 'Decimal',
+                'Enum' => 'Enum',
+                'HTMLText' => 'HTMLText',
+                'HTMLVarchar' => 'HTMLVarchar',
+                'Int' => 'Int',
+                'Percentage' => 'Percentage',
+                'Datetime' => 'Datetime',
+                'Text' => 'Text',
+                'Time' => 'Time',
+                'Varchar' => 'Varchar(255)',
+            ]
+        );
+
+        Config::modify()->merge(
+            DBComplete::class,
             SilverstripeConstants::DB,
             [
                 'Boolean' => 'Boolean',

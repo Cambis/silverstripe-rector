@@ -17,7 +17,7 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPrope
  * @property string $Time
  * @property string $Varchar
  */
-class DBMock extends \SilverStripe\ORM\DataObject
+class DBComplete extends \SilverStripe\ORM\DataObject
 {
     /**
      * @config

@@ -2,7 +2,7 @@
 
 namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture;
 
-class BelongsManyManyMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class BelongsManyMany extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 
@@ -15,7 +15,7 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyM
 /**
  * @method \SilverStripe\ORM\ManyManyList|\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] BelongsManyManyRelationship()
  */
-class BelongsManyManyMock extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class BelongsManyMany extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
 }
 

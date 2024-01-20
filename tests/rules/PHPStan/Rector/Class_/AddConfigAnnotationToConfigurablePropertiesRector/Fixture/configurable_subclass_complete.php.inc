@@ -2,7 +2,7 @@
 
 namespace SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
 
-class ConfigurableSubclass extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class ConfigurableSubclassComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
     /**
      * @var array<string, string>

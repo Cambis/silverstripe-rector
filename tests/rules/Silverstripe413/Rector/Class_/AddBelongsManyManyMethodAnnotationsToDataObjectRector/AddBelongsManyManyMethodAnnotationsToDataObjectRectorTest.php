@@ -7,7 +7,8 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyM
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture\BelongsManyManyMock;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture\BelongsManyMany;
+use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture\BelongsManyManyComplete;
 use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 
@@ -21,7 +22,15 @@ final class AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest extends Ab
         parent::setUp();
 
         Config::modify()->merge(
-            BelongsManyManyMock::class,
+            BelongsManyMany::class,
+            SilverstripeConstants::BELONGS_MANY_MANY,
+            [
+                'BelongsManyManyRelationship' => RelationMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            BelongsManyManyComplete::class,
             SilverstripeConstants::BELONGS_MANY_MANY,
             [
                 'BelongsManyManyRelationship' => RelationMock::class,

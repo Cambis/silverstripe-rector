@@ -9,7 +9,7 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\DataListMethodAn
  * @method \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\DataObject[] ManyManyRelationship()
  * @method \SilverStripe\ORM\ManyManyThroughList|\SilverStripe\ORM\DataObject[] ManyManyThroughRelationship()
  */
-class HasManyMock extends \SilverStripe\ORM\DataObject
+class UnionType extends \SilverStripe\ORM\DataObject
 {
 }
 
@@ -26,7 +26,7 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\DataListMethodAn
  * @method \SilverStripe\ORM\ManyManyList<\SilverStripe\ORM\DataObject> ManyManyRelationship()
  * @method \SilverStripe\ORM\ManyManyThroughList<\SilverStripe\ORM\DataObject> ManyManyThroughRelationship()
  */
-class HasManyMock extends \SilverStripe\ORM\DataObject
+class UnionType extends \SilverStripe\ORM\DataObject
 {
 }
 
