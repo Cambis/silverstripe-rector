@@ -154,7 +154,7 @@ CODE_SAMPLE
 
             // `@method DataList|Foo[] Foo()`
             if ($type instanceof UnionType) {
-                if (!count($type->getTypes()) == 2) {
+                if (count($type->getTypes()) !== 2) {
                     continue;
                 }
 

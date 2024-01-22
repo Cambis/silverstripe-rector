@@ -8,12 +8,14 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use SilverStripe\Core\Extension;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function count;
 
 /**
  * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\AddExtendsAnnotationToExtensionsRectorTest
@@ -55,7 +57,7 @@ CODE_SAMPLE
             new ExtendsTagValueNode(
                 new GenericTypeNode(
                     new FullyQualifiedIdentifierTypeNode(Extension::class),
-                    $typeNodes
+                    count($typeNodes) > 1 ? [new UnionTypeNode($typeNodes)] : $typeNodes
                 ),
                 ''
             ),
