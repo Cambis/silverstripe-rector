@@ -35,7 +35,7 @@ use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
-        SilverstripeLevelSetList::UP_TO_SS_52,
+        SilverstripeLevelSetList::UP_TO_SS_5_2,
         SilverstripeSetList::CODE_QUALITY,
     ]);
 };

@@ -16,5 +16,5 @@ final class SilverstripeSetList implements SetListInterface
 
     public const SS_5_1 = __DIR__ . '/../../../config/set/silverstripe51.php';
 
-    public const SS_5_2 = __DIR__ . '/../../../config/set/silverstripe51.php';
+    public const SS_5_2 = __DIR__ . '/../../../config/set/silverstripe52.php';
 }

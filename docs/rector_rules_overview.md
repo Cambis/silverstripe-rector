@@ -1,4 +1,4 @@
-# 17 Rules Overview
+# 19 Rules Overview
 
 ## AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
@@ -9,6 +9,26 @@ Add missing dynamic annotations.
 ```diff
 +/**
 + * @method \SilverStripe\ORM\ManyManyList|Bar[] Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $belongs_many_many = [
+         'Bars' => Bar::class,
+     ];
+ }
+```
+
+<br>
+
+## AddBelongsManyManyMethodAnnotationsToDataObjectRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
+
+```diff
++/**
++ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
 + */
  class Foo extends \SilverStripe\ORM\DataObject
  {
@@ -205,6 +225,26 @@ Add missing dynamic annotations.
 ```diff
 +/**
 + * @method \SilverStripe\ORM\ManyManyList|Bar[] Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $many_many = [
+         'Bars' => Bar::class,
+     ];
+ }
+```
+
+<br>
+
+## AddManyManyMethodAnnotationsToDataObjectRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
+
+```diff
++/**
++ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
 + */
  class Foo extends \SilverStripe\ORM\DataObject
  {

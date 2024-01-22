@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Set\Silverstripe413;
-
-use SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock;
+namespace SilverstripeRector\Tests\Set\Silverstripe52\Source;
 
 final class TestConstants
 {
