@@ -7,7 +7,7 @@ use SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnn
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector;
-use SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionsRector;
+use SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
@@ -22,7 +22,7 @@ return static function (RectorConfig $rectorConfig): void {
         AddHasManyMethodAnnotationsToDataObjectRector::class,
         AddBelongsManyManyMethodAnnotationsToDataObjectRector::class,
         AddManyManyMethodAnnotationsToDataObjectRector::class,
-        AddGetOwnerMethodAnnotationToExtensionsRector::class,
+        AddGetOwnerMethodAnnotationToExtensionRector::class,
         AddExtensionMixinAnnotationsToExtensibleRector::class,
         CompleteDynamicInjectablePropertiesRector::class,
     ]);

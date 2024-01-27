@@ -3,7 +3,6 @@
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -12,15 +11,15 @@ use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use SilverStripe\Core\Extension;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
+use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector\AddExtendsAnnotationToExtensionsRectorTest
+ * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\AddExtendsAnnotationToExtensionRectorTest
  */
-final class AddExtendsAnnotationToExtensionsRector extends AbstractAddAnnotationsRector
+final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
     public function getRuleDefinition(): RuleDefinition
     {
@@ -67,26 +66,5 @@ CODE_SAMPLE
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@extends', $phpDocTagValueNode));
-    }
-
-    protected function shouldSkipClass(Class_ $class): bool
-    {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
-            return true;
-        }
-
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        return !$classReflection->isSubclassOf(Extension::class);
     }
 }

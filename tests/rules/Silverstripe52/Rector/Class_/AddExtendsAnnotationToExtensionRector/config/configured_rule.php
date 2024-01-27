@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector;
+use SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../../../../../../../config/config.php');
-    $rectorConfig->rule(AddExtendsAnnotationToExtensionsRector::class);
+    $rectorConfig->rule(AddExtendsAnnotationToExtensionRector::class);
 };

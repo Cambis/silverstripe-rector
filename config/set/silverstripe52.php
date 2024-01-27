@@ -9,7 +9,7 @@ use SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotation
 use SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector;
-use SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector;
+use SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\DataListMethodAnnotationToGenericDataListMethodAnnotationRector;
@@ -28,7 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
         AddHasManyMethodAnnotationsToDataObjectRector::class,
         AddBelongsManyManyMethodAnnotationsToDataObjectRector::class,
         AddManyManyMethodAnnotationsToDataObjectRector::class,
-        AddExtendsAnnotationToExtensionsRector::class,
+        AddExtendsAnnotationToExtensionRector::class,
         AddExtensionMixinAnnotationsToExtensibleRector::class,
         CompleteDynamicInjectablePropertiesRector::class,
     ]);

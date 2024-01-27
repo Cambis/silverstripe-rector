@@ -101,11 +101,11 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddExtendsAnnotationToExtensionsRector
+## AddExtendsAnnotationToExtensionRector
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionsRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionsRector.php)
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
 
 ```diff
 +/**
@@ -138,11 +138,11 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddGetOwnerMethodAnnotationToExtensionsRector
+## AddGetOwnerMethodAnnotationToExtensionRector
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionsRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionsRector.php)
+- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionRector.php)
 
 ```diff
 +/**

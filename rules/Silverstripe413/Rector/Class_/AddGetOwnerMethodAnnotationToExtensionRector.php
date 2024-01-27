@@ -3,17 +3,15 @@
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use SilverStripe\Core\Extension;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
+use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionsRector\AddGetOwnerMethodAnnotationToExtensionsRectorTest
+ * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector\AddGetOwnerMethodAnnotationToExtensionRectorTest
  */
-final class AddGetOwnerMethodAnnotationToExtensionsRector extends AbstractAddAnnotationsRector
+final class AddGetOwnerMethodAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
     public function getRuleDefinition(): RuleDefinition
     {
@@ -49,26 +47,5 @@ CODE_SAMPLE
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $ownerProperties
         );
-    }
-
-    protected function shouldSkipClass(Class_ $class): bool
-    {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
-            return true;
-        }
-
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        return !$classReflection->isSubclassOf(Extension::class);
     }
 }
