@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\NodeAnalyzer;
 
-use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\FloatType;
+use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
-use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
@@ -165,9 +161,9 @@ final class SilverstripeAnalyzer
      * @param class-string $className
      * @param SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY|SilverstripeConstants::PROPERTY_HAS_MANY|SilverstripeConstants::PROPERTY_MANY_MANY $relationName
      * @param class-string<DataList> $listName
-     * @return TypeNode[]
+     * @return Type[]
      */
-    public function extractGenericMethodTypeNodesFromManyRelation(
+    public function extractGenericMethodTypesFromManyRelation(
         string $className,
         string $relationName,
         string $listName = DataList::class
@@ -193,9 +189,9 @@ final class SilverstripeAnalyzer
                 $listName = ManyManyThroughList::class;
             }
 
-            $properties[$fieldName] = new GenericTypeNode(
-                new FullyQualifiedIdentifierTypeNode($listName),
-                [new FullyQualifiedIdentifierTypeNode($relationFieldType->getClassName())],
+            $properties[$fieldName] = new GenericObjectType(
+                $listName,
+                [$relationFieldType],
             );
         }
 
@@ -291,44 +287,6 @@ final class SilverstripeAnalyzer
         return [
             SilverstripeConstants::METHOD_GET_OWNER => new UnionType($types),
         ];
-    }
-
-    /**
-     * @param class-string $className extension name
-     * @return TypeNode[]
-     */
-    public function extractExtendsTypeNodesFromOwners(string $className, bool $isIntersection): array
-    {
-        /** @var array<class-string> $owners */
-        $owners = ClassInfo::classesWithExtension($className);
-
-        if ($owners === []) {
-            return [new IdentifierTypeNode('static')];
-        }
-
-        $owners = array_filter($owners, function (string $owner) use ($className): bool {
-            return in_array(
-                $className,
-                $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [],
-                true
-            );
-        });
-
-        $types = [];
-
-        foreach ($owners as $owner) {
-            if ($isIntersection) {
-                $types[] = new IntersectionTypeNode([new FullyQualifiedIdentifierTypeNode($owner), new IdentifierTypeNode('static')]);
-            } else {
-                $types[] = new FullyQualifiedIdentifierTypeNode($owner);
-            }
-        }
-
-        if (!$isIntersection) {
-            $types[] = new IdentifierTypeNode('static');
-        }
-
-        return $types;
     }
 
     /**

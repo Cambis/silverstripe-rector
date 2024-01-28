@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\TypeComparator;
 
 use PhpParser\Node;
+use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -41,6 +42,23 @@ final class AnnotationComparator
         if (
             $originalNode instanceof MixinTagValueNode &&
             $newNode instanceof MixinTagValueNode &&
+            $this->typeComparator->areTypesEqual(
+                $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType(
+                    $originalNode->type,
+                    $node
+                ),
+                $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType(
+                    $newNode->type,
+                    $node
+                ),
+            )
+        ) {
+            return true;
+        }
+
+        if (
+            $originalNode instanceof ExtendsTagValueNode &&
+            $newNode instanceof ExtendsTagValueNode &&
             $this->typeComparator->areTypesEqual(
                 $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType(
                     $originalNode->type,

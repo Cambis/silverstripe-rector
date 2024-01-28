@@ -18,6 +18,7 @@ parameters:
     - '*tests/*/Source*'
   cognitive_complexity:
       class: 50
+      function: 15
   ignoreErrors:
       -
         message: "#^Cognitive complexity for \"SilverstripeRector\\\\DocBlock\\\\DocBlockHelper\\:\\:filterOutExistingAnnotations\\(\\)\" is 15, keep it under 9$#"
@@ -35,7 +36,7 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsRector.php
 
       -
-        message: "#^Cognitive complexity for \"SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\DataListMethodAnnotationToGenericDataListMethodAnnotationRector\\:\\:refactor\\(\\)\" is 23, keep it under 9$#"
+        message: "#^Cognitive complexity for \"SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\DataListMethodAnnotationToGenericDataListMethodAnnotationRector\\:\\:refactor\\(\\)\" is 23, keep it under 15$#"
         count: 1
         path: rules/Silverstripe52/Rector/Class_/DataListMethodAnnotationToGenericDataListMethodAnnotationRector.php
 

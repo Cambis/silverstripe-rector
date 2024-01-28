@@ -53,13 +53,13 @@ CODE_SAMPLE
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
 
-        $manyManyMethods = $this->configurableAnalyzer->extractGenericMethodTypeNodesFromManyRelation(
+        $manyManyMethods = $this->configurableAnalyzer->extractGenericMethodTypesFromManyRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_MANY_MANY,
             ManyManyList::class
         );
 
-        return $this->docBlockHelper->convertTypeNodesToMethodTagValueNodes(
+        return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $manyManyMethods
         );
     }

@@ -13,6 +13,7 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Core\NodeAnalyzer\ClassAnalyzer;
 use Rector\Core\Rector\AbstractRector;
+use Rector\StaticTypeMapper\StaticTypeMapper;
 use SilverstripeRector\DocBlock\DocBlockHelper;
 use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
@@ -27,6 +28,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
+        protected readonly StaticTypeMapper $staticTypeMapper
     ) {
     }
 

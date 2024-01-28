@@ -7,14 +7,13 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use PHPStan\Type\Generic\GenericObjectType;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
-use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use SilverStripe\Core\Extension;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use function count;
+use function array_values;
 
 /**
  * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\AddExtendsAnnotationToExtensionRectorTest
@@ -53,14 +52,17 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $typeNodes = $this->configurableAnalyzer->extractExtendsTypeNodesFromOwners($classConst, $this->isIntersection());
+        $types = $this->configurableAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());
+        $genericType = new GenericObjectType(Extension::class, array_values($types));
+        $genericTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($genericType);
+
+        if (!$genericTypeNode instanceof GenericTypeNode) {
+            return [];
+        }
 
         return [
             new ExtendsTagValueNode(
-                new GenericTypeNode(
-                    new FullyQualifiedIdentifierTypeNode(Extension::class),
-                    count($typeNodes) > 1 ? [new UnionTypeNode($typeNodes)] : $typeNodes
-                ),
+                $genericTypeNode,
                 ''
             ),
         ];
