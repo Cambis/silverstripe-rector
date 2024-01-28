@@ -24,7 +24,7 @@ final class AddHasManyMethodAnnotationsToDataObjectRectorTest extends AbstractRe
 
         Config::modify()->merge(
             HasMany::class,
-            SilverstripeConstants::HAS_MANY,
+            SilverstripeConstants::PROPERTY_HAS_MANY,
             [
                 'HasManyRelationship' => RelationMock::class,
             ]
@@ -32,7 +32,7 @@ final class AddHasManyMethodAnnotationsToDataObjectRectorTest extends AbstractRe
 
         Config::modify()->merge(
             HasManyComplete::class,
-            SilverstripeConstants::HAS_MANY,
+            SilverstripeConstants::PROPERTY_HAS_MANY,
             [
                 'HasManyRelationship' => RelationMock::class,
             ]
@@ -40,7 +40,7 @@ final class AddHasManyMethodAnnotationsToDataObjectRectorTest extends AbstractRe
 
         Config::modify()->merge(
             HasManyShortname::class,
-            SilverstripeConstants::HAS_MANY,
+            SilverstripeConstants::PROPERTY_HAS_MANY,
             [
                 'HasManyRelationship' => RelationMock::class,
             ]

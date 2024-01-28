@@ -58,14 +58,14 @@ CODE_SAMPLE
         }
 
         $className = (string) $this->getName($node->class);
-        $dataListCall = $this->nodeFactory->createStaticCall($className, SilverstripeConstants::GET, []);
+        $dataListCall = $this->nodeFactory->createStaticCall($className, SilverstripeConstants::METHOD_GET, []);
 
-        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::BY_ID, $node->args);
+        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::METHOD_BY_ID, $node->args);
     }
 
     private function shouldSkipStaticCall(StaticCall $staticCall): bool
     {
-        if (!$this->isName($staticCall->name, SilverstripeConstants::GET_BY_ID)) {
+        if (!$this->isName($staticCall->name, SilverstripeConstants::METHOD_GET_BY_ID)) {
             return true;
         }
 

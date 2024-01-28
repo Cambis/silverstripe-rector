@@ -23,7 +23,7 @@ final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRector
 
         Config::modify()->merge(
             Injectable::class,
-            SilverstripeConstants::DEPENDENCIES,
+            SilverstripeConstants::PROPERTY_DEPENDENCIES,
             [
                 'dependency' => '%$' . DependencyMock::class,
                 'message' => 'This is a message',
@@ -34,7 +34,7 @@ final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRector
 
         Config::modify()->merge(
             InjectableComplete::class,
-            SilverstripeConstants::DEPENDENCIES,
+            SilverstripeConstants::PROPERTY_DEPENDENCIES,
             [
                 'dependency' => '%$' . DependencyMock::class,
                 'message' => 'This is a message',

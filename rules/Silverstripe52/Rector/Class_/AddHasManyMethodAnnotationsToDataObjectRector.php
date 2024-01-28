@@ -55,7 +55,7 @@ CODE_SAMPLE
 
         $hasManyMethods = $this->configurableAnalyzer->extractGenericMethodTypeNodesFromManyRelation(
             $classConst,
-            SilverstripeConstants::HAS_MANY,
+            SilverstripeConstants::PROPERTY_HAS_MANY,
             HasManyList::class
         );
 

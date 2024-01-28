@@ -55,7 +55,7 @@ CODE_SAMPLE
 
         $manyManyMethods = $this->configurableAnalyzer->extractGenericMethodTypeNodesFromManyRelation(
             $classConst,
-            SilverstripeConstants::MANY_MANY,
+            SilverstripeConstants::PROPERTY_MANY_MANY,
             ManyManyList::class
         );
 

@@ -23,7 +23,7 @@ final class AddBelongsToPropertyAndMethodAnnotationsToDataObjectRectorTest exten
 
         Config::modify()->merge(
             BelongsTo::class,
-            SilverstripeConstants::BELONGS_TO,
+            SilverstripeConstants::PROPERTY_BELONGS_TO,
             [
                 'BelongsToRelationship' => RelationMock::class . '.Parent',
             ]
@@ -31,7 +31,7 @@ final class AddBelongsToPropertyAndMethodAnnotationsToDataObjectRectorTest exten
 
         Config::modify()->merge(
             BelongsToComplete::class,
-            SilverstripeConstants::BELONGS_TO,
+            SilverstripeConstants::PROPERTY_BELONGS_TO,
             [
                 'BelongsToRelationship' => RelationMock::class . '.Parent',
             ]

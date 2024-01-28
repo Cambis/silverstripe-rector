@@ -23,7 +23,7 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends Abstr
 
         Config::modify()->merge(
             OwnerMock::class,
-            SilverstripeConstants::EXTENSIONS,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 HasOneOwner::class,
             ]
@@ -31,7 +31,7 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends Abstr
 
         Config::modify()->merge(
             OwnerMock::class,
-            SilverstripeConstants::EXTENSIONS,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 HasOneOwnerComplete::class,
             ]

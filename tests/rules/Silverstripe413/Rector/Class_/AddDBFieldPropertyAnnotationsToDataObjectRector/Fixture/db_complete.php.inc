@@ -19,22 +19,4 @@ namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPrope
  */
 class DBComplete extends \SilverStripe\ORM\DataObject
 {
-    /**
-     * @config
-     */
-    private static array $db = [
-        'Boolean' => 'Boolean',
-        'Currency' => 'Currency',
-        'Date' => 'Date',
-        'Decimal' => 'Decimal',
-        'Enum' => 'Enum',
-        'HTMLText' => 'HTMLText',
-        'HTMLVarchar' => 'HTMLVarchar',
-        'Int' => 'Int',
-        'Percentage' => 'Percentage',
-        'Datetime' => 'Datetime',
-        'Text' => 'Text',
-        'Time' => 'Time',
-        'Varchar' => 'Varchar',
-    ];
 }

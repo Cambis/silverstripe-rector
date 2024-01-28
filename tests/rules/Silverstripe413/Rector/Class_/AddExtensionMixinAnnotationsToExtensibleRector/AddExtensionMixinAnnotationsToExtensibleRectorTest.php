@@ -24,7 +24,7 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
 
         Config::modify()->merge(
             HasOneExtension::class,
-            SilverstripeConstants::EXTENSIONS,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 ExtensionMock::class,
             ]
@@ -32,7 +32,7 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
 
         Config::modify()->merge(
             HasOneExtensionComplete::class,
-            SilverstripeConstants::EXTENSIONS,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 ExtensionMock::class,
             ]
@@ -40,7 +40,7 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
 
         Config::modify()->merge(
             HasOneExtensionShortname::class,
-            SilverstripeConstants::EXTENSIONS,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 ExtensionMock::class,
             ]

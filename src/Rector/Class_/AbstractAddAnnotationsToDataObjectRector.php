@@ -10,7 +10,7 @@ use SilverStripe\ORM\DataObject;
 
 abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnotationsRector
 {
-    protected function shouldSkipClass(Class_ $class): bool
+    final protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {
             return true;

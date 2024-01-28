@@ -22,7 +22,7 @@ final class AddDBFieldPropertyAnnotationsToDataObjectRectorTest extends Abstract
 
         Config::modify()->merge(
             DB::class,
-            SilverstripeConstants::DB,
+            SilverstripeConstants::PROPERTY_DB,
             [
                 'Boolean' => 'Boolean',
                 'Currency' => 'Currency',
@@ -42,7 +42,7 @@ final class AddDBFieldPropertyAnnotationsToDataObjectRectorTest extends Abstract
 
         Config::modify()->merge(
             DBComplete::class,
-            SilverstripeConstants::DB,
+            SilverstripeConstants::PROPERTY_DB,
             [
                 'Boolean' => 'Boolean',
                 'Currency' => 'Currency',

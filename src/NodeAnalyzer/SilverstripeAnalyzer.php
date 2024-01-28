@@ -69,7 +69,7 @@ final class SilverstripeAnalyzer
     public function extractPropertyTypesFromDBFields(string $className): array
     {
         $properties = [];
-        $db = $this->getConfig($className, SilverstripeConstants::DB);
+        $db = $this->getConfig($className, SilverstripeConstants::PROPERTY_DB);
 
         if (!is_array($db) || $db === []) {
             return $properties;
@@ -84,7 +84,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
-     * @param SilverstripeConstants::BELONGS_TO|SilverstripeConstants::HAS_ONE $relationName
+     * @param SilverstripeConstants::PROPERTY_BELONGS_TO|SilverstripeConstants::PROPERTY_HAS_ONE $relationName
      * @return Type[]
      */
     public function extractPropertyTypesFromSingleRelation(string $className, string $relationName): array
@@ -105,7 +105,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
-     * @param SilverstripeConstants::BELONGS_TO|SilverstripeConstants::HAS_ONE $relationName
+     * @param SilverstripeConstants::PROPERTY_BELONGS_TO|SilverstripeConstants::PROPERTY_HAS_ONE $relationName
      * @return Type[]
      */
     public function extractMethodTypesFromSingleRelation(string $className, string $relationName): array
@@ -126,7 +126,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
-     * @param SilverstripeConstants::BELONGS_MANY_MANY|SilverstripeConstants::HAS_MANY|SilverstripeConstants::MANY_MANY $relationName
+     * @param SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY|SilverstripeConstants::PROPERTY_HAS_MANY|SilverstripeConstants::PROPERTY_MANY_MANY $relationName
      * @param class-string<DataList> $listName
      * @return Type[]
      */
@@ -163,7 +163,7 @@ final class SilverstripeAnalyzer
 
     /**
      * @param class-string $className
-     * @param SilverstripeConstants::BELONGS_MANY_MANY|SilverstripeConstants::HAS_MANY|SilverstripeConstants::MANY_MANY $relationName
+     * @param SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY|SilverstripeConstants::PROPERTY_HAS_MANY|SilverstripeConstants::PROPERTY_MANY_MANY $relationName
      * @param class-string<DataList> $listName
      * @return TypeNode[]
      */
@@ -211,7 +211,7 @@ final class SilverstripeAnalyzer
         $properties = [];
 
         /** @var string[] */
-        $dependencies = $this->getConfig($className, SilverstripeConstants::DEPENDENCIES);
+        $dependencies = $this->getConfig($className, SilverstripeConstants::PROPERTY_DEPENDENCIES);
 
         if (!is_array($dependencies) || $dependencies === []) {
             return $properties;
@@ -231,7 +231,7 @@ final class SilverstripeAnalyzer
     public function extractMixinTypesFromExtensions(string $className): array
     {
         $properties = [];
-        $extensions = $this->getConfig($className, SilverstripeConstants::EXTENSIONS) ?? [];
+        $extensions = $this->getConfig($className, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
 
         if ($extensions === []) {
             return $properties;
@@ -262,14 +262,14 @@ final class SilverstripeAnalyzer
 
         if ($owners === []) {
             return [
-                SilverstripeConstants::GET_OWNER => new StaticType($classReflection),
+                SilverstripeConstants::METHOD_GET_OWNER => new StaticType($classReflection),
             ];
         }
 
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
             return in_array(
                 $className,
-                $this->getConfig($owner, SilverstripeConstants::EXTENSIONS) ?? [],
+                $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [],
                 true
             );
         });
@@ -289,7 +289,7 @@ final class SilverstripeAnalyzer
         }
 
         return [
-            SilverstripeConstants::GET_OWNER => new UnionType($types),
+            SilverstripeConstants::METHOD_GET_OWNER => new UnionType($types),
         ];
     }
 
@@ -309,7 +309,7 @@ final class SilverstripeAnalyzer
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
             return in_array(
                 $className,
-                $this->getConfig($owner, SilverstripeConstants::EXTENSIONS) ?? [],
+                $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [],
                 true
             );
         });

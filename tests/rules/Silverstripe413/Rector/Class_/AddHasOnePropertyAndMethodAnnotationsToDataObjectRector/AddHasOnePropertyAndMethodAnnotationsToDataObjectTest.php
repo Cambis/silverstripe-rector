@@ -22,7 +22,7 @@ final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends Abstra
 
         Config::modify()->merge(
             HasOne::class,
-            SilverstripeConstants::HAS_ONE,
+            SilverstripeConstants::PROPERTY_HAS_ONE,
             [
                 'HasOneRelationship' => RelationMock::class,
             ]

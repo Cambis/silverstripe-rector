@@ -15,6 +15,7 @@ use Rector\Core\NodeAnalyzer\ClassAnalyzer;
 use Rector\Core\Rector\AbstractRector;
 use SilverstripeRector\DocBlock\DocBlockHelper;
 use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
+use SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 
 abstract class AbstractAddAnnotationsRector extends AbstractRector
 {
@@ -23,6 +24,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         protected readonly SilverstripeAnalyzer $configurableAnalyzer,
         protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
+        protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
     ) {
@@ -31,7 +33,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
     /**
      * @return array<class-string<Node>>
      */
-    public function getNodeTypes(): array
+    final public function getNodeTypes(): array
     {
         return [Class_::class];
     }
@@ -53,7 +55,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
 
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
 
-        $newDocTagValueNodes = $this->docBlockHelper->filterOutExistingAnnotations(
+        $newDocTagValueNodes = $this->missingAnnotationsFactory->filterOutExistingAnnotations(
             $node,
             $phpDocInfo,
             $newDocTagValueNodes

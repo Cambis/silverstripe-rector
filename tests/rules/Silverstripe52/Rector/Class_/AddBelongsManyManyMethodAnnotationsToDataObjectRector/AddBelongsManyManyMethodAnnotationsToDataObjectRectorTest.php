@@ -23,7 +23,7 @@ final class AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest extends Ab
 
         Config::modify()->merge(
             BelongsManyMany::class,
-            SilverstripeConstants::BELONGS_MANY_MANY,
+            SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY,
             [
                 'BelongsManyManyRelationship' => RelationMock::class,
             ]
@@ -31,7 +31,7 @@ final class AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest extends Ab
 
         Config::modify()->merge(
             BelongsManyManyComplete::class,
-            SilverstripeConstants::BELONGS_MANY_MANY,
+            SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY,
             [
                 'BelongsManyManyRelationship' => RelationMock::class,
             ]

@@ -84,7 +84,7 @@ CODE_SAMPLE
                 return null;
             }
 
-            if ($node->value->methodName !== SilverstripeConstants::GET_OWNER) {
+            if ($node->value->methodName !== SilverstripeConstants::METHOD_GET_OWNER) {
                 return null;
             }
 

@@ -60,7 +60,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createStaticCall(
             $className,
-            SilverstripeConstants::CREATE,
+            SilverstripeConstants::METHOD_CREATE,
             $node->args
         );
     }

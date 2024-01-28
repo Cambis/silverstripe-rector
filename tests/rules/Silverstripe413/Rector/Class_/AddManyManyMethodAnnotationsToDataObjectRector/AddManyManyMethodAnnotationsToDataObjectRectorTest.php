@@ -25,7 +25,7 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
 
         Config::modify()->merge(
             ManyMany::class,
-            SilverstripeConstants::MANY_MANY,
+            SilverstripeConstants::PROPERTY_MANY_MANY,
             [
                 'ManyManyRelationship' => RelationMock::class,
             ]
@@ -33,7 +33,7 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
 
         Config::modify()->merge(
             ManyManyComplete::class,
-            SilverstripeConstants::MANY_MANY,
+            SilverstripeConstants::PROPERTY_MANY_MANY,
             [
                 'ManyManyRelationship' => RelationMock::class,
             ]
@@ -41,7 +41,7 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
 
         Config::modify()->merge(
             ManyManyThrough::class,
-            SilverstripeConstants::MANY_MANY,
+            SilverstripeConstants::PROPERTY_MANY_MANY,
             [
                 'ManyManyThroughRelationship' => [
                     'through' => RelationMock::class,
@@ -53,7 +53,7 @@ final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractR
 
         Config::modify()->merge(
             ManyManyThroughComplete::class,
-            SilverstripeConstants::MANY_MANY,
+            SilverstripeConstants::PROPERTY_MANY_MANY,
             [
                 'ManyManyThroughRelationship' => [
                     'through' => RelationMock::class,
