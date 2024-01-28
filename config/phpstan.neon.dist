@@ -1,0 +1,4 @@
+services:
+    -
+        class: SilverstripeRector\PHPStan\PhpDoc\ExtensionOwnerTypeNodeResolverExtension
+        tags: [phpstan.phpDoc.typeNodeResolverExtension]
