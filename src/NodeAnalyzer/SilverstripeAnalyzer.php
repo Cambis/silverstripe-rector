@@ -32,7 +32,9 @@ use SilverStripe\ORM\ManyManyThroughList;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use function array_filter;
 use function array_key_exists;
+use function array_pop;
 use function array_unique;
+use function count;
 use function explode;
 use function in_array;
 use function is_array;
@@ -285,7 +287,7 @@ final class SilverstripeAnalyzer
         }
 
         return [
-            SilverstripeConstants::METHOD_GET_OWNER => new UnionType($types),
+            SilverstripeConstants::METHOD_GET_OWNER => count($types) === 1 ? array_pop($types) : new UnionType($types),
         ];
     }
 
