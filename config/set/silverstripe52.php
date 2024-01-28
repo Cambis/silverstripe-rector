@@ -12,7 +12,6 @@ use SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnno
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
-use SilverstripeRector\Silverstripe52\Rector\Class_\DataListMethodAnnotationToGenericDataListMethodAnnotationRector;
 use SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -21,7 +20,6 @@ return static function (RectorConfig $rectorConfig): void {
     // Restart the sets from here to maintain the order of annotations
     $rectorConfig->rules([
         RemoveGetOwnerMethodAnnotationFromExtensionsRector::class,
-        DataListMethodAnnotationToGenericDataListMethodAnnotationRector::class,
         AddDBFieldPropertyAnnotationsToDataObjectRector::class,
         AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector::class,
         AddHasOnePropertyAndMethodAnnotationsToDataObjectRector::class,

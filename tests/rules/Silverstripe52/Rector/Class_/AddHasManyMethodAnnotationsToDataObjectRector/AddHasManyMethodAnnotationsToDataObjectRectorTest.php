@@ -9,6 +9,7 @@ use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasMany;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyComplete;
+use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyFromSS4;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture\HasManyShortname;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
@@ -40,6 +41,14 @@ final class AddHasManyMethodAnnotationsToDataObjectRectorTest extends AbstractRe
 
         Config::modify()->merge(
             HasManyShortname::class,
+            SilverstripeConstants::PROPERTY_HAS_MANY,
+            [
+                'HasManyRelationship' => RelationMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasManyFromSS4::class,
             SilverstripeConstants::PROPERTY_HAS_MANY,
             [
                 'HasManyRelationship' => RelationMock::class,

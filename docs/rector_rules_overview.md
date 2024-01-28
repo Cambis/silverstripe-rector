@@ -1,4 +1,4 @@
-# 19 Rules Overview
+# 18 Rules Overview
 
 ## AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
@@ -276,27 +276,6 @@ Add missing dynamic properties.
 +
      private static array $dependencies = [
          'bar' => '%$' . Bar::class,
-     ];
- }
-```
-
-<br>
-
-## DataListMethodAnnotationToGenericDataListMethodAnnotationRector
-
-Update DataList annotations to use generics.
-
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\DataListMethodAnnotationToGenericDataListMethodAnnotationRector`](../rules/Silverstripe52/Rector/Class_/DataListMethodAnnotationToGenericDataListMethodAnnotationRector.php)
-
-```diff
- /**
-- * @method \SilverStripe\ORM\HasManyList|Bar[] Bars()
-+ * @method \SilverStripe\ORM\HasManyList<Bar> Bars()
-  */
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static array $has_many = [
-         'Bars' => Bar::class,
      ];
  }
 ```

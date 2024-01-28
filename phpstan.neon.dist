@@ -36,11 +36,6 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsRector.php
 
       -
-        message: "#^Cognitive complexity for \"SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\DataListMethodAnnotationToGenericDataListMethodAnnotationRector\\:\\:refactor\\(\\)\" is 23, keep it under 15$#"
-        count: 1
-        path: rules/Silverstripe52/Rector/Class_/DataListMethodAnnotationToGenericDataListMethodAnnotationRector.php
-
-      -
         message: "#^Class with base .* name is already used in .*. Use unique name to make classes easy to recognize$#"
         path: tests/rules/*
 
@@ -52,3 +47,8 @@ parameters:
         message: "#^Instead of protected element, use private element or contract method$#"
         count: 2
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
+
+      -
+        message: "#^Cognitive complexity for \"SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 18, keep it under 15#"
+        count: 1
+        path: src/PhpDocManipulator/AnnotationUpdater.php

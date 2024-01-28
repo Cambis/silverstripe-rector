@@ -8,13 +8,13 @@ use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
-use SilverstripeRector\TypeComparator\AnnotationComparator;
+use SilverstripeRector\PhpDocManipulator\AnnotationUpdater;
 use function array_filter;
 
 final class MissingAnnotationsFactory
 {
     public function __construct(
-        private readonly AnnotationComparator $annotationComparator,
+        private readonly AnnotationUpdater $annotationUpdater,
     ) {
     }
 
@@ -27,7 +27,7 @@ final class MissingAnnotationsFactory
         return array_filter(
             $newDocTagValueNodes,
             function (PhpDocTagValueNode $newDocTagValueNode) use ($node, $phpDocInfo): bool {
-                foreach ($phpDocInfo->getPhpDocNode()->children as $key => $phpDocTagNode) {
+                foreach ($phpDocInfo->getPhpDocNode()->children as $phpDocTagNode) {
                     if (!$phpDocTagNode instanceof PhpDocTagNode) {
                         continue;
                     }
@@ -38,7 +38,7 @@ final class MissingAnnotationsFactory
                         continue;
                     }
 
-                    if ($this->annotationComparator->shouldSkipNewAnnotation($phpDocTagValueNode, $newDocTagValueNode, $node)) {
+                    if ($this->annotationUpdater->hasExistingAnnotation($phpDocTagValueNode, $newDocTagValueNode, $node)) {
                         return false;
                     }
                 }
