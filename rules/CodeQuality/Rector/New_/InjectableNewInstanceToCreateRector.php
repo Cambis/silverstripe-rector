@@ -7,6 +7,7 @@ namespace SilverstripeRector\CodeQuality\Rector\New_;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PHPStan\Reflection\ReflectionProvider;
+use Rector\Core\NodeAnalyzer\ClassAnalyzer;
 use Rector\Core\Rector\AbstractRector;
 use Rector\Core\ValueObject\MethodName;
 use SilverStripe\Core\Injector\Injectable;
@@ -20,6 +21,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class InjectableNewInstanceToCreateRector extends AbstractRector
 {
     public function __construct(
+        private readonly ClassAnalyzer $classAnalyzer,
         private readonly ReflectionProvider $reflectionProvider
     ) {
     }
@@ -74,6 +76,10 @@ CODE_SAMPLE
         }
 
         $classReflection = $this->reflectionProvider->getClass($className);
+
+        if ($this->classAnalyzer->isAnonymousClass($new->class)) {
+            return true;
+        }
 
         if (!$classReflection->hasTraitUse(Injectable::class)) {
             return true;

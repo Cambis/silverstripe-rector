@@ -12,6 +12,7 @@ use SilverStripe\ORM\DataObject;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function count;
 use function is_string;
 
 /**
@@ -59,8 +60,14 @@ CODE_SAMPLE
 
         $className = (string) $this->getName($node->class);
         $dataListCall = $this->nodeFactory->createStaticCall($className, SilverstripeConstants::METHOD_GET, []);
+        $args = $node->args;
 
-        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::METHOD_BY_ID, $node->args);
+        // Get the second argument if more than one is present
+        if (count($args) > 1) {
+            $args = [$node->args[1]];
+        }
+
+        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::METHOD_BY_ID, $args);
     }
 
     private function shouldSkipStaticCall(StaticCall $staticCall): bool
@@ -80,6 +87,11 @@ CODE_SAMPLE
         }
 
         $classReflection = $this->reflectionProvider->getClass($className);
+
+        // Skip DataObject::get_by_id() as there is potentially too many edge cases.
+        if ($classReflection->getName() === DataObject::class) {
+            return true;
+        }
 
         return !$classReflection->isSubclassOf(DataObject::class);
     }
