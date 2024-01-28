@@ -10,6 +10,6 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->phpstanConfigs([
-        __DIR__ . '/phpstan.neon.dist',
+        __DIR__ . '/services.neon.dist',
     ]);
 };
