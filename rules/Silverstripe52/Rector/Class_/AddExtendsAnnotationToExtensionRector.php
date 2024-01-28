@@ -12,7 +12,7 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
 use SilverStripe\Core\Extension;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
 
@@ -23,23 +23,26 @@ final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotations
 {
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
+        return new RuleDefinition('Add missing dynamic annotations.', [new ConfiguredCodeSample(
             <<<'CODE_SAMPLE'
-class Foo extends \SilverStripe\Core\Extension
+class FooExtension extends \SilverStripe\Core\Extension
 {
 }
 CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
 /**
- * @extends \SilverStripe\Core\Extension<static>
+ * @extends Extension<Foo&static>
  */
-class Foo extends \SilverStripe\Core\Extension
+class FooExtension extends \SilverStripe\Core\Extension
 {
 }
 CODE_SAMPLE
-        ),
-        ]);
+            ,
+            [
+                self::SET_TYPE_STYLE => self::SET_INTERSECTION,
+            ]
+        )]);
     }
 
     /**
@@ -50,7 +53,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $typeNodes = $this->configurableAnalyzer->extractExtendsTypeNodesFromOwners($classConst);
+        $typeNodes = $this->configurableAnalyzer->extractExtendsTypeNodesFromOwners($classConst, $this->isIntersection());
 
         return [
             new ExtendsTagValueNode(

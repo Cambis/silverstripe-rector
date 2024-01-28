@@ -6,14 +6,16 @@ namespace SilverstripeRector\NodeAnalyzer;
 
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\FloatType;
 use PHPStan\Type\IntegerType;
+use PHPStan\Type\IntersectionType;
+use PHPStan\Type\StaticType;
 use PHPStan\Type\StringType;
-use PHPStan\Type\ThisType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use Rector\BetterPhpDocParser\ValueObject\Type\FullyQualifiedIdentifierTypeNode;
@@ -252,16 +254,15 @@ final class SilverstripeAnalyzer
      * @param class-string $className extension name
      * @return Type[]
      */
-    public function extractMethodTypesFromOwners(string $className): array
+    public function extractMethodTypesFromOwners(string $className, bool $isIntersection): array
     {
         /** @var array<class-string> $owners */
         $owners = ClassInfo::classesWithExtension($className);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $thisType = new ThisType($classReflection);
 
         if ($owners === []) {
             return [
-                SilverstripeConstants::GET_OWNER => $thisType,
+                SilverstripeConstants::GET_OWNER => new StaticType($classReflection),
             ];
         }
 
@@ -276,10 +277,16 @@ final class SilverstripeAnalyzer
         $types = [];
 
         foreach ($owners as $owner) {
-            $types[] = new FullyQualifiedObjectType($owner);
+            if ($isIntersection) {
+                $types[] = new IntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
+            } else {
+                $types[] = new FullyQualifiedObjectType($owner);
+            }
         }
 
-        $types[] = $thisType;
+        if (!$isIntersection) {
+            $types[] = new StaticType($classReflection);
+        }
 
         return [
             SilverstripeConstants::GET_OWNER => new UnionType($types),
@@ -290,7 +297,7 @@ final class SilverstripeAnalyzer
      * @param class-string $className extension name
      * @return TypeNode[]
      */
-    public function extractExtendsTypeNodesFromOwners(string $className): array
+    public function extractExtendsTypeNodesFromOwners(string $className, bool $isIntersection): array
     {
         /** @var array<class-string> $owners */
         $owners = ClassInfo::classesWithExtension($className);
@@ -310,10 +317,16 @@ final class SilverstripeAnalyzer
         $types = [];
 
         foreach ($owners as $owner) {
-            $types[] = new FullyQualifiedIdentifierTypeNode($owner);
+            if ($isIntersection) {
+                $types[] = new IntersectionTypeNode([new FullyQualifiedIdentifierTypeNode($owner), new IdentifierTypeNode('static')]);
+            } else {
+                $types[] = new FullyQualifiedIdentifierTypeNode($owner);
+            }
         }
 
-        $types[] = new IdentifierTypeNode('static');
+        if (!$isIntersection) {
+            $types[] = new IdentifierTypeNode('static');
+        }
 
         return $types;
     }

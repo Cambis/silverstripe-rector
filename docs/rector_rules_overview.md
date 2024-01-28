@@ -105,13 +105,15 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
+:wrench: **configure it!**
+
 - class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
 
 ```diff
 +/**
-+ * @extends \SilverStripe\Core\Extension<static>
++ * @extends Extension<Foo&static>
 + */
- class Foo extends \SilverStripe\Core\Extension
+ class FooExtension extends \SilverStripe\Core\Extension
  {
  }
 ```
@@ -142,13 +144,15 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
+:wrench: **configure it!**
+
 - class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionRector.php)
 
 ```diff
 +/**
-+ * @method getOwner() $this
++ * @method Foo&static getOwner()
 + */
- class Foo extends \SilverStripe\Core\Extension
+ class FooExtension extends \SilverStripe\Core\Extension
  {
  }
 ```

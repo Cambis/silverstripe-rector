@@ -43,8 +43,8 @@ final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRec
      */
     public function test(string $filePath): void
     {
-        $this->markTestIncomplete('TODO');
-        // $this->doTestFile($filePath);
+        // $this->markTestIncomplete('TODO');
+        $this->doTestFile($filePath);
     }
 
     public static function provideData(): Iterator

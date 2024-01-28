@@ -9,12 +9,15 @@ parameters:
     - src
     - tests
   excludePaths:
+    - bootstrap.php
     - ecs.php
     - rector.php
     - '*tests/*/Fixture/*'
     - '*tests/*/Fixture*'
     - '*tests/*/Source/*'
     - '*tests/*/Source*'
+  cognitive_complexity:
+      class: 50
   ignoreErrors:
       -
         message: "#^Cognitive complexity for \"SilverstripeRector\\\\DocBlock\\\\DocBlockHelper\\:\\:filterOutExistingAnnotations\\(\\)\" is 15, keep it under 9$#"
@@ -43,3 +46,8 @@ parameters:
       -
         message: "#^Class SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
         path: tests/*
+      
+      -
+        message: "#^Instead of protected element, use private element or contract method$#"
+        count: 2
+        path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php

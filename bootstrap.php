@@ -3,15 +3,22 @@
 declare(strict_types=1);
 
 use SilverStripe\Core\DatabaselessKernel;
+use SilverStripe\ORM\Connect\NullDatabase;
+use SilverStripe\ORM\DB;
+
+require __DIR__ . '/vendor/silverstripe/framework/tests/bootstrap/init.php';
+require __DIR__ . '/vendor/silverstripe/framework/tests/bootstrap/cli.php';
 
 // Add Page/PageController stubs which may be required
-if (!class_exists(\Page::class)) {
+if (!class_exists(Page::class)) {
     require __DIR__ . '/stubs/Page.php';
 }
 
-if (!class_exists(\PageController::class)) {
+if (!class_exists(PageController::class)) {
     require __DIR__ . '/stubs/PageController.php';
 }
+
+DB::set_conn(new NullDatabase());
 
 // Mock a Silverstripe application in order to access the Configuration API
 try {
@@ -23,6 +30,6 @@ try {
     };
 
     $kernel->boot();
-} catch (\Throwable $e) {
+} catch (Throwable $e) {
     echo $e->getMessage();
 }
