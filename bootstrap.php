@@ -6,9 +6,6 @@ use SilverStripe\Core\DatabaselessKernel;
 use SilverStripe\ORM\Connect\NullDatabase;
 use SilverStripe\ORM\DB;
 
-require __DIR__ . '/vendor/silverstripe/framework/tests/bootstrap/init.php';
-require __DIR__ . '/vendor/silverstripe/framework/tests/bootstrap/cli.php';
-
 // Add Page/PageController stubs which may be required
 if (!class_exists(Page::class)) {
     require __DIR__ . '/stubs/Page.php';
