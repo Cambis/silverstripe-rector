@@ -7,8 +7,13 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
-use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use PHPStan\Type\IntersectionType;
+use PHPStan\Type\StaticType;
+use PHPStan\Type\UnionType;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
+use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Extension;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -31,7 +36,7 @@ CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
 /**
- * @extends Extension<Foo&static>
+ * @extends Extension<(Foo & static)>
  */
 class FooExtension extends \SilverStripe\Core\Extension
 {
@@ -52,13 +57,45 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $types = $this->configurableAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());
-        $genericType = new GenericObjectType(Extension::class, array_values($types));
-        $genericTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($genericType);
+        $parentClass = $classReflection->getParentClass();
+        $extensionClassConst = $parentClass ? $parentClass->getName() : Extension::class;
+        $originalType = array_values($this->configurableAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection()))[0];
+        $genericTypes = [];
 
-        if (!$genericTypeNode instanceof GenericTypeNode) {
+        if ($originalType instanceof StaticType) {
+            $genericTypes[] = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($originalType);
+        } elseif ($originalType instanceof IntersectionType) {
+            $genericTypes[] = new IntersectionTypeNode([
+                $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($originalType->getTypes()[0]),
+                $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($originalType->getTypes()[1]),
+            ]);
+        } elseif ($originalType instanceof UnionType) {
+            $types = [];
+
+            foreach ($originalType->getTypes() as $type) {
+                if ($type instanceof IntersectionType) {
+                    $types[] = new IntersectionTypeNode([
+                        $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type->getTypes()[0]),
+                        $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type->getTypes()[1]),
+                    ]);
+
+                    continue;
+                }
+
+                $types[] = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type);
+            }
+
+            $genericTypes[] = new UnionTypeNode($types);
+        }
+
+        if ($genericTypes === []) {
             return [];
         }
+
+        $genericTypeNode = new GenericTypeNode(
+            $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode(new FullyQualifiedObjectType($extensionClassConst)), // @phpstan-ignore-line
+            $genericTypes
+        );
 
         return [
             new ExtendsTagValueNode(

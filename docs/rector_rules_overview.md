@@ -111,7 +111,7 @@ Add missing dynamic annotations.
 
 ```diff
 +/**
-+ * @extends Extension<Foo&static>
++ * @extends Extension<(Foo & static)>
 + */
  class FooExtension extends \SilverStripe\Core\Extension
  {
@@ -150,7 +150,7 @@ Add missing dynamic annotations.
 
 ```diff
 +/**
-+ * @method Foo&static getOwner()
++ * @method (Foo & static) getOwner()
 + */
  class FooExtension extends \SilverStripe\Core\Extension
  {

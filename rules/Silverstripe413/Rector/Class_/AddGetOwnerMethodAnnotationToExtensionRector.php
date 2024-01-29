@@ -24,7 +24,7 @@ CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
 /**
- * @method Foo&static getOwner()
+ * @method (Foo & static) getOwner()
  */
 class FooExtension extends \SilverStripe\Core\Extension
 {

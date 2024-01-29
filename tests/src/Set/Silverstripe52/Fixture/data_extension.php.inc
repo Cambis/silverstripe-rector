@@ -34,7 +34,7 @@ namespace SilverstripeRector\Tests\Set\Silverstripe52\Fixture;
  * @method \SilverStripe\ORM\ManyManyList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> BelongsManyManyRelationship()
  * @method \SilverStripe\ORM\ManyManyList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyRelationship()
  * @method \SilverStripe\ORM\ManyManyThroughList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyThroughRelationship()
- * @extends \SilverStripe\Core\Extension<static>
+ * @extends \SilverStripe\ORM\DataExtension<static>
  */
 class DataExtension extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
 {

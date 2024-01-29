@@ -45,10 +45,15 @@ parameters:
       
       -
         message: "#^Instead of protected element, use private element or contract method$#"
-        count: 2
+        count: 3
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
       -
         message: "#^Cognitive complexity for \"SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 18, keep it under 15#"
         count: 1
         path: src/PhpDocManipulator/AnnotationUpdater.php
+
+      -
+        message: "#^Use value object over return of values$#"
+        count: 1
+        path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php

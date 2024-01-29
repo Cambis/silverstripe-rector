@@ -7,7 +7,7 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnota
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class AddExtendsAnnotationToExtensionRectorTest extends AbstractRectorTestCase
+final class IntersectionMultipleRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
@@ -19,11 +19,11 @@ final class AddExtendsAnnotationToExtensionRectorTest extends AbstractRectorTest
 
     public static function provideData(): Iterator
     {
-        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
+        return self::yieldFilesFromDirectory(__DIR__ . '/FixtureIntersectionMultiple');
     }
 
     public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/config/configured_rule.php';
+        return __DIR__ . '/config/intersection_multiple.php';
     }
 }

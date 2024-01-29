@@ -28,6 +28,8 @@ return ECSConfig::configure()
     ])
     ->withSkip([
         '*/Fixture/*',
+        '*/Fixture*',
         '*/Source/*',
+        '*/Source*',
         NotOperatorWithSuccessorSpaceFixer::class,
     ]);

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SilverstripeRector\Rector\Class_;
 
 use PhpParser\Node\Stmt\Class_;
+use PHPStan\Reflection\ClassReflection;
 use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use SilverStripe\Core\Extension;
+use SilverStripe\ORM\DataExtension;
 use Webmozart\Assert\Assert;
+use function in_array;
 
 abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnotationsRector implements ConfigurableRectorInterface
 {
@@ -61,11 +64,30 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf(Extension::class);
+        if (!$classReflection->isSubclassOf(Extension::class)) {
+            return true;
+        }
+
+        $parentReflection = $classReflection->getParentClass();
+
+        if (!$parentReflection instanceof ClassReflection) {
+            return true;
+        }
+
+        // Only allow child of these classes, no subchilds allowed
+        return !in_array($parentReflection->getName(), $this->getAllowedParents(), true);
     }
 
     final protected function isIntersection(): bool
     {
         return $this->setTypeStyle === self::SET_INTERSECTION;
+    }
+
+    /**
+     * @return array<class-string<Extension>>
+     */
+    final protected function getAllowedParents(): array
+    {
+        return [Extension::class, DataExtension::class];
     }
 }

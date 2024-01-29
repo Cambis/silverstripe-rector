@@ -4,6 +4,6 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnota
 /**
  * @extends \SilverStripe\Core\Extension<static>
  */
-class HasOneOwnerComplete extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
+class ExtensionComplete extends \SilverStripe\Core\Extension implements \SilverStripe\Dev\TestOnly
 {
 }
