@@ -6,7 +6,7 @@ namespace SilverstripeRector\Rector\Class_;
 
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ClassReflection;
-use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataExtension;
 use Webmozart\Assert\Assert;

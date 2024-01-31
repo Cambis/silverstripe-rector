@@ -7,8 +7,8 @@ See available [Silverstripe rules](docs/rector_rules_overview.md).
 ## Prerequisites 🦺
 
 ```sh
-silverstripe/framework:^4.0 || ^5.0
-silverstripe/cms:^4.0 || ^5.0
+silverstripe/framework ^4.0 || ^5.0
+silverstripe/cms ^4.0 || ^5.0
 ```
 
 ## Installation 👷‍♀️
@@ -16,8 +16,7 @@ silverstripe/cms:^4.0 || ^5.0
 Install via composer.
 
 ```sh
-composer require --dev rector/rector:0.18.3
-composer require --dev phpstan/phpstan:1.10.48
+composer require --dev rector/rector
 composer require --dev cambis/silverstripe-rector
 ```
 

@@ -7,7 +7,7 @@ namespace SilverstripeRector\CodeQuality\Rector\StaticCall;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
-use Rector\Core\Rector\AbstractRector;
+use Rector\Rector\AbstractRector;
 use SilverStripe\ORM\DataObject;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;

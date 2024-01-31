@@ -3,7 +3,7 @@ includes:
   - vendor/symplify/phpstan-rules/config/rector-rules.neon
 parameters:
   level: 8
-  reportUnmatchedIgnoredErrors: false
+  reportUnmatchedIgnoredErrors: true
   paths:
     - rules
     - src
@@ -20,11 +20,6 @@ parameters:
       class: 50
       function: 15
   ignoreErrors:
-      -
-        message: "#^Cognitive complexity for \"SilverstripeRector\\\\DocBlock\\\\DocBlockHelper\\:\\:filterOutExistingAnnotations\\(\\)\" is 15, keep it under 9$#"
-        count: 1
-        path: src/DocBlock/DocBlockHelper.php
-
       -
         message: "#^Instead of protected element, use private element or contract method$#"
         count: 3
@@ -57,3 +52,23 @@ parameters:
         message: "#^Use value object over return of values$#"
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
+
+      -
+        message: "#^Class \"SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionMultipleRector\" is missing @see annotation with test case class reference$#"
+        count: 1
+        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionMultipleRector.php
+
+      -
+        message: "#^Class \"SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionRector\" is missing @see annotation with test case class reference$#"
+        count: 1
+        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionRector.php
+
+      -
+        message: "#^Class \"SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionMultipleRector\" is missing @see annotation with test case class reference$#"
+        count: 1
+        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionMultipleRector.php
+
+      -
+        message: "#^Class \"SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionRector\" is missing @see annotation with test case class reference$#"
+        count: 1
+        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionRector.php
