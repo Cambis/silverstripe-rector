@@ -43,7 +43,7 @@ final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRec
      */
     public function test(string $filePath): void
     {
-        $this->markTestIncomplete('TODO');
+        $this->markTestIncomplete('TODO'); // @phpstan-ignore-line
         // $this->doTestFile($filePath);
     }
 

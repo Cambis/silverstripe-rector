@@ -9,6 +9,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\UnionType;
@@ -58,8 +59,8 @@ CODE_SAMPLE
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
         $parentClass = $classReflection->getParentClass();
-        $extensionClassConst = $parentClass ? $parentClass->getName() : Extension::class;
-        $originalType = array_values($this->configurableAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection()))[0];
+        $extensionClassConst = ($parentClass instanceof ClassReflection) ? $parentClass->getName() : Extension::class;
+        $originalType = array_values($this->silverstripeAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection()))[0];
         $genericTypes = [];
 
         if ($originalType instanceof StaticType) {

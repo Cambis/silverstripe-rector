@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\NodeFactory;
 
 use PhpParser\Node;
+use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
@@ -34,7 +35,7 @@ final class MissingAnnotationsFactory
 
                     $phpDocTagValueNode = $phpDocTagNode->value;
 
-                    if (!$phpDocTagValueNode instanceof PhpDocTagValueNode) {
+                    if ($phpDocTagValueNode instanceof InvalidTagValueNode) {
                         continue;
                     }
 

@@ -54,7 +54,7 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
 
         $newDocTagValueNodes = [];
-        $belongsToProperties = $this->configurableAnalyzer->extractPropertyTypesFromSingleRelation(
+        $belongsToProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );
@@ -66,7 +66,7 @@ CODE_SAMPLE
             ),
         ];
 
-        $belongsToMethods = $this->configurableAnalyzer->extractMethodTypesFromSingleRelation(
+        $belongsToMethods = $this->silverstripeAnalyzer->extractMethodTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );

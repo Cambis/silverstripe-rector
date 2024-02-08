@@ -34,9 +34,6 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
      */
     protected string $setTypeStyle = self::SET_INTERSECTION;
 
-    /**
-     * @param string[] $configuration
-     */
     final public function configure(array $configuration): void
     {
         $setTypeStyle = $configuration[self::SET_TYPE_STYLE] ?? self::SET_INTERSECTION;

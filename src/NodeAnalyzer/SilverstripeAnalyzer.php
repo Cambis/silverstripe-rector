@@ -208,7 +208,6 @@ final class SilverstripeAnalyzer
     {
         $properties = [];
 
-        /** @var string[] */
         $dependencies = $this->getConfig($className, SilverstripeConstants::PROPERTY_DEPENDENCIES);
 
         if (!is_array($dependencies) || $dependencies === []) {

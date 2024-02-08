@@ -45,7 +45,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $ownerProperties = $this->configurableAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());
+        $ownerProperties = $this->silverstripeAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());
 
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $ownerProperties

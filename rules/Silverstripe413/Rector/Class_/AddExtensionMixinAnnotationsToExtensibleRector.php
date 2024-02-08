@@ -57,7 +57,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $mixinProperties = $this->configurableAnalyzer->extractMixinTypesFromExtensions($classConst);
+        $mixinProperties = $this->silverstripeAnalyzer->extractMixinTypesFromExtensions($classConst);
 
         return [
             ...$this->docBlockHelper->convertTypesToMixinTagValueNodes(

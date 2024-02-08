@@ -72,3 +72,6 @@ parameters:
         message: "#^Class \"SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionRector\" is missing @see annotation with test case class reference$#"
         count: 1
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionRector.php
+
+      # Rector covariant
+      - '#Parameter \#1 \$node (.*?) of method SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'

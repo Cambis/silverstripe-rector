@@ -22,7 +22,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
 {
     public function __construct(
         protected readonly ClassAnalyzer $classAnalyzer,
-        protected readonly SilverstripeAnalyzer $configurableAnalyzer,
+        protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
         protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
         protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,

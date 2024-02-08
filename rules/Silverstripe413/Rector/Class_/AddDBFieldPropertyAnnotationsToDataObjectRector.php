@@ -50,7 +50,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $dbProperties = $this->configurableAnalyzer->extractPropertyTypesFromDBFields($classConst);
+        $dbProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromDBFields($classConst);
 
         return $this->docBlockHelper->convertTypesToPropertyTagValueNodes(
             $dbProperties
