@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class IntersectionRectorTest extends AbstractRectorTestCase
@@ -22,6 +23,7 @@ final class IntersectionRectorTest extends AbstractRectorTestCase
         return self::yieldFilesFromDirectory(__DIR__ . '/FixtureIntersection');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/intersection.php';

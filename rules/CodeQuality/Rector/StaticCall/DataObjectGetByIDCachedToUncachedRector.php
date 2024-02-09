@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\CodeQuality\Rector\StaticCall;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
@@ -26,6 +27,7 @@ final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector
     ) {
     }
 
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change DataObject::get_by_id() to use DataObject::get()->byID() instead.', [
@@ -44,6 +46,7 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticCall::class];
@@ -52,6 +55,7 @@ CODE_SAMPLE
     /**
      * @param StaticCall $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipStaticCall($node)) {

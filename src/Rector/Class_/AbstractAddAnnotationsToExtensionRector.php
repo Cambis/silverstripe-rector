@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Rector\Class_;
 
+use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
@@ -34,6 +35,7 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
      */
     protected string $setTypeStyle = self::SET_INTERSECTION;
 
+    #[Override]
     final public function configure(array $configuration): void
     {
         $setTypeStyle = $configuration[self::SET_TYPE_STYLE] ?? self::SET_INTERSECTION;
@@ -43,6 +45,7 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
         $this->setTypeStyle = $setTypeStyle;
     }
 
+    #[Override]
     final protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {

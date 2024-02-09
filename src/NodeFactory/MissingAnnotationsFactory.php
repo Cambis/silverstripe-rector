@@ -12,10 +12,10 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use SilverstripeRector\PhpDocManipulator\AnnotationUpdater;
 use function array_filter;
 
-final class MissingAnnotationsFactory
+final readonly class MissingAnnotationsFactory
 {
     public function __construct(
-        private readonly AnnotationUpdater $annotationUpdater,
+        private AnnotationUpdater $annotationUpdater,
     ) {
     }
 

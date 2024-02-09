@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class UnionMultipleRectorTest extends AbstractRectorTestCase
@@ -22,6 +23,7 @@ final class UnionMultipleRectorTest extends AbstractRectorTestCase
         return self::yieldFilesFromDirectory(__DIR__ . '/FixtureUnionMultiple');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/union_multiple.php';

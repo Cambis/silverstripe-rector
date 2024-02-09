@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class InjectableNewInstanceToCreateRectorTest extends AbstractRectorTestCase
@@ -22,6 +23,7 @@ final class InjectableNewInstanceToCreateRectorTest extends AbstractRectorTestCa
         return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/configured_rule.php';

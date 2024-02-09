@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
@@ -15,6 +16,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddDBFieldPropertyAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -45,6 +47,7 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
+    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);

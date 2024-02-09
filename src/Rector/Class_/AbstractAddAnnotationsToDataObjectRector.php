@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Rector\Class_;
 
+use Override;
 use PhpParser\Node\Stmt\Class_;
 use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataObject;
 
 abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnotationsRector
 {
+    #[Override]
     final protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {

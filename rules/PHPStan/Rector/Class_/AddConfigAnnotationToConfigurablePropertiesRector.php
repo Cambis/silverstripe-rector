@@ -2,6 +2,7 @@
 
 namespace SilverstripeRector\PHPStan\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\GenericTagValueNode;
@@ -33,6 +34,7 @@ final class AddConfigAnnotationToConfigurablePropertiesRector extends AbstractRe
     ) {
     }
 
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
@@ -66,6 +68,7 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -74,6 +77,7 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {

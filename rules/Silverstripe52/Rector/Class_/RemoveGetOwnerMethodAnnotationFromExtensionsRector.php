@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\Node as AstNode;
@@ -33,6 +34,7 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRector extends AbstractR
     ) {
     }
 
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Remove getOwner() method annotation.', [new CodeSample(
@@ -57,6 +59,7 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -65,6 +68,7 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {

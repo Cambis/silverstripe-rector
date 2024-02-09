@@ -2,6 +2,7 @@
 
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -26,6 +27,7 @@ use function array_values;
  */
 final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new ConfiguredCodeSample(
@@ -53,6 +55,7 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
+    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
@@ -106,6 +109,7 @@ CODE_SAMPLE
         ];
     }
 
+    #[Override]
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@extends', $phpDocTagValueNode));

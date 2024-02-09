@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\Set\Silverstripe413;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
 use SilverstripeRector\Tests\Set\Silverstripe413\Fixture\DataExtension;
@@ -20,6 +21,7 @@ final class Silverstripe413Test extends AbstractRectorTestCase
     /**
      * Load properties via {@see SilverStripe\Core\Config\Config::modify()} in order for this to work in this testing environment.
      */
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -188,6 +190,7 @@ final class Silverstripe413Test extends AbstractRectorTestCase
         return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/configured_rule.php';

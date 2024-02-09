@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
-use Rector\Set\ValueObject\DowngradeLevelSetList;
+use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
@@ -20,8 +20,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->removeUnusedImports();
 
     $rectorConfig->sets([
-        DowngradeLevelSetList::DOWN_TO_PHP_81,
-        LevelSetList::UP_TO_PHP_81,
+        LevelSetList::UP_TO_PHP_83,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
@@ -33,5 +32,7 @@ return static function (RectorConfig $rectorConfig): void {
         '*/Fixture/*',
         '*/Source/*',
         ClosureToArrowFunctionRector::class,
+        // This may cause a downgrade to fail
+        AddTypeToConstRector::class,
     ]);
 };

@@ -43,12 +43,12 @@ use function is_numeric;
 use function is_string;
 use function str_contains;
 
-final class SilverstripeAnalyzer
+final readonly class SilverstripeAnalyzer
 {
     /**
      * @var array<class-string<DBField>, class-string<Type>>
      */
-    private const DBFIELD_TO_TYPE_MAPPING = [
+    public const DBFIELD_TO_TYPE_MAPPING = [
         DBBoolean::class => BooleanType::class,
         DBDecimal::class => FloatType::class,
         DBFloat::class => FloatType::class,
@@ -56,7 +56,7 @@ final class SilverstripeAnalyzer
     ];
 
     public function __construct(
-        private readonly ReflectionProvider $reflectionProvider
+        private ReflectionProvider $reflectionProvider
     ) {
     }
 

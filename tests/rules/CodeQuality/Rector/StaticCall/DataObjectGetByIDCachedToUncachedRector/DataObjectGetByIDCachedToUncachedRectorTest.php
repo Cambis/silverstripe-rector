@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class DataObjectGetByIDCachedToUncachedRectorTest extends AbstractRectorTestCase
@@ -22,6 +23,7 @@ final class DataObjectGetByIDCachedToUncachedRectorTest extends AbstractRectorTe
         return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/configured_rule.php';

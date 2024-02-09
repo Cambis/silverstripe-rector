@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
+use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -28,6 +29,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class UnionRector extends AbstractAddAnnotationsToExtensionRector
 {
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('', []);
@@ -36,6 +38,7 @@ final class UnionRector extends AbstractAddAnnotationsToExtensionRector
     /**
      * @return PhpDocTagValueNode[]
      */
+    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
@@ -63,6 +66,7 @@ final class UnionRector extends AbstractAddAnnotationsToExtensionRector
         ];
     }
 
+    #[Override]
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@extends', $phpDocTagValueNode));

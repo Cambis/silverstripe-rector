@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -35,6 +36,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     final public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -43,6 +45,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
     /**
      * @param Class_ $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {

@@ -2,6 +2,7 @@
 
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -17,6 +18,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractAddAnnotationsRector
 {
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -44,6 +46,7 @@ CODE_SAMPLE
         ]);
     }
 
+    #[Override]
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@mixin', $phpDocTagValueNode));
@@ -52,6 +55,7 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
+    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
@@ -66,6 +70,7 @@ CODE_SAMPLE
         ];
     }
 
+    #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {

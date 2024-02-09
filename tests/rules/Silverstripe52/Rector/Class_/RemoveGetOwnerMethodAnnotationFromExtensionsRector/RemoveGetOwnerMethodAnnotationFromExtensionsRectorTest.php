@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
 
 use Iterator;
+use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
 use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwner;
@@ -17,6 +18,7 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends Abstr
     /**
      * Load properties via {@see SilverStripe\Core\Config\Config::modify()} in order for this to work in this testing environment.
      */
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,6 +53,7 @@ final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends Abstr
         return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
+    #[Override]
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/configured_rule.php';

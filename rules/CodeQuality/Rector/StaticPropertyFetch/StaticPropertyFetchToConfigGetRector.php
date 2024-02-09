@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PHPStan\Analyser\Scope;
@@ -29,6 +30,7 @@ final class StaticPropertyFetchToConfigGetRector extends AbstractRector
     ) {
     }
 
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
@@ -65,6 +67,7 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticPropertyFetch::class];
@@ -73,6 +76,7 @@ CODE_SAMPLE
     /**
      * @param StaticPropertyFetch $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         $classReflection = $this->reflectionResolver->resolveClassReflection($node);

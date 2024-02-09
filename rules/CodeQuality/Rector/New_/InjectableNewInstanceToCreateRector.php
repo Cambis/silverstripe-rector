@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\CodeQuality\Rector\New_;
 
+use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PHPStan\Reflection\ReflectionProvider;
@@ -26,6 +27,7 @@ final class InjectableNewInstanceToCreateRector extends AbstractRector
     ) {
     }
 
+    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change `new Injectable()` to use Injectable::create() instead.', [
@@ -44,6 +46,7 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
+    #[Override]
     public function getNodeTypes(): array
     {
         return [New_::class];
@@ -52,6 +55,7 @@ CODE_SAMPLE
     /**
      * @param New_ $node
      */
+    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipNew($node)) {

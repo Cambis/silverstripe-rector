@@ -18,13 +18,13 @@ use Rector\NodeTypeResolver\TypeComparator\TypeComparator;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 use function count;
 
-final class AnnotationUpdater
+final readonly class AnnotationUpdater
 {
     public function __construct(
-        private readonly DocBlockUpdater $docBlockUpdater,
-        private readonly NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard,
-        private readonly StaticTypeMapper $staticTypeMapper,
-        private readonly TypeComparator $typeComparator
+        private DocBlockUpdater $docBlockUpdater,
+        private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard,
+        private StaticTypeMapper $staticTypeMapper,
+        private TypeComparator $typeComparator
     ) {
     }
 
