@@ -1,0 +1,25 @@
+{
+  "name": "cambis/silverstripe-rector",
+  "description": "Rector rules for Silverstripe.",
+  "license": "MIT",
+  "keywords": [
+      "silverstripe",
+      "rector"
+  ],
+  "require": {
+      "php": "^7.4 || ^8.0",
+      "rector/rector": "^1.0",
+      "silverstripe/cms": "^4.13 || ^5.0",
+      "silverstripe/framework": "^4.13 || ^5.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+      "psr-4": {
+          "SilverstripeRector\\": [
+              "src/",
+              "rules/"
+          ]
+      }
+  }
+}

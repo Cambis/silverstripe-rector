@@ -5,10 +5,11 @@
 /.changeset export-ignore
 /.husky export-ignore
 ecs.php export-ignore
-commmitlint.config.js export-ignore
+commitlint.config.js export-ignore
 lint-staged.config.js export-ignore
 phpstan.neon.dist export-ignore
 phpunit.xml.dist export-ignore
 rector.php export-ignore
 /build export-ignore
 /patches export-ignore
+package.json

@@ -1,5 +1,5 @@
 {
-  "name": "silverstripe-rector-rules",
+  "name": "silverstripe-rector",
   "version": "0.0.1",
   "description": "Rector rules for Silverstripe.",
   "author": "Cameron Bryers",
