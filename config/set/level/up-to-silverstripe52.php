@@ -9,5 +9,5 @@ use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
  * @see config/set/silverstripe52.php
  */
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([SilverstripeSetList::SS_5_0, SilverstripeSetList::SS_5_1, SilverstripeSetList::SS_5_2]);
+    $rectorConfig->sets([SilverstripeSetList::SILVERSTRIPE_50, SilverstripeSetList::SILVERSTRIPE_51, SilverstripeSetList::SILVERSTRIPE_52]);
 };

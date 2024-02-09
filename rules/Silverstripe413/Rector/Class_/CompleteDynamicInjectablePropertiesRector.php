@@ -24,7 +24,7 @@ use function array_keys;
 final class CompleteDynamicInjectablePropertiesRector extends AbstractRector
 {
     public function __construct(
-        private readonly SilverstripeAnalyzer $configurableAnaylzer,
+        private readonly SilverstripeAnalyzer $silverstripeAnalyzer,
         private readonly ReflectionProvider $reflectionProvider,
         private readonly ClassAnalyzer $classAnalyzer,
         private readonly MissingPropertiesFactory $missingPropertiesFactory,
@@ -81,7 +81,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $dependencyProperties = $this->configurableAnaylzer->extractPropertyTypesFromDependencies($classConst);
+        $dependencyProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromDependencies($classConst);
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,

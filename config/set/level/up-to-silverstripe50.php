@@ -7,5 +7,5 @@ use SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
 use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([SilverstripeSetList::SS_5_0, SilverstripeLevelSetList::UP_TO_SS_4_13]);
+    $rectorConfig->sets([SilverstripeSetList::SILVERSTRIPE_50, SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_413]);
 };

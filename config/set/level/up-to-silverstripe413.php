@@ -6,5 +6,5 @@ use Rector\Config\RectorConfig;
 use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([SilverstripeSetList::SS_4_13]);
+    $rectorConfig->sets([SilverstripeSetList::SILVERSTRIPE_413]);
 };
