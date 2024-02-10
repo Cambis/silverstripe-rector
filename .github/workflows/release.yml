@@ -25,7 +25,7 @@ jobs:
       - uses: ramsey/composer-install@v2
 
       # Downgrade to PHP 7.4
-      - run: vendor/bin/rector process rules src config --config build/rector-downgrade-php-74.php --ansi
+      - run: vendor/bin/rector process config rules src --config build/rector-downgrade-php-74.php --ansi
 
       # Copy composer
       - run: cp build/composer-php-74.json composer.json
@@ -33,17 +33,18 @@ jobs:
       # Clear the dev files
       - run: |
           rm -rf \
-            tests \
+            .editorconfig \
             .gitattributes \
             .gitignore \
             .github \
             .changeset \
             .husky \
-            ecs.php \
             commitlint.config.js \
             lint-staged.config.js \
-            phpstan.neon.dist \
             phpunit.xml.dist \
+            tests \
+            ecs.php \
+            phpstan.neon.dist \
             rector.php \
             build \
             patches \
@@ -55,7 +56,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       # Publish to the same repository with a new tag
-      - name: "Tag Downgraded Code"
+      - name: Tag downgraded code
         run: |
           git commit -a -m ":package: ci: php-7.4 downgraded ${GITHUB_REF#refs/tags/}"
 

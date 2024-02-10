@@ -1,16 +1,25 @@
-node_modules/
-vendor/
+# OS
 .DS_Store
-composer.lock
-*.js.map
-*.css.map
-yarn-error.log
-yarn.lock
+
+# IDE
+.idea
+.vscode
+
+# Docker
 docker/
 docker-compose.yml
-.phpunit.result.cache
+
+# Silverstripe
 public/
-.vscode/
 app/
+
+# Dependencies
+node_modules/
+vendor/
+composer.lock
+yarn-error.log
+yarn.lock
+
+# Tests
+.phpunit.result.cache
 coverage/
-.idea
