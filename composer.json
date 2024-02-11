@@ -9,8 +9,8 @@
     "require": {
         "php": "^8.3",
         "rector/rector": "^1.0",
-        "silverstripe/cms": "^4.13 || ^5.0",
-        "silverstripe/framework": "^4.13 || ^5.0"
+        "silverstripe/cms": "^4.0 || ^5.0",
+        "silverstripe/framework": "^4.0 || ^5.0"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7",
