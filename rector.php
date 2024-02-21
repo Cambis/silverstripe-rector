@@ -8,31 +8,23 @@ use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->importNames();
-
-    $rectorConfig->paths([
+return RectorConfig::configure()
+    ->withImportNames()
+    ->withPaths([
         __DIR__ . '/rules',
         __DIR__ . '/src',
         __DIR__ . '/tests',
-    ]);
-
-    $rectorConfig->removeUnusedImports();
-
-    $rectorConfig->sets([
+    ])->withSets([
         LevelSetList::UP_TO_PHP_83,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
         SetList::PRIVATIZATION,
-    ]);
-
-    $rectorConfig->skip([
+    ])->withSkip([
         '*/Fixture/*',
         '*/Source/*',
         ClosureToArrowFunctionRector::class,
         // This may cause a downgrade to fail
         AddTypeToConstRector::class,
     ]);
-};
