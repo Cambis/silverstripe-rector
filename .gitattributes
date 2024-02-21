@@ -25,5 +25,9 @@ rector.php export-ignore
 build export-ignore
 patches export-ignore
 
+# Documentation
+CHANGELOG.md
+CONTRIBUTING.md
+
 # Extra
 package.json
