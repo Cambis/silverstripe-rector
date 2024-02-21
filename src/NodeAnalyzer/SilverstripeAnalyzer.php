@@ -29,6 +29,7 @@ use SilverStripe\ORM\FieldType\DBFloat;
 use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ManyManyThroughList;
+use SilverStripe\View\ViewableData;
 use SilverstripeRector\ValueObject\SilverstripeConstants;
 use function array_filter;
 use function array_key_exists;
@@ -254,7 +255,7 @@ final readonly class SilverstripeAnalyzer
     public function extractMethodTypesFromOwners(string $className, bool $isIntersection): array
     {
         /** @var array<class-string> $owners */
-        $owners = ClassInfo::classesWithExtension($className);
+        $owners = ClassInfo::classesWithExtension($className, ViewableData::class);
         $classReflection = $this->reflectionProvider->getClass($className);
 
         if ($owners === []) {

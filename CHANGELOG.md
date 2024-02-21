@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.2.1
+
+### Patch Changes
+
+- Set ViewableData as the base class for checking extensions
+
 ## 0.2.0
 
 ### Minor Changes
