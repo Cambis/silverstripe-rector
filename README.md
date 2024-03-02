@@ -41,9 +41,9 @@ return RectorConfig::configure()
     ]);
 ```
 
-## Autoloading issues 🤖
+## Common issues 😢
 
-You may run into some issues with composer autoloading while running rector. If you do, hopefully you will find one of the following examples useful.
+You may run into some issues while running rector. If you do, hopefully you will find one of the following examples useful.
 
 ### Issue with the Rector autoloader
 
