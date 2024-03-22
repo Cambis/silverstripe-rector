@@ -32,7 +32,7 @@ final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Rename $enabled to $is_enabled.', [new CodeSample(
+        return new RuleDefinition('Rename protected property $enabled to configurable property $is_enabled.', [new CodeSample(
             <<<'CODE_SAMPLE'
 class FooTask extends \SilverStripe\Dev\BuildTask
 {

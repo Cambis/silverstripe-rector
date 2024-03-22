@@ -325,6 +325,21 @@ Remove `getOwner()` method annotation.
 
 <br>
 
+## RenameEnabledToIsEnabledOnBuildTaskRector
+
+Rename protected property `$enabled` to configurable property `$is_enabled`.
+
+- class: [`SilverstripeRector\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector`](../rules/Silverstripe51/Rector/Class_/RenameEnabledToIsEnabledOnBuildTaskRector.php)
+
+```diff
+ class FooTask extends \SilverStripe\Dev\BuildTask
+ {
+-    protected bool $enabled = true;
++    private static bool $is_enabled = true;
+ }
+```
+<br>
+
 ## StaticPropertyFetchToConfigGetRector
 
 Transforms static property fetch into `$this->config->get()`.
