@@ -3,7 +3,7 @@
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Override;
-use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -43,9 +43,9 @@ CODE_SAMPLE
      * @return PhpDocTagValueNode[]
      */
     #[Override]
-    protected function getNewDocTagValueNodes(Node $node): array
+    protected function getNewDocTagValueNodes(Class_ $class): array
     {
-        $className = (string) $this->nodeNameResolver->getName($node);
+        $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
         $ownerProperties = $this->silverstripeAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());

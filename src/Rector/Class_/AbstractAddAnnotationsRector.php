@@ -7,11 +7,18 @@ namespace SilverstripeRector\Rector\Class_;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
+use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\ImplementsTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\Reflection\ReflectionProvider;
-use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
+use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
@@ -21,6 +28,18 @@ use SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 
 abstract class AbstractAddAnnotationsRector extends AbstractRector
 {
+    /**
+     * @var array<class-string<PhpDocTagValueNode>, string>
+     */
+    private const TAGS_TYPES_TO_NAMES = [
+        ExtendsTagValueNode::class => '@extends',
+        MethodTagValueNode::class => '@method',
+        MixinTagValueNode::class => '@mixin',
+        ImplementsTagValueNode::class => '@implements',
+        PropertyTagValueNode::class => '@property',
+        TemplateTagValueNode::class => '@template',
+    ];
+
     public function __construct(
         protected readonly ClassAnalyzer $classAnalyzer,
         protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
@@ -34,7 +53,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<Class_>>
      */
     #[Override]
     final public function getNodeTypes(): array
@@ -71,7 +90,9 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         }
 
         foreach ($newDocTagValueNodes as $newDocTagValueNode) {
-            $this->addDocTagValueNode($phpDocInfo, $newDocTagValueNode);
+            $tagName = $this->resolveNameForPhpDocTagValueNode($newDocTagValueNode);
+            $phpDocTagNode = new PhpDocTagNode($tagName, $newDocTagValueNode);
+            $phpDocInfo->addPhpDocTagNode($phpDocTagNode);
         }
 
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
@@ -79,15 +100,25 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
         return $node;
     }
 
-    protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
+    /**
+     * @throws NotImplementedYetException
+     */
+    protected function resolveNameForPhpDocTagValueNode(PhpDocTagValueNode $phpDocTagValueNode): string
     {
-        $phpDocInfo->addTagValueNode($phpDocTagValueNode);
+        foreach (self::TAGS_TYPES_TO_NAMES as $tagValueNodeType => $name) {
+            /** @var class-string<PhpDocTagValueNode> $tagValueNodeType */
+            if ($phpDocTagValueNode instanceof $tagValueNodeType) {
+                return $name;
+            }
+        }
+
+        throw new NotImplementedYetException('Not yet implemented for ' . $phpDocTagValueNode::class);
     }
 
     /**
      * @return PhpDocTagValueNode[]
      */
-    abstract protected function getNewDocTagValueNodes(Node $node): array;
+    abstract protected function getNewDocTagValueNodes(Class_ $class): array;
 
     abstract protected function shouldSkipClass(Class_ $class): bool;
 }

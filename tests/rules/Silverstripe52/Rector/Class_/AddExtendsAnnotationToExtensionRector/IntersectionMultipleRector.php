@@ -7,7 +7,6 @@ namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnota
 use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
@@ -15,7 +14,6 @@ use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\UnionType;
-use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Extension;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
@@ -75,11 +73,5 @@ final class IntersectionMultipleRector extends AbstractAddAnnotationsToExtension
                 ''
             ),
         ];
-    }
-
-    #[Override]
-    protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
-    {
-        $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@extends', $phpDocTagValueNode));
     }
 }

@@ -3,11 +3,8 @@
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Override;
-use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use SilverStripe\Core\Extensible;
 use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -46,19 +43,13 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
-    protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
-    {
-        $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@mixin', $phpDocTagValueNode));
-    }
-
     /**
      * @return PhpDocTagValueNode[]
      */
     #[Override]
-    protected function getNewDocTagValueNodes(Node $node): array
+    protected function getNewDocTagValueNodes(Class_ $class): array
     {
-        $className = (string) $this->nodeNameResolver->getName($node);
+        $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
         $mixinProperties = $this->silverstripeAnalyzer->extractMixinTypesFromExtensions($classConst);
