@@ -31,10 +31,6 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsRector.php
 
       -
-        message: "#^Class with base .* name is already used in .*. Use unique name to make classes easy to recognize$#"
-        path: tests/rules/*
-
-      -
         message: "#^Class SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
         path: tests/*
       
@@ -44,7 +40,7 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
       -
-        message: "#^Cognitive complexity for \"SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 18, keep it under 15#"
+        message: "#^Cognitive complexity for \"SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
         count: 1
         path: src/PhpDocManipulator/AnnotationUpdater.php
 
@@ -75,3 +71,17 @@ parameters:
 
       # Rector covariant
       - '#Parameter \#1 \$node (.*?) of method SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
+      -
+        message: "#^Method SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractGenericMethodTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
+        count: 1
+        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
+
+      -
+        message: "#^Method SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractMethodUnionTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
+        count: 1
+        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
+
+      -
+        message: "#^Method SilverstripeRector\\\\Rector\\\\Class_\\\\AbstractAddAnnotationsToExtensionRector\\:\\:getAllowedParents\\(\\) return type with generic class SilverStripe\\\\Core\\\\Extension does not specify its types\\: T$#"
+        count: 1
+        path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php

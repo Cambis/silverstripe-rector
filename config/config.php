@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->bootstrapFiles([
-        __DIR__ . '/../bootstrap.php',
+return RectorConfig::configure()
+    ->withSets([
+        SilverstripeSetList::WITH_DEPENDENCY_INJECTION,
+        SilverstripeSetList::WITH_SERVICES,
     ]);
-};

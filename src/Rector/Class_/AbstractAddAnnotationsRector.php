@@ -25,6 +25,7 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 use SilverstripeRector\DocBlock\DocBlockHelper;
 use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
+use SilverstripeRector\NodeResolver\DataRecordResolver;
 
 abstract class AbstractAddAnnotationsRector extends AbstractRector
 {
@@ -42,12 +43,13 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
 
     public function __construct(
         protected readonly ClassAnalyzer $classAnalyzer,
-        protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
+        protected readonly DataRecordResolver $dataRecordResolver,
         protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
         protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
+        protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
         protected readonly StaticTypeMapper $staticTypeMapper
     ) {
     }
@@ -112,7 +114,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
             }
         }
 
-        throw new NotImplementedYetException('Not yet implemented for ' . $phpDocTagValueNode::class);
+        throw new NotImplementedYetException(__METHOD__ . ' not yet implemented for ' . $phpDocTagValueNode::class);
     }
 
     /**

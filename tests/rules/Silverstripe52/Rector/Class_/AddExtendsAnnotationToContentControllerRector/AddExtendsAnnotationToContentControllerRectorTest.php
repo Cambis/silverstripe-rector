@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
+namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector;
 
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class IntersectionMultipleRectorTest extends AbstractRectorTestCase
+final class AddExtendsAnnotationToContentControllerRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
-     * @runInSeparateProcess
      */
     public function test(string $filePath): void
     {
@@ -21,12 +20,12 @@ final class IntersectionMultipleRectorTest extends AbstractRectorTestCase
 
     public static function provideData(): Iterator
     {
-        return self::yieldFilesFromDirectory(__DIR__ . '/FixtureIntersectionMultiple');
+        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
     #[Override]
     public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/config/intersection_multiple.php';
+        return __DIR__ . '/config/configured_rule.php';
     }
 }

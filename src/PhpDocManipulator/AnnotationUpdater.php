@@ -10,6 +10,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\Type\Generic\GenericObjectType;
 use Rector\BetterPhpDocParser\Guard\NewPhpDocFromPHPStanTypeGuard;
@@ -77,6 +78,14 @@ final readonly class AnnotationUpdater
                 $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
             }
 
+            return true;
+        }
+
+        if (
+            $originalNode instanceof TemplateTagValueNode &&
+            $newNode instanceof TemplateTagValueNode &&
+            $this->shouldCheckTemplate($originalNode, $newNode, $node)
+        ) {
             return true;
         }
 
@@ -148,7 +157,7 @@ final readonly class AnnotationUpdater
             return false;
         }
 
-        return $originalType->getClassName() === $originalType->getClassName();
+        return $originalType->getClassName() === $newType->getClassName();
     }
 
     private function shouldUpdateExtends(ExtendsTagValueNode $originalNode, ExtendsTagValueNode $newNode, Node $node): bool
@@ -180,6 +189,20 @@ final readonly class AnnotationUpdater
         return !$this->typeComparator->areTypesEqual(
             $originalType->getTypes()[0],
             $newType->getTypes()[0]
+        );
+    }
+
+    private function shouldCheckTemplate(TemplateTagValueNode $originalNode, TemplateTagValueNode $newNode, Node $node): bool
+    {
+        return $this->typeComparator->areTypesEqual(
+            $this->staticTypeMapper->mapPHPStanPhpDocTypeToPHPStanType(
+                $originalNode,
+                $node
+            ),
+            $this->staticTypeMapper->mapPHPStanPhpDocTypeToPHPStanType(
+                $newNode,
+                $node
+            ),
         );
     }
 }

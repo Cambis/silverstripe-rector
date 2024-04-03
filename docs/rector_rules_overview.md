@@ -1,6 +1,95 @@
-# 18 Rules Overview
+# 20 Rules Overview
 
-## AddBelongsManyManyMethodAnnotationsToDataObjectRector
+<br>
+
+## Categories
+
+- [CodeQuality](#codequality) (3)
+
+- [PHPStan](#phpstan) (1)
+
+- [Silverstripe413](#silverstripe413) (9)
+
+- [Silverstripe51](#silverstripe51) (1)
+
+- [Silverstripe52](#silverstripe52) (6)
+
+<br>
+
+## CodeQuality
+
+### DataObjectGetByIDCachedToUncachedRector
+
+Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
+
+- class: [`SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
+
+```diff
+-$foo = \SilverStripe\Assets\File::get_by_id(1);
++$foo = \SilverStripe\Assets\File::get()->byID(1);
+```
+
+<br>
+
+### InjectableNewInstanceToCreateRector
+
+Change `new Injectable()` to use `Injectable::create()` instead.
+
+- class: [`SilverstripeRector\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector`](../rules/CodeQuality/Rector/New_/InjectableNewInstanceToCreateRector.php)
+
+```diff
+-$foo = new \SilverStripe\ORM\ArrayList();
++$foo = \SilverStripe\ORM\ArrayList::create();
+```
+
+<br>
+
+### StaticPropertyFetchToConfigGetRector
+
+Transforms static property fetch into `$this->config->get()`.
+
+- class: [`SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector`](../rules/CodeQuality/Rector/StaticPropertyFetch/StaticPropertyFetchToConfigGetRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static string $singular_name = 'Foo';
+
+     public function getType(): string
+     {
+-        return self::$singular_name;
++        return $this->config()->get('singular_name');
+     }
+ }
+```
+
+<br>
+
+## PHPStan
+
+### AddConfigAnnotationToConfigurablePropertiesRector
+
+Adds `@config` annotation to configurable properties for PHPStan.
+
+- class: [`SilverstripeRector\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector`](../rules/PHPStan/Rector/Class_/AddConfigAnnotationToConfigurablePropertiesRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
++    /**
++     * @config
++     */
+     private static array $db = [
+         'Bar' => 'Varchar(255)',
+     ];
+ }
+```
+
+<br>
+
+## Silverstripe413
+
+### AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -20,27 +109,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddBelongsManyManyMethodAnnotationsToDataObjectRector
-
-Add missing dynamic annotations.
-
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
-
-```diff
-+/**
-+ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
-+ */
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static array $belongs_many_many = [
-         'Bars' => Bar::class,
-     ];
- }
-```
-
-<br>
-
-## AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector
+### AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -61,27 +130,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddConfigAnnotationToConfigurablePropertiesRector
-
-Adds `@config` annotation to configurable properties for PHPStan.
-
-- class: [`SilverstripeRector\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector`](../rules/PHPStan/Rector/Class_/AddConfigAnnotationToConfigurablePropertiesRector.php)
-
-```diff
- class Foo extends \SilverStripe\ORM\DataObject
- {
-+    /**
-+     * @config
-+     */
-     private static array $db = [
-         'Bar' => 'Varchar(255)',
-     ];
- }
-```
-
-<br>
-
-## AddDBFieldPropertyAnnotationsToDataObjectRector
+### AddDBFieldPropertyAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -101,26 +150,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddExtendsAnnotationToExtensionRector
-
-Add missing dynamic annotations.
-
-:wrench: **configure it!**
-
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
-
-```diff
-+/**
-+ * @extends Extension<(Foo & static)>
-+ */
- class FooExtension extends \SilverStripe\Core\Extension
- {
- }
-```
-
-<br>
-
-## AddExtensionMixinAnnotationsToExtensibleRector
+### AddExtensionMixinAnnotationsToExtensibleRector
 
 Add missing dynamic annotations.
 
@@ -140,7 +170,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddGetOwnerMethodAnnotationToExtensionRector
+### AddGetOwnerMethodAnnotationToExtensionRector
 
 Add missing dynamic annotations.
 
@@ -159,7 +189,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddHasManyMethodAnnotationsToDataObjectRector
+### AddHasManyMethodAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -179,27 +209,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddHasManyMethodAnnotationsToDataObjectRector
-
-Add missing dynamic annotations.
-
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
-
-```diff
-+/**
-+ * @method \SilverStripe\ORM\HasManyList<Bar> Bars()
-+ */
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static array $has_many = [
-         'Bars' => Bar::class,
-     ];
- }
-```
-
-<br>
-
-## AddHasOnePropertyAndMethodAnnotationsToDataObjectRector
+### AddHasOnePropertyAndMethodAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -220,7 +230,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddManyManyMethodAnnotationsToDataObjectRector
+### AddManyManyMethodAnnotationsToDataObjectRector
 
 Add missing dynamic annotations.
 
@@ -240,27 +250,7 @@ Add missing dynamic annotations.
 
 <br>
 
-## AddManyManyMethodAnnotationsToDataObjectRector
-
-Add missing dynamic annotations.
-
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
-
-```diff
-+/**
-+ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
-+ */
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static array $many_many = [
-         'Bars' => Bar::class,
-     ];
- }
-```
-
-<br>
-
-## CompleteDynamicInjectablePropertiesRector
+### CompleteDynamicInjectablePropertiesRector
 
 Add missing dynamic properties.
 
@@ -282,33 +272,139 @@ Add missing dynamic properties.
 
 <br>
 
-## DataObjectGetByIDCachedToUncachedRector
+## Silverstripe51
 
-Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
+### RenameEnabledToIsEnabledOnBuildTaskRector
 
-- class: [`SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
+Rename protected property `$enabled` to configurable property `$is_enabled.`
+
+- class: [`SilverstripeRector\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector`](../rules/Silverstripe51/Rector/Class_/RenameEnabledToIsEnabledOnBuildTaskRector.php)
 
 ```diff
--$foo = \SilverStripe\Assets\File::get_by_id(1);
-+$foo = \SilverStripe\Assets\File::get()->byID(1);
+ class FooTask extends \SilverStripe\Dev\BuildTask
+ {
+-    protected $enabled = true;
++    private static bool $is_enabled = true;
+ }
 ```
 
 <br>
 
-## InjectableNewInstanceToCreateRector
+## Silverstripe52
 
-Change `new Injectable()` to use `Injectable::create()` instead.
+### AddBelongsManyManyMethodAnnotationsToDataObjectRector
 
-- class: [`SilverstripeRector\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector`](../rules/CodeQuality/Rector/New_/InjectableNewInstanceToCreateRector.php)
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
--$foo = new \SilverStripe\ORM\ArrayList();
-+$foo = \SilverStripe\ORM\ArrayList::create();
++/**
++ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $belongs_many_many = [
+         'Bars' => Bar::class,
+     ];
+ }
 ```
 
 <br>
 
-## RemoveGetOwnerMethodAnnotationFromExtensionsRector
+### AddExtendsAnnotationToContentControllerRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToContentControllerRector.php)
+
+```diff
+ class Page extends \SilverStripe\ORM\Model\SiteTree
+ {
+ }
+
++/**
++ * @template T of Page
++ * @extends \SilverStripe\CMS\Controllers\ContentController<T>
++ */
+ class PageController extends \SilverStripe\CMS\Controllers\ContentController
+ {
+ }
+
+ class Homepage extends Page
+ {
+ }
+
++/**
++ * @extends PageController<Homepage>
++ */
+ class HomepageController extends PageController
+ {
+ }
+```
+
+<br>
+
+### AddExtendsAnnotationToExtensionRector
+
+Add missing dynamic annotations.
+
+:wrench: **configure it!**
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
+
+```diff
++/**
++ * @extends Extension<(Foo & static)>
++ */
+ class FooExtension extends \SilverStripe\Core\Extension
+ {
+ }
+```
+
+<br>
+
+### AddHasManyMethodAnnotationsToDataObjectRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
+
+```diff
++/**
++ * @method \SilverStripe\ORM\HasManyList<Bar> Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $has_many = [
+         'Bars' => Bar::class,
+     ];
+ }
+```
+
+<br>
+
+### AddManyManyMethodAnnotationsToDataObjectRector
+
+Add missing dynamic annotations.
+
+- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
+
+```diff
++/**
++ * @method \SilverStripe\ORM\ManyManyList<Bar> Bars()
++ */
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $many_many = [
+         'Bars' => Bar::class,
+     ];
+ }
+```
+
+<br>
+
+### RemoveGetOwnerMethodAnnotationFromExtensionsRector
 
 Remove `getOwner()` method annotation.
 
@@ -320,42 +416,6 @@ Remove `getOwner()` method annotation.
 - */
  class Foo extends \SilverStripe\Core\Extension
  {
- }
-```
-
-<br>
-
-## RenameEnabledToIsEnabledOnBuildTaskRector
-
-Rename protected property `$enabled` to configurable property `$is_enabled`.
-
-- class: [`SilverstripeRector\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector`](../rules/Silverstripe51/Rector/Class_/RenameEnabledToIsEnabledOnBuildTaskRector.php)
-
-```diff
- class FooTask extends \SilverStripe\Dev\BuildTask
- {
--    protected bool $enabled = true;
-+    private static bool $is_enabled = true;
- }
-```
-<br>
-
-## StaticPropertyFetchToConfigGetRector
-
-Transforms static property fetch into `$this->config->get()`.
-
-- class: [`SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector`](../rules/CodeQuality/Rector/StaticPropertyFetch/StaticPropertyFetchToConfigGetRector.php)
-
-```diff
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static string $singular_name = 'Foo';
-
-     public function getType(): string
-     {
--        return self::$singular_name;
-+        return $this->config()->get('singular_name');
-     }
  }
 ```
 

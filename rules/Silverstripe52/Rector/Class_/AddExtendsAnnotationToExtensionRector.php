@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use Override;
@@ -45,7 +47,7 @@ class FooExtension extends \SilverStripe\Core\Extension
 CODE_SAMPLE
             ,
             [
-                self::SET_TYPE_STYLE => self::SET_INTERSECTION,
+                static::SET_TYPE_STYLE => static::SET_INTERSECTION,
             ]
         )]);
     }

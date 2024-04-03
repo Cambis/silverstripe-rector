@@ -51,7 +51,7 @@ If you run into an issue such as 'Class ... was not found while trying to analys
 
 ### Issue with using an "AbstractAddAnnotationsRector" rule
 
-If you run an instance of `AbstractAddAnnotationsRector` outside of its set you will likely receive a 'No config manifests available...' error. In that case you will need to explicitally include the bootstrap file in your configuration.
+If you run an instance of `AbstractAddAnnotationsRector` outside of its set you will likely receive a 'No config manifests available...' error. In that case you will need to explicitally include the bootstrap file in your configuration. You can use the `WITH_DEPENDENCY_INJECTION` and `WITH_SERVICES` sets to accomplish this.
 
 ```php
 <?php
@@ -59,16 +59,17 @@ If you run an instance of `AbstractAddAnnotationsRector` outside of its set you 
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 
 return RectorConfig::configure()
-    ->withBootstrapFiles([
-        // Include the bootstrap file to access the Configuration API
-        __DIR__ . '/vendor/cambis/silverstripe-rector/bootstrap.php'
+    ->withSets([
+        SilverstripeSetList::WITH_DEPENDENCY_INJECTION,
+        SilverstripeSetList::WITH_SERVICES,
     ])
     ->withRules([
-        // This rule will fail without the bootstrap file
-        AddHasManyMethodAnnotationsToDataObjectRector::class
+        // This rule will fail without the afformentioned sets
+        AddHasManyMethodAnnotationsToDataObjectRector::class,
     ]);
 ```
 
