@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
 
 class DB extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
@@ -10,7 +10,7 @@ class DB extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestO
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
 
 /**
  * @property bool $Boolean

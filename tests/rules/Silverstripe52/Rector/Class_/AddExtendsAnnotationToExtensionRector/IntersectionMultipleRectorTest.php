@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
 use Iterator;
 use Override;

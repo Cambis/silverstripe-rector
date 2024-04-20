@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector;
 
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtension;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionShortname;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ExtensionMock;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtension;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionComplete;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionShortname;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ExtensionMock;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractRectorTestCase
 {

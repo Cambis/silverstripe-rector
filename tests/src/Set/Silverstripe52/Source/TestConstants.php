@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Set\Silverstripe52\Source;
+namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source;
 
 final class TestConstants
 {

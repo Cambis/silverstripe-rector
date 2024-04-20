@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture;
 
 class DataExtension extends \SilverStripe\ORM\DataExtension implements \SilverStripe\Dev\TestOnly
 {
@@ -10,7 +10,7 @@ class DataExtension extends \SilverStripe\ORM\DataExtension implements \SilverSt
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture;
 
 /**
  * @extends \SilverStripe\ORM\DataExtension<static>

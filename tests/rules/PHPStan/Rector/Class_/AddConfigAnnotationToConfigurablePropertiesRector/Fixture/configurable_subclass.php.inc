@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
 
 class ConfigurableSubclass extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
@@ -25,7 +25,7 @@ class ConfigurableSubclass extends \SilverStripe\ORM\DataObject implements \Silv
 -----
 <?php
 
-namespace SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
 
 class ConfigurableSubclass extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

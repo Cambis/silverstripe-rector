@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector;
+namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector;
 
 use Iterator;
 use Override;

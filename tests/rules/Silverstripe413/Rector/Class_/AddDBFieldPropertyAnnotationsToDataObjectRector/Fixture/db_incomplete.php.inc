@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
 
 /**
  * @property mixed $Boolean
@@ -25,7 +25,7 @@ class DBIncomplete extends \SilverStripe\ORM\DataObject implements \SilverStripe
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture;
 
 /**
  * @property bool $Boolean

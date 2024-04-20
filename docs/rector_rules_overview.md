@@ -22,7 +22,7 @@
 
 Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
 
-- class: [`SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
+- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
 
 ```diff
 -$foo = \SilverStripe\Assets\File::get_by_id(1);
@@ -35,7 +35,7 @@ Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
 
 Change `new Injectable()` to use `Injectable::create()` instead.
 
-- class: [`SilverstripeRector\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector`](../rules/CodeQuality/Rector/New_/InjectableNewInstanceToCreateRector.php)
+- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector`](../rules/CodeQuality/Rector/New_/InjectableNewInstanceToCreateRector.php)
 
 ```diff
 -$foo = new \SilverStripe\ORM\ArrayList();
@@ -48,7 +48,7 @@ Change `new Injectable()` to use `Injectable::create()` instead.
 
 Transforms static property fetch into `$this->config->get()`.
 
-- class: [`SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector`](../rules/CodeQuality/Rector/StaticPropertyFetch/StaticPropertyFetchToConfigGetRector.php)
+- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector`](../rules/CodeQuality/Rector/StaticPropertyFetch/StaticPropertyFetchToConfigGetRector.php)
 
 ```diff
  class Foo extends \SilverStripe\ORM\DataObject
@@ -71,7 +71,7 @@ Transforms static property fetch into `$this->config->get()`.
 
 Adds `@config` annotation to configurable properties for PHPStan.
 
-- class: [`SilverstripeRector\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector`](../rules/PHPStan/Rector/Class_/AddConfigAnnotationToConfigurablePropertiesRector.php)
+- class: [`Cambis\SilverstripeRector\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector`](../rules/PHPStan/Rector/Class_/AddConfigAnnotationToConfigurablePropertiesRector.php)
 
 ```diff
  class Foo extends \SilverStripe\ORM\DataObject
@@ -93,7 +93,7 @@ Adds `@config` annotation to configurable properties for PHPStan.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -113,7 +113,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -134,7 +134,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddDBFieldPropertyAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddDBFieldPropertyAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -154,7 +154,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector`](../rules/Silverstripe413/Rector/Class_/AddExtensionMixinAnnotationsToExtensibleRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector`](../rules/Silverstripe413/Rector/Class_/AddExtensionMixinAnnotationsToExtensibleRector.php)
 
 ```diff
 +/**
@@ -176,7 +176,7 @@ Add missing dynamic annotations.
 
 :wrench: **configure it!**
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionRector.php)
 
 ```diff
 +/**
@@ -193,7 +193,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -213,7 +213,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddHasOnePropertyAndMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddHasOnePropertyAndMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -234,7 +234,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe413/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -254,7 +254,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic properties.
 
-- class: [`SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector`](../rules/Silverstripe413/Rector/Class_/CompleteDynamicInjectablePropertiesRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector`](../rules/Silverstripe413/Rector/Class_/CompleteDynamicInjectablePropertiesRector.php)
 
 ```diff
  class Foo extends \SilverStripe\ORM\DataObject
@@ -278,7 +278,7 @@ Add missing dynamic properties.
 
 Rename protected property `$enabled` to configurable property `$is_enabled.`
 
-- class: [`SilverstripeRector\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector`](../rules/Silverstripe51/Rector/Class_/RenameEnabledToIsEnabledOnBuildTaskRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector`](../rules/Silverstripe51/Rector/Class_/RenameEnabledToIsEnabledOnBuildTaskRector.php)
 
 ```diff
  class FooTask extends \SilverStripe\Dev\BuildTask
@@ -296,7 +296,7 @@ Rename protected property `$enabled` to configurable property `$is_enabled.`
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -316,7 +316,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToContentControllerRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToContentControllerRector.php)
 
 ```diff
  class Page extends \SilverStripe\ORM\Model\SiteTree
@@ -351,7 +351,7 @@ Add missing dynamic annotations.
 
 :wrench: **configure it!**
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
 
 ```diff
 +/**
@@ -368,7 +368,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -388,7 +388,7 @@ Add missing dynamic annotations.
 
 Add missing dynamic annotations.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector`](../rules/Silverstripe52/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php)
 
 ```diff
 +/**
@@ -408,7 +408,7 @@ Add missing dynamic annotations.
 
 Remove `getOwner()` method annotation.
 
-- class: [`SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector`](../rules/Silverstripe52/Rector/Class_/RemoveGetOwnerMethodAnnotationFromExtensionsRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector`](../rules/Silverstripe52/Rector/Class_/RemoveGetOwnerMethodAnnotationFromExtensionsRector.php)
 
 ```diff
 -/**

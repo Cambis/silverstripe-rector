@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe52\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
@@ -16,12 +17,11 @@ use Rector\Exception\ShouldNotHappenException;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\CMS\Model\SiteTree;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector\AddExtendsAnnotationToContentControllerRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector\AddExtendsAnnotationToContentControllerRectorTest
  */
 final class AddExtendsAnnotationToContentControllerRector extends AbstractAddAnnotationsRector
 {

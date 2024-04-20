@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture\HasOne;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture\HasOne;
-use SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends AbstractRectorTestCase
 {

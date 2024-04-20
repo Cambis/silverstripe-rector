@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Set\Silverstripe52\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture;
 
 /**
  * This a complete file
@@ -19,14 +19,14 @@ namespace SilverstripeRector\Tests\Set\Silverstripe52\Fixture;
  * @property string $Time
  * @property string $Varchar
  * @property int $BelongsToRelationshipID
- * @method \SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock BelongsToRelationship()
+ * @method \Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock BelongsToRelationship()
  * @property int $HasOneRelationshipID
- * @method \SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock HasOneRelationship()
- * @method \SilverStripe\ORM\HasManyList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> HasManyRelationship()
- * @method \SilverStripe\ORM\ManyManyList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> BelongsManyManyRelationship()
- * @method \SilverStripe\ORM\ManyManyList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyRelationship()
- * @method \SilverStripe\ORM\ManyManyThroughList<\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyThroughRelationship()
- * @mixin \SilverstripeRector\Tests\Set\Silverstripe52\Source\ExtensionMock
+ * @method \Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock HasOneRelationship()
+ * @method \SilverStripe\ORM\HasManyList<\Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> HasManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyList<\Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> BelongsManyManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyList<\Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyThroughList<\Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock> ManyManyThroughRelationship()
+ * @mixin \Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\ExtensionMock
  */
 class DataObjectComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

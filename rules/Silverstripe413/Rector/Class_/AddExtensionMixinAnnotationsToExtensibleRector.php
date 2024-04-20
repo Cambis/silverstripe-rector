@@ -1,17 +1,17 @@
 <?php
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\Core\Extensible;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\AddExtensionMixinAnnotationsToExtensibleRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\AddExtensionMixinAnnotationsToExtensibleRectorTest
  */
 final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractAddAnnotationsRector
 {

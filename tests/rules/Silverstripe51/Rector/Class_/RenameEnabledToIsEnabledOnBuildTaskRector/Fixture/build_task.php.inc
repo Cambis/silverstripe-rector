@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\Fixture;
 
 class BuildTask extends \SilverStripe\Dev\BuildTask
 {
@@ -15,7 +15,7 @@ class BuildTask extends \SilverStripe\Dev\BuildTask
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\Fixture;
 
 class BuildTask extends \SilverStripe\Dev\BuildTask
 {

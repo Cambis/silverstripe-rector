@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
 
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwner;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwnerComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Source\OwnerMock;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwner;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Fixture\HasOneOwnerComplete;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\Source\OwnerMock;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends AbstractRectorTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector\Source;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector\Source;
 
 /**
  * @template T of BasePage

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe52\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
@@ -17,13 +18,12 @@ use PHPStan\Type\StaticType;
 use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Extension;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_values;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\AddExtendsAnnotationToExtensionRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\AddExtendsAnnotationToExtensionRectorTest
  */
 final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {

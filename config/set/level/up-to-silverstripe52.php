@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 /**
  * @see config/set/silverstripe52.php

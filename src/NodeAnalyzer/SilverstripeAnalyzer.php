@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\NodeAnalyzer;
+namespace Cambis\SilverstripeRector\NodeAnalyzer;
 
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
@@ -30,7 +31,6 @@ use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\ManyManyThroughList;
 use SilverStripe\View\ViewableData;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 use function array_filter;
 use function array_key_exists;
 use function array_pop;

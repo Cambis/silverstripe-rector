@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockOne;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockTwo;
 use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
@@ -16,15 +19,12 @@ use PHPStan\Type\StaticType;
 use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Extension;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockOne;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockTwo;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @internal
  *
- * {@see \SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector} does not receive the proper owners in this test environment.
+ * {@see \Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector} does not receive the proper owners in this test environment.
  *
  * The intention of this class is to mock the return of the aforementioned class to get some usable types to test.
  */

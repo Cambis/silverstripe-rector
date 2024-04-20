@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\StaticTypeMapper\PhpDocParser;
+namespace Cambis\SilverstripeRector\StaticTypeMapper\PhpDocParser;
 
 use Override;
 use PhpParser\Node;

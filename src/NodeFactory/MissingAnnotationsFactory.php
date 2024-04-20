@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\NodeFactory;
+namespace Cambis\SilverstripeRector\NodeFactory;
 
+use Cambis\SilverstripeRector\PhpDocManipulator\AnnotationUpdater;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
-use SilverstripeRector\PhpDocManipulator\AnnotationUpdater;
 use function array_filter;
 
 final readonly class MissingAnnotationsFactory

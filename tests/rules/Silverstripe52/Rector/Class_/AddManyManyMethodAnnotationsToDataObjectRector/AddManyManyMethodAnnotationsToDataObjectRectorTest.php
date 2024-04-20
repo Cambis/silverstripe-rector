@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
 
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyMany;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThrough;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThroughComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyMany;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyComplete;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThrough;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Fixture\ManyManyThroughComplete;
-use SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class AddManyManyMethodAnnotationsToDataObjectRectorTest extends AbstractRectorTestCase
 {

@@ -32,7 +32,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "SilverstripeRector\\": [
+            "Cambis\\SilverstripeRector\\": [
                 "src/",
                 "rules/"
             ]
@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SilverstripeRector\\Tests\\": [
+            "Cambis\\SilverstripeRector\\Tests\\": [
                 "tests/src/",
                 "tests/rules/"
             ]

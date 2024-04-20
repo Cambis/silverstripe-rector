@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch;
+namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch;
 
 use Override;
 use PhpParser\Node;
@@ -21,7 +21,7 @@ use function is_string;
 use function str_contains;
 
 /**
- * @see \SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\StaticPropertyFetchToConfigGetRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\StaticPropertyFetchToConfigGetRectorTest
  */
 final class StaticPropertyFetchToConfigGetRector extends AbstractRector
 {

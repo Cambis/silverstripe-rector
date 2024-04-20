@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
 
 class DataObject extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
@@ -10,7 +10,7 @@ class DataObject extends \SilverStripe\ORM\DataObject implements \SilverStripe\D
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
 
 /**
  * @property bool $Boolean
@@ -27,14 +27,14 @@ namespace SilverstripeRector\Tests\Set\Silverstripe413\Fixture;
  * @property string $Time
  * @property string $Varchar
  * @property int $BelongsToRelationshipID
- * @method \SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock BelongsToRelationship()
+ * @method \Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock BelongsToRelationship()
  * @property int $HasOneRelationshipID
- * @method \SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock HasOneRelationship()
- * @method \SilverStripe\ORM\HasManyList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] HasManyRelationship()
- * @method \SilverStripe\ORM\ManyManyList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] BelongsManyManyRelationship()
- * @method \SilverStripe\ORM\ManyManyList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyRelationship()
- * @method \SilverStripe\ORM\ManyManyThroughList|\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyThroughRelationship()
- * @mixin \SilverstripeRector\Tests\Set\Silverstripe413\Source\ExtensionMock
+ * @method \Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock HasOneRelationship()
+ * @method \SilverStripe\ORM\HasManyList|\Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] HasManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyList|\Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] BelongsManyManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyList|\Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyRelationship()
+ * @method \SilverStripe\ORM\ManyManyThroughList|\Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\RelationMock[] ManyManyThroughRelationship()
+ * @mixin \Cambis\SilverstripeRector\Tests\Set\Silverstripe413\Source\ExtensionMock
  */
 class DataObject extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

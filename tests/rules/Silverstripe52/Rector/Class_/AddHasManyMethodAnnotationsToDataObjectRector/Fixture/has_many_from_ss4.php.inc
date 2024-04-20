@@ -1,9 +1,9 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture;
 
 /**
- * @method \SilverStripe\ORM\HasManyList|SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] HasManyRelationship()
+ * @method \SilverStripe\ORM\HasManyList|Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock[] HasManyRelationship()
  */
 class HasManyFromSS4 extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
@@ -13,10 +13,10 @@ class HasManyFromSS4 extends \SilverStripe\ORM\DataObject implements \SilverStri
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Fixture;
 
 /**
- * @method \SilverStripe\ORM\HasManyList<\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock> HasManyRelationship()
+ * @method \SilverStripe\ORM\HasManyList<\Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\Source\RelationMock> HasManyRelationship()
  */
 class HasManyFromSS4 extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

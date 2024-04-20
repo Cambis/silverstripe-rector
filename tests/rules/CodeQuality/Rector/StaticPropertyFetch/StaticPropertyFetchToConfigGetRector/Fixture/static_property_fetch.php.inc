@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\Fixture;
 
 class StaticPropertyFetch extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
@@ -26,7 +26,7 @@ class StaticPropertyFetch extends \SilverStripe\ORM\DataObject implements \Silve
 -----
 <?php
 
-namespace SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\Fixture;
 
 class StaticPropertyFetch extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

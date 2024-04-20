@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\Fixture;
 
 class ConfigurableComplete implements \SilverStripe\Dev\TestOnly
 {

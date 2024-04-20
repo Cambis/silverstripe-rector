@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\ORM\HasManyList;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\AddHasManyMethodAnnotationsToDataObjectRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector\AddHasManyMethodAnnotationsToDataObjectRectorTest
  */
 final class AddHasManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe51\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe51\Rector\Class_;
 
 use Override;
 use PhpParser\Node;
@@ -18,7 +18,7 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\RenameEnabledToIsEnabledOnBuildTaskRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\RenameEnabledToIsEnabledOnBuildTaskRectorTest
  * @changelog https://docs.silverstripe.org/en/5/changelogs/5.1.0/#api-changes-framework
  */
 final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector

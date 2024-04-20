@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe52\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -17,12 +18,11 @@ use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Rector\Rector\AbstractRector;
 use SilverStripe\Core\Extension;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector\RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest
  */
 final class RemoveGetOwnerMethodAnnotationFromExtensionsRector extends AbstractRector
 {

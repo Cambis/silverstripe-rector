@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\CodeQuality\Rector\StaticCall;
+namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall;
 
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Rector\AbstractRector;
 use SilverStripe\ORM\DataObject;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
@@ -18,7 +18,7 @@ use function is_string;
 
 /**
  * @changelog https://github.com/silverstripe/silverstripe-framework/issues/5976
- * @see \SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector\DataObjectGetByIDCachedToUncachedRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector\DataObjectGetByIDCachedToUncachedRectorTest
  */
 final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector
 {

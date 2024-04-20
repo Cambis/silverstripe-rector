@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\CodeQuality\Rector\New_;
+namespace Cambis\SilverstripeRector\CodeQuality\Rector\New_;
 
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
@@ -12,12 +13,11 @@ use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\ValueObject\MethodName;
 use SilverStripe\Core\Injector\Injectable;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\InjectableNewInstanceToCreateRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\InjectableNewInstanceToCreateRectorTest
  */
 final class InjectableNewInstanceToCreateRector extends AbstractRector
 {

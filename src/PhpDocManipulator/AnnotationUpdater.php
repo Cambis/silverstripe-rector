@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\PhpDocManipulator;
+namespace Cambis\SilverstripeRector\PhpDocManipulator;
 
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;

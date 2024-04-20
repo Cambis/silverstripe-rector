@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\PHPStan\Rector\Class_;
+namespace Cambis\SilverstripeRector\PHPStan\Rector\Class_;
 
 use Override;
 use PhpParser\Node;
@@ -20,7 +20,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @changelog https://github.com/syntro-opensource/silverstripe-phpstan#known-limitations--gotchas
- * @see \SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\AddConfigAnnotationToConfigurablePropertiesRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector\AddConfigAnnotationToConfigurablePropertiesRectorTest
  */
 final class AddConfigAnnotationToConfigurablePropertiesRector extends AbstractRector
 {

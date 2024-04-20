@@ -1,11 +1,11 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture;
 
 class InjectableComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
     /**
-     * @var \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock
+     * @var \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock
      */
     public $dependency;
     /**

@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Rector\Class_;
+namespace Cambis\SilverstripeRector\Rector\Class_;
 
+use Cambis\SilverstripeRector\DocBlock\DocBlockHelper;
+use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
+use Cambis\SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
+use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -22,10 +26,6 @@ use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
-use SilverstripeRector\DocBlock\DocBlockHelper;
-use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
-use SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
-use SilverstripeRector\NodeResolver\DataRecordResolver;
 
 abstract class AbstractAddAnnotationsRector extends AbstractRector
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Rector\Class_;
+namespace Cambis\SilverstripeRector\Rector\Class_;
 
 use Override;
 use PhpParser\Node\Stmt\Class_;

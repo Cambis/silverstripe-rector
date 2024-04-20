@@ -1,7 +1,8 @@
 <?php
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -14,13 +15,12 @@ use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
 use Rector\Rector\AbstractRector;
 use SilverStripe\Core\Injector\Injectable;
-use SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_keys;
 
 /**
- * @see SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
+ * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
 final class CompleteDynamicInjectablePropertiesRector extends AbstractRector
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture;
 
 /**
  * @property int $HasOneRelationshipID
- * @method \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock HasOneRelationship()
+ * @method \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock HasOneRelationship()
  */
 class HasOneComplete extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {

@@ -16,7 +16,7 @@
   "prefer-stable": true,
   "autoload": {
       "psr-4": {
-          "SilverstripeRector\\": [
+          "Cambis\\SilverstripeRector\\": [
               "src/",
               "rules/"
           ]

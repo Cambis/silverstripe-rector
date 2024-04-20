@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Set\ValueObject;
+namespace Cambis\SilverstripeRector\Set\ValueObject;
 
 use Rector\Set\Contract\SetListInterface;
 

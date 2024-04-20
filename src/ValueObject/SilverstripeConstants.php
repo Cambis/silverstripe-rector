@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\ValueObject;
+namespace Cambis\SilverstripeRector\ValueObject;
 
 final class SilverstripeConstants
 {

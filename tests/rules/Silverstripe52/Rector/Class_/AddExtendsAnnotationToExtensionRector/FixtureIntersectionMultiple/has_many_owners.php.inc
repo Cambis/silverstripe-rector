@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\FixtureIntersectionMultiple;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\FixtureIntersectionMultiple;
 
 class HasManyOwners extends \SilverStripe\Core\Extension implements \SilverStripe\Dev\TestOnly
 {
@@ -10,10 +10,10 @@ class HasManyOwners extends \SilverStripe\Core\Extension implements \SilverStrip
 -----
 <?php
 
-namespace SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\FixtureIntersectionMultiple;
+namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\FixtureIntersectionMultiple;
 
 /**
- * @extends \SilverStripe\Core\Extension<((\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockOne & static) | (\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockTwo & static))>
+ * @extends \SilverStripe\Core\Extension<((\Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockOne & static) | (\Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Source\OwnerMockTwo & static))>
  */
 class HasManyOwners extends \SilverStripe\Core\Extension implements \SilverStripe\Dev\TestOnly
 {

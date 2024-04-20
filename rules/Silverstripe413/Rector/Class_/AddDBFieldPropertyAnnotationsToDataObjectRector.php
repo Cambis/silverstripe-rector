@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Silverstripe413\Rector\Class_;
+namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * @see \SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\AddDBFieldPropertyAnnotationsToDataObjectRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\AddDBFieldPropertyAnnotationsToDataObjectRectorTest
  */
 final class AddDBFieldPropertyAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {

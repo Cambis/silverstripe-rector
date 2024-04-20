@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace SilverstripeRector\Tests\Set\Silverstripe52;
+namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe52;
 
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataExtension;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataExtensionFromSS413;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObject;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObjectComplete;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObjectFromSS413;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\ExtensionMock;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock;
+use Cambis\SilverstripeRector\Tests\Set\Silverstripe52\Source\TestConstants;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
-use SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataExtension;
-use SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataExtensionFromSS413;
-use SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObject;
-use SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObjectComplete;
-use SilverstripeRector\Tests\Set\Silverstripe52\Fixture\DataObjectFromSS413;
-use SilverstripeRector\Tests\Set\Silverstripe52\Source\ExtensionMock;
-use SilverstripeRector\Tests\Set\Silverstripe52\Source\RelationMock;
-use SilverstripeRector\Tests\Set\Silverstripe52\Source\TestConstants;
-use SilverstripeRector\ValueObject\SilverstripeConstants;
 
 final class Silverstripe52Test extends AbstractRectorTestCase
 {

@@ -31,8 +31,8 @@ Use the `SilverstripeLevelSetList` and `SilverstripeSetList` sets and pick one o
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
-use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 
 return RectorConfig::configure()
     ->withSets([
@@ -59,8 +59,8 @@ If you run an instance of `AbstractAddAnnotationsRector` outside of its set you 
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
+use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 
 return RectorConfig::configure()
     ->withSets([
@@ -137,7 +137,7 @@ Finally, include the custom bootstrap file in your configuration:
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
 
 return RectorConfig::configure()
     ->withBootstrapFiles([

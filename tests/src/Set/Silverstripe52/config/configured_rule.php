@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
 use Rector\Config\RectorConfig;
-use SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
