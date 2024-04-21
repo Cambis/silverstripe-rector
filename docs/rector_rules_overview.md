@@ -1,12 +1,10 @@
-# 20 Rules Overview
+# 19 Rules Overview
 
 <br>
 
 ## Categories
 
 - [CodeQuality](#codequality) (3)
-
-- [PHPStan](#phpstan) (1)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -60,28 +58,6 @@ Transforms static property fetch into `$this->config->get()`.
 -        return self::$singular_name;
 +        return $this->config()->get('singular_name');
      }
- }
-```
-
-<br>
-
-## PHPStan
-
-### AddConfigAnnotationToConfigurablePropertiesRector
-
-Adds `@config` annotation to configurable properties for PHPStan.
-
-- class: [`Cambis\SilverstripeRector\PHPStan\Rector\Class_\AddConfigAnnotationToConfigurablePropertiesRector`](../rules/PHPStan/Rector/Class_/AddConfigAnnotationToConfigurablePropertiesRector.php)
-
-```diff
- class Foo extends \SilverStripe\ORM\DataObject
- {
-+    /**
-+     * @config
-+     */
-     private static array $db = [
-         'Bar' => 'Varchar(255)',
-     ];
  }
 ```
 
