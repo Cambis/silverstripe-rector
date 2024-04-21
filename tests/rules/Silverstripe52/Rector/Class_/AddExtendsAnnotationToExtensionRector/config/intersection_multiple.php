@@ -7,5 +7,5 @@ use Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnot
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
-    ->withSets([SilverstripeSetList::WITH_SERVICES])
+    ->withSets([SilverstripeSetList::WITH_RECTOR_SERVICES])
     ->withRules([IntersectionMultipleRector::class]);

@@ -3,6 +3,7 @@
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
+use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -13,7 +14,6 @@ use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
-use Rector\Rector\AbstractRector;
 use SilverStripe\Core\Injector\Injectable;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -22,7 +22,7 @@ use function array_keys;
 /**
  * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
-final class CompleteDynamicInjectablePropertiesRector extends AbstractRector
+final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector
 {
     public function __construct(
         private readonly SilverstripeAnalyzer $silverstripeAnalyzer,
@@ -76,7 +76,7 @@ CODE_SAMPLE
      * @param Class_ $node
      */
     #[Override]
-    public function refactor(Node $node): ?Node
+    public function refactorAPIAwareNode(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;

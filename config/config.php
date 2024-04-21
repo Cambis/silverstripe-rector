@@ -7,6 +7,6 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withSets([
-        SilverstripeSetList::WITH_DEPENDENCY_INJECTION,
-        SilverstripeSetList::WITH_SERVICES,
+        SilverstripeSetList::WITH_SILVERSTRIPE_API,
+        SilverstripeSetList::WITH_RECTOR_SERVICES,
     ]);

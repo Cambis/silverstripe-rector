@@ -21,10 +21,10 @@ final class SilverstripeSetList implements SetListInterface
     /**
      * Provides access to the Injector and Configuration APIs.
      */
-    public const WITH_DEPENDENCY_INJECTION = __DIR__ . '/../../../config/dependency-injection.php';
+    public const WITH_SILVERSTRIPE_API = __DIR__ . '/../../../config/silverstripe-api.php';
 
     /**
-     * Provides all the services that are required in order to run all the rules.
+     * Provides all the custom services that are required in order to run all the rules.
      */
-    public const WITH_SERVICES = __DIR__ . '/../../../config/services.php';
+    public const WITH_RECTOR_SERVICES = __DIR__ . '/../../../config/rector-services.php';
 }

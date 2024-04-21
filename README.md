@@ -30,9 +30,9 @@ Use the `SilverstripeLevelSetList` and `SilverstripeSetList` sets and pick one o
 
 declare(strict_types=1);
 
-use Rector\Config\RectorConfig;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
+use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withSets([
@@ -49,33 +49,30 @@ You may run into some issues while running rector. If you do, hopefully you will
 
 If you run into an issue such as 'Class ... was not found while trying to analyse it...', see the [official docs](https://getrector.com/documentation/static-reflection-and-autoload).
 
-### Issue with using an "AbstractAddAnnotationsRector" rule
+### Issue with the Silverstripe autoloader
 
-If you run an instance of `AbstractAddAnnotationsRector` outside of its set you will likely receive a 'No config manifests available...' error. In that case you will need to explicitally include the bootstrap file in your configuration. You can use the `WITH_DEPENDENCY_INJECTION` and `WITH_SERVICES` sets to accomplish this.
+If you receive an error such as 'System error: "Interface App\Contract\FooInterface was not found", the common cause if that you have imported the affected class incorrectly somewhere in your code. The following example illustrates this case. 
 
 ```php
 <?php
 
-declare(strict_types=1);
+namespace App\Contract;
 
-use Rector\Config\RectorConfig;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
+interface FooInterface
+{
+}
 
-return RectorConfig::configure()
-    ->withSets([
-        SilverstripeSetList::WITH_DEPENDENCY_INJECTION,
-        SilverstripeSetList::WITH_SERVICES,
-    ])
-    ->withRules([
-        // This rule will fail without the afformentioned sets
-        AddHasManyMethodAnnotationsToDataObjectRector::class,
-    ]);
+namespace App\Model;
+
+use App\Contract\Foointerface; // <--- The casing for this use statement is wrong and will likely cause an error.
+use SilverStripe\ORM\DataObject;
+
+class Foo extends DataObject implements Foointerface
+{
+}
 ```
 
-### Issue with the Silverstripe autoloader
-
-If you receive an error such as 'System error: "Interface App\MyInterface was not found"' you can resolve this by including the affected file during the bootstrapping process.
+If the problem persists you can attempt resolve it by including the affected file during the bootstrapping process.
 
 First copy the existing bootstrap file:
 
@@ -90,14 +87,14 @@ Then modifiy the file as so:
 
 declare(strict_types=1);
 
-+use App\MyInterface
++use App\Contract\FooInterface
 use SilverStripe\Core\DatabaselessKernel;
 use SilverStripe\ORM\Connect\NullDatabase;
 use SilverStripe\ORM\DB;
 
 +// Include any 'missing' files here using the following format:
-+if (!class_exists(MyInterface::class)) {
-+    require_once __DIR__ . '/app/src/MyInterface.php';
++if (!class_exists(FooInterface::class)) {
++    require_once __DIR__ . '/app/src/Contract/FooInterface.php';
 +}
 
 -// Add Page/PageController stubs which may be required
@@ -136,8 +133,8 @@ Finally, include the custom bootstrap file in your configuration:
 
 declare(strict_types=1);
 
-use Rector\Config\RectorConfig;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
+use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withBootstrapFiles([

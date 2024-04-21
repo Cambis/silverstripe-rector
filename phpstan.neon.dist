@@ -31,7 +31,7 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsRector.php
 
       -
-        message: "#^Class Cambis\\SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
+        message: "#^Class Cambis\\\\SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
         path: tests/*
       
       -
@@ -40,7 +40,7 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
       -
-        message: "#^Cognitive complexity for \"Cambis\\SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
+        message: "#^Cognitive complexity for \"Cambis\\\\SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
         count: 1
         path: src/PhpDocManipulator/AnnotationUpdater.php
 
@@ -50,38 +50,60 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
       -
-        message: "#^Class \"Cambis\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionMultipleRector\" is missing @see annotation with test case class reference$#"
+        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionMultipleRector\" is missing @see annotation with test case class reference$#"
         count: 1
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionMultipleRector.php
 
       -
-        message: "#^Class \"Cambis\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionRector\" is missing @see annotation with test case class reference$#"
+        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionRector\" is missing @see annotation with test case class reference$#"
         count: 1
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionRector.php
 
       -
-        message: "#^Class \"Cambis\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionMultipleRector\" is missing @see annotation with test case class reference$#"
+        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionMultipleRector\" is missing @see annotation with test case class reference$#"
         count: 1
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionMultipleRector.php
 
       -
-        message: "#^Class \"Cambis\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionRector\" is missing @see annotation with test case class reference$#"
+        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionRector\" is missing @see annotation with test case class reference$#"
         count: 1
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionRector.php
 
-      # Rector covariant
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
+      
       -
-        message: "#^Method Cambis\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractGenericMethodTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
+        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractGenericMethodTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
         count: 1
         path: src/NodeAnalyzer/SilverstripeAnalyzer.php
 
       -
-        message: "#^Method Cambis\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractMethodUnionTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
+        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractMethodUnionTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
         count: 1
         path: src/NodeAnalyzer/SilverstripeAnalyzer.php
 
       -
-        message: "#^Method Cambis\\SilverstripeRector\\\\Rector\\\\Class_\\\\AbstractAddAnnotationsToExtensionRector\\:\\:getAllowedParents\\(\\) return type with generic class SilverStripe\\\\Core\\\\Extension does not specify its types\\: T$#"
+        message: "#^Method Cambis\\\\SilverstripeRector\\\\Rector\\\\Class_\\\\AbstractAddAnnotationsToExtensionRector\\:\\:getAllowedParents\\(\\) return type with generic class SilverStripe\\\\Core\\\\Extension does not specify its types\\: T$#"
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
+      
+      -
+        message: "#^Class with base \"AddBelongsManyManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
+        count: 1
+        path: rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php
+
+      -
+        message: "#^Class with base \"AddHasManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddHasManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddHasManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
+        count: 1
+        path: rules/Silverstripe413/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php
+
+      -
+        message: "#^Class with base \"AddManyManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
+        count: 1
+        path: rules/Silverstripe413/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php
+
+      - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:refactorAPIAwareNode\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Cambis\\SilverstripeRector\\Contract\\Rector\\APIAwareRectorInterface\:\:refactorAPIAwareNode\(\)#'
+
+      -
+        message: "#^Class with base \"AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\", \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\"\\. Use unique name to make classes easy to recognize$#"
+        count: 1
+        path: tests/rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector/AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest.php

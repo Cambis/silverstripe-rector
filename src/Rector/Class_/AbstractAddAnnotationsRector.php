@@ -8,6 +8,7 @@ use Cambis\SilverstripeRector\DocBlock\DocBlockHelper;
 use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Cambis\SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
+use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -24,10 +25,9 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
-use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-abstract class AbstractAddAnnotationsRector extends AbstractRector
+abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
 {
     /**
      * @var array<class-string<PhpDocTagValueNode>, string>
@@ -67,7 +67,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector
      * @param Class_ $node
      */
     #[Override]
-    public function refactor(Node $node): ?Node
+    public function refactorAPIAwareNode(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
