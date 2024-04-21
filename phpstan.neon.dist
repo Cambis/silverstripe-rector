@@ -86,29 +86,11 @@ parameters:
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
       
-      -
-        message: "#^Class with base \"AddBelongsManyManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
-        count: 1
-        path: rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector.php
-
-      -
-        message: "#^Class with base \"AddHasManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddHasManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddHasManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
-        count: 1
-        path: rules/Silverstripe413/Rector/Class_/AddHasManyMethodAnnotationsToDataObjectRector.php
-
-      -
-        message: "#^Class with base \"AddManyManyMethodAnnotationsToDataObjectRectorTest\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\\\\AddManyManyMethodAnnotationsToDataObjectRectorTest\", \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\\\\AddManyManyMethodAnnotationsToDataObjectRectorTest\"\\. Use unique name to make classes easy to recognize$#"
-        count: 1
-        path: tests/rules/Silverstripe413/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector/AddManyManyMethodAnnotationsToDataObjectRectorTest.php
-
-      -
-        message: "#^Class with base \"AddManyManyMethodAnnotationsToDataObjectRector\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\", \"Cambis\\\\SilverstripeRector\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddManyManyMethodAnnotationsToDataObjectRector\"\\. Use unique name to make classes easy to recognize$#"
-        count: 1
-        path: rules/Silverstripe413/Rector/Class_/AddManyManyMethodAnnotationsToDataObjectRector.php
-
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:refactorAPIAwareNode\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Cambis\\SilverstripeRector\\Contract\\Rector\\APIAwareRectorInterface\:\:refactorAPIAwareNode\(\)#'
 
+      # Names are duplicated for some rules
       -
-        message: "#^Class with base \"AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\" name is already used in \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\", \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe413\\\\Rector\\\\Class_\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRector\\\\AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest\"\\. Use unique name to make classes easy to recognize$#"
-        count: 1
-        path: tests/rules/Silverstripe413/Rector/Class_/AddBelongsManyManyMethodAnnotationsToDataObjectRector/AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest.php
+        message: '#Use unique name to make classes easy to recognize#'
+        paths:
+          - rules/*
+          - tests/rules/*
