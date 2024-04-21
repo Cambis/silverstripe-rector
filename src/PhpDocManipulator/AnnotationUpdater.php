@@ -187,8 +187,8 @@ final readonly class AnnotationUpdater
         }
 
         return !$this->typeComparator->areTypesEqual(
-            $originalType->getTypes()[0],
-            $newType->getTypes()[0]
+            $originalType,
+            $newType
         );
     }
 
