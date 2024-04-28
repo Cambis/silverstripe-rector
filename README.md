@@ -17,7 +17,6 @@ silverstripe/cms ^4.0 || ^5.0
 Install via composer.
 
 ```sh
-composer require --dev rector/rector
 composer require --dev cambis/silverstripe-rector
 ```
 
@@ -35,6 +34,11 @@ use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
+    ->withPaths([
+        __DIR__ . '/app/_config.php',
+        __DIR__ . '/app/src',
+        __DIR__ . '/app/tests',
+    ])
     ->withSets([
         SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_52,
         SilverstripeSetList::CODE_QUALITY,
@@ -140,6 +144,11 @@ return RectorConfig::configure()
     ->withBootstrapFiles([
         // Include the custom bootstrap file here
         __DIR__ . '/rector-bootstrap.php',
+    ])
+    ->withPaths([
+        __DIR__ . '/app/_config.php',
+        __DIR__ . '/app/src',
+        __DIR__ . '/app/tests',
     ])
     ->withSets([
         SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_52,
