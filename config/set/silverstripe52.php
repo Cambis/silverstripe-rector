@@ -8,6 +8,7 @@ use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddExtensionMixinAnn
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector;
+use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
@@ -29,5 +30,6 @@ return static function (RectorConfig $rectorConfig): void {
         AddExtendsAnnotationToExtensionRector::class,
         AddExtensionMixinAnnotationsToExtensibleRector::class,
         CompleteDynamicInjectablePropertiesRector::class,
+        AddExtendsAnnotationToContentControllerRector::class,
     ]);
 };
