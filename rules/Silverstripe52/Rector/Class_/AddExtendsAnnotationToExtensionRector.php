@@ -2,7 +2,6 @@
 
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
-use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -27,7 +26,6 @@ use function array_values;
  */
 final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new ConfiguredCodeSample(
@@ -55,7 +53,6 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
@@ -65,7 +62,6 @@ CODE_SAMPLE
         $extensionClassConst = ($parentClass instanceof ClassReflection) ? $parentClass->getName() : Extension::class;
         $originalType = array_values($this->silverstripeAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection()))[0];
         $genericTypes = [];
-
         if ($originalType instanceof StaticType) {
             $genericTypes[] = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($originalType);
         } elseif ($originalType instanceof IntersectionType) {
@@ -91,16 +87,13 @@ CODE_SAMPLE
 
             $genericTypes[] = new UnionTypeNode($types);
         }
-
         if ($genericTypes === []) {
             return [];
         }
-
         $genericTypeNode = new GenericTypeNode(
             $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode(new FullyQualifiedObjectType($extensionClassConst)), // @phpstan-ignore-line
             $genericTypes
         );
-
         return [
             new ExtendsTagValueNode(
                 $genericTypeNode,
@@ -109,7 +102,6 @@ CODE_SAMPLE
         ];
     }
 
-    #[Override]
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@extends', $phpDocTagValueNode));

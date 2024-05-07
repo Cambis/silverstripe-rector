@@ -2,7 +2,6 @@
 
 namespace SilverstripeRector\PHPStan\Rector\Class_;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\GenericTagValueNode;
@@ -24,17 +23,32 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddConfigAnnotationToConfigurablePropertiesRector extends AbstractRector
 {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private ClassAnalyzer $classAnalyzer;
+    /**
+     * @readonly
+     */
+    private PhpDocInfoFactory $phpDocInfoFactory;
+    /**
+     * @readonly
+     */
+    private DocBlockUpdater $docBlockUpdater;
     private bool $hasChanged = false;
 
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly ClassAnalyzer $classAnalyzer,
-        private readonly PhpDocInfoFactory $phpDocInfoFactory,
-        private readonly DocBlockUpdater $docBlockUpdater,
-    ) {
+    public function __construct(ReflectionProvider $reflectionProvider, ClassAnalyzer $classAnalyzer, PhpDocInfoFactory $phpDocInfoFactory, DocBlockUpdater $docBlockUpdater)
+    {
+        $this->reflectionProvider = $reflectionProvider;
+        $this->classAnalyzer = $classAnalyzer;
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
+        $this->docBlockUpdater = $docBlockUpdater;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
@@ -68,7 +82,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -77,13 +90,11 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
         }
-
         foreach ($node->getProperties() as $property) {
             if (!$property->isPrivate()) {
                 continue;
@@ -106,7 +117,6 @@ CODE_SAMPLE
             $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($property);
             $this->hasChanged = true;
         }
-
         return $this->hasChanged ? $node : null;
     }
 
