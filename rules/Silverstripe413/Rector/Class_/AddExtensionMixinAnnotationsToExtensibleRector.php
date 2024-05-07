@@ -2,7 +2,6 @@
 
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -18,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractAddAnnotationsRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -46,7 +44,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     protected function addDocTagValueNode(PhpDocInfo $phpDocInfo, PhpDocTagValueNode $phpDocTagValueNode): void
     {
         $phpDocInfo->addPhpDocTagNode(new PhpDocTagNode('@mixin', $phpDocTagValueNode));
@@ -55,40 +52,30 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
         $mixinProperties = $this->silverstripeAnalyzer->extractMixinTypesFromExtensions($classConst);
-
-        return [
-            ...$this->docBlockHelper->convertTypesToMixinTagValueNodes(
-                $mixinProperties
-            ),
-        ];
+        return array_merge($this->docBlockHelper->convertTypesToMixinTagValueNodes(
+            $mixinProperties
+        ));
     }
 
-    #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {
             return true;
         }
-
         $className = $this->nodeNameResolver->getName($class);
-
         if ($className === null) {
             return true;
         }
-
         if (!$this->reflectionProvider->hasClass($className)) {
             return true;
         }
-
         $classReflection = $this->reflectionProvider->getClass($className);
-
         return !$classReflection->hasTraitUse(Extensible::class);
     }
 }

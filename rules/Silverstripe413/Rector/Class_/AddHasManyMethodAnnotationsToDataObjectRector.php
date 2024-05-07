@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Silverstripe413\Rector\Class_;
 
-use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\ORM\HasManyList;
@@ -18,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddHasManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -49,19 +47,16 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
         $hasManyMethods = $this->silverstripeAnalyzer->extractMethodUnionTypesFromManyRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_MANY,
             HasManyList::class
         );
-
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $hasManyMethods
         );

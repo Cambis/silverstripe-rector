@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SilverstripeRector\Silverstripe52\Rector\Class_;
 
-use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\ORM\ManyManyList;
@@ -18,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddBelongsManyManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -49,19 +47,16 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Node $node): array
     {
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
         $belongsManyManyMethods = $this->silverstripeAnalyzer->extractGenericMethodTypesFromManyRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY,
             ManyManyList::class
         );
-
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $belongsManyManyMethods
         );
