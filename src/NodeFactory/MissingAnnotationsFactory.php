@@ -12,13 +12,16 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use function array_filter;
 
-final readonly class MissingAnnotationsFactory
+final class MissingAnnotationsFactory
 {
-    public function __construct(
-        private AnnotationUpdater $annotationUpdater,
-    ) {
+    /**
+     * @readonly
+     */
+    private AnnotationUpdater $annotationUpdater;
+    public function __construct(AnnotationUpdater $annotationUpdater)
+    {
+        $this->annotationUpdater = $annotationUpdater;
     }
-
     /**
      * @param PhpDocTagValueNode[] $newDocTagValueNodes
      * @return PhpDocTagValueNode[]
