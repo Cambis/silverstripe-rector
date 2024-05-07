@@ -42,10 +42,13 @@ use function is_array;
 use function is_bool;
 use function is_numeric;
 use function is_string;
-use function str_contains;
 
-final readonly class SilverstripeAnalyzer
+final class SilverstripeAnalyzer
 {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
     /**
      * @var array<class-string<DBField>, class-string<Type>>
      */
@@ -56,9 +59,9 @@ final readonly class SilverstripeAnalyzer
         DBInt::class => IntegerType::class,
     ];
 
-    public function __construct(
-        private ReflectionProvider $reflectionProvider
-    ) {
+    public function __construct(ReflectionProvider $reflectionProvider)
+    {
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     /**
@@ -305,8 +308,9 @@ final readonly class SilverstripeAnalyzer
      * @template T
      * @param class-string<T> $className
      * @return T
+     * @param mixed $argument
      */
-    private function make(string $className, mixed $argument = null)
+    private function make(string $className, $argument = null)
     {
         return Injector::inst()->create($className, $argument);
     }
@@ -326,7 +330,7 @@ final readonly class SilverstripeAnalyzer
 
         $name = $fieldType;
 
-        if (str_contains($fieldType, '%$')) {
+        if (strpos($fieldType, '%$') !== false) {
             $name = $this->resolvePrefixNotation($fieldType);
         }
 
@@ -344,7 +348,7 @@ final readonly class SilverstripeAnalyzer
     {
         /** @var DBField $field */
         $field = $this->make($fieldType, 'Temp');
-        $classReflection = $this->reflectionProvider->getClass($field::class);
+        $classReflection = $this->reflectionProvider->getClass(get_class($field));
 
         foreach (self::DBFIELD_TO_TYPE_MAPPING as $dbClass => $type) {
             if (!$this->reflectionProvider->hasClass($dbClass)) {
