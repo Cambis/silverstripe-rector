@@ -45,7 +45,7 @@ return RectorConfig::configure()
     ]);
 ```
 
-## Common issues 😢
+## Troubleshooting 😢
 
 You may run into some issues while running rector. If you do, hopefully you will find one of the following examples useful.
 
