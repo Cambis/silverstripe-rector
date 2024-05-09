@@ -20,9 +20,21 @@ Install via composer.
 composer require --dev cambis/silverstripe-rector
 ```
 
+Rebuild your application.
+
+```sh
+vendor/bin/sake dev/build "flush=1"
+```
+
 ## Configuration 🚧
 
-Use the `SilverstripeLevelSetList` and `SilverstripeSetList` sets and pick one of the constants.
+If you do not have an existing `rector.php` file, run the following command and Rector will create one for you.
+
+```sh
+vendor/bin/rector
+```
+
+Then use the `SilverstripeLevelSetList` and `SilverstripeSetList` sets and pick one of the constants.
 
 ```php
 <?php
@@ -45,6 +57,22 @@ return RectorConfig::configure()
     ]);
 ```
 
+## Usage 🏃
+
+Analyse your code with Rector and review the suggested changes.
+
+```sh
+vendor/bin/rector process --dry-run
+```
+
+Apply the suggested changes after they have been reviewed.
+
+```sh
+vendor/bin/rector process
+```
+
+For more information on usage, please refer to the [official docs](https://getrector.com/documentation).
+
 ## Troubleshooting 😢
 
 You may run into some issues while running rector. If you do, hopefully you will find one of the following examples useful.
@@ -55,7 +83,13 @@ If you run into an issue such as 'Class ... was not found while trying to analys
 
 ### Issue with the Silverstripe autoloader
 
-If you receive an error such as 'System error: "Interface App\Contract\FooInterface was not found", the common cause if that you have imported the affected class incorrectly somewhere in your code. The following example illustrates this case. 
+If you receive an error such as 'System error: "Interface App\Contract\FooInterface was not found"', try rebuilding your application first before running Rector again.
+
+```sh
+vendor/bin/sake dev/build "flush=1"
+```
+
+If the problem still persists, check if you have imported the affected class incorrectly somewhere in your code. The following example illustrates this case. 
 
 ```php
 <?php
@@ -76,7 +110,9 @@ class Foo extends DataObject implements Foointerface
 }
 ```
 
-If the problem persists you can attempt resolve it by including the affected file during the bootstrapping process.
+Fix the import casing and rebuild your application before running Rector again.
+
+If the problem continues to persist you can attempt resolve it by including the affected file during the bootstrapping process.
 
 First copy the existing bootstrap file:
 
@@ -154,3 +190,5 @@ return RectorConfig::configure()
         SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_52,
     ]);
 ```
+
+Remember to rebuild your application first before running Rector again.
