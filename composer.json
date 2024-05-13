@@ -1,80 +1,25 @@
 {
-    "name": "cambis/silverstripe-rector",
-    "description": "Rector rules for Silverstripe.",
-    "license": "MIT",
-    "keywords": [
-        "silverstripe",
-        "rector"
-    ],
-    "require": {
-        "php": "^8.3",
-        "rector/rector": "^1.0",
-        "silverstripe/cms": "^4.0 || ^5.0",
-        "silverstripe/framework": "^4.0 || ^5.0"
-    },
-    "require-dev": {
-        "cweagans/composer-patches": "^1.7",
-        "ergebnis/composer-normalize": "^2.41",
-        "php-parallel-lint/php-parallel-lint": "^1.3",
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "^1.10",
-        "phpstan/phpstan-phpunit": "^1.3",
-        "phpstan/phpstan-strict-rules": "^1.5",
-        "phpunit/phpunit": "^9.6",
-        "slevomat/coding-standard": "^8.14",
-        "symplify/easy-coding-standard": "^12.0",
-        "symplify/phpstan-extensions": "^11.4",
-        "symplify/phpstan-rules": "^12.4",
-        "symplify/rule-doc-generator": "^11.0",
-        "tomasvotruba/cognitive-complexity": "^0.2.2"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "Cambis\\SilverstripeRector\\": [
-                "src/",
-                "rules/"
-            ]
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Cambis\\SilverstripeRector\\Tests\\": [
-                "tests/src/",
-                "tests/rules/"
-            ]
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "composer/installers": true,
-            "cweagans/composer-patches": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true,
-            "phpstan/extension-installer": true,
-            "rector/extension-installer": true,
-            "silverstripe/vendor-plugin": true
-        },
-        "sort-packages": true
-    },
-    "extra": {
-        "composer-exit-on-patch-failure": true,
-        "patches": {
-            "symplify/rule-doc-generator": {
-                "Custom rule docs": "patches/symplify/rule-doc-generator/custom-rule-docs.patch"
-            }
-        }
-    },
-    "scripts": {
-        "docs": "vendor/bin/rule-doc-generator generate rules --output-file docs/rector_rules_overview.md --ansi",
-        "lint": [
-            "vendor/bin/parallel-lint src rules tests --colors --blame",
-            "vendor/bin/ecs check --ansi",
-            "vendor/bin/phpstan analyse --ansi --memory-limit=-1"
-        ],
-        "lint:fix": [
-            "vendor/bin/ecs check --fix --ansi"
-        ]
-    }
+  "name": "cambis/silverstripe-rector",
+  "description": "Rector rules for Silverstripe.",
+  "license": "MIT",
+  "keywords": [
+      "silverstripe",
+      "rector"
+  ],
+  "require": {
+      "php": "^7.4 || ^8.0",
+      "rector/rector": "^1.0",
+      "silverstripe/cms": "^4.0 || ^5.0",
+      "silverstripe/framework": "^4.0 || ^5.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+      "psr-4": {
+          "Cambis\\SilverstripeRector\\": [
+              "src/",
+              "rules/"
+          ]
+      }
+  }
 }

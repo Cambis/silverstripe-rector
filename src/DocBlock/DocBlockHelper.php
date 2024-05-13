@@ -11,11 +11,15 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\Type\Type;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-final readonly class DocBlockHelper
+final class DocBlockHelper
 {
-    public function __construct(
-        private StaticTypeMapper $staticTypeMapper
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    public function __construct(StaticTypeMapper $staticTypeMapper)
+    {
+        $this->staticTypeMapper = $staticTypeMapper;
     }
 
     /**
