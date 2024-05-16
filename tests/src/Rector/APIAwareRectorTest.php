@@ -3,6 +3,7 @@
 namespace Cambis\SilverstripeRector\Tests\Rector;
 
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Override;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class APIAwareRectorTest extends TestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         $config = ConfigLoader::inst();

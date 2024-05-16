@@ -29,10 +29,10 @@ use function count;
  *
  * @implements PhpDocTypeMapperInterface<GenericTypeNode>
  */
-final class ExtensionTypeMapper implements PhpDocTypeMapperInterface
+final readonly class ExtensionTypeMapper implements PhpDocTypeMapperInterface
 {
     public function __construct(
-        private readonly TypeNodeResolver $typeNodeResolver
+        private TypeNodeResolver $typeNodeResolver
     ) {
     }
 
