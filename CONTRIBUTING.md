@@ -4,7 +4,7 @@ Kia ora! Would you like to contribute? That's awesome, thank you so much for you
 
 Before you go committing your amazing contribution please read the following guidelines.
 
-## Getting started 👶
+## Getting started 🐤
 
 Here are some things to know before you start coding.
 
