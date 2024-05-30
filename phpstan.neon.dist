@@ -94,3 +94,8 @@ parameters:
         paths:
           - rules/*
           - tests/rules/*
+
+      -
+        message: "#^Cognitive complexity for \"Cambis\\\\SilverstripeRector\\\\Silverstripe60\\\\Rector\\\\New_\\\\SilverstripeSessionToSymfonySessionRector\\:\\:refactor\\(\\)\" is 21, keep it under 15$#"
+        count: 1
+        path: rules/Silverstripe60/Rector/New_/SilverstripeSessionToSymfonySessionRector.php
