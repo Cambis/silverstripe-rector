@@ -13,13 +13,13 @@ use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\Contract\PhpDocParser\PhpDocTypeMapperInterface;
+use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedGenericObjectType;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Extension;
 use function count;
@@ -65,7 +65,7 @@ final readonly class ExtensionTypeMapper implements PhpDocTypeMapperInterface
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
-        return new GenericObjectType($typeNode->type->name, $genericTypes);
+        return new FullyQualifiedGenericObjectType($nameScope->resolveStringName($typeNode->type->name), $genericTypes);
     }
 
     private function resolveUnionTypeNode(UnionTypeNode $typeNode, NameScope $nameScope): Type
