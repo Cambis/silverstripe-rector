@@ -21,23 +21,8 @@ parameters:
       function: 15
   ignoreErrors:
       -
-        message: "#^Instead of protected element, use private element or contract method$#"
-        count: 3
-        path: src/Rector/Class_/AbstractAddAnnotationsRector.php
-
-      -
-        message: "#^Use explicit interface contract or a service over unclear abstract methods$#"
-        count: 2
-        path: src/Rector/Class_/AbstractAddAnnotationsRector.php
-
-      -
         message: "#^Class Cambis\\\\SilverstripeRector\\\\Tests.*\\\\Fixture\\\\.* not found\\.$#"
         path: tests/*
-      
-      -
-        message: "#^Instead of protected element, use private element or contract method$#"
-        count: 3
-        path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
       -
         message: "#^Cognitive complexity for \"Cambis\\\\SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
@@ -87,10 +72,3 @@ parameters:
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
       
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:refactorAPIAwareNode\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Cambis\\SilverstripeRector\\Contract\\Rector\\APIAwareRectorInterface\:\:refactorAPIAwareNode\(\)#'
-
-      # Names are duplicated for some rules
-      -
-        message: '#Use unique name to make classes easy to recognize#'
-        paths:
-          - rules/*
-          - tests/rules/*
