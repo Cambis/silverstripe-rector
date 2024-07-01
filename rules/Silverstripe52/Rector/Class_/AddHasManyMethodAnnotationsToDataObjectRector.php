@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use SilverStripe\ORM\HasManyList;
@@ -18,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddHasManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -49,19 +47,16 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
         $hasManyMethods = $this->silverstripeAnalyzer->extractGenericMethodTypesFromManyRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_MANY,
             HasManyList::class
         );
-
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
             $hasManyMethods
         );
