@@ -114,7 +114,7 @@ CODE_SAMPLE
                 'of'
             );
 
-            $dataRecordTypeNode = new IdentifierTypeNode('T'); // @phpstan-ignore-line
+            $dataRecordTypeNode = new IdentifierTypeNode('T');
         }
 
         $genericTypeNode = new GenericTypeNode(

@@ -389,7 +389,7 @@ final readonly class SilverstripeAnalyzer
 
     private function resolvePrefixNotation(string $fieldType): string
     {
-        [$_, $class] = explode('%$', $fieldType, 2); // @phpstan-ignore-line
+        [$_, $class] = explode('%$', $fieldType, 2);
 
         return $class;
     }

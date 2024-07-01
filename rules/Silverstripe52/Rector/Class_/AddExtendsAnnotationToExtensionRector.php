@@ -47,7 +47,7 @@ class FooExtension extends \SilverStripe\Core\Extension
 CODE_SAMPLE
             ,
             [
-                static::SET_TYPE_STYLE => static::SET_INTERSECTION,
+                self::SET_TYPE_STYLE => self::SET_INTERSECTION,
             ]
         )]);
     }

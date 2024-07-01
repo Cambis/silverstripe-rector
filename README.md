@@ -149,21 +149,7 @@ if (!class_exists(PageController::class)) {
 +    require_once __DIR__ . '/app/src/PageController.php';
 }
 
-DB::set_conn(new NullDatabase());
-
-// Mock a Silverstripe application in order to access the Configuration API
-try {
-    $kernel = new class(BASE_PATH) extends DatabaselessKernel {
-        protected function getIncludeTests()
-        {
-            return true;
-        }
-    };
-
-    $kernel->boot();
-} catch (Throwable $e) {
-    echo $e->getMessage();
-}
+// Feel free to leave the rest of file unchanged
 ```
 
 Finally, include the custom bootstrap file in your configuration:
