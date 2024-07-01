@@ -1,5 +1,13 @@
 # silverstripe-rector
 
+## 0.3.3
+
+### Patch Changes
+
+- 2a85e57: Run rector process
+- a70b6c9: Ensure global vars are set
+- 8c0fde8: Use FQN name for extension type mapping
+
 ## 0.3.2
 
 ### Patch Changes
