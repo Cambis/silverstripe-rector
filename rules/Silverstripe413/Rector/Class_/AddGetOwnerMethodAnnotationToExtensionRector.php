@@ -3,6 +3,7 @@
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -48,10 +49,12 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $ownerProperties = $this->silverstripeAnalyzer->extractMethodTypesFromOwners($classConst, $this->isIntersection());
+        $ownerType = $this->configurationPropertyTypeResolver->resolveOwnerTypeFromOwners($classConst, $this->isIntersection());
 
         return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
-            $ownerProperties
+            [
+                SilverstripeConstants::METHOD_GET_OWNER => $ownerType,
+            ],
         );
     }
 }

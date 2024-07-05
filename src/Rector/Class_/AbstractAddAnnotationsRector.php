@@ -9,6 +9,7 @@ use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Cambis\SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -43,6 +44,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
 
     public function __construct(
         protected readonly ClassAnalyzer $classAnalyzer,
+        protected readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         protected readonly DataRecordResolver $dataRecordResolver,
         protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
@@ -50,7 +52,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
         protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
-        protected readonly StaticTypeMapper $staticTypeMapper
+        protected readonly StaticTypeMapper $staticTypeMapper,
     ) {
     }
 

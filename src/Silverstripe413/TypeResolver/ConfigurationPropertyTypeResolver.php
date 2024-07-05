@@ -1,0 +1,111 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Cambis\SilverstripeRector\Silverstripe413\TypeResolver;
+
+use Cambis\SilverstripeRector\TypeResolver\AbstractConfigurationPropertyTypeResolver;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
+use Override;
+use PHPStan\Type\ArrayType;
+use PHPStan\Type\IntegerType;
+use PHPStan\Type\IntersectionType;
+use PHPStan\Type\StaticType;
+use PHPStan\Type\Type;
+use PHPStan\Type\UnionType;
+use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\ManyManyList;
+use SilverStripe\ORM\ManyManyThroughList;
+use SilverStripe\View\ViewableData;
+use function array_filter;
+use function array_key_exists;
+use function array_pop;
+use function count;
+use function in_array;
+use function is_array;
+
+final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPropertyTypeResolver
+{
+    /**
+     * @param class-string $className
+     * @param SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY|SilverstripeConstants::PROPERTY_HAS_MANY|SilverstripeConstants::PROPERTY_MANY_MANY $relationName
+     * @param class-string<DataList<DataObject>> $listName
+     * @return Type[]
+     */
+    #[Override]
+    public function resolveMethodTypesFromManyRelation(
+        string $className,
+        string $relationName,
+        string $listName = DataList::class
+    ): array {
+        $properties = [];
+        $relation = $this->getConfig($className, $relationName) ?? [];
+
+        if ($relation === []) {
+            return $properties;
+        }
+
+        foreach ($relation as $fieldName => $fieldType) {
+            $relationFieldType = $this->resolveRelationFieldType($fieldType);
+
+            if (
+                is_array($fieldType) &&
+                array_key_exists('through', $fieldType) && $listName === ManyManyList::class
+            ) {
+                $listName = ManyManyThroughList::class;
+            }
+
+            $properties[$fieldName] = new UnionType([
+                new FullyQualifiedObjectType($listName),
+                new ArrayType(new IntegerType(), $relationFieldType),
+            ]);
+        }
+
+        return $properties;
+    }
+
+    /**
+     * @param class-string $className
+     */
+    #[Override]
+    public function resolveOwnerTypeFromOwners(string $className, bool $isIntersection): Type
+    {
+        /** @var array<class-string> $owners */
+        $owners = array_filter(ClassInfo::allClasses(), static function (string $owner) use ($className): bool {
+            return ViewableData::has_extension($owner, $className, true);
+        });
+
+        $classReflection = $this->reflectionProvider->getClass($className);
+
+        if ($owners === []) {
+            return new StaticType($classReflection);
+        }
+
+        $owners = array_filter($owners, function (string $owner) use ($className): bool {
+            return in_array(
+                $className,
+                $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [],
+                true
+            );
+        });
+
+        $types = [];
+
+        foreach ($owners as $owner) {
+            if ($isIntersection) {
+                $types[] = new IntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
+            } else {
+                $types[] = new FullyQualifiedObjectType($owner);
+            }
+        }
+
+        if (!$isIntersection) {
+            $types[] = new StaticType($classReflection);
+        }
+
+        return count($types) === 1 ? array_pop($types) : new UnionType($types);
+    }
+}

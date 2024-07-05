@@ -255,7 +255,10 @@ final readonly class SilverstripeAnalyzer
     public function extractMethodTypesFromOwners(string $className, bool $isIntersection): array
     {
         /** @var array<class-string> $owners */
-        $owners = ClassInfo::classesWithExtension($className, ViewableData::class);
+        $owners = array_filter(ClassInfo::allClasses(), static function (string $owner) use ($className): bool {
+            return ViewableData::has_extension($owner, $className, true);
+        });
+
         $classReflection = $this->reflectionProvider->getClass($className);
 
         if ($owners === []) {

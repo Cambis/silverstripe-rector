@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\StaticTypeMapper\PhpDocParser;
 
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
 use Override;
 use PhpParser\Node;
 use PHPStan\Analyser\NameScope;
@@ -19,7 +20,6 @@ use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\Contract\PhpDocParser\PhpDocTypeMapperInterface;
-use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedGenericObjectType;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Extension;
 use function count;
@@ -29,7 +29,7 @@ use function count;
  *
  * @implements PhpDocTypeMapperInterface<GenericTypeNode>
  */
-final readonly class ExtensionTypeMapper implements PhpDocTypeMapperInterface
+final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
 {
     public function __construct(
         private TypeNodeResolver $typeNodeResolver
@@ -65,7 +65,7 @@ final readonly class ExtensionTypeMapper implements PhpDocTypeMapperInterface
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
-        return new FullyQualifiedGenericObjectType($nameScope->resolveStringName($typeNode->type->name), $genericTypes);
+        return new ExtensionGenericObjectType($nameScope->resolveStringName($typeNode->type->name), $genericTypes);
     }
 
     private function resolveUnionTypeNode(UnionTypeNode $typeNode, NameScope $nameScope): Type
