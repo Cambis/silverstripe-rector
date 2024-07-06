@@ -2,8 +2,8 @@
 
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
-use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -25,11 +25,11 @@ use function array_keys;
 final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector
 {
     public function __construct(
-        private readonly SilverstripeAnalyzer $silverstripeAnalyzer,
-        private readonly ReflectionProvider $reflectionProvider,
         private readonly ClassAnalyzer $classAnalyzer,
+        private readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         private readonly MissingPropertiesFactory $missingPropertiesFactory,
-        private readonly PropertyPresenceChecker $propertyPresenceChecker
+        private readonly PropertyPresenceChecker $propertyPresenceChecker,
+        private readonly ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -85,7 +85,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $dependencyProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromDependencies($classConst);
+        $dependencyProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromDependencies($classConst);
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,

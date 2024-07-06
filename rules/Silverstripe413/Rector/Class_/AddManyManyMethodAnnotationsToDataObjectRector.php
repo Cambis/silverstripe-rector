@@ -56,7 +56,7 @@ CODE_SAMPLE
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
 
-        $manyManyMethods = $this->silverstripeAnalyzer->extractMethodUnionTypesFromManyRelation(
+        $manyManyMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromManyRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_MANY_MANY,
             ManyManyList::class

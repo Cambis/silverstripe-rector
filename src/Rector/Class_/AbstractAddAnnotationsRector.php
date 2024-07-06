@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Rector\Class_;
 
 use Cambis\SilverstripeRector\DocBlock\DocBlockHelper;
-use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
 use Cambis\SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
@@ -51,7 +50,6 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
         protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
-        protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
         protected readonly StaticTypeMapper $staticTypeMapper,
     ) {
     }

@@ -55,16 +55,6 @@ parameters:
         path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionRector.php
 
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
-      
-      -
-        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractGenericMethodTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
-        count: 1
-        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
-
-      -
-        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractMethodUnionTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
-        count: 1
-        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
 
       -
         message: "#^Method Cambis\\\\SilverstripeRector\\\\Rector\\\\Class_\\\\AbstractAddAnnotationsToExtensionRector\\:\\:getAllowedParents\\(\\) return type with generic class SilverStripe\\\\Core\\\\Extension does not specify its types\\: T$#"

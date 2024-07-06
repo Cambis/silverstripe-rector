@@ -57,7 +57,7 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
 
         $newDocTagValueNodes = [];
-        $hasOneProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromSingleRelation(
+        $hasOneProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
@@ -69,7 +69,7 @@ CODE_SAMPLE
             ),
         ];
 
-        $hasOneMethods = $this->silverstripeAnalyzer->extractMethodTypesFromSingleRelation(
+        $hasOneMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
