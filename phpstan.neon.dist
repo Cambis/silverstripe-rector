@@ -16,6 +16,7 @@ parameters:
     - '*tests/*/Fixture*'
     - '*tests/*/Source/*'
     - '*tests/*/Source*'
+    - '*tests/*/config/*'
   cognitive_complexity:
       class: 50
       function: 15

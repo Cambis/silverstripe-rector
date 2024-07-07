@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\StaticTypeMapper\PhpDocParser;
 
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIntersectionType;
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
 use Override;
 use PhpParser\Node;
 use PHPStan\Analyser\NameScope;
@@ -18,7 +20,6 @@ use PHPStan\Type\IntersectionType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
-use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\Contract\PhpDocParser\PhpDocTypeMapperInterface;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Extension;
@@ -89,7 +90,7 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
-        return new UnionType($types);
+        return new ExtensionOwnerUnionType($types);
     }
 
     private function resolveIntersectionTypeNode(IntersectionTypeNode $typeNode, NameScope $nameScope): Type
@@ -110,7 +111,7 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
-        return new IntersectionType([$extensibleType, $extensionType]);
+        return new ExtensionOwnerIntersectionType([$extensibleType, $extensionType]);
     }
 
     private function shouldSkipExtensibleType(Type $type): bool

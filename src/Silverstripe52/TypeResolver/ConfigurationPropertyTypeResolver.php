@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe52\TypeResolver;
 
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIntersectionType;
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
 use Cambis\SilverstripeRector\TypeResolver\AbstractConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Generic\GenericObjectType;
-use PHPStan\Type\IntersectionType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
-use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ManyManyList;
@@ -85,7 +86,7 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        $parentClassName = $classReflection->getParentClass() instanceof ClassReflection ? $classReflection->getParentClass()->getName() : '';
+        $parentClassName = $classReflection->getParentClass() instanceof ClassReflection ? $classReflection->getParentClass()->getName() : Extension::class;
 
         if ($owners === []) {
             return new ExtensionGenericObjectType($parentClassName, [new StaticType($classReflection)]);
@@ -103,7 +104,7 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
 
         foreach ($owners as $owner) {
             if ($isIntersection) {
-                $types[] = new IntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
+                $types[] = new ExtensionOwnerIntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
             } else {
                 $types[] = new FullyQualifiedObjectType($owner);
             }
@@ -113,6 +114,6 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
             $types[] = new StaticType($classReflection);
         }
 
-        return new ExtensionGenericObjectType($parentClassName, [count($types) === 1 ? array_pop($types) : new UnionType($types)]);
+        return new ExtensionGenericObjectType($parentClassName, [count($types) === 1 ? array_pop($types) : new ExtensionOwnerUnionType($types)]);
     }
 }
