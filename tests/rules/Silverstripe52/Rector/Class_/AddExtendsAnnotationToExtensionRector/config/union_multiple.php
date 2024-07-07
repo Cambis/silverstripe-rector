@@ -16,6 +16,7 @@ use PHPStan\Type\Type;
 use Rector\Config\RectorConfig;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Extension;
+use SilverStripe\Dev\TestOnly;
 use SilverStripe\ORM\DataList;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -31,7 +32,7 @@ return static function (RectorConfig $rectorConfig): void {
         /** @var ReflectionProvider $reflectionProvider */
         $reflectionProvider = $config->make(ReflectionProvider::class);
 
-        return new class($reflectionProvider) extends AbstractConfigurationPropertyTypeResolver {
+        return new class($reflectionProvider) extends AbstractConfigurationPropertyTypeResolver implements TestOnly {
             public function resolveMethodTypesFromManyRelation(string $className, string $relationName, string $listName = DataList::class): array
             {
                 return [];
