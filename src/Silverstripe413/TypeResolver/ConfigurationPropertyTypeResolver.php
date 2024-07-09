@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe413\TypeResolver;
 
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIntersectionType;
+use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
 use Cambis\SilverstripeRector\TypeResolver\AbstractConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\IntegerType;
-use PHPStan\Type\IntersectionType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
@@ -96,7 +97,7 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
 
         foreach ($owners as $owner) {
             if ($isIntersection) {
-                $types[] = new IntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
+                $types[] = new ExtensionOwnerIntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
             } else {
                 $types[] = new FullyQualifiedObjectType($owner);
             }
@@ -106,6 +107,6 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
             $types[] = new StaticType($classReflection);
         }
 
-        return count($types) === 1 ? array_pop($types) : new UnionType($types);
+        return count($types) === 1 ? array_pop($types) : new ExtensionOwnerUnionType($types);
     }
 }

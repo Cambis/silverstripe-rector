@@ -26,11 +26,6 @@ parameters:
         path: tests/*
 
       -
-        message: "#^Cognitive complexity for \"Cambis\\\\SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
-        count: 1
-        path: src/PhpDocManipulator/AnnotationUpdater.php
-
-      -
         message: "#^Use value object over return of values$#"
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
