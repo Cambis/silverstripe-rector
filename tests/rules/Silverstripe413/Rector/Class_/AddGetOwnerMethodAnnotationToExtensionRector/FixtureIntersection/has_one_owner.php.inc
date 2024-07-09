@@ -13,7 +13,7 @@ class HasOneOwner extends \SilverStripe\Core\Extension implements \SilverStripe\
 namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector\FixtureIntersection;
 
 /**
- * @method (\Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector\Source\OwnerMockOne & \static) getOwner()
+ * @method (\Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector\Source\OwnerMockOne & static) getOwner()
  */
 class HasOneOwner extends \SilverStripe\Core\Extension implements \SilverStripe\Dev\TestOnly
 {

@@ -12,7 +12,6 @@ final class UnionMultipleRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
-     * @runInSeparateProcess
      */
     public function test(string $filePath): void
     {
