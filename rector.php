@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\Config\RectorConfig;
-use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -29,11 +27,4 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         // This may cause a downgrade to fail
         AddTypeToConstRector::class,
-        // This class has some complicated if statements
-        ChangeAndIfToEarlyReturnRector::class => [
-            __DIR__ . '/src/PhpDocManipulator/AnnotationUpdater.php',
-        ],
-        SimplifyIfReturnBoolRector::class => [
-            __DIR__ . '/src/PhpDocManipulator/AnnotationUpdater.php',
-        ],
     ]);
