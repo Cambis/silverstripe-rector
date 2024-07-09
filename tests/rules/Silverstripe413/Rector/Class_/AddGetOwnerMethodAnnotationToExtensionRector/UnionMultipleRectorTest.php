@@ -8,7 +8,7 @@ use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRectorTestCase
+final class UnionMultipleRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
@@ -20,12 +20,12 @@ final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRec
 
     public static function provideData(): Iterator
     {
-        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
+        return self::yieldFilesFromDirectory(__DIR__ . '/FixtureUnionMultiple');
     }
 
     #[Override]
     public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/config/configured_rule.php';
+        return __DIR__ . '/config/union_multiple.php';
     }
 }

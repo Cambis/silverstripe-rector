@@ -8,10 +8,11 @@ use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRectorTestCase
+final class IntersectionMultipleRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
+     * @runInSeparateProcess
      */
     public function test(string $filePath): void
     {
@@ -20,12 +21,12 @@ final class AddGetOwnerMethodAnnotationToExtensionRectorTest extends AbstractRec
 
     public static function provideData(): Iterator
     {
-        return self::yieldFilesFromDirectory(__DIR__ . '/Fixture');
+        return self::yieldFilesFromDirectory(__DIR__ . '/FixtureIntersectionMultiple');
     }
 
     #[Override]
     public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/config/configured_rule.php';
+        return __DIR__ . '/config/intersection_multiple.php';
     }
 }
