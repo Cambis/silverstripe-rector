@@ -55,7 +55,7 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
         $dbProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromDBFields($classConst);
 
-        return $this->docBlockHelper->convertTypesToPropertyTagValueNodes(
+        return $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
             $dbProperties
         );
     }

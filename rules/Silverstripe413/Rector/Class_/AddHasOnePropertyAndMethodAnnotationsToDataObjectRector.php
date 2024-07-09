@@ -64,7 +64,7 @@ CODE_SAMPLE
 
         $newDocTagValueNodes = [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToPropertyTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
                 $hasOneProperties
             ),
         ];
@@ -76,7 +76,7 @@ CODE_SAMPLE
 
         return [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToMethodTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
                 $hasOneMethods
             ),
         ];

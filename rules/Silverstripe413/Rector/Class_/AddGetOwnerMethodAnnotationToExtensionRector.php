@@ -51,7 +51,7 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
         $ownerType = $this->configurationPropertyTypeResolver->resolveOwnerTypeFromOwners($classConst, $this->isIntersection());
 
-        return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
+        return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             [
                 SilverstripeConstants::METHOD_GET_OWNER => $ownerType,
             ],

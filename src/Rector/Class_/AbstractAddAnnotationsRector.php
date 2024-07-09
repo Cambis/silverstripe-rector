@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Rector\Class_;
 
-use Cambis\SilverstripeRector\DocBlock\DocBlockHelper;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
+use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
@@ -46,8 +46,8 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
         protected readonly ClassAnalyzer $classAnalyzer,
         protected readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         protected readonly DataRecordResolver $dataRecordResolver,
-        protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
+        protected readonly PhpDocHelper $phpDocHelper,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
         protected readonly StaticTypeMapper $staticTypeMapper,

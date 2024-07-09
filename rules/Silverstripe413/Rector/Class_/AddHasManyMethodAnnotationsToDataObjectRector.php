@@ -62,7 +62,7 @@ CODE_SAMPLE
             HasManyList::class
         );
 
-        return $this->docBlockHelper->convertTypesToMethodTagValueNodes(
+        return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             $hasManyMethods
         );
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\DocBlock;
+namespace Cambis\SilverstripeRector\PhpDoc;
 
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
@@ -11,7 +11,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\Type\Type;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-final readonly class DocBlockHelper
+final readonly class PhpDocHelper
 {
     public function __construct(
         private StaticTypeMapper $staticTypeMapper

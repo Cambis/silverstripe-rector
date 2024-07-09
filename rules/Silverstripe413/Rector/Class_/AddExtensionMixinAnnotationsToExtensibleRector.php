@@ -55,7 +55,7 @@ CODE_SAMPLE
         $mixinProperties = $this->configurationPropertyTypeResolver->resolveMixinTypesFromExtensions($classConst);
 
         return [
-            ...$this->docBlockHelper->convertTypesToMixinTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToMixinTagValueNodes(
                 $mixinProperties
             ),
         ];
