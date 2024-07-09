@@ -18,6 +18,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->singleton(GenericTypeMapper::class);
     $rectorConfig->tag(GenericTypeMapper::class, PhpDocTypeMapperInterface::class);
 
+    // Register annotation comparators
     $rectorConfig->autotagInterface(AnnotationComparatorInterface::class);
     $rectorConfig->singleton(ExtendsAnnotationComparator::class);
     $rectorConfig->singleton(MethodAnnotationComparator::class);
