@@ -12,6 +12,7 @@ final class IntersectionRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
+     * @runInSeparateProcess
      */
     public function test(string $filePath): void
     {
