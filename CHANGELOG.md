@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.4.0
+
+### Minor Changes
+
+- 6e058fa: Refactor common services
+
 ## 0.3.3
 
 ### Patch Changes
