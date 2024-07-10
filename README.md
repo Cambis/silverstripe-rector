@@ -20,6 +20,33 @@ Install via composer.
 composer require --dev cambis/silverstripe-rector
 ```
 
+Ensure you have PSR-4 autoload setup in your `composer.json`.
+
+```json
+{
+    "autoload": {
+        "classmap": [
+            "app/src/Page.php",
+            "app/src/PageController.php"
+        ],
+        "psr-4": {
+            "MyProjectNamespace\\": "app/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MyProjectNamespace\\Tests\\": "app/tests"
+        }
+    }
+}
+```
+
+Verify everything is PSR-4 compliant.
+
+```sh
+composer dumpautoload -o
+```
+
 Rebuild your application.
 
 ```sh

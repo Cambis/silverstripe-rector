@@ -53,9 +53,9 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-        $dbProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromDBFields($classConst);
+        $dbProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromDBFields($classConst);
 
-        return $this->docBlockHelper->convertTypesToPropertyTagValueNodes(
+        return $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
             $dbProperties
         );
     }

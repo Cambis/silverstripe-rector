@@ -57,26 +57,26 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
 
         $newDocTagValueNodes = [];
-        $belongsToProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromSingleRelation(
+        $belongsToProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );
 
         $newDocTagValueNodes = [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToPropertyTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
                 $belongsToProperties
             ),
         ];
 
-        $belongsToMethods = $this->silverstripeAnalyzer->extractMethodTypesFromSingleRelation(
+        $belongsToMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );
 
         return [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToMethodTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
                 $belongsToMethods
             ),
         ];

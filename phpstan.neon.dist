@@ -16,6 +16,7 @@ parameters:
     - '*tests/*/Fixture*'
     - '*tests/*/Source/*'
     - '*tests/*/Source*'
+    - '*tests/*/config/*'
   cognitive_complexity:
       class: 50
       function: 15
@@ -25,46 +26,11 @@ parameters:
         path: tests/*
 
       -
-        message: "#^Cognitive complexity for \"Cambis\\\\SilverstripeRector\\\\PhpDocManipulator\\\\AnnotationUpdater::hasExistingAnnotation\\(\\)\" is 21, keep it under 15#"
-        count: 1
-        path: src/PhpDocManipulator/AnnotationUpdater.php
-
-      -
         message: "#^Use value object over return of values$#"
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
 
-      -
-        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionMultipleRector\" is missing @see annotation with test case class reference$#"
-        count: 1
-        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionMultipleRector.php
-
-      -
-        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\IntersectionRector\" is missing @see annotation with test case class reference$#"
-        count: 1
-        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/IntersectionRector.php
-
-      -
-        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionMultipleRector\" is missing @see annotation with test case class reference$#"
-        count: 1
-        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionMultipleRector.php
-
-      -
-        message: "#^Class \"Cambis\\\\SilverstripeRector\\\\Tests\\\\Silverstripe52\\\\Rector\\\\Class_\\\\AddExtendsAnnotationToExtensionRector\\\\UnionRector\" is missing @see annotation with test case class reference$#"
-        count: 1
-        path: tests/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector/UnionRector.php
-
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\RectorInterface\:\:refactor\(\)#'
-      
-      -
-        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractGenericMethodTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
-        count: 1
-        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
-
-      -
-        message: "#^Method Cambis\\\\SilverstripeRector\\\\NodeAnalyzer\\\\SilverstripeAnalyzer\\:\\:extractMethodUnionTypesFromManyRelation\\(\\) has parameter \\$listName with generic class SilverStripe\\\\ORM\\\\DataList but does not specify its types\\: T$#"
-        count: 1
-        path: src/NodeAnalyzer/SilverstripeAnalyzer.php
 
       -
         message: "#^Method Cambis\\\\SilverstripeRector\\\\Rector\\\\Class_\\\\AbstractAddAnnotationsToExtensionRector\\:\\:getAllowedParents\\(\\) return type with generic class SilverStripe\\\\Core\\\\Extension does not specify its types\\: T$#"

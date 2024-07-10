@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Rector\Class_;
 
-use Cambis\SilverstripeRector\DocBlock\DocBlockHelper;
-use Cambis\SilverstripeRector\NodeAnalyzer\SilverstripeAnalyzer;
-use Cambis\SilverstripeRector\NodeFactory\MissingAnnotationsFactory;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
+use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
+use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -42,15 +42,15 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
     ];
 
     public function __construct(
+        protected readonly AnnotationUpdater $annotationUpdater,
         protected readonly ClassAnalyzer $classAnalyzer,
+        protected readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         protected readonly DataRecordResolver $dataRecordResolver,
-        protected readonly DocBlockHelper $docBlockHelper,
         protected readonly DocBlockUpdater $docBlockUpdater,
-        protected readonly MissingAnnotationsFactory $missingAnnotationsFactory,
+        protected readonly PhpDocHelper $phpDocHelper,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
-        protected readonly SilverstripeAnalyzer $silverstripeAnalyzer,
-        protected readonly StaticTypeMapper $staticTypeMapper
+        protected readonly StaticTypeMapper $staticTypeMapper,
     ) {
     }
 
@@ -81,11 +81,9 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
 
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
 
-        $newDocTagValueNodes = $this->missingAnnotationsFactory->filterOutExistingAnnotations(
-            $node,
-            $phpDocInfo,
-            $newDocTagValueNodes
-        );
+        $this->annotationUpdater->updateExistingAnnotations($node, $phpDocInfo, $newDocTagValueNodes);
+
+        $newDocTagValueNodes = $this->annotationUpdater->filterOutExistingAnnotations($phpDocInfo, $newDocTagValueNodes, $node);
 
         if ($newDocTagValueNodes === []) {
             return null;

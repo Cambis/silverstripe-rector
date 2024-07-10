@@ -57,26 +57,26 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
 
         $newDocTagValueNodes = [];
-        $hasOneProperties = $this->silverstripeAnalyzer->extractPropertyTypesFromSingleRelation(
+        $hasOneProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
 
         $newDocTagValueNodes = [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToPropertyTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
                 $hasOneProperties
             ),
         ];
 
-        $hasOneMethods = $this->silverstripeAnalyzer->extractMethodTypesFromSingleRelation(
+        $hasOneMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
 
         return [
             ...$newDocTagValueNodes,
-            ...$this->docBlockHelper->convertTypesToMethodTagValueNodes(
+            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
                 $hasOneMethods
             ),
         ];

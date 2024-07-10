@@ -12,7 +12,6 @@ final class IntersectionMultipleRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData
-     * @runInSeparateProcess
      */
     public function test(string $filePath): void
     {
