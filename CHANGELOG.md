@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.4.1
+
+### Patch Changes
+
+- 927e47c: Include missing ConfigurationPropertyTypeResolverInterface in Silverstripe50 and Silverstripe51 sets
+
 ## 0.4.0
 
 ### Minor Changes
