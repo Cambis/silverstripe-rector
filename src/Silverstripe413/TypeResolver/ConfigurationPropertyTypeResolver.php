@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIn
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
 use Cambis\SilverstripeRector\TypeResolver\AbstractConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\StaticType;
@@ -36,19 +35,13 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
      * @param class-string<DataList<DataObject>> $listName
      * @return Type[]
      */
-    #[Override]
-    public function resolveMethodTypesFromManyRelation(
-        string $className,
-        string $relationName,
-        string $listName = DataList::class
-    ): array {
+    public function resolveMethodTypesFromManyRelation(string $className, string $relationName, string $listName = DataList::class): array
+    {
         $properties = [];
         $relation = $this->getConfig($className, $relationName) ?? [];
-
         if ($relation === []) {
             return $properties;
         }
-
         foreach ($relation as $fieldName => $fieldType) {
             $relationFieldType = $this->resolveRelationFieldType($fieldType);
 
@@ -64,27 +57,22 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 new ArrayType(new IntegerType(), $relationFieldType),
             ]);
         }
-
         return $properties;
     }
 
     /**
      * @param class-string $className
      */
-    #[Override]
     public function resolveOwnerTypeFromOwners(string $className, bool $isIntersection): Type
     {
         /** @var array<class-string> $owners */
         $owners = array_filter(ClassInfo::allClasses(), static function (string $owner) use ($className): bool {
             return ViewableData::has_extension($owner, $className, true);
         });
-
         $classReflection = $this->reflectionProvider->getClass($className);
-
         if ($owners === []) {
             return new StaticType($classReflection);
         }
-
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
             return in_array(
                 $className,
@@ -92,9 +80,7 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 true
             );
         });
-
         $types = [];
-
         foreach ($owners as $owner) {
             if ($isIntersection) {
                 $types[] = new ExtensionOwnerIntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
@@ -102,11 +88,9 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 $types[] = new FullyQualifiedObjectType($owner);
             }
         }
-
         if (!$isIntersection) {
             $types[] = new StaticType($classReflection);
         }
-
         return count($types) === 1 ? array_pop($types) : new ExtensionOwnerUnionType($types);
     }
 }
