@@ -7,7 +7,6 @@ namespace Cambis\SilverstripeRector\StaticTypeMapper\PhpDocParser;
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIntersectionType;
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
-use Override;
 use PhpParser\Node;
 use PHPStan\Analyser\NameScope;
 use PHPStan\PhpDoc\TypeNodeResolver;
@@ -30,14 +29,17 @@ use function count;
  *
  * @implements PhpDocTypeMapperInterface<GenericTypeNode>
  */
-final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
+final class GenericTypeMapper implements PhpDocTypeMapperInterface
 {
-    public function __construct(
-        private TypeNodeResolver $typeNodeResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private TypeNodeResolver $typeNodeResolver;
+    public function __construct(TypeNodeResolver $typeNodeResolver)
+    {
+        $this->typeNodeResolver = $typeNodeResolver;
     }
 
-    #[Override]
     public function getNodeType(): string
     {
         return GenericTypeNode::class;
@@ -46,11 +48,9 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
     /**
      * @param GenericTypeNode $typeNode
      */
-    #[Override]
     public function mapToPHPStanType(TypeNode $typeNode, Node $node, NameScope $nameScope): Type
     {
         $genericTypes = [];
-
         // If the type is a candidate for `\SilverStripe\Core\Extensible&\SilverStripe\Core\Extension` attempt to resolve it, otherwise fallback
         foreach ($typeNode->genericTypes as $genericTypeNode) {
             if ($genericTypeNode instanceof IntersectionTypeNode) {
@@ -65,7 +65,6 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
 
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
-
         return new ExtensionGenericObjectType($nameScope->resolveStringName($typeNode->type->name), $genericTypes);
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type;
 
-use Override;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\ObjectType;
@@ -18,12 +17,10 @@ use SilverStripe\Core\Extension;
  */
 final class ExtensionOwnerIntersectionType extends IntersectionType
 {
-    #[Override]
     public function traverse(callable $cb): Type
     {
         $types = [];
         $hasChanged = false;
-
         foreach ($this->getTypes() as $type) {
             $newType = $cb($type);
 
@@ -38,12 +35,10 @@ final class ExtensionOwnerIntersectionType extends IntersectionType
 
             $types[] = $newType;
         }
-
         if ($hasChanged) {
             // Return a regular IntersectionType, so the type doesn't resolve to NEVER
             return new IntersectionType($types);
         }
-
         return $this;
     }
 
