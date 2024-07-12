@@ -10,7 +10,6 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
-use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -67,28 +66,4 @@ CODE_SAMPLE
             ),
         ];
     }
-
-    /**
-     * `\Rector\PHPStanStaticTypeMapper\TypeMapper\IntersectionTypeMapper::mapToPHPStanPhpDocTypeNode()` will turn `static` into `\static`.
-     * Remove the leading slash from `\static`.
-     */
-    // private function fixIntersectionTypeNode(GenericTypeNode $typeNode): IntersectionTypeNode
-    // {
-    //     $phpDocNodeTraverser = new PhpDocNodeTraverser();
-    //     $phpDocNodeTraverser->traverseWithCallable($typeNode, '', static function ($astNode): ?IdentifierTypeNode {
-    //         if ($astNode instanceof IdentifierTypeNode) {
-    //             if ($astNode->name !== '\\' . ObjectReference::STATIC) {
-    //                 return $astNode;
-    //             }
-
-    //             $astNode->name = ObjectReference::STATIC;
-
-    //             return $astNode;
-    //         }
-
-    //         return null;
-    //     });
-
-    //     return $typeNode;
-    // }
 }
