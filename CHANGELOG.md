@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.4.2
+
+### Patch Changes
+
+- 5c2930c: Add webmozart/assert
+
 ## 0.4.1
 
 ### Patch Changes
