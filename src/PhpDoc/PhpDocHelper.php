@@ -18,11 +18,15 @@ use Rector\Enum\ObjectReference;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-final readonly class PhpDocHelper
+final class PhpDocHelper
 {
-    public function __construct(
-        private StaticTypeMapper $staticTypeMapper
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    public function __construct(StaticTypeMapper $staticTypeMapper)
+    {
+        $this->staticTypeMapper = $staticTypeMapper;
     }
 
     /**
@@ -111,8 +115,9 @@ final readonly class PhpDocHelper
     /**
      * `\Rector\PHPStanStaticTypeMapper\TypeMapper\IntersectionTypeMapper::mapToPHPStanPhpDocTypeNode()` will turn `static` into `\static`.
      * Remove the leading slash from `\static`.
+     * @param \PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode|\PHPStan\PhpDocParser\Ast\Type\UnionTypeNode $typeNode
      */
-    private function fixCompoundTypeNode(IntersectionTypeNode|UnionTypeNode $typeNode): TypeNode
+    private function fixCompoundTypeNode($typeNode): TypeNode
     {
         $phpDocNodeTraverser = new PhpDocNodeTraverser();
         $phpDocNodeTraverser->traverseWithCallable($typeNode, '', static function (Node $astNode): ?IdentifierTypeNode {

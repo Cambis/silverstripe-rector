@@ -15,5 +15,5 @@ interface APIAwareRectorInterface extends RectorInterface
      *
      * @return Node|Node[]|null|NodeTraverser::*
      */
-    public function refactorAPIAwareNode(Node $node): mixed;
+    public function refactorAPIAwareNode(Node $node);
 }

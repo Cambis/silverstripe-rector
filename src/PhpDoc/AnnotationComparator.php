@@ -10,14 +10,19 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use Webmozart\Assert\Assert;
 use function is_a;
 
-final readonly class AnnotationComparator
+final class AnnotationComparator
 {
+    /**
+     * @readonly
+     */
+    private array $annotationComparators;
     public function __construct(
+        array $annotationComparators
+    ) {
         /**
          * @var AnnotationComparatorInterface<PhpDocTagValueNode>[]
          */
-        private array $annotationComparators
-    ) {
+        $this->annotationComparators = $annotationComparators;
         Assert::notEmpty($annotationComparators);
     }
 
