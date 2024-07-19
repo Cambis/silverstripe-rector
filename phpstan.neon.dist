@@ -17,6 +17,8 @@ parameters:
     - '*tests/*/Source/*'
     - '*tests/*/Source*'
     - '*tests/*/config/*'
+    - stubs/Page.php
+    - stubs/PageController.php
   cognitive_complexity:
       class: 50
       function: 15

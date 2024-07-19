@@ -32,4 +32,9 @@ return ECSConfig::configure()
         '*/Source/*',
         '*/Source*',
         NotOperatorWithSuccessorSpaceFixer::class,
+        ReferenceUsedNamesOnlySniff::class => [
+            __DIR__ . '/bootstrap.php',
+            __DIR__ . '/stubs/Page.php',
+            __DIR__ . '/stubs/PageController.php',
+        ],
     ]);

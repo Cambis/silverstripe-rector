@@ -9,7 +9,6 @@ See available [Silverstripe rules](docs/rector_rules_overview.md).
 ```sh
 php ^7.4 || ^8.0
 silverstripe/framework ^4.0 || ^5.0
-silverstripe/cms ^4.0 || ^5.0
 ```
 
 ## Installation 👷‍♀️
