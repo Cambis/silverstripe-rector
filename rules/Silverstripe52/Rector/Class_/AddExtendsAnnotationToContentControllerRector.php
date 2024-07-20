@@ -15,8 +15,6 @@ use PHPStan\Reflection\ClassReflection;
 use Rector\BetterPhpDocParser\ValueObject\PhpDoc\SpacingAwareTemplateTagValueNode;
 use Rector\Exception\ShouldNotHappenException;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
-use SilverStripe\CMS\Controllers\ContentController;
-use SilverStripe\CMS\Model\SiteTree;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -99,14 +97,16 @@ CODE_SAMPLE
         $dataRecordType = new FullyQualifiedObjectType($dataRecordClassName);
 
         // Verify the dataRecord
-        if ((new FullyQualifiedObjectType(SiteTree::class))->isSuperTypeOf($dataRecordType)->no()) {
+        if ((new FullyQualifiedObjectType('SilverStripe\\CMS\\Model\\SiteTree'))->isSuperTypeOf($dataRecordType)->no()) {
             return [];
         }
 
         $dataRecordTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($dataRecordType);
+
+        /** @var string $parentClassName */
         $parentClassName = $this->getParentClassName($classReflection);
 
-        if ($parentClassName === ContentController::class) {
+        if ($parentClassName === 'SilverStripe\\CMS\\Controllers\\ContentController') {
             $tagValueNodes[] = new SpacingAwareTemplateTagValueNode(
                 'T',
                 $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($dataRecordType),
@@ -156,7 +156,7 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf(ContentController::class);
+        return !$classReflection->isSubclassOf('SilverStripe\\CMS\\Controllers\\ContentController');
     }
 
     /**
