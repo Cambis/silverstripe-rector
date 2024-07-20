@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.5.0
+
+### Minor Changes
+
+- e7b7209: Remove silverstripe/cms from dependencies
+
 ## 0.4.2
 
 ### Patch Changes
