@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.5.1
+
+### Patch Changes
+
+- 6d48a9e: Resolve suffixed extension names
+
 ## 0.5.0
 
 ### Minor Changes
