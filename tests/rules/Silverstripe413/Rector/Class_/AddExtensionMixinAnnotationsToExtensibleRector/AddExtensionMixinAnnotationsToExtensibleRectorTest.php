@@ -7,6 +7,7 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExten
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtension;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionComplete;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionShortname;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionSuffixed;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ExtensionMock;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
@@ -45,6 +46,14 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
             SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 ExtensionMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            HasOneExtensionSuffixed::class,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
+            [
+                ExtensionMock::class . "('Foo', 'Bar')",
             ]
         );
     }

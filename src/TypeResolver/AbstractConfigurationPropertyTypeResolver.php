@@ -24,6 +24,7 @@ use function is_array;
 use function is_bool;
 use function is_numeric;
 use function is_string;
+use function preg_match;
 use function str_contains;
 
 /**
@@ -31,6 +32,12 @@ use function str_contains;
  */
 abstract class AbstractConfigurationPropertyTypeResolver implements ConfigurationPropertyTypeResolverInterface
 {
+    /**
+     * @var string
+     * @see https://regex101.com/r/ZXIMlR/1
+     */
+    protected const EXTENSION_CLASSNAME_REGEX = '/^([^(]*)/';
+
     public function __construct(
         protected readonly ReflectionProvider $reflectionProvider
     ) {
@@ -138,13 +145,19 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         }
 
         foreach (array_unique($extensions) as $extension) {
-            $classReflection = $this->reflectionProvider->getClass($extension);
+            $extensionClassName = $this->resolveExtensionClassName($extension);
+
+            if ($extensionClassName === null) {
+                continue;
+            }
+
+            $classReflection = $this->reflectionProvider->getClass($extensionClassName);
 
             if (!$classReflection->isSubclassOf(Extension::class)) {
                 continue;
             }
 
-            $properties[] = new FullyQualifiedObjectType($extension);
+            $properties[] = new FullyQualifiedObjectType($extensionClassName);
         }
 
         return $properties;
@@ -247,5 +260,20 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         [$_, $class] = explode('%$', $fieldType, 2);
 
         return $class;
+    }
+
+    protected function resolveExtensionClassName(string $extensionName): ?string
+    {
+        $matches = [];
+
+        if (preg_match(self::EXTENSION_CLASSNAME_REGEX, $extensionName, $matches) === false) {
+            return null;
+        }
+
+        if ($matches === []) {
+            return null;
+        }
+
+        return $matches[1];
     }
 }
