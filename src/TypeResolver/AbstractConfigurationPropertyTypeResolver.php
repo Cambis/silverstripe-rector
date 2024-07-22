@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\TypeResolver;
 
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
@@ -25,7 +24,6 @@ use function is_bool;
 use function is_numeric;
 use function is_string;
 use function preg_match;
-use function str_contains;
 
 /**
  * This class contains common abstractions which can be used from Silverstripe 4.13 and up.
@@ -33,34 +31,34 @@ use function str_contains;
 abstract class AbstractConfigurationPropertyTypeResolver implements ConfigurationPropertyTypeResolverInterface
 {
     /**
+     * @readonly
+     */
+    protected ReflectionProvider $reflectionProvider;
+    /**
      * @var string
      * @see https://regex101.com/r/ZXIMlR/1
      */
     protected const EXTENSION_CLASSNAME_REGEX = '/^([^(]*)/';
 
-    public function __construct(
-        protected readonly ReflectionProvider $reflectionProvider
-    ) {
+    public function __construct(ReflectionProvider $reflectionProvider)
+    {
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     /**
      * @param class-string $className
      * @return Type[]
      */
-    #[Override]
     public function resolvePropertyTypesFromDBFields(string $className): array
     {
         $properties = [];
         $db = $this->getConfig($className, SilverstripeConstants::PROPERTY_DB);
-
         if (!is_array($db) || $db === []) {
             return $properties;
         }
-
         foreach ($db as $fieldName => $fieldType) {
             $properties['$' . $fieldName] = $this->resolveDBFieldType($fieldType);
         }
-
         return $properties;
     }
 
@@ -69,20 +67,16 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @param SilverstripeConstants::PROPERTY_BELONGS_TO|SilverstripeConstants::PROPERTY_HAS_ONE $relationName
      * @return Type[]
      */
-    #[Override]
     public function resolvePropertyTypesFromSingleRelation(string $className, string $relationName): array
     {
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
-
         if ($relation === null) {
             return $properties;
         }
-
         foreach ($relation as $fieldName => $_) {
             $properties['$' . $fieldName . 'ID'] = new IntegerType();
         }
-
         return $properties;
     }
 
@@ -91,20 +85,16 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @param SilverstripeConstants::PROPERTY_BELONGS_TO|SilverstripeConstants::PROPERTY_HAS_ONE $relationName
      * @return Type[]
      */
-    #[Override]
     public function resolveMethodTypesFromSingleRelation(string $className, string $relationName): array
     {
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
-
         if ($relation === null) {
             return $properties;
         }
-
         foreach ($relation as $fieldName => $fieldType) {
             $properties[$fieldName] = $this->resolveRelationFieldType($fieldType);
         }
-
         return $properties;
     }
 
@@ -112,21 +102,16 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @param class-string $className
      * @return Type[]
      */
-    #[Override]
     public function resolvePropertyTypesFromDependencies(string $className): array
     {
         $properties = [];
-
         $dependencies = $this->getConfig($className, SilverstripeConstants::PROPERTY_DEPENDENCIES);
-
         if (!is_array($dependencies) || $dependencies === []) {
             return $properties;
         }
-
         foreach ($dependencies as $fieldName => $fieldType) {
             $properties[$fieldName] = $this->resolveDependencyFieldType($fieldType);
         }
-
         return $properties;
     }
 
@@ -134,16 +119,13 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @param class-string $className
      * @return Type[]
      */
-    #[Override]
     public function resolveMixinTypesFromExtensions(string $className): array
     {
         $properties = [];
         $extensions = $this->getConfig($className, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
-
         if ($extensions === []) {
             return $properties;
         }
-
         foreach (array_unique($extensions) as $extension) {
             $extensionClassName = $this->resolveExtensionClassName($extension);
 
@@ -159,15 +141,15 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
 
             $properties[] = new FullyQualifiedObjectType($extensionClassName);
         }
-
         return $properties;
     }
 
     /**
      * @param class-string $className
      * @param SilverstripeConstants::* $name
+     * @return mixed
      */
-    protected function getConfig(string $className, string $name): mixed
+    protected function getConfig(string $className, string $name)
     {
         return Config::inst()->get($className, $name, Config::EXCLUDE_EXTRA_SOURCES | Config::UNINHERITED);
     }
@@ -176,13 +158,17 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @template T
      * @param class-string<T> $className
      * @return T
+     * @param mixed $argument
      */
-    protected function make(string $className, mixed $argument = null): mixed
+    protected function make(string $className, $argument = null)
     {
         return Injector::inst()->create($className, $argument);
     }
 
-    protected function resolveDependencyFieldType(bool|int|string $fieldType): Type
+    /**
+     * @param bool|int|string $fieldType
+     */
+    protected function resolveDependencyFieldType($fieldType): Type
     {
         if (is_bool($fieldType)) {
             return new BooleanType();
@@ -194,7 +180,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
 
         $name = $fieldType;
 
-        if (str_contains($fieldType, '%$')) {
+        if (strpos($fieldType, '%$') !== false) {
             $name = $this->resolvePrefixNotation($fieldType);
         }
 
@@ -212,7 +198,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
     {
         /** @var DBField $field */
         $field = $this->make($fieldType, 'Temp');
-        $classReflection = $this->reflectionProvider->getClass($field::class);
+        $classReflection = $this->reflectionProvider->getClass(get_class($field));
 
         foreach (self::DBFIELD_TO_TYPE_MAPPING as $dbClass => $type) {
             if (!$this->reflectionProvider->hasClass($dbClass)) {
@@ -233,7 +219,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
      * @param string[]|string $fieldType
      * @param array{through: class-string<DataObject>, from: string, to: string}|string $fieldType
      */
-    protected function resolveRelationFieldType(array|string $fieldType): Type
+    protected function resolveRelationFieldType($fieldType): Type
     {
         $className = '';
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PHPStan\Analyser\Scope;
@@ -18,19 +17,20 @@ use SilverStripe\Core\Extension;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function is_string;
-use function str_contains;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\StaticPropertyFetchToConfigGetRectorTest
  */
 final class StaticPropertyFetchToConfigGetRector extends AbstractRector
 {
-    public function __construct(
-        private readonly ReflectionResolver $reflectionResolver,
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionResolver $reflectionResolver;
+    public function __construct(ReflectionResolver $reflectionResolver)
+    {
+        $this->reflectionResolver = $reflectionResolver;
     }
-
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
@@ -67,7 +67,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticPropertyFetch::class];
@@ -76,39 +75,28 @@ CODE_SAMPLE
     /**
      * @param StaticPropertyFetch $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         $classReflection = $this->reflectionResolver->resolveClassReflection($node);
-
         if (!$classReflection instanceof ClassReflection) {
             return null;
         }
-
         if ($this->shouldSkipClass($classReflection)) {
             return null;
         }
-
         $propertyFetchScope = $node->getAttribute(AttributeKey::SCOPE);
-
         if (!$propertyFetchScope instanceof Scope) {
             return null;
         }
-
         $propertyName = $this->nodeNameResolver->getName($node->name);
-
         if (!is_string($propertyName)) {
             return null;
         }
-
         $propertyReflection = $classReflection->getProperty($propertyName, $propertyFetchScope);
-
         if ($this->shouldSkipProperty($propertyReflection)) {
             return null;
         }
-
         $configCall = $this->nodeFactory->createMethodCall('this', 'config');
-
         return $this->nodeFactory->createMethodCall($configCall, 'get', [$propertyName]);
     }
 
@@ -131,6 +119,6 @@ CODE_SAMPLE
             return true;
         }
 
-        return str_contains((string) $propertyReflection->getDocComment(), '@internal');
+        return strpos((string) $propertyReflection->getDocComment(), '@internal') !== false;
     }
 }
