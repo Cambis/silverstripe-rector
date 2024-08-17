@@ -11,6 +11,9 @@ use SilverStripe\Core\Manifest\ClassLoader;
 use SilverStripe\Core\Manifest\ClassManifest;
 use function dirname;
 
+/**
+ * @see \Cambis\SilverstripeRector\Tests\Testing\Fixture\FixtureManifestUpdater\FixtureManifestUpdaterTest
+ */
 final class FixtureManifestUpdater
 {
     /**
