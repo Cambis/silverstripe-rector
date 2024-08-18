@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -27,4 +28,8 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         // This may cause a downgrade to fail
         AddTypeToConstRector::class,
+        // This rector uses FQN names
+        StringClassNameToClassConstantRector::class => [
+            __DIR__ . '/rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToContentControllerRector.php',
+        ],
     ]);

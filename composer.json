@@ -27,6 +27,7 @@
         "symplify/phpstan-extensions": "^11.4",
         "symplify/phpstan-rules": "^13.0",
         "symplify/rule-doc-generator": "^11.0",
+        "symplify/vendor-patches": "^11.3",
         "tomasvotruba/cognitive-complexity": "^0.2.2"
     },
     "minimum-stability": "dev",
@@ -62,6 +63,9 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "patches": {
+            "rector/rector": {
+                "Update Silverstripe class manifest": "patches/rector/rector/update-silverstripe-class-manifest.patch"
+            },
             "symplify/rule-doc-generator": {
                 "Custom rule docs": "patches/symplify/rule-doc-generator/custom-rule-docs.patch"
             }
