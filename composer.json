@@ -64,10 +64,10 @@
         "composer-exit-on-patch-failure": true,
         "patches": {
             "rector/rector": {
-                "Update Silverstripe class manifest": "patches/rector/rector/update-silverstripe-class-manifest.patch"
+                "Update Silverstripe manifest": "patches/rector-rector-src-testing-phpunit-abstractrectortestcase-php.patch"
             },
             "symplify/rule-doc-generator": {
-                "Custom rule docs": "patches/symplify/rule-doc-generator/custom-rule-docs.patch"
+                "Custom rule docs": "patches/symplify-rule-doc-generator-src-rulecodesampleprinter-rectorrulecodesampleprinter-php.patch"
             }
         }
     },
