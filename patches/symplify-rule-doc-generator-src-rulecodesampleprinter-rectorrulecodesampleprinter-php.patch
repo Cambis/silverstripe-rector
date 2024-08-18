@@ -1,8 +1,6 @@
-diff --git src/RuleCodeSamplePrinter/RectorRuleCodeSamplePrinter.php src/RuleCodeSamplePrinter/RectorRuleCodeSamplePrinter.php
-index 4fe8da5..df900dd 100644
---- src/RuleCodeSamplePrinter/RectorRuleCodeSamplePrinter.php
-+++ src/RuleCodeSamplePrinter/RectorRuleCodeSamplePrinter.php
-@@ -10,7 +10,6 @@ use Symplify\RuleDocGenerator\Printer\CodeSamplePrinter\DiffCodeSamplePrinter;
+--- /dev/null
++++ ../src/RuleCodeSamplePrinter/RectorRuleCodeSamplePrinter.php
+@@ -10,7 +10,6 @@
  use Symplify\RuleDocGenerator\Printer\MarkdownCodeWrapper;
  use Symplify\RuleDocGenerator\RuleCodeSamplePrinter\ConfiguredRuleCustomPrinter\RectorConfigConfiguredRuleCustomPrinter;
  use Symplify\RuleDocGenerator\ValueObject\CodeSample\ComposerJsonAwareCodeSample;
@@ -10,18 +8,18 @@ index 4fe8da5..df900dd 100644
  use Symplify\RuleDocGenerator\ValueObject\CodeSample\ExtraFileCodeSample;
  use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  
-@@ -42,14 +41,6 @@ final class RectorRuleCodeSamplePrinter implements RuleCodeSamplePrinterInterfac
-             return $this->printComposerJsonAwareCodeSample($codeSample);
-         }
+@@ -40,14 +39,6 @@
  
+         if ($codeSample instanceof ComposerJsonAwareCodeSample) {
+             return $this->printComposerJsonAwareCodeSample($codeSample);
+-        }
+-
 -        if ($codeSample instanceof ConfiguredCodeSample) {
 -            return $this->configuredCodeSamplerPrinter->printConfiguredCodeSample(
 -                $ruleDefinition,
 -                $codeSample,
 -                $this->rectorConfigConfiguredRuleCustomPrinter
 -            );
--        }
--
-         return $this->diffCodeSamplePrinter->print($codeSample);
-     }
+         }
  
+         return $this->diffCodeSamplePrinter->print($codeSample);

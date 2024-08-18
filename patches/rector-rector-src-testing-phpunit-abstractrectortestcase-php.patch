@@ -1,0 +1,10 @@
+--- /dev/null
++++ ../src/Testing/PHPUnit/AbstractRectorTestCase.php
+@@ -135,6 +135,7 @@
+         }
+         // write temp file
+         FileSystem::write($inputFilePath, $inputFileContents, null);
++        \Cambis\SilverstripeRector\Testing\Fixture\FixtureManifestUpdater::addInputFileToClassManifest($inputFilePath);
+         $this->doTestFileMatchesExpectedContent($inputFilePath, $inputFileContents, $expectedFileContents, $fixtureFilePath);
+     }
+     private function forgetRectorsRules() : void
