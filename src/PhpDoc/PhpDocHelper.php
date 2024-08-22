@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\PhpDoc;
 
+use PhpParser\Node\NullableType;
 use PHPStan\PhpDocParser\Ast\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
@@ -11,11 +12,13 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use PHPStan\Type\Type;
 use Rector\Enum\ObjectReference;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
+use Rector\PHPStanStaticTypeMapper\Enum\TypeKind;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
 final readonly class PhpDocHelper
@@ -39,6 +42,12 @@ final readonly class PhpDocHelper
 
         foreach ($paramsNameToType as $name => $type) {
             $typeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type);
+
+            $phpParserNode = $this->staticTypeMapper->mapPHPStanTypeToPhpParserNode($type, TypeKind::PROPERTY);
+
+            if ($typeNode instanceof UnionTypeNode && $phpParserNode instanceof NullableType) {
+                $typeNode = new NullableTypeNode($typeNode->types[1]);
+            }
 
             if ($typeNode instanceof IntersectionTypeNode || $typeNode instanceof UnionTypeNode) {
                 $typeNode = $this->fixCompoundTypeNode($typeNode);

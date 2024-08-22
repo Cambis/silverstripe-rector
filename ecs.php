@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -15,6 +16,12 @@ return ECSConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
+    ->withConfiguredRule(
+        NewWithBracesFixer::class,
+        [
+            'anonymous_class' => false,
+        ]
+    )
     ->withConfiguredRule(
         ReferenceUsedNamesOnlySniff::class,
         [
