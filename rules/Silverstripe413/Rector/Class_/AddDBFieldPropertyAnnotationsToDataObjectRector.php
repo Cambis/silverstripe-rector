@@ -31,7 +31,7 @@ CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
 /**
- * @property string $Bar
+ * @property ?string $Bar
  */
 class Foo extends \SilverStripe\ORM\DataObject
 {

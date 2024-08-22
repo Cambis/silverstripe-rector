@@ -7,6 +7,10 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFie
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DB;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBComplete;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBIncomplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBRequiredFields;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBRequiredFieldsExtended;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Fixture\DBRequiredFieldsExtension;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddDBFieldPropertyAnnotationsToDataObjectRector\Source\RequiredFieldsExtensionMock;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
@@ -80,6 +84,41 @@ final class AddDBFieldPropertyAnnotationsToDataObjectRectorTest extends Abstract
                 'Text' => 'Text',
                 'Time' => 'Time',
                 'Varchar' => 'Varchar(255)',
+            ]
+        );
+
+        Config::modify()->merge(
+            DBRequiredFields::class,
+            SilverstripeConstants::PROPERTY_DB,
+            [
+                'NotRequiredField' => 'Varchar(255)',
+                'RequiredField' => 'Varchar(255)',
+            ]
+        );
+
+        Config::modify()->merge(
+            DBRequiredFieldsExtended::class,
+            SilverstripeConstants::PROPERTY_DB,
+            [
+                'NotRequiredField' => 'Varchar(255)',
+                'RequiredField' => 'Varchar(255)',
+            ]
+        );
+
+        Config::modify()->merge(
+            DBRequiredFieldsExtended::class,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
+            [
+                RequiredFieldsExtensionMock::class,
+            ]
+        );
+
+        Config::modify()->merge(
+            DBRequiredFieldsExtension::class,
+            SilverstripeConstants::PROPERTY_DB,
+            [
+                'NotRequiredField' => 'Varchar(255)',
+                'RequiredField' => 'Varchar(255)',
             ]
         );
     }

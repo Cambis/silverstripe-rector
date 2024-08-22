@@ -114,7 +114,7 @@ Add missing dynamic annotations.
 
 ```diff
 +/**
-+ * @property string $Bar
++ * @property ?string $Bar
 + */
  class Foo extends \SilverStripe\ORM\DataObject
  {

@@ -10,12 +10,15 @@ use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
+use PHPStan\Type\NullType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
+use PHPStan\Type\UnionType;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\TestOnly;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
 use function array_unique;
@@ -58,7 +61,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         }
 
         foreach ($db as $fieldName => $fieldType) {
-            $properties['$' . $fieldName] = $this->resolveDBFieldType($fieldType);
+            $properties['$' . $fieldName] = $this->resolveDBFieldType($className, $fieldName, $fieldType);
         }
 
         return $properties;
@@ -206,9 +209,10 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
     }
 
     /**
+     * @param class-string $className
      * @param class-string<DBField> $fieldType
      */
-    protected function resolveDBFieldType(string $fieldType): Type
+    protected function resolveDBFieldType(string $className, string $fieldName, string $fieldType): Type
     {
         /** @var DBField $field */
         $field = $this->make($fieldType, 'Temp');
@@ -226,7 +230,27 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             return new $type();
         }
 
-        return new StringType();
+        // Instantiate the object so we can check for required fields
+        $object = Injector::inst()->create($className);
+
+        // Fallback case
+        if (!$object instanceof DataObject && !$object instanceof Extension) {
+            return new StringType();
+        }
+
+        // If the object is an extension, create a mock DataObject and add the extension to it
+        if ($object instanceof Extension) {
+            $object = new class extends DataObject implements TestOnly {};
+            $object::add_extension($className);
+        }
+
+        // Check if the field is required
+        if ($object->getCMSCompositeValidator()->fieldIsRequired($fieldName)) {
+            return new StringType();
+        }
+
+        // This is not required and therefore is nullable
+        return new UnionType([new NullType(), new StringType()]);
     }
 
     /**

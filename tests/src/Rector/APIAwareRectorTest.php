@@ -34,7 +34,7 @@ final class APIAwareRectorTest extends TestCase
     public function testRefactorException(): void
     {
         /** @phpstan-ignore-next-line (This is an anonymous class and does not require '@see') */
-        $rector = new class() extends AbstractAPIAwareRector implements TestOnly {
+        $rector = new class extends AbstractAPIAwareRector implements TestOnly {
             public function getRuleDefinition(): RuleDefinition
             {
                 return new RuleDefinition('', []);
@@ -53,7 +53,7 @@ final class APIAwareRectorTest extends TestCase
 
         $this->expectException(ShouldNotHappenException::class);
 
-        $rector->refactor(new class() extends NodeAbstract implements TestOnly {
+        $rector->refactor(new class extends NodeAbstract implements TestOnly {
             public function getType(): string
             {
                 return '';
