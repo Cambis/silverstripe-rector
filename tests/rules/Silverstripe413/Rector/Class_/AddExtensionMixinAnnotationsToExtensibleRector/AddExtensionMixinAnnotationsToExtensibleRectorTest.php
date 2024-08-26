@@ -6,14 +6,17 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExten
 
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtension;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionReplaced;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionShortname;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Fixture\HasOneExtensionSuffixed;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ExtensionMock;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddExtensionMixinAnnotationsToExtensibleRector\Source\ReplacedExtensionMock;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
 
 final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractRectorTestCase
 {
@@ -54,6 +57,19 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
             SilverstripeConstants::PROPERTY_EXTENSIONS,
             [
                 ExtensionMock::class . "('Foo', 'Bar')",
+            ]
+        );
+
+        Injector::inst()->registerService(
+            Injector::inst()->create(ExtensionMock::class),
+            ReplacedExtensionMock::class
+        );
+
+        Config::modify()->merge(
+            HasOneExtensionReplaced::class,
+            SilverstripeConstants::PROPERTY_EXTENSIONS,
+            [
+                ReplacedExtensionMock::class,
             ]
         );
     }
