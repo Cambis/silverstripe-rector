@@ -6,6 +6,8 @@ namespace Cambis\SilverstripeRector\TypeResolver;
 
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
+use Exception;
+use InvalidArgumentException;
 use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
@@ -201,11 +203,18 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             $name = $this->resolvePrefixNotation($fieldType);
         }
 
-        if ($this->reflectionProvider->hasClass($name)) {
-            return new FullyQualifiedObjectType($name);
+        if (!$this->reflectionProvider->hasClass($name)) {
+            return new StringType();
         }
 
-        return new StringType();
+        $classReflection = $this->reflectionProvider->getClass($name);
+
+        // Keep the original name if it is an interface
+        if (!$classReflection->isInterface()) {
+            $name = $this->resolveInjectedClassName($name);
+        }
+
+        return new FullyQualifiedObjectType($name);
     }
 
     /**
@@ -231,7 +240,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         }
 
         // Instantiate the object so we can check for required fields
-        $object = Injector::inst()->create($className);
+        $object = $this->make($className);
 
         // Fallback case
         if (!$object instanceof DataObject && !$object instanceof Extension) {
@@ -269,7 +278,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             $className = $this->resolveDotNotation($fieldType);
         }
 
-        return new FullyQualifiedObjectType($className);
+        return new FullyQualifiedObjectType($this->resolveInjectedClassName($className));
     }
 
     protected function resolveDotNotation(string $fieldType): string
@@ -298,6 +307,30 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             return null;
         }
 
-        return $matches[1];
+        $resolved = $matches[1];
+
+        if (!$this->reflectionProvider->hasClass($resolved)) {
+            return null;
+        }
+
+        return $this->resolveInjectedClassName($resolved);
+    }
+
+    /**
+     * Resolve the class name with the Injector, as it may have been replaced.
+     */
+    protected function resolveInjectedClassName(string $className): string
+    {
+        if (!$this->reflectionProvider->hasClass($className)) {
+            throw new InvalidArgumentException('Class does not exist.');
+        }
+
+        try {
+            return $this->make($className)::class;
+        } catch (Exception) {
+        }
+
+        // Fallback case
+        return $className;
     }
 }
