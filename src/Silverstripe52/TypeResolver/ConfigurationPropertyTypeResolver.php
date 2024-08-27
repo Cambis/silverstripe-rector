@@ -94,14 +94,15 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
         }
 
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
-            // Use the Injector to resolve the extension class name as it may have been replaced
-            $extensions = array_map(function (string $extensionName): string {
-                return $this->resolveInjectedClassName($extensionName);
-            }, $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? []);
+            /** @var class-string[] $extensions */
+            $extensions = $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
 
+            // Use the Injector to resolve the extension class name as it may have been replaced
             return in_array(
                 $className,
-                $extensions,
+                array_map(function (string $extensionName): string {
+                    return $this->resolveInjectedClassName($extensionName);
+                }, $extensions),
                 true
             );
         });

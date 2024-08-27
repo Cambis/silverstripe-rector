@@ -277,7 +277,11 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             $className = $this->resolveDotNotation($fieldType);
         }
 
-        return new FullyQualifiedObjectType($this->resolveInjectedClassName($className));
+        if ($this->reflectionProvider->hasClass($className)) {
+            $className = $this->resolveInjectedClassName($className);
+        }
+
+        return new FullyQualifiedObjectType($className);
     }
 
     protected function resolveDotNotation(string $fieldType): string
@@ -317,13 +321,11 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
 
     /**
      * Resolve the class name with the Injector, as it may have been replaced.
+     *
+     * @param class-string $className
      */
     protected function resolveInjectedClassName(string $className): string
     {
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return $className;
-        }
-
         try {
             return $this->make($className)::class;
         } catch (Exception) {
