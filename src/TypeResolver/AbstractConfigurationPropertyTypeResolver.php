@@ -7,7 +7,6 @@ namespace Cambis\SilverstripeRector\TypeResolver;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Exception;
-use InvalidArgumentException;
 use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
@@ -322,7 +321,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
     protected function resolveInjectedClassName(string $className): string
     {
         if (!$this->reflectionProvider->hasClass($className)) {
-            throw new InvalidArgumentException('Class does not exist.');
+            return $className;
         }
 
         try {
