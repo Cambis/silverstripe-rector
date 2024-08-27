@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Testing\Fixture;
 
 use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Injector\InjectorLoader;
 use SilverStripe\Core\Manifest\ClassLoader;
@@ -30,12 +31,10 @@ final class FixtureManifestUpdater
         // in the fixture directory
         $basePath = dirname($inputFilePath);
 
-        // Create a new class manifest with the generated file
-        $classManifest = new ClassManifest($basePath);
-        $classManifest->handleFile($basePath, $inputFilePath, true);
-
-        // Add the manifest to the class loader
-        ClassLoader::inst()->pushManifest($classManifest, false);
+        // Add the file to the current manifest
+        ClassLoader::inst()
+            ->getManifest()
+            ->handleFile($basePath, $inputFilePath, true);
 
         // Register any new classes with the Injector
         foreach (ClassInfo::classes_for_file($inputFilePath) as $class) {

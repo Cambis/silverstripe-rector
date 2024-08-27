@@ -21,6 +21,7 @@ final class FixtureManifestUpdaterTest extends AbstractRectorTestCase
     public function testAddInputFileToClassManifest(): void
     {
         $this->inputFilePath = __DIR__ . '/Fixture/foo.php';
+        $numOfClasses = count(ClassInfo::allClasses());
 
         $expectedClassName = 'Cambis\SilverstripeRector\Tests\Testing\Fixture\FixtureManifestUpdater\Fixture\Foo';
         $fixtureFilePath = __DIR__ . '/Fixture/foo.php.inc';
@@ -30,6 +31,7 @@ final class FixtureManifestUpdaterTest extends AbstractRectorTestCase
 
         $this->assertArrayHasKey(Strings::lower($expectedClassName), ClassLoader::inst()->getManifest()->getClassNames());
         $this->assertTrue(ClassInfo::exists($expectedClassName));
+        $this->assertCount($numOfClasses + 1, ClassInfo::allClasses());
         $this->assertTrue(Injector::inst()->has($expectedClassName));
         $this->assertInstanceOf($expectedClassName, Injector::inst()->create($expectedClassName));
     }
@@ -40,8 +42,11 @@ final class FixtureManifestUpdaterTest extends AbstractRectorTestCase
         return SilverstripeSetList::WITH_SILVERSTRIPE_API;
     }
 
+    #[Override]
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         if ($this->inputFilePath !== null) {
             FileSystem::delete($this->inputFilePath);
         }
