@@ -15,4 +15,10 @@ final class SilverstripeLevelSetList implements SetListInterface
     public const UP_TO_SILVERSTRIPE_51 = __DIR__ . '/../../../config/set/level/up-to-silverstripe51.php';
 
     public const UP_TO_SILVERSTRIPE_52 = __DIR__ . '/../../../config/set/level/up-to-silverstripe52.php';
+
+    public const UP_TO_SILVERSTRIPE_53 = __DIR__ . '/../../../config/set/level/up-to-silverstripe53.php';
+
+    public const UP_TO_SILVERSTRIPE_54 = __DIR__ . '/../../../config/set/level/up-to-silverstripe54.php';
+
+    public const UP_TO_SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/level/up-to-silverstripe60.php';
 }

@@ -18,6 +18,12 @@ final class SilverstripeSetList implements SetListInterface
 
     public const SILVERSTRIPE_52 = __DIR__ . '/../../../config/set/silverstripe52.php';
 
+    public const SILVERSTRIPE_53 = __DIR__ . '/../../../config/set/silverstripe53.php';
+
+    public const SILVERSTRIPE_54 = __DIR__ . '/../../../config/set/silverstripe54.php';
+
+    public const SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/silverstripe60.php';
+
     /**
      * Provides access to the Injector and Configuration APIs.
      */
