@@ -6,12 +6,16 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\Complete
 
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\Injectable;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableComplete;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableInterface;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyInterface;
+use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyInterfaceImplementor;
 use Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Iterator;
 use Override;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
 
 final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRectorTestCase
 {
@@ -42,6 +46,19 @@ final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRector
                 'message' => 'This is a message',
                 'integer' => 1,
                 'boolean' => true,
+            ]
+        );
+
+        Injector::inst()->registerService(
+            new DependencyInterfaceImplementor(),
+            DependencyInterface::class
+        );
+
+        Config::modify()->merge(
+            InjectableInterface::class,
+            SilverstripeConstants::PROPERTY_DEPENDENCIES,
+            [
+                'dependency' => '%$' . DependencyInterface::class,
             ]
         );
     }

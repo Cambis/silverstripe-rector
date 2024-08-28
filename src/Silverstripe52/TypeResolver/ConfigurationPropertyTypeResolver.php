@@ -24,6 +24,7 @@ use SilverStripe\ORM\ManyManyThroughList;
 use SilverStripe\View\ViewableData;
 use function array_filter;
 use function array_key_exists;
+use function array_map;
 use function array_pop;
 use function count;
 use function in_array;
@@ -93,12 +94,22 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
         }
 
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
+            /** @var class-string[] $extensions */
+            $extensions = $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
+
+            // Use the Injector to resolve the extension class name as it may have been replaced
             return in_array(
                 $className,
-                $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [],
+                array_map(function (string $extensionName): string {
+                    return $this->resolveInjectedClassName($extensionName);
+                }, $extensions),
                 true
             );
         });
+
+        if ($owners === []) {
+            return new ExtensionGenericObjectType($parentClassName, [new StaticType($classReflection)]);
+        }
 
         $types = [];
 
