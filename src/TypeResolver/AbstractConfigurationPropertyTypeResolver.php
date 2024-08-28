@@ -306,10 +306,6 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             return null;
         }
 
-        if ($matches === []) {
-            return null;
-        }
-
         $resolved = $matches[1];
 
         if (!$this->reflectionProvider->hasClass($resolved)) {
