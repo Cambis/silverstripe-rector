@@ -1,5 +1,19 @@
 # silverstripe-rector
 
+## 0.6.0
+
+### Minor Changes
+
+- fc39f46: Add generated test files to Silverstripe manifest
+- 1193d89: Add nullable types
+- 9453436: Add setlists up to Silverstripe 6.0
+- cf4a3e3: - Use the Injector API to resolve classnames
+  - Update extension owner tests to use true types rather than mocked types
+
+### Patch Changes
+
+- 8e692e1: Only include `\SilverStripe\Dev\TestOnly` classes during testing
+
 ## 0.5.1
 
 ### Patch Changes
