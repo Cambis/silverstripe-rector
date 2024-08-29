@@ -25,7 +25,7 @@ interface ConfigurationPropertyTypeResolverInterface
     /**
      * @var array<class-string<DBField>, class-string<Type>>
      */
-    final public const DBFIELD_TO_TYPE_MAPPING = [
+    public const DBFIELD_TO_TYPE_MAPPING = [
         DBBoolean::class => BooleanType::class,
         DBDecimal::class => FloatType::class,
         DBFloat::class => FloatType::class,
