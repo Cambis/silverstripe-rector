@@ -31,7 +31,8 @@ try {
     $kernel = new class(BASE_PATH) extends DatabaselessKernel {
         protected function getIncludeTests()
         {
-            return true;
+            // Only include `\SilverStripe\Dev\TestOnly` if we are running PHPUnit
+            return defined('PHPUNIT_COMPOSER_INSTALL') || defined('__PHPUNIT_PHAR__');
         }
     };
 
