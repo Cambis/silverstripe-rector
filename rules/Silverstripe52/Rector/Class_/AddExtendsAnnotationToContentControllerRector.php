@@ -102,8 +102,6 @@ CODE_SAMPLE
         }
 
         $dataRecordTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($dataRecordType);
-
-        /** @var string $parentClassName */
         $parentClassName = $this->getParentClassName($classReflection);
 
         if ($parentClassName === 'SilverStripe\\CMS\\Controllers\\ContentController') {

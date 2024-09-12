@@ -15,10 +15,7 @@ use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\IntersectionType;
-use PHPStan\Type\ObjectType;
-use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
 use Rector\StaticTypeMapper\Contract\PhpDocParser\PhpDocTypeMapperInterface;
 use SilverStripe\Core\Extensible;
@@ -103,44 +100,29 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
         $extensibleType = $this->typeNodeResolver->resolve($typeNode->types[0], $nameScope);
         $extensionType = $this->typeNodeResolver->resolve($typeNode->types[1], $nameScope);
 
-        if ($this->shouldSkipExtensibleType($extensibleType)) {
+        if (!$this->isInternalTypeAcceptable($extensibleType)) {
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
-        if ($this->shouldSkipExtensionType($extensionType)) {
+        if (!$this->isInternalTypeAcceptable($extensionType)) {
             return $this->typeNodeResolver->resolve($typeNode, $nameScope);
         }
 
         return new ExtensionOwnerIntersectionType([$extensibleType, $extensionType]);
     }
 
-    private function shouldSkipExtensibleType(Type $type): bool
+    private function isInternalTypeAcceptable(Type $type): bool
     {
-        if (!$type instanceof ObjectType) {
-            return true;
+        foreach ($type->getObjectClassReflections() as $classReflection) {
+            if ($classReflection->hasTraitUse(Extensible::class)) {
+                return true;
+            }
+
+            if ($classReflection->isSubclassOf(Extension::class)) {
+                return true;
+            }
         }
 
-        $classReflection = $type->getClassReflection();
-
-        if (!$classReflection instanceof ClassReflection) {
-            return true;
-        }
-
-        return !$classReflection->hasTraitUse(Extensible::class);
-    }
-
-    private function shouldSkipExtensionType(Type $type): bool
-    {
-        if (!$type instanceof StaticType && !$type instanceof ObjectType) {
-            return true;
-        }
-
-        $classReflection = $type->getClassReflection();
-
-        if (!$classReflection instanceof ClassReflection) {
-            return true;
-        }
-
-        return !$classReflection->isSubclassOf(Extension::class);
+        return false;
     }
 }
