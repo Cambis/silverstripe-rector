@@ -11,6 +11,7 @@ use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
+use PHPStan\Type\MixedType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
@@ -22,6 +23,8 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\TestOnly;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
+use function array_key_exists;
+use function array_keys;
 use function array_unique;
 use function explode;
 use function is_array;
@@ -55,12 +58,14 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
     public function resolvePropertyTypesFromDBFields(string $className): array
     {
         $properties = [];
+
         $db = $this->getConfig($className, SilverstripeConstants::PROPERTY_DB);
 
         if (!is_array($db) || $db === []) {
             return $properties;
         }
 
+        /** @var class-string<DBField>[] $db */
         foreach ($db as $fieldName => $fieldType) {
             $properties['$' . $fieldName] = $this->resolveDBFieldType($className, $fieldName, $fieldType);
         }
@@ -79,11 +84,14 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
 
-        if ($relation === null) {
+        if (!is_array($relation) || $relation === []) {
             return $properties;
         }
 
-        foreach ($relation as $fieldName => $_) {
+        /** @var string[] $relationKeys */
+        $relationKeys = array_keys($relation);
+
+        foreach ($relationKeys as $fieldName) {
             $properties['$' . $fieldName . 'ID'] = new IntegerType();
         }
 
@@ -101,10 +109,11 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         $properties = [];
         $relation = $this->getConfig($className, $relationName);
 
-        if ($relation === null) {
+        if (!is_array($relation) || $relation === []) {
             return $properties;
         }
 
+        /** @var string[] $relation */
         foreach ($relation as $fieldName => $fieldType) {
             $properties[$fieldName] = $this->resolveRelationFieldType($fieldType);
         }
@@ -127,6 +136,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
             return $properties;
         }
 
+        /** @var array<bool|int|string> $dependencies */
         foreach ($dependencies as $fieldName => $fieldType) {
             $properties[$fieldName] = $this->resolveDependencyFieldType($fieldType);
         }
@@ -144,11 +154,14 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
         $properties = [];
         $extensions = $this->getConfig($className, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
 
-        if ($extensions === []) {
+        if (!is_array($extensions) || $extensions === []) {
             return $properties;
         }
 
-        foreach (array_unique($extensions) as $extension) {
+        /** @var string[] $extensions */
+        $extensions = array_unique($extensions);
+
+        foreach ($extensions as $extension) {
             $extensionClassName = $this->resolveExtensionClassName($extension);
 
             if ($extensionClassName === null) {
@@ -263,11 +276,14 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
 
     /**
      * @param string[]|string $fieldType
-     * @param array{through: class-string<DataObject>, from: string, to: string}|string $fieldType
      */
     protected function resolveRelationFieldType(array|string $fieldType): Type
     {
         $className = '';
+
+        if (is_array($fieldType) && !array_key_exists('through', $fieldType)) {
+            return new MixedType();
+        }
 
         if (is_array($fieldType)) {
             $className = $fieldType['through'];
