@@ -60,8 +60,11 @@ final class AddExtensionMixinAnnotationsToExtensibleRectorTest extends AbstractR
             ]
         );
 
+        /** @var ExtensionMock $service */
+        $service = Injector::inst()->create(ExtensionMock::class);
+
         Injector::inst()->registerService(
-            Injector::inst()->create(ExtensionMock::class),
+            $service,
             ReplacedExtensionMock::class
         );
 

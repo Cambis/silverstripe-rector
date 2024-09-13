@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type;
 
 use Override;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\IntersectionType;
-use PHPStan\Type\ObjectType;
-use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Core\Extension;
@@ -49,20 +46,16 @@ final class ExtensionOwnerIntersectionType extends IntersectionType
 
     private function isInternalTypeAcceptable(Type $type): bool
     {
-        if (!$type instanceof StaticType && !$type instanceof ObjectType) {
-            return false;
+        foreach ($type->getObjectClassReflections() as $classReflection) {
+            if ($classReflection->hasTraitUse(Extensible::class)) {
+                return true;
+            }
+
+            if ($classReflection->isSubclassOf(Extension::class)) {
+                return true;
+            }
         }
 
-        $classReflection = $type->getClassReflection();
-
-        if (!$classReflection instanceof ClassReflection) {
-            return false;
-        }
-
-        if ($classReflection->hasTraitUse(Extensible::class)) {
-            return true;
-        }
-
-        return $classReflection->isSubclassOf(Extension::class);
+        return false;
     }
 }

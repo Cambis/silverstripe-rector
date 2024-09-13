@@ -44,12 +44,14 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
         string $listName = DataList::class
     ): array {
         $properties = [];
+
         $relation = $this->getConfig($className, $relationName) ?? [];
 
-        if ($relation === []) {
+        if (!is_array($relation) || $relation === []) {
             return $properties;
         }
 
+        /** @var array<string|string[]> $relation */
         foreach ($relation as $fieldName => $fieldType) {
             $relationFieldType = $this->resolveRelationFieldType($fieldType);
 
