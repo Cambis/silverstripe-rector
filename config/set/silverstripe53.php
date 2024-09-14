@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Silverstripe52\TypeResolver\ConfigurationPropertyTypeResolver;
+use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabNonArrayToArrayArgumentRector;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -15,6 +16,9 @@ return static function (RectorConfig $rectorConfig): void {
         ConfigurationPropertyTypeResolverInterface::class,
         ConfigurationPropertyTypeResolver::class
     );
+
+    // https://github.com/silverstripe/silverstripe-framework/pull/11236
+    $rectorConfig->rule(FieldListFieldsToTabNonArrayToArrayArgumentRector::class);
 
     $rectorConfig->ruleWithConfiguration(
         RenameClassRector::class,

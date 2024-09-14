@@ -6,6 +6,8 @@ namespace Cambis\SilverstripeRector\ValueObject;
 
 final class SilverstripeConstants
 {
+    public const PROPERTY_BELONGS_MANY_MANY = 'belongs_many_many';
+
     public const PROPERTY_BELONGS_TO = 'belongs_to';
 
     public const PROPERTY_DB = 'db';
@@ -20,15 +22,17 @@ final class SilverstripeConstants
 
     public const PROPERTY_MANY_MANY = 'many_many';
 
-    public const PROPERTY_BELONGS_MANY_MANY = 'belongs_many_many';
+    public const METHOD_ADD_FIELDS_TO_TAB = 'addFieldsToTab';
 
-    public const METHOD_GET_OWNER = 'getOwner';
+    public const METHOD_BY_ID = 'byID';
 
     public const METHOD_CREATE = 'create';
 
-    public const METHOD_GET_BY_ID = 'get_by_id';
-
     public const METHOD_GET = 'get';
 
-    public const METHOD_BY_ID = 'byID';
+    public const METHOD_GET_BY_ID = 'get_by_id';
+
+    public const METHOD_GET_OWNER = 'getOwner';
+
+    public const METHOD_REMOVE_FIELDS_FROM_TAB = 'removeFieldsFromTab';
 }
