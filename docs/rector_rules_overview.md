@@ -1,4 +1,4 @@
-# 19 Rules Overview
+# 20 Rules Overview
 
 <br>
 
@@ -11,6 +11,8 @@
 - [Silverstripe51](#silverstripe51) (1)
 
 - [Silverstripe52](#silverstripe52) (6)
+
+- [Silverstripe53](#silverstripe53) (1)
 
 <br>
 
@@ -393,6 +395,26 @@ Remove `getOwner()` method annotation.
  class Foo extends \SilverStripe\Core\Extension
  {
  }
+```
+
+<br>
+
+## Silverstripe53
+
+### FieldListFieldsToTabNonArrayToArrayArgumentRector
+
+Change the second argument of `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` into an array.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabNonArrayToArrayArgumentRector`](../rules/Silverstripe53/Rector/MethodCall/FieldListFieldsToTabNonArrayToArrayArgumentRector.php)
+
+```diff
+ \SilverStripe\Forms\FieldList::create()
+-    ->addFieldsToTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
++    ->addFieldsToTab('Root.Main', [\SilverStripe\Forms\TextField::create('Field')]);
+
+ \SilverStripe\Forms\FieldList::create()
+-    ->removeFieldsFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
++    ->removeFieldsFromTab('Root.Main', [\SilverStripe\Forms\TextField::create('Field')]);
 ```
 
 <br>
