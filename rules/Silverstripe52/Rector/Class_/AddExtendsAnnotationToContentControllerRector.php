@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
-use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -23,7 +22,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddExtendsAnnotationToContentControllerRector extends AbstractAddAnnotationsRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -76,34 +74,27 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $dataRecordClassName = $this->dataRecordResolver->resolveFullyQualifiedDataRecordClassNameFromControllerClassName($className);
         $tagValueNodes = [];
-
         // Fallback to Page if no data record was found
         if ($dataRecordClassName === null && $classReflection->isSubclassOf('PageController')) {
             $dataRecordClassName = 'Page';
         }
-
         // We can't really do anything at this point
         if ($dataRecordClassName === null) {
             return [];
         }
-
         $dataRecordType = new FullyQualifiedObjectType($dataRecordClassName);
-
         // Verify the dataRecord
         if ((new FullyQualifiedObjectType('SilverStripe\\CMS\\Model\\SiteTree'))->isSuperTypeOf($dataRecordType)->no()) {
             return [];
         }
-
         $dataRecordTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($dataRecordType);
         $parentClassName = $this->getParentClassName($classReflection);
-
         if ($parentClassName === 'SilverStripe\\CMS\\Controllers\\ContentController') {
             $tagValueNodes[] = new SpacingAwareTemplateTagValueNode(
                 'T',
@@ -114,46 +105,35 @@ CODE_SAMPLE
 
             $dataRecordTypeNode = new IdentifierTypeNode('T');
         }
-
         $genericTypeNode = new GenericTypeNode(
             $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode(new FullyQualifiedObjectType($parentClassName)), // @phpstan-ignore-line
             [$dataRecordTypeNode]
         );
-
         $tagValueNodes[] = new ExtendsTagValueNode(
             $genericTypeNode,
             ''
         );
-
         return $tagValueNodes;
     }
 
-    #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
         if ($this->classAnalyzer->isAnonymousClass($class)) {
             return true;
         }
-
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($class);
-
         // Skip if there is an existing extends
         if ($phpDocInfo->hasByName('@extends')) {
             return true;
         }
-
         $className = $this->nodeNameResolver->getName($class);
-
         if ($className === null) {
             return true;
         }
-
         if (!$this->reflectionProvider->hasClass($className)) {
             return true;
         }
-
         $classReflection = $this->reflectionProvider->getClass($className);
-
         return !$classReflection->isSubclassOf('SilverStripe\\CMS\\Controllers\\ContentController');
     }
 
