@@ -11,6 +11,7 @@ use Rector\Config\RectorConfig;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([SilverstripeSetList::SILVERSTRIPE_53, SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_52]);
 
+    // Ensure that we are using the correct type resolver
     $rectorConfig->singleton(
         ConfigurationPropertyTypeResolverInterface::class,
         ConfigurationPropertyTypeResolver::class
