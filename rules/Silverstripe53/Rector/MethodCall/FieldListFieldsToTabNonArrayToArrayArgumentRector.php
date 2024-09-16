@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
@@ -82,7 +81,7 @@ CODE_SAMPLE
 
         $argValue = $arg->value;
 
-        if ($argValue instanceof Array_) {
+        if ($this->getType($argValue)->isArray()->yes()) {
             return null;
         }
 
