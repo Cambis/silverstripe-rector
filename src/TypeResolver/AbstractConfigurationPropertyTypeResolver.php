@@ -261,7 +261,7 @@ abstract class AbstractConfigurationPropertyTypeResolver implements Configuratio
 
         // If the object is an extension, create a mock DataObject and add the extension to it
         if ($object instanceof Extension) {
-            $object = new class extends DataObject implements TestOnly {};
+            $object = new class(creationType: DataObject::CREATE_SINGLETON) extends DataObject implements TestOnly {};
             $object::add_extension($className);
         }
 
