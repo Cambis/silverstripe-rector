@@ -4,7 +4,8 @@
     "license": "MIT",
     "keywords": [
         "silverstripe",
-        "rector"
+        "rector",
+        "dev"
     ],
     "require": {
         "php": "^8.3",
