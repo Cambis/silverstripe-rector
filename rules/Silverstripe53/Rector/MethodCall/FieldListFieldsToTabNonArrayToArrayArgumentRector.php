@@ -29,7 +29,6 @@ final class FieldListFieldsToTabNonArrayToArrayArgumentRector extends AbstractRe
         SilverstripeConstants::METHOD_REMOVE_FIELDS_FROM_TAB,
     ];
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change the second argument of `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` into an array.', [
@@ -53,7 +52,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class];
@@ -62,32 +60,24 @@ CODE_SAMPLE
     /**
      * @param MethodCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->var, new ObjectType('SilverStripe\Forms\FieldList'))) {
             return null;
         }
-
         if (!$this->nodeNameResolver->isNames($node->name, self::METHOD_NAMES)) {
             return null;
         }
-
         $arg = $node->args[1] ?? null;
-
         if (!$arg instanceof Arg) {
             return null;
         }
-
         $argValue = $arg->value;
-
         if ($this->getType($argValue)->isArray()->yes()) {
             return null;
         }
-
         /** @phpstan-ignore-next-line */
         $node->args[1]->value = $this->nodeFactory->createArray([$argValue]);
-
         return $node;
     }
 }

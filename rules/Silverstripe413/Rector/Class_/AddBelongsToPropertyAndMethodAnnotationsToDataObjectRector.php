@@ -17,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddBelongsToPropertyAndMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -49,36 +48,25 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $classConst = $classReflection->getName();
-
         $newDocTagValueNodes = [];
         $belongsToProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );
-
-        $newDocTagValueNodes = [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
-                $belongsToProperties
-            ),
-        ];
-
+        $newDocTagValueNodes = array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
+            $belongsToProperties
+        ));
         $belongsToMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromSingleRelation(
             $classConst,
             SilverstripeConstants::PROPERTY_BELONGS_TO
         );
-
-        return [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
-                $belongsToMethods
-            ),
-        ];
+        return array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToMethodTagValueNodes(
+            $belongsToMethods
+        ));
     }
 }

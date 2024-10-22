@@ -18,7 +18,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new ConfiguredCodeSample(
@@ -46,7 +45,6 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
@@ -54,11 +52,9 @@ CODE_SAMPLE
         $classConst = $classReflection->getName();
         $genericType = $this->configurationPropertyTypeResolver->resolveOwnerTypeFromOwners($classConst, $this->isIntersection());
         $genericTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($genericType);
-
         if (!$genericTypeNode instanceof GenericTypeNode) {
             return [];
         }
-
         return [
             new ExtendsTagValueNode(
                 $genericTypeNode,

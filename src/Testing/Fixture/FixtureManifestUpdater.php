@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Testing\Fixture;
 
 use SilverStripe\Core\ClassInfo;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Injector\InjectorLoader;
 use SilverStripe\Core\Manifest\ClassLoader;
-use SilverStripe\Core\Manifest\ClassManifest;
 use function dirname;
 
 /**

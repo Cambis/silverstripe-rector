@@ -19,7 +19,6 @@ use SilverStripe\Core\Injector\InjectorLoader;
  */
 abstract class AbstractAPIAwareRector extends AbstractRector implements APIAwareRectorInterface
 {
-    #[Override]
     final public function refactor(Node $node)
     {
         // Check that we have access.
@@ -29,7 +28,6 @@ abstract class AbstractAPIAwareRector extends AbstractRector implements APIAware
                 'Include the `SilverstripeSetList::WITH_SILVERSTRIPE_API` set in your rector config.'
             );
         }
-
         return $this->refactorAPIAwareNode($node);
     }
 

@@ -23,13 +23,20 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly VisibilityManipulator $visibilityManipulator
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private VisibilityManipulator $visibilityManipulator;
+    public function __construct(ReflectionProvider $reflectionProvider, VisibilityManipulator $visibilityManipulator)
+    {
+        $this->reflectionProvider = $reflectionProvider;
+        $this->visibilityManipulator = $visibilityManipulator;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Rename protected property $enabled to configurable property $is_enabled.', [new CodeSample(
@@ -53,7 +60,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -62,25 +68,19 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
         }
-
         $property = $node->getProperty('enabled');
-
         if (!$property instanceof Property) {
             return null;
         }
-
         $property->props[0]->name = new VarLikeIdentifier('is_enabled');
         $property->type = new Identifier('bool');
-
         $this->visibilityManipulator->makePrivate($property);
         $this->visibilityManipulator->makeStatic($property);
-
         return $node;
     }
 
