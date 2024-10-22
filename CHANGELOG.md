@@ -1,5 +1,17 @@
 # silverstripe-rector
 
+## 0.7.0
+
+### Minor Changes
+
+- 0ae8477: Add PHPStan bleeding edge
+- fb999d0: Update Silverstripe 53 set
+
+### Patch Changes
+
+- 98d61c5: Fix for infinite loop with RenameClassRector
+- 44419e9: Fix for array like comparison in FieldListFieldsToTabNonArrayToArrayArgumentRector
+
 ## 0.6.0
 
 ### Minor Changes
