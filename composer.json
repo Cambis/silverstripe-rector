@@ -9,6 +9,7 @@
     ],
     "require": {
         "php": "^8.3",
+        "cambis/silverstan": "dev-feature/autoloader",
         "rector/rector": "^1.2",
         "silverstripe/framework": "^4.0 || ^5.0",
         "webmozart/assert": "^1.11"
@@ -64,12 +65,24 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "rector/rector": {
-                "Update Silverstripe manifest": "patches/rector-rector-src-testing-phpunit-abstractrectortestcase-php.patch"
-            },
+            "rector/rector": [
+                "patches/rector-rector-src-testing-phpunit-abstractrectortestcase-php.patch"
+            ],
             "symplify/rule-doc-generator": {
                 "Custom rule docs": "patches/symplify-rule-doc-generator-src-rulecodesampleprinter-rectorrulecodesampleprinter-php.patch"
             }
+        },
+        "patches-ignore": {
+            "cambis/silverstan": {
+                "symplify/rule-doc-generator": {
+                    "This patch conflicts with our own patch": "patches/symplify/rule-doc-generator/custom-rule-docs.patch"
+                }
+            }
+        },
+        "phpstan/extension-installer": {
+            "ignore": [
+                "cambis/silverstan"
+            ]
         }
     },
     "scripts": {

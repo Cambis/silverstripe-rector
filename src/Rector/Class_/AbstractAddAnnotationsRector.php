@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Rector\Class_;
 
+use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
 use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
@@ -50,6 +51,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
         protected readonly PhpDocHelper $phpDocHelper,
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
+        protected readonly TypeResolver $typeResolver,
         protected readonly StaticTypeMapper $staticTypeMapper,
     ) {
     }

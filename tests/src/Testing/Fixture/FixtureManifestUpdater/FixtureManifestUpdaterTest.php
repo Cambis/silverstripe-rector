@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Testing\Fixture\FixtureManifestUpdater;
 
+use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\Testing\Fixture\FixtureManifestUpdater;
 use Nette\Utils\FileSystem;
@@ -27,7 +28,7 @@ final class FixtureManifestUpdaterTest extends AbstractRectorTestCase
         $fixtureFilePath = __DIR__ . '/Fixture/foo.php.inc';
 
         FileSystem::write($this->inputFilePath, FileSystem::read($fixtureFilePath));
-        FixtureManifestUpdater::addInputFileToClassManifest($this->inputFilePath);
+        FixtureManifestUpdater::addInputFileToClassManifest($this->inputFilePath, $this->make(ClassManifest::class));
 
         $this->assertArrayHasKey(Strings::lower($expectedClassName), ClassLoader::inst()->getManifest()->getClassNames());
         $this->assertTrue(ClassInfo::exists($expectedClassName));

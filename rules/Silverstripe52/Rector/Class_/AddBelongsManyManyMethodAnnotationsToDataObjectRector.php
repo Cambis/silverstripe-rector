@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use SilverStripe\ORM\ManyManyList;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -54,12 +53,10 @@ CODE_SAMPLE
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $classConst = $classReflection->getName();
 
-        $belongsManyManyMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromManyRelation(
-            $classConst,
+        $belongsManyManyMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
+            $classReflection,
             SilverstripeConstants::PROPERTY_BELONGS_MANY_MANY,
-            ManyManyList::class
         );
 
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(

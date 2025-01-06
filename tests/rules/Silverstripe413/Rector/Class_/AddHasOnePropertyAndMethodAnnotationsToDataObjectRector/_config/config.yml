@@ -1,0 +1,3 @@
+Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Fixture\HasOne:
+  has_one:
+    HasOneRelationship: Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector\Source\RelationMock

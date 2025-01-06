@@ -54,11 +54,10 @@ CODE_SAMPLE
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $classConst = $classReflection->getName();
 
         $newDocTagValueNodes = [];
-        $hasOneProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromSingleRelation(
-            $classConst,
+        $hasOneProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
+            $classReflection,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
 
@@ -69,8 +68,8 @@ CODE_SAMPLE
             ),
         ];
 
-        $hasOneMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromSingleRelation(
-            $classConst,
+        $hasOneMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
+            $classReflection,
             SilverstripeConstants::PROPERTY_HAS_ONE
         );
 

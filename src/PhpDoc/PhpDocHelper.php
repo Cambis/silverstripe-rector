@@ -15,11 +15,16 @@ use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeTraverser;
 use Rector\Enum\ObjectReference;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Rector\PHPStanStaticTypeMapper\Enum\TypeKind;
 use Rector\StaticTypeMapper\StaticTypeMapper;
+use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
+use function str_starts_with;
 
 final readonly class PhpDocHelper
 {
@@ -42,11 +47,10 @@ final readonly class PhpDocHelper
 
         foreach ($paramsNameToType as $name => $type) {
             $typeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type);
-
             $phpParserNode = $this->staticTypeMapper->mapPHPStanTypeToPhpParserNode($type, TypeKind::PROPERTY);
 
             if ($typeNode instanceof UnionTypeNode && $phpParserNode instanceof NullableType) {
-                $typeNode = new NullableTypeNode($typeNode->types[1]);
+                $typeNode = new NullableTypeNode($typeNode->types[0]);
             }
 
             if ($typeNode instanceof IntersectionTypeNode || $typeNode instanceof UnionTypeNode) {
@@ -55,7 +59,7 @@ final readonly class PhpDocHelper
 
             $result[] = new PropertyTagValueNode(
                 $typeNode,
-                $name,
+                str_starts_with('$', $name) ? $name : '$' . $name,
                 ''
             );
         }
@@ -76,6 +80,7 @@ final readonly class PhpDocHelper
         }
 
         foreach ($paramsNameToType as $name => $type) {
+            $type = $this->transformObjectTypeIntoFullyQualifiedObjectType($type);
             $typeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type);
 
             if ($typeNode instanceof IntersectionTypeNode || $typeNode instanceof UnionTypeNode) {
@@ -139,5 +144,28 @@ final readonly class PhpDocHelper
         });
 
         return $typeNode;
+    }
+
+    /**
+     * Transform `ObjectType` into `FullyQualifiedObjectType`, this ensures that there is a leading slash when the type is converted into a `TypeNode`.
+     */
+    private function transformObjectTypeIntoFullyQualifiedObjectType(Type $type): Type
+    {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse): Type {
+            if (!$type instanceof ObjectType) {
+                return $traverse($type);
+            }
+
+            if ($type instanceof GenericObjectType) {
+                return $traverse($type);
+            }
+
+            // Already a `FullyQualifiedObjecType`, return
+            if ($type instanceof FullyQualifiedObjectType) {
+                return $type;
+            }
+
+            return new FullyQualifiedObjectType($type->getClassName());
+        });
     }
 }
