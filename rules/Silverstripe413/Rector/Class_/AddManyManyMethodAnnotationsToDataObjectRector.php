@@ -9,7 +9,11 @@ use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use SilverStripe\ORM\ManyManyList;
+use PHPStan\Type\ArrayType;
+use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\Type\IntegerType;
+use PHPStan\Type\TypeCombinator;
+use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -54,13 +58,21 @@ CODE_SAMPLE
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $classConst = $classReflection->getName();
 
-        $manyManyMethods = $this->configurationPropertyTypeResolver->resolveMethodTypesFromManyRelation(
-            $classConst,
+        $manyManyMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
+            $classReflection,
             SilverstripeConstants::PROPERTY_MANY_MANY,
-            ManyManyList::class
         );
+
+        // List types from Silverstan are generic, transform them into the `DataList|Item[]` format
+        foreach ($manyManyMethods as $name => $type) {
+            if (!$type instanceof GenericObjectType) {
+                continue;
+            }
+
+            $arrayType = new ArrayType(new IntegerType(), $type->getTypes()[0]);
+            $manyManyMethods[$name] = TypeCombinator::union(new FullyQualifiedObjectType($type->getClassName()), $arrayType);
+        }
 
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             $manyManyMethods

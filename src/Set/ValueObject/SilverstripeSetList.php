@@ -33,4 +33,11 @@ final class SilverstripeSetList implements SetListInterface
      * Provides all the custom services that are required in order to run all the rules.
      */
     public const WITH_RECTOR_SERVICES = __DIR__ . '/../../../config/rector-services.php';
+
+    /**
+     * Special set for the test suite.
+     *
+     * @internal
+     */
+    public const SILVERSTRIPE_RECTOR_TESTS = __DIR__ . '/../../../config/tests.php';
 }

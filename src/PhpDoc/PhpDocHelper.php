@@ -113,6 +113,8 @@ final readonly class PhpDocHelper
         }
 
         foreach ($params as $type) {
+            $type = $this->transformObjectTypeIntoFullyQualifiedObjectType($type);
+
             $result[] = new MixinTagValueNode(
                 $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type),
                 '',

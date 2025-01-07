@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector;
 use Cambis\SilverstripeRector\Silverstripe413\TypeResolver\ConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
@@ -9,7 +10,7 @@ use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../../../../../../../config/config.php');
+    $rectorConfig->import(SilverstripeSetList::SILVERSTRIPE_RECTOR_TESTS);
     $rectorConfig->importShortClasses();
 
     $rectorConfig->sets([

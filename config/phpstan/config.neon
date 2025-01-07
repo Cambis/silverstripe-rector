@@ -1,0 +1,153 @@
+parametersSchema:
+    silverstripeRector: structure([
+        includeTestOnly: bool()
+    ])
+parameters:
+    bootstrapFiles:
+        - vendor/cambis/silverstan/silverstripe-autoloader.php
+    silverstripeRector:
+        includeTestOnly: false
+services:
+    - 
+        class: Cambis\Silverstan\Autoloader\Autoloader
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\Contract\MiddlewareRegistryProviderInterface
+        factory: Cambis\Silverstan\ConfigurationResolver\MiddlewareRegistryProvider\LazyMiddlewareRegistryProvider
+    configCollectionFactory:
+        class: Cambis\Silverstan\ConfigurationResolver\ConfigCollectionFactory\ExperimentalLazyConfigCollectionFactory
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\Middleware\PrivateStaticMiddleware
+        tags: [silverstan.configurationResolver.middleware]
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\Middleware\ExtensionMiddleware
+        tags: [silverstan.configurationResolver.middleware]
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\Middleware\InheritanceMiddleware
+        tags: [silverstan.configurationResolver.middleware]
+    -
+        class: Cambis\Silverstan\ClassManifest\ClassManifest
+        arguments:
+            excludedClasses:
+                - 'SilverStripe\Core\Manifest\ClassManifestErrorHandler'
+            includeTestOnly: %silverstripeRector.includeTestOnly%
+            parser: @currentPhpVersionPhpParser
+    -
+        class: Cambis\Silverstan\FileCleaner\FileCleaner
+    -
+        class: Cambis\Silverstan\FileFinder\FileFinder
+        arguments:
+            includeTestOnly: %silverstripeRector.includeTestOnly%
+    -
+        class: Cambis\Silverstan\NodeVisitor\TestOnlyFinderVisitor
+    -
+        class: Composer\ClassMapGenerator\ClassMapGenerator
+        arguments:
+            extensions: ['php']
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver
+    -
+        class: Cambis\Silverstan\ConfigurationResolver\Contract\ConfigCollectionFactoryInterface
+        factory: @configCollectionFactory
+    -
+        class: Cambis\Silverstan\Extension\ClassPropertiesNode\ConfigurationPropertiesExtension
+        tags: [phpstan.properties.readWriteExtension]
+    -
+        class: Cambis\Silverstan\Extension\PhpDoc\DataObjectTypeNodeResolverExtension
+        tags: [phpstan.phpDoc.typeNodeResolverExtension]
+    -
+        class: Cambis\Silverstan\Extension\PhpDoc\ExtensionOwnerTypeNodeResolverExtension
+        tags: [phpstan.phpDoc.typeNodeResolverExtension]
+    -
+        class: Cambis\Silverstan\ReflectionAnalyser\ClassReflectionAnalyser
+    -
+        class: Cambis\Silverstan\ReflectionAnalyser\PropertyReflectionAnalyser
+    -
+        class: Cambis\Silverstan\ReflectionResolver\ReflectionResolver
+    -
+        class: Cambis\Silverstan\ReflectionResolver\Contract\ReflectionResolverRegistryProviderInterface
+        factory: Cambis\Silverstan\ReflectionResolver\ReflectionResolverRegistryProvider\LazyReflectionResolverRegistryProvider
+    -
+        class: Cambis\Silverstan\TypeFactory\TypeFactory
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver
+    -
+        class: Cambis\Silverstan\TypeResolver\Contract\TypeResolverRegistryProviderInterface
+        factory: Cambis\Silverstan\TypeResolver\TypeResolverRegistryProvider\LazyTypeResolverRegistryProvider
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\DBPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\DependencyInjectionPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\FixedFieldsPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            configurationPropertyName: 'belongs_many_many'
+            excludeMiddleware: 3
+            listName: 'SilverStripe\ORM\ManyManyList'
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            configurationPropertyName: 'has_many'
+            excludeMiddleware: 3
+            listName: 'SilverStripe\ORM\HasManyList'
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            configurationPropertyName: 'many_many'
+            excludeMiddleware: 3
+            listName: 'SilverStripe\ORM\ManyManyList'
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            configurationPropertyName: 'belongs_to'
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationMethodTypeResolver
+        tags: [silverstan.typeResolver.methodTypeResolver]
+        arguments:
+            configurationPropertyName: 'has_one'
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            configurationPropertyName: 'belongs_to'
+            excludeMiddleware: 3
+    -
+        class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+        arguments:
+            configurationPropertyName: 'has_one'
+            excludeMiddleware: 3
+    -
+        class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\ExtensibleOwnsMetaPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
+    - 
+        class: PhpParser\NodeFinder

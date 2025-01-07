@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
+use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\ExtendsAnnotationComparator;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\MethodAnnotationComparator;
@@ -38,8 +39,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     // Register services from Silverstan
     $additionalConfigFiles = [
-        __DIR__ . '/../vendor/cambis/silverstan/extension.neon',
-        __DIR__ . '/../vendor/cambis/silverstan/bleedingEdge.neon',
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+        ...SimpleParameterProvider::provideArrayParameter(Option::PHPSTAN_FOR_RECTOR_PATHS),
     ];
 
     $containerFactory = new ContainerFactory(getcwd());
