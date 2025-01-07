@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+/**
+ * @deprecated since 1.0.0
+ */
+
 use SilverStripe\Control\CLIRequestBuilder;
 use SilverStripe\Core\DatabaselessKernel;
 use SilverStripe\Core\Environment;
