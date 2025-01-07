@@ -1,0 +1,4 @@
+services:
+    extensionOwnerMetaPropertyTypeResolver:
+        class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]

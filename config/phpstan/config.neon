@@ -78,7 +78,7 @@ services:
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
             excludeMiddleware: 3
-    -
+    extensionOwnerMetaPropertyTypeResolver:
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
     -

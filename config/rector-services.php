@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cambis\Silverstan\Autoloader\Autoloader;
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
@@ -47,6 +48,9 @@ return static function (RectorConfig $rectorConfig): void {
 
     $containerFactory = new ContainerFactory(getcwd());
     $container = $containerFactory->create(SimpleParameterProvider::provideStringParameter(Option::CONTAINER_CACHE_DIRECTORY), $additionalConfigFiles, []);
+
+    // Register Silverstan's autoloader
+    $container->getByType(Autoloader::class)->register();
 
     $silverstanServices = [
         ClassManifest::class,
