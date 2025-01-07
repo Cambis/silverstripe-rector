@@ -12,7 +12,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\ValueObject\MethodName;
-use SilverStripe\Core\Injector\Injectable;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -85,7 +84,7 @@ CODE_SAMPLE
             return true;
         }
 
-        if (!$classReflection->hasTraitUse(Injectable::class)) {
+        if (!$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable')) {
             return true;
         }
 

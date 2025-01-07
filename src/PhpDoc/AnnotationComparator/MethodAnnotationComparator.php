@@ -17,7 +17,6 @@ use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use Rector\BetterPhpDocParser\Guard\NewPhpDocFromPHPStanTypeGuard;
 use Rector\NodeTypeResolver\TypeComparator\TypeComparator;
 use Rector\StaticTypeMapper\StaticTypeMapper;
-use SilverStripe\Core\Extension;
 
 /**
  * @implements AnnotationComparatorInterface<MethodTagValueNode>
@@ -60,8 +59,8 @@ final readonly class MethodAnnotationComparator implements AnnotationComparatorI
 
         // Special case for `getOwner()`. We cast it as a custom generic object so that the types resolve correctly
         if ($this->isGetOwnerMethod($originalNode, $newNode, $node)) {
-            $originalType = new ExtensionGenericObjectType(Extension::class, [$originalType]);
-            $newType = new ExtensionGenericObjectType(Extension::class, [$newType]);
+            $originalType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$originalType]);
+            $newType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$newType]);
         }
 
         if (!$this->newPhpDocFromPHPStanTypeGuard->isLegal($newType)) {

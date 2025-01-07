@@ -13,8 +13,6 @@ use PHPStan\Reflection\PropertyReflection;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
 use Rector\Reflection\ReflectionResolver;
-use SilverStripe\Core\Config\Configurable;
-use SilverStripe\Core\Extension;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function is_string;
@@ -114,11 +112,11 @@ CODE_SAMPLE
 
     private function shouldSkipClass(ClassReflection $classReflection): bool
     {
-        if ($classReflection->isSubclassOf(Extension::class)) {
+        if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
             return false;
         }
 
-        return !$classReflection->hasTraitUse(Configurable::class);
+        return !$classReflection->hasTraitUse('SilverStripe\Core\Config\Configurable');
     }
 
     private function shouldSkipProperty(PropertyReflection $propertyReflection): bool

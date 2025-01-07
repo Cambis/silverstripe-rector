@@ -6,8 +6,6 @@ namespace Cambis\SilverstripeRector\Rector\Class_;
 
 use Override;
 use PhpParser\Node\Stmt\Class_;
-use SilverStripe\Core\Extension;
-use SilverStripe\ORM\DataObject;
 
 abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnotationsRector
 {
@@ -30,10 +28,10 @@ abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnot
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        if ($classReflection->isSubclassOf(Extension::class)) {
+        if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
             return false;
         }
 
-        return !$classReflection->isSubclassOf(DataObject::class);
+        return !$classReflection->isSubclassOf('SilverStripe\ORM\DataObject');
     }
 }

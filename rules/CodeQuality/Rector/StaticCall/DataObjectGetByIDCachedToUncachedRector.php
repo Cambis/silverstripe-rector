@@ -10,7 +10,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Rector\AbstractRector;
-use SilverStripe\ORM\DataObject;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
@@ -93,10 +92,10 @@ CODE_SAMPLE
         $classReflection = $this->reflectionProvider->getClass($className);
 
         // Skip DataObject::get_by_id() as there is potentially too many edge cases.
-        if ($classReflection->getName() === DataObject::class) {
+        if ($classReflection->getName() === 'SilverStripe\ORM\DataObject') {
             return true;
         }
 
-        return !$classReflection->isSubclassOf(DataObject::class);
+        return !$classReflection->isSubclassOf('SilverStripe\ORM\DataObject');
     }
 }

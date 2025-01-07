@@ -7,8 +7,6 @@ namespace Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type;
 use Override;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
-use SilverStripe\Core\Extensible;
-use SilverStripe\Core\Extension;
 
 /**
  * Internal type to represent `\Silverstripe\Core\Extensible|\Silverstripe\Core\Extension`.
@@ -49,11 +47,11 @@ final class ExtensionOwnerUnionType extends UnionType
     private function isInternalTypeAcceptable(Type $type): bool
     {
         foreach ($type->getObjectClassReflections() as $classReflection) {
-            if ($classReflection->hasTraitUse(Extensible::class)) {
+            if ($classReflection->hasTraitUse('SilverStripe\Core\Extensible')) {
                 return true;
             }
 
-            if ($classReflection->isSubclassOf(Extension::class)) {
+            if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
                 return true;
             }
         }

@@ -17,7 +17,6 @@ use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Rector\Rector\AbstractRector;
-use SilverStripe\Core\Extension;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -124,6 +123,6 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf(Extension::class);
+        return !$classReflection->isSubclassOf('SilverStripe\Core\Extension');
     }
 }

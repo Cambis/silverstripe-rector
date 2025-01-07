@@ -13,7 +13,6 @@ use PhpParser\Node\VarLikeIdentifier;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Privatization\NodeManipulator\VisibilityManipulator;
 use Rector\Rector\AbstractRector;
-use SilverStripe\Dev\BuildTask;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -98,6 +97,6 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf(BuildTask::class);
+        return !$classReflection->isSubclassOf('SilverStripe\Dev\BuildTask');
     }
 }

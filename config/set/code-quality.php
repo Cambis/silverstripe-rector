@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPrope
 use Rector\Config\RectorConfig;
 use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
-use SilverStripe\Core\Extension;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rules([
@@ -21,7 +20,7 @@ return static function (RectorConfig $rectorConfig): void {
         PropertyFetchToMethodCallRector::class,
         [
             new PropertyFetchToMethodCall(
-                Extension::class,
+                'SilverStripe\Core\Extension',
                 'owner',
                 'getOwner',
             ),

@@ -7,7 +7,6 @@ namespace Cambis\SilverstripeRector\NodeAnalyser;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeNameResolver\NodeNameResolver;
-use SilverStripe\Core\Extension;
 
 final readonly class ClassAnalyser
 {
@@ -27,6 +26,6 @@ final readonly class ClassAnalyser
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return $classReflection->isSubclassOf(Extension::class);
+        return $classReflection->isSubclassOf('SilverStripe\Core\Extension');
     }
 }

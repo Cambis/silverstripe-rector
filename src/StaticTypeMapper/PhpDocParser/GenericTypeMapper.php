@@ -18,8 +18,6 @@ use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use PHPStan\Type\IntersectionType;
 use PHPStan\Type\Type;
 use Rector\StaticTypeMapper\Contract\PhpDocParser\PhpDocTypeMapperInterface;
-use SilverStripe\Core\Extensible;
-use SilverStripe\Core\Extension;
 use function count;
 
 /**
@@ -115,11 +113,11 @@ final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface
     private function isInternalTypeAcceptable(Type $type): bool
     {
         foreach ($type->getObjectClassReflections() as $classReflection) {
-            if ($classReflection->hasTraitUse(Extensible::class)) {
+            if ($classReflection->hasTraitUse('SilverStripe\Core\Extensible')) {
                 return true;
             }
 
-            if ($classReflection->isSubclassOf(Extension::class)) {
+            if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
                 return true;
             }
         }
