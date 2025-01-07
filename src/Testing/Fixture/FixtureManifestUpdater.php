@@ -6,11 +6,6 @@ namespace Cambis\SilverstripeRector\Testing\Fixture;
 
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Composer\ClassMapGenerator\PhpFileParser;
-use SilverStripe\Core\ClassInfo;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Core\Injector\InjectorLoader;
-use SilverStripe\Core\Manifest\ClassLoader;
-use function dirname;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\Testing\Fixture\FixtureManifestUpdater\FixtureManifestUpdaterTest
@@ -32,27 +27,6 @@ final class FixtureManifestUpdater
 
         foreach ($classNames as $className) {
             $classManifest->addClass($className, $inputFilePath);
-        }
-
-        // We are not running Silverstripe so let's return
-        if (InjectorLoader::inst()->countManifests() === 0) {
-            return;
-        }
-
-        // Set the base path to the current directory, we only want to search files
-        // in the fixture directory
-        $basePath = dirname($inputFilePath);
-
-        // Add the file to the current manifest
-        ClassLoader::inst()
-            ->getManifest()
-            ->handleFile($basePath, $inputFilePath, true);
-
-        // Register any new classes with the Injector
-        foreach (ClassInfo::classes_for_file($inputFilePath) as $class) {
-            Injector::inst()
-                ->load([$class])
-                ->create($class);
         }
     }
 }
