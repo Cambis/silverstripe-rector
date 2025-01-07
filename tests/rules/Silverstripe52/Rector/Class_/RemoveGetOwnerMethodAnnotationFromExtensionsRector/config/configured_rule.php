@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../../../../../../../config/config.php');
+    $rectorConfig->import(SilverstripeSetList::SILVERSTRIPE_RECTOR_TESTS);
     $rectorConfig->rule(RemoveGetOwnerMethodAnnotationFromExtensionsRector::class);
 };

@@ -10,8 +10,10 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
+use PHPStan\Type\Generic\GenericObjectType;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function array_key_exists;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\AddExtendsAnnotationToExtensionRectorTest
@@ -51,9 +53,28 @@ CODE_SAMPLE
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $classConst = $classReflection->getName();
-        $genericType = $this->configurationPropertyTypeResolver->resolveOwnerTypeFromOwners($classConst, $this->isIntersection());
-        $genericTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($genericType);
+
+        $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
+            $classReflection,
+            '__silverstan_owners'
+        );
+
+        if ($types === []) {
+            return [];
+        }
+
+        if (!array_key_exists('__getOwners', $types)) {
+            return [];
+        }
+
+        $type = $types['__getOwners'];
+
+        if (!$type instanceof GenericObjectType) {
+            return [];
+        }
+
+        $type = $this->phpDocHelper->transformObjectTypeIntoFullyQualifiedObjectType($type);
+        $genericTypeNode = $this->staticTypeMapper->mapPHPStanTypeToPHPStanPhpDocTypeNode($type);
 
         if (!$genericTypeNode instanceof GenericTypeNode) {
             return [];

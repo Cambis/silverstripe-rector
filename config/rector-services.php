@@ -37,9 +37,11 @@ return static function (RectorConfig $rectorConfig): void {
         ConfigurationPropertyTypeResolver::class
     );
 
+
     // Register services from Silverstan
     $additionalConfigFiles = [
         SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+        // Add any additional PHPStan config files
         ...SimpleParameterProvider::provideArrayParameter(Option::PHPSTAN_FOR_RECTOR_PATHS),
     ];
 

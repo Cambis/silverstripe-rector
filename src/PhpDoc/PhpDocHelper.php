@@ -125,6 +125,29 @@ final readonly class PhpDocHelper
     }
 
     /**
+     * Transform `ObjectType` into `FullyQualifiedObjectType`, this ensures that there is a leading slash when the type is converted into a `TypeNode`.
+     */
+    public function transformObjectTypeIntoFullyQualifiedObjectType(Type $type): Type
+    {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse): Type {
+            if (!$type instanceof ObjectType) {
+                return $traverse($type);
+            }
+
+            if ($type instanceof GenericObjectType) {
+                return $traverse($type);
+            }
+
+            // Already a `FullyQualifiedObjecType`, return
+            if ($type instanceof FullyQualifiedObjectType) {
+                return $type;
+            }
+
+            return new FullyQualifiedObjectType($type->getClassName());
+        });
+    }
+
+    /**
      * `\Rector\PHPStanStaticTypeMapper\TypeMapper\IntersectionTypeMapper::mapToPHPStanPhpDocTypeNode()` will turn `static` into `\static`.
      * Remove the leading slash from `\static`.
      */
@@ -146,28 +169,5 @@ final readonly class PhpDocHelper
         });
 
         return $typeNode;
-    }
-
-    /**
-     * Transform `ObjectType` into `FullyQualifiedObjectType`, this ensures that there is a leading slash when the type is converted into a `TypeNode`.
-     */
-    private function transformObjectTypeIntoFullyQualifiedObjectType(Type $type): Type
-    {
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse): Type {
-            if (!$type instanceof ObjectType) {
-                return $traverse($type);
-            }
-
-            if ($type instanceof GenericObjectType) {
-                return $traverse($type);
-            }
-
-            // Already a `FullyQualifiedObjecType`, return
-            if ($type instanceof FullyQualifiedObjectType) {
-                return $type;
-            }
-
-            return new FullyQualifiedObjectType($type->getClassName());
-        });
     }
 }
