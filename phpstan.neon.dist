@@ -25,10 +25,6 @@ parameters:
       function: 15
   ignoreErrors:
       -
-        message: "#^Class Cambis\\\\SilverstripeRector\\\\Tests.*\\\\Fixture.*\\\\.* not found\\.$#"
-        path: tests/*
-
-      -
         message: "#^Use value object over return of values$#"
         count: 1
         path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php

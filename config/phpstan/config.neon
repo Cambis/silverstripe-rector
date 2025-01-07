@@ -79,11 +79,6 @@ services:
         arguments:
             excludeMiddleware: 3
     -
-        class: Cambis\Silverstan\TypeResolver\TypeResolver\DependencyInjectionPropertyTypeResolver
-        tags: [silverstan.typeResolver.propertyTypeResolver]
-        arguments:
-            excludeMiddleware: 3
-    -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
     -
@@ -146,6 +141,9 @@ services:
         arguments:
             configurationPropertyName: 'has_one'
             excludeMiddleware: 3
+    -
+        class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\DependencyInjectionPropertyTypeResolver
+        tags: [silverstan.typeResolver.propertyTypeResolver]
     -
         class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\ExtensibleOwnsMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]

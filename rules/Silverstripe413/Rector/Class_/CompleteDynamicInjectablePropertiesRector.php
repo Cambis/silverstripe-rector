@@ -2,8 +2,9 @@
 
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
+use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -14,7 +15,6 @@ use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
-use SilverStripe\Core\Injector\Injectable;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_keys;
@@ -26,10 +26,10 @@ final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRe
 {
     public function __construct(
         private readonly ClassAnalyzer $classAnalyzer,
-        private readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         private readonly MissingPropertiesFactory $missingPropertiesFactory,
         private readonly PropertyPresenceChecker $propertyPresenceChecker,
         private readonly ReflectionProvider $reflectionProvider,
+        private readonly TypeResolver $typeResolver
     ) {
     }
 
@@ -84,8 +84,7 @@ CODE_SAMPLE
 
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $classConst = $classReflection->getName();
-        $dependencyProperties = $this->configurationPropertyTypeResolver->resolvePropertyTypesFromDependencies($classConst);
+        $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, SilverstripeConstants::PROPERTY_DEPENDENCIES);
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,
@@ -121,7 +120,7 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->hasTraitUse(Injectable::class);
+        return !$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
     }
 
     /**
