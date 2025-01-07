@@ -29,6 +29,9 @@ use function count;
 use function in_array;
 use function is_array;
 
+/**
+ * @deprecated since 1.0.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
+ */
 final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPropertyTypeResolver
 {
     /**

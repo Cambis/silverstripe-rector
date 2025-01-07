@@ -15,6 +15,8 @@ use SilverStripe\Core\Injector\InjectorLoader;
 /**
  * A rector rule that has access to the Silverstripe Injector and Configuration APIs.
  *
+ * @deprecated since 1.0.0
+ *
  * @see \Cambis\SilverstripeRector\Tests\Rector\APIAwareRectorTest
  */
 abstract class AbstractAPIAwareRector extends AbstractRector implements APIAwareRectorInterface

@@ -36,6 +36,8 @@ use function str_contains;
 
 /**
  * This class contains common abstractions which can be used from Silverstripe 4.13 and up.
+ *
+ * @deprecated since 1.0.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
  */
 abstract class AbstractConfigurationPropertyTypeResolver implements ConfigurationPropertyTypeResolverInterface
 {

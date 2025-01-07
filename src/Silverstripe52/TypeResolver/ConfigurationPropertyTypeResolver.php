@@ -30,6 +30,9 @@ use function count;
 use function in_array;
 use function is_array;
 
+/**
+ * @deprecated since 1.0.0
+ */
 final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPropertyTypeResolver
 {
     /**

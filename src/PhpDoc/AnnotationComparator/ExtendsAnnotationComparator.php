@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
 
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
-use Cambis\SilverstripeRector\StaticTypeMapper\PhpDocParser\GenericTypeMapper;
 use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
@@ -13,7 +12,6 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\Type\Generic\GenericObjectType;
 use Rector\BetterPhpDocParser\Guard\NewPhpDocFromPHPStanTypeGuard;
 use Rector\NodeTypeResolver\TypeComparator\TypeComparator;
-use Rector\StaticTypeMapper\Naming\NameScopeFactory;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 use function count;
 
@@ -23,8 +21,6 @@ use function count;
 final readonly class ExtendsAnnotationComparator implements AnnotationComparatorInterface
 {
     public function __construct(
-        private GenericTypeMapper $genericTypeMapper,
-        private NameScopeFactory $nameScopeFactory,
         private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard,
         private StaticTypeMapper $staticTypeMapper,
         private TypeComparator $typeComparator
@@ -57,10 +53,8 @@ final readonly class ExtendsAnnotationComparator implements AnnotationComparator
     #[Override]
     public function shouldUpdateTagValueNode(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
     {
-        $nameScope = $this->nameScopeFactory->createNameScopeFromNodeWithoutTemplateTypes($node);
-
-        $originalType = $this->genericTypeMapper->mapToPHPStanType($originalNode->type, $node, $nameScope);
-        $newType = $this->genericTypeMapper->mapToPHPStanType($newNode->type, $node, $nameScope);
+        $originalType = $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType($originalNode->type, $node);
+        $newType = $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType($newNode->type, $node);
 
         if (!$this->newPhpDocFromPHPStanTypeGuard->isLegal($newType)) {
             return false;
