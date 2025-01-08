@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
@@ -15,14 +16,17 @@ return RectorConfig::configure()
         __DIR__ . '/rules',
         __DIR__ . '/src',
         __DIR__ . '/tests',
-    ])->withSets([
+    ])
+    ->withSets([
         LevelSetList::UP_TO_PHP_83,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
         SetList::DEAD_CODE,
         SetList::EARLY_RETURN,
         SetList::PRIVATIZATION,
-    ])->withSkip([
+        SilverstripeSetList::SILVERSTRIPE_53,
+    ])
+    ->withSkip([
         '*/Rector/*/Fixture/*',
         '*/Source/*',
         ClosureToArrowFunctionRector::class,

@@ -11,10 +11,13 @@ use Rector\Renaming\Rector\Name\RenameClassRector;
 
 // See: https://docs.silverstripe.org/en/5/changelogs/5.3.0/
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
-
     // Add Silverstripe53 PHPStan patch
-    $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH);
+    $rectorConfig->phpstanConfigs([
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH,
+    ]);
+
+    $rectorConfig->import(__DIR__ . '/../config.php');
 
     $rectorConfig->singleton(
         ConfigurationPropertyTypeResolverInterface::class,
