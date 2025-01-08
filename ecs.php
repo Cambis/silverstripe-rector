@@ -34,8 +34,8 @@ return ECSConfig::configure()
         SetList::PSR_12,
     ])
     ->withSkip([
-        '*/Fixture/*',
-        '*/Fixture*',
+        '*/Rector/*/Fixture/*',
+        '*/Rector/*/Fixture*',
         '*/Source/*',
         '*/Source*',
         NotOperatorWithSuccessorSpaceFixer::class,

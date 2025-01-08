@@ -15,10 +15,8 @@ use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\TemplateAnnotationComp
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
 use Cambis\SilverstripeRector\Silverstripe413\TypeResolver\ConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
-use PHPStan\DependencyInjection\ContainerFactory;
 use Rector\Config\RectorConfig;
-use Rector\Configuration\Option;
-use Rector\Configuration\Parameter\SimpleParameterProvider;
+use Rector\NodeTypeResolver\DependencyInjection\PHPStanServicesFactory;
 
 return static function (RectorConfig $rectorConfig): void {
     // Register annotation comparators
@@ -38,28 +36,23 @@ return static function (RectorConfig $rectorConfig): void {
         ConfigurationPropertyTypeResolver::class
     );
 
-
-    // Register services from Silverstan
-    $additionalConfigFiles = [
-        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
-        // Add any additional PHPStan config files
-        ...SimpleParameterProvider::provideArrayParameter(Option::PHPSTAN_FOR_RECTOR_PATHS),
-    ];
-
-    $containerFactory = new ContainerFactory(getcwd());
-    $container = $containerFactory->create(SimpleParameterProvider::provideStringParameter(Option::CONTAINER_CACHE_DIRECTORY), $additionalConfigFiles, []);
-
-    // Register Silverstan's autoloader
-    $container->getByType(Autoloader::class)->register();
+    // Register Silverstan services
+    $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH);
 
     $silverstanServices = [
+        Autoloader::class,
         ClassManifest::class,
         TypeResolver::class,
     ];
 
     foreach ($silverstanServices as $silverstanService) {
-        $rectorConfig->singleton($silverstanService, static function (RectorConfig $rectorConfig) use ($container, $silverstanService): mixed {
-            return $container->getByType($silverstanService);
+        $rectorConfig->singleton($silverstanService, static function (RectorConfig $rectorConfig) use ($silverstanService): mixed {
+            $phpStanServicesFactory = $rectorConfig->make(PHPStanServicesFactory::class);
+
+            return $phpStanServicesFactory->getByType($silverstanService);
         });
     }
+
+    // Register Silverstan's autoloader
+    $rectorConfig->make(Autoloader::class)->register();
 };

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class StaticPropertyFetchToConfigGetRectorTest extends AbstractRectorTestCase
+final class StaticPropertyFetchToConfigGetRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

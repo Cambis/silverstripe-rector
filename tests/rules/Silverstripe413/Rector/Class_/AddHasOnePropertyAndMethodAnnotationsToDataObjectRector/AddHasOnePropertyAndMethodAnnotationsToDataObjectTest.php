@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends AbstractRectorTestCase
+final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

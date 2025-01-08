@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class DataObjectGetByIDCachedToUncachedRectorTest extends AbstractRectorTestCase
+final class DataObjectGetByIDCachedToUncachedRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

@@ -7,16 +7,14 @@ use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsTo
 use Cambis\SilverstripeRector\Silverstripe53\TypeResolver\ConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
-use Rector\Configuration\Option;
-use Rector\Configuration\Parameter\SimpleParameterProvider;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 
 // See: https://docs.silverstripe.org/en/5/changelogs/5.3.0/
 return static function (RectorConfig $rectorConfig): void {
-    // Add Silverstripe53 PHPStan patch
-    SimpleParameterProvider::addParameter(Option::PHPSTAN_FOR_RECTOR_PATHS, [SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH]);
-
     $rectorConfig->import(__DIR__ . '/../config.php');
+
+    // Add Silverstripe53 PHPStan patch
+    $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH);
 
     $rectorConfig->singleton(
         ConfigurationPropertyTypeResolverInterface::class,

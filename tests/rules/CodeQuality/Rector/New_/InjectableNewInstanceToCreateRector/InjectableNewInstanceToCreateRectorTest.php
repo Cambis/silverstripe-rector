@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class InjectableNewInstanceToCreateRectorTest extends AbstractRectorTestCase
+final class InjectableNewInstanceToCreateRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

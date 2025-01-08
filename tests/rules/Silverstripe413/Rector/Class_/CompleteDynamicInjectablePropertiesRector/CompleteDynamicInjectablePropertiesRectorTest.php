@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractRectorTestCase
+final class CompleteDynamicInjectablePropertiesRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

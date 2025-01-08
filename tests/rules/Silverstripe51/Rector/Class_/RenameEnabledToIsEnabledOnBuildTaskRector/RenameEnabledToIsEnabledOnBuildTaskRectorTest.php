@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class RenameEnabledToIsEnabledOnBuildTaskRectorTest extends AbstractRectorTestCase
+final class RenameEnabledToIsEnabledOnBuildTaskRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

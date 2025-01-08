@@ -7,6 +7,6 @@ use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodA
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(SilverstripeSetList::SILVERSTRIPE_RECTOR_TESTS);
+    $rectorConfig->import(SilverstripeSetList::WITH_RECTOR_SERVICES);
     $rectorConfig->rule(RemoveGetOwnerMethodAnnotationFromExtensionsRector::class);
 };

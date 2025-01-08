@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends AbstractRectorTestCase
+final class RemoveGetOwnerMethodAnnotationFromExtensionsRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

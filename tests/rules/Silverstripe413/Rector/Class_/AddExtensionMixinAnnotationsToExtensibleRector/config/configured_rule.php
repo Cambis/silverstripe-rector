@@ -9,7 +9,7 @@ use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeRes
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(SilverstripeSetList::SILVERSTRIPE_RECTOR_TESTS);
+    $rectorConfig->import(SilverstripeSetList::WITH_RECTOR_SERVICES);
     $rectorConfig->rule(AddExtensionMixinAnnotationsToExtensibleRector::class);
     $rectorConfig->singleton(ConfigurationPropertyTypeResolverInterface::class, ConfigurationPropertyTypeResolver::class);
 };

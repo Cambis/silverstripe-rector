@@ -10,7 +10,7 @@ use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(SilverstripeSetList::SILVERSTRIPE_RECTOR_TESTS);
+    $rectorConfig->import(SilverstripeSetList::WITH_RECTOR_SERVICES);
     $rectorConfig->importShortClasses();
 
     $rectorConfig->sets([

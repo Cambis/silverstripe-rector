@@ -1,3 +1,3 @@
 parameters:
-  silverstripeRector:
-    includeTestOnly: true
+    silverstripeRector:
+        includeTestOnly: true

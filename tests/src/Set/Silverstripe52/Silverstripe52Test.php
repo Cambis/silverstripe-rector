@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Set\Silverstripe52;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class Silverstripe52Test extends AbstractRectorTestCase
+final class Silverstripe52Test extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

@@ -8,7 +8,10 @@ use Rector\Config\RectorConfig;
 use Rector\Configuration\Option;
 use Rector\Configuration\Parameter\SimpleParameterProvider;
 
-SimpleParameterProvider::addParameter(Option::PHPSTAN_FOR_RECTOR_PATHS, [SilverstripeOption::PHPSTAN_FOR_RECTOR_INCLUDE_TEST_ONLY_PATH]);
+// SimpleParameterProvider::setParameter(Option::PHPSTAN_FOR_RECTOR_PATHS, [
+//     SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+//     SilverstripeOption::PHPSTAN_FOR_RECTOR_INCLUDE_TEST_ONLY_PATH,
+// ]);
 
 return RectorConfig::configure()
     ->withSets([

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Tests\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabNonArrayToArrayArgumentRector;
 
+use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class FieldListFieldsToTabNonArrayToArrayArgumentRectorTest extends AbstractRectorTestCase
+final class FieldListFieldsToTabNonArrayToArrayArgumentRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData

@@ -23,7 +23,7 @@ return RectorConfig::configure()
         SetList::EARLY_RETURN,
         SetList::PRIVATIZATION,
     ])->withSkip([
-        '*/Fixture/*',
+        '*/Rector/*/Fixture/*',
         '*/Source/*',
         ClosureToArrowFunctionRector::class,
         // This may cause a downgrade to fail
