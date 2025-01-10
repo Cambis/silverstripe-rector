@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Cambis\Silverstan\Autoloader\Autoloader;
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
+use Cambis\SilverstripeRector\Autoloader\Autoloader;
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\ExtendsAnnotationComparator;
@@ -40,7 +40,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH);
 
     $silverstanServices = [
-        Autoloader::class,
         ClassManifest::class,
         TypeResolver::class,
     ];
@@ -53,6 +52,6 @@ return static function (RectorConfig $rectorConfig): void {
         });
     }
 
-    // Register Silverstan's autoloader
+    // Register our autoloader
     $rectorConfig->make(Autoloader::class)->register();
 };
