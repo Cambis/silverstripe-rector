@@ -22,6 +22,8 @@ final class SilverstripeConstants
 
     public const PROPERTY_MANY_MANY = 'many_many';
 
+    public const METHOD_ADD_FIELD_TO_TAB = 'addFieldToTab';
+
     public const METHOD_ADD_FIELDS_TO_TAB = 'addFieldsToTab';
 
     public const METHOD_BY_ID = 'byID';
@@ -33,6 +35,8 @@ final class SilverstripeConstants
     public const METHOD_GET_BY_ID = 'get_by_id';
 
     public const METHOD_GET_OWNER = 'getOwner';
+
+    public const METHOD_REMOVE_FIELD_FROM_TAB = 'removeFieldFromTab';
 
     public const METHOD_REMOVE_FIELDS_FROM_TAB = 'removeFieldsFromTab';
 }

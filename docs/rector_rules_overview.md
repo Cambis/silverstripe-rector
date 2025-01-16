@@ -401,20 +401,20 @@ Remove `getOwner()` method annotation.
 
 ## Silverstripe53
 
-### FieldListFieldsToTabNonArrayToArrayArgumentRector
+### FieldListFieldsToTabDeprecatedNonArrayArgumentRector
 
-Change the second argument of `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` into an array.
+Rename `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` to `FieldList::addFieldToTab()` and `FieldList::removeFieldFromTab()` respectively if the second argument is not an array.
 
-- class: [`Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabNonArrayToArrayArgumentRector`](../rules/Silverstripe53/Rector/MethodCall/FieldListFieldsToTabNonArrayToArrayArgumentRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabDeprecatedNonArrayArgumentRector`](../rules/Silverstripe53/Rector/MethodCall/FieldListFieldsToTabDeprecatedNonArrayArgumentRector.php)
 
 ```diff
  \SilverStripe\Forms\FieldList::create()
 -    ->addFieldsToTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
-+    ->addFieldsToTab('Root.Main', [\SilverStripe\Forms\TextField::create('Field')]);
++    ->addFieldToTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
 
  \SilverStripe\Forms\FieldList::create()
 -    ->removeFieldsFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
-+    ->removeFieldsFromTab('Root.Main', [\SilverStripe\Forms\TextField::create('Field')]);
++    ->removeFieldFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
 ```
 
 <br>
