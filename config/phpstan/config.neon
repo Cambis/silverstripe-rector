@@ -77,7 +77,7 @@ services:
         class: Cambis\Silverstan\TypeResolver\TypeResolver\DBPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     extensionOwnerMetaPropertyTypeResolver:
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
@@ -85,62 +85,62 @@ services:
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\FixedFieldsPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
             configurationPropertyName: 'belongs_many_many'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
             listName: 'SilverStripe\ORM\ManyManyList'
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
             configurationPropertyName: 'has_many'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
             listName: 'SilverStripe\ORM\HasManyList'
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
             configurationPropertyName: 'many_many'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
             listName: 'SilverStripe\ORM\ManyManyList'
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
             configurationPropertyName: 'belongs_to'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
         arguments:
             configurationPropertyName: 'has_one'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
             configurationPropertyName: 'belongs_to'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\SimpleRelationPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
         arguments:
             configurationPropertyName: 'has_one'
-            excludeMiddleware: 3
+            excludeMiddleware: 5
     -
         class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\DependencyInjectionPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
