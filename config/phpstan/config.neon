@@ -32,18 +32,6 @@ services:
             includeTestOnly: %silverstripeRector.includeTestOnly%
             parser: @currentPhpVersionPhpParser
     -
-        class: Cambis\Silverstan\FileCleaner\FileCleaner
-    -
-        class: Cambis\Silverstan\FileFinder\FileFinder
-        arguments:
-            includeTestOnly: %silverstripeRector.includeTestOnly%
-    -
-        class: Cambis\Silverstan\NodeVisitor\TestOnlyFinderVisitor
-    -
-        class: Composer\ClassMapGenerator\ClassMapGenerator
-        arguments:
-            extensions: ['php']
-    -
         class: Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver
     -
         class: Cambis\Silverstan\ConfigurationResolver\Contract\ConfigCollectionFactoryInterface
@@ -57,6 +45,19 @@ services:
     -
         class: Cambis\Silverstan\Extension\PhpDoc\ExtensionOwnerTypeNodeResolverExtension
         tags: [phpstan.phpDoc.typeNodeResolverExtension]
+    -
+        class: Cambis\Silverstan\Extension\PhpDoc\SilverstripeStubFilesExtension
+        tags: [phpstan.stubFilesExtension]
+    -
+        class: Cambis\Silverstan\FileCleaner\FileCleaner
+    -
+        class: Cambis\Silverstan\FileFinder\FileFinder
+        arguments:
+            includeTestOnly: %silverstripeRector.includeTestOnly%
+    -
+        class: Cambis\Silverstan\NodeVisitor\TestOnlyFinderVisitor
+    -
+        class: Cambis\Silverstan\Normaliser\Normaliser
     -
         class: Cambis\Silverstan\ReflectionAnalyser\ClassReflectionAnalyser
     -
@@ -81,21 +82,6 @@ services:
     extensionOwnerMetaPropertyTypeResolver:
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionOwnerMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
-    -
-        class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionMethodTypeResolver
-        tags: [silverstan.typeResolver.methodTypeResolver]
-        arguments:
-            excludeMiddleware: 5
-    -
-        class: Cambis\Silverstan\TypeResolver\TypeResolver\ExtensionPropertyTypeResolver
-        tags: [silverstan.typeResolver.propertyTypeResolver]
-        arguments:
-            excludeMiddleware: 5
-    -
-        class: Cambis\Silverstan\TypeResolver\TypeResolver\FixedFieldsPropertyTypeResolver
-        tags: [silverstan.typeResolver.propertyTypeResolver]
-        arguments:
-            excludeMiddleware: 5
     -
         class: Cambis\Silverstan\TypeResolver\TypeResolver\ManyRelationMethodTypeResolver
         tags: [silverstan.typeResolver.methodTypeResolver]
@@ -147,5 +133,9 @@ services:
     -
         class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\ExtensibleOwnsMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
+    -
+        class: Composer\ClassMapGenerator\ClassMapGenerator
+        arguments:
+            extensions: ['php']
     - 
         class: PhpParser\NodeFinder

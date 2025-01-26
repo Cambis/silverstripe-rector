@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\TypeResolver\TypeResolver;
 
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
+use Cambis\Silverstan\Normaliser\Normaliser;
 use Cambis\Silverstan\ReflectionAnalyser\ClassReflectionAnalyser;
 use Cambis\Silverstan\TypeResolver\Contract\LazyTypeResolverInterface;
 use Cambis\Silverstan\TypeResolver\Contract\PropertyTypeResolverInterface;
@@ -18,9 +19,6 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use function is_array;
 use function is_string;
-use function str_contains;
-use function str_starts_with;
-use function substr;
 
 final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResolverInterface, TypeResolverAwareInterface, LazyTypeResolverInterface
 {
@@ -29,6 +27,7 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
     public function __construct(
         private readonly ClassReflectionAnalyser $classReflectionAnalyser,
         private readonly ConfigurationResolver $configurationResolver,
+        private readonly Normaliser $normaliser,
         private readonly ReflectionProvider $reflectionProvider
     ) {
     }
@@ -90,23 +89,18 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
     private function resolveDependencyObjectType(string $fieldType): Type
     {
         // Remove the prefix
-        if (str_contains($fieldType, '%$')) {
-            $fieldType = $this->configurationResolver->resolvePrefixNotation($fieldType);
-        }
+        $name = $this->normaliser->normalisePrefixNotation($fieldType);
 
         // Remove leading backslash
-        if (str_starts_with($fieldType, '\\')) {
-            $fieldType = substr($fieldType, 1);
-        }
+        $name = $this->normaliser->normaliseNamespace($name);
 
-        if (str_contains($fieldType, '.')) {
-            $fieldType = $this->configurationResolver->resolveDotNotation($fieldType);
-        }
+        // Remove dot notation
+        $name = $this->normaliser->normaliseDotNotation($name);
 
-        if (!$this->reflectionProvider->hasClass($fieldType)) {
+        if (!$this->reflectionProvider->hasClass($name)) {
             return new StringType();
         }
 
-        return new ObjectType($fieldType);
+        return new ObjectType($name);
     }
 }

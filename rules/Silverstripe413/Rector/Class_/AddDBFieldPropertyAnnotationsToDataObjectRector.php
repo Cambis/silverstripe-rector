@@ -8,7 +8,10 @@ use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRe
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
+use PHPStan\Analyser\OutOfClassScope;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
+use PHPStan\Reflection\ClassReflection;
+use PHPStan\Type\Type;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -54,13 +57,48 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        $dbProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
+        $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
             $classReflection,
             SilverstripeConstants::PROPERTY_DB
         );
 
+        foreach ($types as $name => $type) {
+            $types[$name] = $this->getReadableType($classReflection, $type, $name);
+        }
+
         return $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
-            $dbProperties
+            $types
         );
+    }
+
+    private function getReadableType(ClassReflection $classReflection, Type $type, string $name): Type
+    {
+        // Safety checks...
+        if ($type->isObject()->no()) {
+            return $type;
+        }
+
+        if ($type->getObjectClassReflections() === []) {
+            return $type;
+        }
+
+        $fieldClassReflection = $type->getObjectClassReflections()[0];
+
+        if (!$fieldClassReflection->isSubclassOf('SilverStripe\ORM\FieldType\DBField')) {
+            return $type;
+        }
+
+        // Check for custom `get<name>` function https://docs.silverstripe.org/en/5/developer_guides/model/data_types_and_casting/#overriding
+        if ($classReflection->hasNativeMethod('get' . $name)) {
+            return $classReflection->getNativeMethod('get' . $name)->getVariants()[0]->getReturnType();
+        }
+
+        // Attempt to return the type from the value property
+        if ($fieldClassReflection->hasProperty('value')) {
+            return $fieldClassReflection->getProperty('value', new OutOfClassScope())->getReadableType();
+        }
+
+        // Fallback, return the original type
+        return $type;
     }
 }
