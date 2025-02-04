@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 
 use SilverStripe\Control\CLIRequestBuilder;

@@ -11,7 +11,7 @@ use PHPStan\Type\Type;
 /**
  * Internal type to represent `\Silverstripe\Core\Extensible&\Silverstripe\Core\Extension`.
  *
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 final class ExtensionOwnerIntersectionType extends IntersectionType
 {

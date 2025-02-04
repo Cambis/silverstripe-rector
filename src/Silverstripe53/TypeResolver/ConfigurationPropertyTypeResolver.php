@@ -29,7 +29,7 @@ use function in_array;
 use function is_array;
 
 /**
- * @deprecated since 1.0.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
+ * @deprecated since 0.8.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
  */
 final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPropertyTypeResolver
 {

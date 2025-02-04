@@ -12,7 +12,7 @@ use Rector\Rector\AbstractRector;
 /**
  * A rector rule that has access to the Silverstripe Injector and Configuration APIs.
  *
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 abstract class AbstractAPIAwareRector extends AbstractRector implements APIAwareRectorInterface
 {

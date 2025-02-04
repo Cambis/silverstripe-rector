@@ -15,30 +15,30 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
 {
     /**
      * @api
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     final public const SET_TYPE_STYLE = 'set_type_style';
 
     /**
      * @api
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     final public const SET_INTERSECTION = 'intersection';
 
     /**
      * @api
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     final public const SET_UNION = 'union';
 
     /**
      * @var self::SET_INTERSECTION|self::SET_UNION
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     protected string $setTypeStyle = self::SET_INTERSECTION;
 
     /**
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     #[Override]
     final public function configure(array $configuration): void
@@ -84,7 +84,7 @@ abstract class AbstractAddAnnotationsToExtensionRector extends AbstractAddAnnota
     }
 
     /**
-     * @deprecated since 1.0.0
+     * @deprecated since 0.8.0
      */
     final protected function isIntersection(): bool
     {

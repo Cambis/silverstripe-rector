@@ -3,7 +3,7 @@
 namespace Cambis\SilverstripeRector\Testing\PHPUnit\ValueObject;
 
 /**
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 final readonly class ConfigurationProperty
 {

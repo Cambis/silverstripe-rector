@@ -23,7 +23,7 @@ use function count;
 /**
  * Allow the use of `\SilverStripe\Core\Extensible&\SilverStripe\Core\Extension` which would normally resolve to NEVER.
  *
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  * @implements PhpDocTypeMapperInterface<GenericTypeNode>
  */
 final readonly class GenericTypeMapper implements PhpDocTypeMapperInterface

@@ -20,7 +20,7 @@ use SilverStripe\ORM\FieldType\DBInt;
 /**
  * A service that is used to resolve the `\PHPStan\Type\Type` of a Silverstripe configuration property.
  *
- * @deprecated since 1.0.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
+ * @deprecated since 0.8.0 use `Cambis\Silverstan\TypeResolver\TyperResolver` instead.
  */
 interface ConfigurationPropertyTypeResolverInterface
 {

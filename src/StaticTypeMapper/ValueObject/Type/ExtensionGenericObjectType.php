@@ -9,7 +9,7 @@ use PHPStan\Type\Generic\GenericObjectType;
 /**
  * Internal type to represent a generic `\SilverStripe\Core\Extension`.
  *
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 final class ExtensionGenericObjectType extends GenericObjectType
 {

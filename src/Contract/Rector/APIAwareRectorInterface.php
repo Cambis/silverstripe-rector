@@ -9,7 +9,7 @@ use PhpParser\NodeTraverser;
 use Rector\Contract\Rector\RectorInterface;
 
 /**
- * @deprecated since 1.0.0
+ * @deprecated since 0.8.0
  */
 interface APIAwareRectorInterface extends RectorInterface
 {
