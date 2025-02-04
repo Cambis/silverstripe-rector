@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.8.0
+
+### Minor Changes
+
+- 742fc00: Use cambis/silverstan services, deprecate legacy services.
+
 ## 0.7.0
 
 ### Minor Changes
