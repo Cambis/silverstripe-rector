@@ -10,8 +10,7 @@
     "require": {
         "php": "^8.3",
         "cambis/silverstan": "^1.0.7",
-        "rector/rector": "^1.2",
-        "webmozart/assert": "^1.11"
+        "rector/rector": "^1.2"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7",

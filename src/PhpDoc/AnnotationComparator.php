@@ -7,18 +7,16 @@ namespace Cambis\SilverstripeRector\PhpDoc;
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
-use Webmozart\Assert\Assert;
 use function is_a;
 
 final readonly class AnnotationComparator
 {
     public function __construct(
         /**
-         * @var AnnotationComparatorInterface<PhpDocTagValueNode>[]
+         * @var list<AnnotationComparatorInterface<PhpDocTagValueNode>>
          */
         private array $annotationComparators
     ) {
-        Assert::notEmpty($annotationComparators);
     }
 
     public function areTagValueNodeNamesEqual(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
