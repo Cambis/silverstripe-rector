@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Rector\Class_;
 
 use Cambis\Silverstan\TypeResolver\TypeResolver;
-use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
-use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
+use Cambis\SilverstripeRector\AnnotationUpdater\AnnotationUpdater;
+use Cambis\SilverstripeRector\DataRecordResolver\DataRecordResolver;
+use Cambis\SilverstripeRector\PhpDocHelper\PhpDocHelper;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;

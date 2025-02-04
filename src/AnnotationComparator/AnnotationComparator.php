@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\PhpDoc;
+namespace Cambis\SilverstripeRector\AnnotationComparator;
 
-use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
+use Cambis\SilverstripeRector\AnnotationComparator\Contract\AnnotationComparatorInterface;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use function is_a;

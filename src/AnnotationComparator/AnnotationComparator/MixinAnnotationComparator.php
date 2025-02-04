@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
+namespace Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator;
 
-use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
+use Cambis\SilverstripeRector\AnnotationComparator\Contract\AnnotationComparatorInterface;
 use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;

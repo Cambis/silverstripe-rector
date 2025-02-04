@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\NodeResolver;
+namespace Cambis\SilverstripeRector\DataRecordResolver;
 
 use PhpParser\Node\Stmt\ClassLike;
 use PHPStan\Reflection\ReflectionProvider;

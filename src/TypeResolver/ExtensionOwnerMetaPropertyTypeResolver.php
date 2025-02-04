@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\TypeResolver\TypeResolver;
+namespace Cambis\SilverstripeRector\TypeResolver;
 
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;

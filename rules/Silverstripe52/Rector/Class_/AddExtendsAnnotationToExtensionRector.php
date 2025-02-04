@@ -11,7 +11,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\Type\Generic\GenericObjectType;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_key_exists;
 
@@ -23,7 +23,7 @@ final class AddExtendsAnnotationToExtensionRector extends AbstractAddAnnotations
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Add missing dynamic annotations.', [new ConfiguredCodeSample(
+        return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
             <<<'CODE_SAMPLE'
 class FooExtension extends \SilverStripe\Core\Extension
 {
@@ -38,10 +38,6 @@ class FooExtension extends \SilverStripe\Core\Extension
 {
 }
 CODE_SAMPLE
-            ,
-            [
-                self::SET_TYPE_STYLE => self::SET_INTERSECTION,
-            ]
         )]);
     }
 

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\PhpDoc;
+namespace Cambis\SilverstripeRector\AnnotationUpdater;
 
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;

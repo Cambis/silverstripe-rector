@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\PhpDoc;
+namespace Cambis\SilverstripeRector\PhpDocHelper;
 
 use PhpParser\Node\NullableType;
 use PHPStan\PhpDocParser\Ast\Node;

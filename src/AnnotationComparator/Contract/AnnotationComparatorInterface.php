@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cambis\SilverstripeRector\PhpDoc\Contract;
+namespace Cambis\SilverstripeRector\AnnotationComparator\Contract;
 
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
