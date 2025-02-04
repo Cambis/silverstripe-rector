@@ -63,7 +63,7 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
         $types = [];
 
         foreach ($extensions as $extension) {
-            // Check for nullified extension name
+            // Check for nullified extensions
             if ($extension === null) {
                 continue;
             }
