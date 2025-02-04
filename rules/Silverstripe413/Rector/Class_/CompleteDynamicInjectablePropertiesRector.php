@@ -5,7 +5,6 @@ namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ClassReflection;
@@ -24,16 +23,35 @@ use function array_keys;
  */
 final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector
 {
-    public function __construct(
-        private readonly ClassAnalyzer $classAnalyzer,
-        private readonly MissingPropertiesFactory $missingPropertiesFactory,
-        private readonly PropertyPresenceChecker $propertyPresenceChecker,
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly TypeResolver $typeResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyzer $classAnalyzer;
+    /**
+     * @readonly
+     */
+    private MissingPropertiesFactory $missingPropertiesFactory;
+    /**
+     * @readonly
+     */
+    private PropertyPresenceChecker $propertyPresenceChecker;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private TypeResolver $typeResolver;
+    public function __construct(ClassAnalyzer $classAnalyzer, MissingPropertiesFactory $missingPropertiesFactory, PropertyPresenceChecker $propertyPresenceChecker, ReflectionProvider $reflectionProvider, TypeResolver $typeResolver)
+    {
+        $this->classAnalyzer = $classAnalyzer;
+        $this->missingPropertiesFactory = $missingPropertiesFactory;
+        $this->propertyPresenceChecker = $propertyPresenceChecker;
+        $this->reflectionProvider = $reflectionProvider;
+        $this->typeResolver = $typeResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic properties.', [new CodeSample(
@@ -66,7 +84,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -75,13 +92,11 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactorAPIAwareNode(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
         }
-
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, SilverstripeConstants::PROPERTY_DEPENDENCIES);
@@ -90,15 +105,11 @@ CODE_SAMPLE
             $classReflection,
             array_keys($dependencyProperties)
         );
-
         $newProperties = $this->missingPropertiesFactory->create($dependencyProperties, $propertiesToComplete);
-
         if ($newProperties === []) {
             return null;
         }
-
-        $node->stmts = [...$newProperties, ...$node->stmts];
-
+        $node->stmts = array_merge(is_array($newProperties) ? $newProperties : iterator_to_array($newProperties), $node->stmts);
         return $node;
     }
 

@@ -17,7 +17,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddHasManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -48,17 +47,14 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-
         $hasManyMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
             SilverstripeConstants::PROPERTY_HAS_MANY
         );
-
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             $hasManyMethods
         );
