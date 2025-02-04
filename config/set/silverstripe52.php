@@ -13,8 +13,6 @@ use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationT
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddHasManyMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\RemoveGetOwnerMethodAnnotationFromExtensionsRector;
-use Cambis\SilverstripeRector\Silverstripe52\TypeResolver\ConfigurationPropertyTypeResolver;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -34,9 +32,4 @@ return static function (RectorConfig $rectorConfig): void {
         CompleteDynamicInjectablePropertiesRector::class,
         AddExtendsAnnotationToContentControllerRector::class,
     ]);
-
-    $rectorConfig->singleton(
-        ConfigurationPropertyTypeResolverInterface::class,
-        ConfigurationPropertyTypeResolver::class
-    );
 };

@@ -25,13 +25,6 @@ final class SilverstripeSetList implements SetListInterface
     public const SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/silverstripe60.php';
 
     /**
-     * Provides access to the Injector and Configuration APIs.
-     *
-     * @deprecated since 0.8.0
-     */
-    public const WITH_SILVERSTRIPE_API = __DIR__ . '/../../../config/silverstripe-api.php';
-
-    /**
      * Provides all the custom services that are required in order to run all the rules.
      */
     public const WITH_RECTOR_SERVICES = __DIR__ . '/../../../config/rector-services.php';

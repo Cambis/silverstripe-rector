@@ -13,8 +13,6 @@ use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\MixinAnnotationCompara
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\PropertyAnnotationComparator;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\TemplateAnnotationComparator;
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
-use Cambis\SilverstripeRector\Silverstripe413\TypeResolver\ConfigurationPropertyTypeResolver;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\DependencyInjection\PHPStanServicesFactory;
 
@@ -29,12 +27,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     /** @phpstan-ignore-next-line */
     $rectorConfig->when(AnnotationComparator::class)->needs('$annotationComparators')->giveTagged(AnnotationComparatorInterface::class);
-
-    // Register base type resolver
-    $rectorConfig->singleton(
-        ConfigurationPropertyTypeResolverInterface::class,
-        ConfigurationPropertyTypeResolver::class
-    );
 
     // Register Silverstan services
     $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH);

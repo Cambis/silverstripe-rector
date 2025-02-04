@@ -3,7 +3,6 @@
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\Silverstan\TypeResolver\TypeResolver;
-use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
@@ -17,6 +16,7 @@ use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_keys;
@@ -24,7 +24,7 @@ use function array_keys;
 /**
  * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
-final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector implements RelatedConfigInterface
+final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements RelatedConfigInterface
 {
     public function __construct(
         private readonly ClassAnalyzer $classAnalyzer,
@@ -78,7 +78,7 @@ CODE_SAMPLE
      * @param Class_ $node
      */
     #[Override]
-    public function refactorAPIAwareNode(Node $node): ?Node
+    public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;

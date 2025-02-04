@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
 
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
-use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
@@ -14,6 +13,7 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
+use PHPStan\Type\Generic\GenericObjectType;
 use Rector\BetterPhpDocParser\Guard\NewPhpDocFromPHPStanTypeGuard;
 use Rector\NodeTypeResolver\TypeComparator\TypeComparator;
 use Rector\StaticTypeMapper\StaticTypeMapper;
@@ -59,8 +59,8 @@ final readonly class MethodAnnotationComparator implements AnnotationComparatorI
 
         // Special case for `getOwner()`. We cast it as a custom generic object so that the types resolve correctly
         if ($this->isGetOwnerMethod($originalNode, $newNode, $node)) {
-            $originalType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$originalType]);
-            $newType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$newType]);
+            $originalType = new GenericObjectType('SilverStripe\Core\Extension', [$originalType]);
+            $newType = new GenericObjectType('SilverStripe\Core\Extension', [$newType]);
         }
 
         if (!$this->newPhpDocFromPHPStanTypeGuard->isLegal($newType)) {

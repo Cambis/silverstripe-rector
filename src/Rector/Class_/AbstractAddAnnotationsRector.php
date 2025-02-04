@@ -8,9 +8,7 @@ use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
 use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
-use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -28,9 +26,10 @@ use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
+use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector implements RelatedConfigInterface
+abstract class AbstractAddAnnotationsRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
      * @var array<class-string<PhpDocTagValueNode>, string>
@@ -47,7 +46,6 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector imple
     public function __construct(
         protected readonly AnnotationUpdater $annotationUpdater,
         protected readonly ClassAnalyzer $classAnalyzer,
-        protected readonly ConfigurationPropertyTypeResolverInterface $configurationPropertyTypeResolver,
         protected readonly DataRecordResolver $dataRecordResolver,
         protected readonly DocBlockUpdater $docBlockUpdater,
         protected readonly PhpDocHelper $phpDocHelper,
@@ -71,7 +69,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector imple
      * @param Class_ $node
      */
     #[Override]
-    public function refactorAPIAwareNode(Node $node): ?Node
+    public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
