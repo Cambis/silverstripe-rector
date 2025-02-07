@@ -18,9 +18,6 @@ parameters:
     - '*tests/*/Source*'
     - '*tests/*/config/*'
     - e2e
-  cognitive_complexity:
-      class: 50
-      function: 15
   ignoreErrors:
       -
         message: "#^Use value object over return of values$#"

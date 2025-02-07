@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Set\ValueObject;
 
-use Rector\Set\Contract\SetListInterface;
-
-final class SilverstripeLevelSetList implements SetListInterface
+final class SilverstripeLevelSetList
 {
     public const UP_TO_SILVERSTRIPE_413 = __DIR__ . '/../../../config/set/level/up-to-silverstripe413.php';
 

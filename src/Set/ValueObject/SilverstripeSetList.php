@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Set\ValueObject;
 
-use Rector\Set\Contract\SetListInterface;
-
-final class SilverstripeSetList implements SetListInterface
+final class SilverstripeSetList
 {
     public const CODE_QUALITY = __DIR__ . '/../../../config/set/code-quality.php';
 
