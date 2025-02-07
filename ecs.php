@@ -6,7 +6,6 @@ use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return ECSConfig::configure()
     ->withPaths([
@@ -29,10 +28,7 @@ return ECSConfig::configure()
             'allowFallbackGlobalConstants' => false,
         ]
     )
-    ->withSets([
-        SetList::COMMON,
-        SetList::PSR_12,
-    ])
+    ->withPreparedSets(common: true, psr12: true)
     ->withSkip([
         '*/Rector/*/Fixture/*',
         '*/Rector/*/Fixture*',
