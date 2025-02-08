@@ -58,11 +58,16 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
             return [];
         }
 
-        /** @var string[] $extensions */
+        /** @var array<string|null> $extensions */
         $extensions = array_unique($extensions);
         $types = [];
 
         foreach ($extensions as $extension) {
+            // Check for nullified extension name
+            if ($extension === null) {
+                continue;
+            }
+
             $extensionClassName = $this->configurationResolver->resolveExtensionClassName($extension);
 
             if ($extensionClassName === null) {
