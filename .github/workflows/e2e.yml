@@ -1,9 +1,12 @@
 name: End to end 🥚 ➡️ 🐔
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-      - bugfix/fix-regression-on-vendormodules
+      - main
 
 env:
   # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
