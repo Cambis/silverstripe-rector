@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.8.1
+
+### Patch Changes
+
+- 4473f59: Address regression with vendormodules
+
 ## 0.8.0
 
 ### Minor Changes
