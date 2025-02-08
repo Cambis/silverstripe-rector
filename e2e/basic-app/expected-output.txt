@@ -1,0 +1,106 @@
+
+5 files with changes
+====================
+
+1) app/src/Block.php:3
+
+    ---------- begin diff ----------
+@@ @@
+
+ use SilverStripe\ORM\DataObject;
+
++/**
++ * @property string $Title
++ */
+ class Block extends DataObject
+ {
+     private static string $table_name = 'Block';
+    ----------- end diff -----------
+
+Applied rules:
+ * AddDBFieldPropertyAnnotationsToDataObjectRector
+
+
+2) app/src/Block/ContentBlock.php:3
+
+    ---------- begin diff ----------
+@@ @@
+
+ use App\Block;
+
++/**
++ * @property ?string $Content
++ */
+ final class ContentBlock extends Block
+ {
+     private static string $table_name = 'ContentBlock';
+    ----------- end diff -----------
+
+Applied rules:
+ * AddDBFieldPropertyAnnotationsToDataObjectRector
+
+
+3) app/src/Extension/Page/AlternativeTitleExtension.php:5
+
+    ---------- begin diff ----------
+@@ @@
+ use SilverStripe\Forms\FieldList;
+ use SilverStripe\Forms\TextField;
+
++/**
++ * @property ?string $AlternativeTitle
++ * @extends \SilverStripe\Core\Extension<(\Page & static)>
++ */
+ final class AlternativeTitleExtension extends Extension
+ {
+     private static array $db = [
+    ----------- end diff -----------
+
+Applied rules:
+ * AddDBFieldPropertyAnnotationsToDataObjectRector
+ * AddExtendsAnnotationToExtensionRector
+
+
+4) app/src/Page.php:3
+
+    ---------- begin diff ----------
+@@ @@
+ use App\Extension\Page\AlternativeTitleExtension;
+ use SilverStripe\CMS\Model\SiteTree;
+
++/**
++ * @method \SilverStripe\ORM\HasManyList<\App\Block> Blocks()
++ * @mixin \App\Extension\Page\AlternativeTitleExtension
++ */
+ class Page extends SiteTree
+ {
+     private static array $has_many = [
+    ----------- end diff -----------
+
+Applied rules:
+ * AddExtensionMixinAnnotationsToExtensibleRector
+ * AddHasManyMethodAnnotationsToDataObjectRector
+
+
+5) app/src/PageController.php:1
+
+    ---------- begin diff ----------
+@@ @@
+
+ use SilverStripe\CMS\Controllers\ContentController;
+
++/**
++ * @template T of \Page
++ * @extends \SilverStripe\CMS\Controllers\ContentController<T>
++ */
+ class PageController extends ContentController
+ {
+ }
+    ----------- end diff -----------
+
+Applied rules:
+ * AddExtendsAnnotationToContentControllerRector
+
+
+ [OK] 5 files would have been changed (dry-run) by Rector                   
+

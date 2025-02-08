@@ -1,0 +1,59 @@
+name: End to end 🥚 ➡️ 🐔
+
+on:
+  push:
+    branches:
+      - bugfix/fix-regression-on-vendormodules
+
+env:
+  # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
+  COMPOSER_ROOT_VERSION: dev-main
+
+jobs:
+  end-to-end:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - directory: e2e/basic-app
+            php-version: 8.1
+    steps:
+      # Build source code
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - uses: ramsey/composer-install@v2
+
+      # Downgrade to PHP 7.4
+      - run: vendor/bin/rector process config rules src --config build/rector-downgrade-php-74.php --ansi --no-diffs
+
+      # Copy composer
+      - run: cp build/composer-php-74.json composer.json
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+
+      # Reinstall to clear out any unwanted dependencies
+      - uses: ramsey/composer-install@v2
+        with:
+          dependency-versions: highest
+
+      # Set up e2e directory
+      - uses: ramsey/composer-install@v2
+        with:
+          working-directory: ${{ matrix.directory }}
+      
+      # Run rector on the e2e directory
+      - run: vendor/bin/rector process --config rector.php --ansi >> output.txt
+        working-directory: ${{ matrix.directory }}
+
+      # Compare the actual output vs the expected
+      - run: diff output.txt expected-output.txt
+        working-directory: ${{ matrix.directory }}

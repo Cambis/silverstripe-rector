@@ -20,6 +20,7 @@ parameters:
     - '*tests/*/config/*'
     - stubs/Page.php
     - stubs/PageController.php
+    - e2e
   cognitive_complexity:
       class: 50
       function: 15

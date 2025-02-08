@@ -1,0 +1,27 @@
+
+1 file with changes
+===================
+
+1) src/Extension/Page/IsFeaturedExtension.php:5
+
+    ---------- begin diff ----------
+@@ @@
+ use SilverStripe\Forms\CheckboxField;
+ use SilverStripe\Forms\FieldList;
+
++/**
++ * @property bool $IsFeatured
++ * @extends \SilverStripe\Core\Extension<static>
++ */
+ final class IsFeaturedExtension extends Extension
+ {
+     private static array $db = [
+    ----------- end diff -----------
+
+Applied rules:
+ * AddDBFieldPropertyAnnotationsToDataObjectRector
+ * AddExtendsAnnotationToExtensionRector
+
+
+ [OK] 1 file would have been changed (dry-run) by Rector                    
+
