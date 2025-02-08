@@ -19,6 +19,8 @@ jobs:
         include:
           - directory: e2e/basic-app
             php-version: 8.1
+          - directory: e2e/basic-module
+            php-version: 8.1
     steps:
       # Build source code
       - uses: actions/checkout@v4
@@ -28,7 +30,7 @@ jobs:
           php-version: 8.3
           coverage: none
 
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@v3
 
       # Downgrade to PHP 7.4
       - run: vendor/bin/rector process config rules src --config build/rector-downgrade-php-74.php --ansi --no-diffs
@@ -38,21 +40,24 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php_version }}
+          php-version: ${{ matrix.php-version }}
 
       # Reinstall to clear out any unwanted dependencies
-      - uses: ramsey/composer-install@v2
+      - run: rm -rf vendor composer.lock
+
+      - uses: ramsey/composer-install@v3
         with:
           dependency-versions: highest
 
       # Set up e2e directory
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@v3
         with:
           working-directory: ${{ matrix.directory }}
-      
+
       # Run rector on the e2e directory
-      - run: vendor/bin/rector process --config rector.php --ansi >> output.txt
+      - run: vendor/bin/rector process --dry-run --ansi --output-format json >> output.txt
         working-directory: ${{ matrix.directory }}
+        continue-on-error: true
 
       # Compare the actual output vs the expected
       - run: diff output.txt expected-output.txt

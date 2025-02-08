@@ -1,27 +1,19 @@
-
-1 file with changes
-===================
-
-1) src/Extension/Page/IsFeaturedExtension.php:5
-
-    ---------- begin diff ----------
-@@ @@
- use SilverStripe\Forms\CheckboxField;
- use SilverStripe\Forms\FieldList;
-
-+/**
-+ * @property bool $IsFeatured
-+ * @extends \SilverStripe\Core\Extension<static>
-+ */
- final class IsFeaturedExtension extends Extension
- {
-     private static array $db = [
-    ----------- end diff -----------
-
-Applied rules:
- * AddDBFieldPropertyAnnotationsToDataObjectRector
- * AddExtendsAnnotationToExtensionRector
-
-
- [OK] 1 file would have been changed (dry-run) by Rector                    
-
+{
+    "totals": {
+        "changed_files": 1,
+        "errors": 0
+    },
+    "file_diffs": [
+        {
+            "file": "src/Extension/Page/IsFeaturedExtension.php",
+            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n use SilverStripe\\Forms\\CheckboxField;\n use SilverStripe\\Forms\\FieldList;\n \n+/**\n+ * @property bool $IsFeatured\n+ * @extends \\SilverStripe\\Core\\Extension<static>\n+ */\n final class IsFeaturedExtension extends Extension\n {\n     private static array $db = [\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector",
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddExtendsAnnotationToExtensionRector"
+            ]
+        }
+    ],
+    "changed_files": [
+        "src/Extension/Page/IsFeaturedExtension.php"
+    ]
+}

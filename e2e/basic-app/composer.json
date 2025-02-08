@@ -1,5 +1,6 @@
 {
   "name": "cambis/silverstripe-rector-basic-app",
+  "description": "",
   "require": {
     "php": "^8.1",
     "silverstripe/framework": "^5.3",

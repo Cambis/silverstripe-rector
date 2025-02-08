@@ -1,6 +1,7 @@
 {
   "name": "cambis/silverstripe-rector-basic-module",
   "type": "silverstripe-vendormodule",
+  "description": "",
   "require": {
     "php": "^8.1",
     "silverstripe/framework": "^5.3",
