@@ -1,0 +1,19 @@
+{
+    "totals": {
+        "changed_files": 1,
+        "errors": 0
+    },
+    "file_diffs": [
+        {
+            "file": "src/Page/Extension/IsFeaturedExtension.php",
+            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n use SilverStripe\\Forms\\CheckboxField;\n use SilverStripe\\Forms\\FieldList;\n \n+/**\n+ * @property bool $IsFeatured\n+ * @method (\\Page & static) getOwner()\n+ */\n final class IsFeaturedExtension extends Extension\n {\n     private static array $db = [\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector",
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddGetOwnerMethodAnnotationToExtensionRector"
+            ]
+        }
+    ],
+    "changed_files": [
+        "src/Page/Extension/IsFeaturedExtension.php"
+    ]
+}

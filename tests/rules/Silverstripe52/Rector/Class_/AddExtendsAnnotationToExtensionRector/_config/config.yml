@@ -13,3 +13,7 @@ Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotatio
     - Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture\HasManyOwners
     - Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture\HasManyOwnersComplete
     - Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture\HasManyOwnersIncomplete
+
+Page:
+  extensions:
+    - Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector\Fixture\PageExtension

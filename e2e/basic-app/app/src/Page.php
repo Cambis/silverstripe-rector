@@ -1,7 +1,7 @@
 <?php
 
-use App\Block;
-use App\Extension\Page\AlternativeTitleExtension;
+use App\Model\Block;
+use App\Page\Extension\AlternativeTitleExtension;
 use SilverStripe\CMS\Model\SiteTree;
 
 class Page extends SiteTree
@@ -11,6 +11,6 @@ class Page extends SiteTree
     ];
 
     private static array $extensions = [
-        AlternativeTitleExtension::class,
+        'alternativeTitle' => AlternativeTitleExtension::class,
     ];
 }
