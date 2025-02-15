@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.8.2
+
+### Patch Changes
+
+- e403a5a: Update e2e test configuration
+
 ## 0.8.1
 
 ### Patch Changes
