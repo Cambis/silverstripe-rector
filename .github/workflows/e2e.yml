@@ -84,9 +84,6 @@ jobs:
         env:
           SILVERSTRIPE_RECTOR_SET: ${{ matrix.framework-version }}
 
-      - run: cat output.txt
-        working-directory: ${{ matrix.directory }}
-
       # Compare the actual output vs the expected
       - run: diff output.txt expected-output-${SILVERSTRIPE_RECTOR_SET//./}.txt
         working-directory: ${{ matrix.directory }}
