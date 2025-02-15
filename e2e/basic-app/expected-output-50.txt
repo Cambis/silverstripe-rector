@@ -20,7 +20,7 @@
         },
         {
             "file": "app/src/Page.php",
-            "diff": "--- Original\n+++ New\n@@ -4,6 +4,10 @@\n use App\\Page\\Extension\\AlternativeTitleExtension;\n use SilverStripe\\CMS\\Model\\SiteTree;\n \n+/**\n+ * @method \\SilverStripe\\ORM\\HasManyList|\\App\\Model\\Block[] Blocks()\n+ * @mixin \\App\\Page\\Extension\\AlternativeTitleExtension\n+ */\n class Page extends SiteTree\n {\n     private static array $has_many = [\n",
+            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n     use App\\Page\\Extension\\AlternativeTitleExtension;\n     use SilverStripe\\CMS\\Model\\SiteTree;\n \n+    /**\n+     * @method \\SilverStripe\\ORM\\HasManyList|\\App\\Model\\Block[] Blocks()\n+     * @mixin \\App\\Page\\Extension\\AlternativeTitleExtension\n+     */\n     class Page extends SiteTree\n     {\n         private static array $has_many = [\n",
             "applied_rectors": [
                 "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddExtensionMixinAnnotationsToExtensibleRector",
                 "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddHasManyMethodAnnotationsToDataObjectRector"
