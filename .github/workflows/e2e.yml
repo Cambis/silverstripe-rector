@@ -17,33 +17,33 @@ jobs:
   end-to-end:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
-          # - directory: e2e/basic-app
-          #   php-version: 7.4
-          #   framework-version: 4.13
-          #   cms-version: 4.13
-          # - directory: e2e/basic-app
-          #   php-version: 8.1
-          #   framework-version: 5.1
-          #   cms-version: 5.1
+          - directory: e2e/basic-app
+            php-version: 7.4
+            framework-version: 4.13
+            cms-version: 4.13
+          - directory: e2e/basic-app
+            php-version: 8.1
+            framework-version: 5.1
+            cms-version: 5.1
           - directory: e2e/basic-app
             php-version: 8.1
             framework-version: 5.3
             cms-version: 5.3
-          # - directory: e2e/basic-module
-          #   php-version: 7.4
-          #   framework-version: 4.13
-          #   cms-version: 4.13
-          # - directory: e2e/basic-module
-          #   php-version: 8.1
-          #   framework-version: 5.1
-          #   cms-version: 5.1
-          # - directory: e2e/basic-module
-          #   php-version: 8.1
-          #   framework-version: 5.3
-          #   cms-version: 5.3
+          - directory: e2e/basic-module
+            php-version: 7.4
+            framework-version: 4.13
+            cms-version: 4.13
+          - directory: e2e/basic-module
+            php-version: 8.1
+            framework-version: 5.1
+            cms-version: 5.1
+          - directory: e2e/basic-module
+            php-version: 8.1
+            framework-version: 5.3
+            cms-version: 5.3
     steps:
       # Build source code
       - uses: actions/checkout@v4
