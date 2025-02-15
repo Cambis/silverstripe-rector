@@ -1,0 +1,60 @@
+{
+    "totals": {
+        "changed_files": 6,
+        "errors": 0
+    },
+    "file_diffs": [
+        {
+            "file": "app/src/Model/Block.php",
+            "diff": "--- Original\n+++ New\n@@ -4,6 +4,9 @@\n \n use SilverStripe\\ORM\\DataObject;\n \n+/**\n+ * @property string $Title\n+ */\n class Block extends DataObject\n {\n     private static string $table_name = 'Block';\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector"
+            ]
+        },
+        {
+            "file": "app/src/Model/Block/ContentBlock.php",
+            "diff": "--- Original\n+++ New\n@@ -4,6 +4,9 @@\n \n use App\\Model\\Block;\n \n+/**\n+ * @property ?string $Content\n+ */\n final class ContentBlock extends Block\n {\n     private static string $table_name = 'ContentBlock';\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector"
+            ]
+        },
+        {
+            "file": "app/src/Page.php",
+            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n     use App\\Page\\Extension\\AlternativeTitleExtension;\n     use SilverStripe\\CMS\\Model\\SiteTree;\n \n+    /**\n+     * @method \\SilverStripe\\ORM\\HasManyList<\\App\\Model\\Block> Blocks()\n+     * @mixin \\App\\Page\\Extension\\AlternativeTitleExtension\n+     */\n     class Page extends SiteTree\n     {\n         private static array $has_many = [\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddExtensionMixinAnnotationsToExtensibleRector",
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddHasManyMethodAnnotationsToDataObjectRector"
+            ]
+        },
+        {
+            "file": "app/src/Page/Extension/AlternativeTitleExtension.php",
+            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n use SilverStripe\\Forms\\FieldList;\n use SilverStripe\\Forms\\TextField;\n \n+/**\n+ * @property ?string $AlternativeTitle\n+ * @extends \\SilverStripe\\Core\\Extension<(\\Page & static)>\n+ */\n final class AlternativeTitleExtension extends Extension\n {\n     private static array $db = [\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector",
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddExtendsAnnotationToExtensionRector"
+            ]
+        },
+        {
+            "file": "app/src/PageController.php",
+            "diff": "--- Original\n+++ New\n@@ -4,6 +4,10 @@\n \n     use SilverStripe\\CMS\\Controllers\\ContentController;\n \n+    /**\n+     * @template T of \\Page\n+     * @extends \\SilverStripe\\CMS\\Controllers\\ContentController<T>\n+     */\n     class PageController extends ContentController\n     {\n     }\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddExtendsAnnotationToContentControllerRector"
+            ]
+        },
+        {
+            "file": "app/src/PageController/HomepageController.php",
+            "diff": "--- Original\n+++ New\n@@ -4,6 +4,9 @@\n \n use PageController;\n \n+/**\n+ * @extends \\PageController<\\App\\Page\\Homepage>\n+ */\n final class HomepageController extends PageController\n {\n }\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddExtendsAnnotationToContentControllerRector"
+            ]
+        }
+    ],
+    "changed_files": [
+        "app/src/Model/Block.php",
+        "app/src/Model/Block/ContentBlock.php",
+        "app/src/Page.php",
+        "app/src/Page/Extension/AlternativeTitleExtension.php",
+        "app/src/PageController.php",
+        "app/src/PageController/HomepageController.php"
+    ]
+}

@@ -1,16 +1,19 @@
 <?php
 
-use App\Block;
-use App\Extension\Page\AlternativeTitleExtension;
-use SilverStripe\CMS\Model\SiteTree;
+namespace {
 
-class Page extends SiteTree
-{
-    private static array $has_many = [
-        'Blocks' => Block::class,
-    ];
+    use App\Model\Block;
+    use App\Page\Extension\AlternativeTitleExtension;
+    use SilverStripe\CMS\Model\SiteTree;
 
-    private static array $extensions = [
-        AlternativeTitleExtension::class,
-    ];
+    class Page extends SiteTree
+    {
+        private static array $has_many = [
+            'Blocks' => Block::class,
+        ];
+
+        private static array $extensions = [
+            AlternativeTitleExtension::class,
+        ];
+    }
 }
