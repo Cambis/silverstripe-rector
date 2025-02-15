@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/update-e2e-configuration
   pull_request:
     branches:
       - main
