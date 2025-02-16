@@ -23,6 +23,7 @@ rector.php export-ignore
 
 # Build
 build export-ignore
+e2e export-ignore
 patches export-ignore
 
 # Documentation

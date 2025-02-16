@@ -47,6 +47,7 @@ jobs:
             phpstan.neon.dist \
             rector.php \
             build \
+            e2e \
             patches \
             package.json \
             CHANGELOG.md \
