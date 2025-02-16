@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionGenericObjectType;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
@@ -21,52 +20,60 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 /**
  * @implements AnnotationComparatorInterface<MethodTagValueNode>
  */
-final readonly class MethodAnnotationComparator implements AnnotationComparatorInterface
+final class MethodAnnotationComparator implements AnnotationComparatorInterface
 {
-    public function __construct(
-        private ClassAnalyser $classAnalyser,
-        private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard,
-        private StaticTypeMapper $staticTypeMapper,
-        private TypeComparator $typeComparator
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard;
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    /**
+     * @readonly
+     */
+    private TypeComparator $typeComparator;
+    public function __construct(ClassAnalyser $classAnalyser, NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard, StaticTypeMapper $staticTypeMapper, TypeComparator $typeComparator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->newPhpDocFromPHPStanTypeGuard = $newPhpDocFromPHPStanTypeGuard;
+        $this->staticTypeMapper = $staticTypeMapper;
+        $this->typeComparator = $typeComparator;
     }
 
-    #[Override]
     public function getTagValueNodeClass(): string
     {
         return MethodTagValueNode::class;
     }
 
-    #[Override]
     public function areTagValueNodeNamesEqual(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
     {
         return $originalNode->methodName === $newNode->methodName;
     }
 
-    #[Override]
     public function shouldUpdateTagValueNode(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
     {
         if (!$originalNode->returnType instanceof TypeNode) {
             return false;
         }
-
         if (!$newNode->returnType instanceof TypeNode) {
             return false;
         }
-
         $originalType = $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType($originalNode->returnType, $node);
         $newType = $this->staticTypeMapper->mapPHPStanPhpDocTypeNodeToPHPStanType($newNode->returnType, $node);
-
         // Special case for `getOwner()`. We cast it as a custom generic object so that the types resolve correctly
         if ($this->isGetOwnerMethod($originalNode, $newNode, $node)) {
             $originalType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$originalType]);
             $newType = new ExtensionGenericObjectType('SilverStripe\Core\Extension', [$newType]);
         }
-
         if (!$this->newPhpDocFromPHPStanTypeGuard->isLegal($newType)) {
             return false;
         }
-
         return !$this->typeComparator->areTypesEqual(
             $originalType,
             $newType

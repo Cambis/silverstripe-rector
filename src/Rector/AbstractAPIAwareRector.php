@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Rector;
 
 use Cambis\SilverstripeRector\Contract\Rector\APIAwareRectorInterface;
-use Override;
 use PhpParser\Node;
 use Rector\Rector\AbstractRector;
 
@@ -16,7 +15,6 @@ use Rector\Rector\AbstractRector;
  */
 abstract class AbstractAPIAwareRector extends AbstractRector implements APIAwareRectorInterface
 {
-    #[Override]
     final public function refactor(Node $node)
     {
         return $this->refactorAPIAwareNode($node);

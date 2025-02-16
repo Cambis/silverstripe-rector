@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type;
 
-use Override;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
@@ -15,12 +14,10 @@ use PHPStan\Type\UnionType;
  */
 final class ExtensionOwnerUnionType extends UnionType
 {
-    #[Override]
     public function traverse(callable $cb): Type
     {
         $types = [];
         $hasChanged = false;
-
         foreach ($this->getTypes() as $type) {
             $newType = $cb($type);
 
@@ -35,12 +32,10 @@ final class ExtensionOwnerUnionType extends UnionType
 
             $types[] = $newType;
         }
-
         if ($hasChanged) {
             // Return a regular UnionType, so the type does not resolve to NEVER
             return new UnionType($types);
         }
-
         return $this;
     }
 
