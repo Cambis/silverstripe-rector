@@ -4,6 +4,7 @@ namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
@@ -12,6 +13,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
 use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
+use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
@@ -22,7 +24,7 @@ use function array_keys;
 /**
  * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
-final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector
+final class CompleteDynamicInjectablePropertiesRector extends AbstractAPIAwareRector implements RelatedConfigInterface
 {
     public function __construct(
         private readonly ClassAnalyzer $classAnalyzer,
@@ -100,6 +102,12 @@ CODE_SAMPLE
         $node->stmts = [...$newProperties, ...$node->stmts];
 
         return $node;
+    }
+
+    #[Override]
+    public static function getConfigFile(): string
+    {
+        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     private function shouldSkipClass(Class_ $class): bool
