@@ -8,7 +8,7 @@ use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase
 use Iterator;
 use Override;
 
-final class AddHasOnePropertyAndMethodAnnotationsToDataObjectTest extends AbstractSilverstripeRectorTestCase
+final class AddHasOnePropertyAndMethodAnnotationsToDataObjectRectorTest extends AbstractSilverstripeRectorTestCase
 {
     /**
      * @dataProvider provideData
