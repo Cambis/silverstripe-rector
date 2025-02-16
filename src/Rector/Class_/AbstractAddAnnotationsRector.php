@@ -9,6 +9,7 @@ use Cambis\SilverstripeRector\NodeResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDoc\AnnotationUpdater;
 use Cambis\SilverstripeRector\PhpDoc\PhpDocHelper;
 use Cambis\SilverstripeRector\Rector\AbstractAPIAwareRector;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Override;
 use PhpParser\Node;
@@ -24,11 +25,12 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
+use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 
-abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
+abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector implements RelatedConfigInterface
 {
     /**
      * @var array<class-string<PhpDocTagValueNode>, string>
@@ -100,6 +102,12 @@ abstract class AbstractAddAnnotationsRector extends AbstractAPIAwareRector
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
 
         return $node;
+    }
+
+    #[Override]
+    public static function getConfigFile(): string
+    {
+        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     /**
