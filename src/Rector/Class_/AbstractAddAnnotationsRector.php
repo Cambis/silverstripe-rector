@@ -8,6 +8,7 @@ use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\AnnotationUpdater\AnnotationUpdater;
 use Cambis\SilverstripeRector\DataRecordResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDocHelper\PhpDocHelper;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
