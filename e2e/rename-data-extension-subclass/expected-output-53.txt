@@ -1,0 +1,19 @@
+{
+    "totals": {
+        "changed_files": 1,
+        "errors": 0
+    },
+    "file_diffs": [
+        {
+            "file": "src/Model/Extension/BasicExtension.php",
+            "diff": "--- Original\n+++ New\n@@ -4,6 +4,9 @@\n \n use SilverStripe\\ORM\\DataExtension;\n \n-final class BasicExtension extends DataExtension\n+/**\n+ * @extends \\SilverStripe\\Core\\Extension<static>\n+ */\n+final class BasicExtension extends \\SilverStripe\\Core\\Extension\n {\n }\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\Silverstripe52\\Rector\\Class_\\AddExtendsAnnotationToExtensionRector",
+                "Rector\\Renaming\\Rector\\Name\\RenameClassRector"
+            ]
+        }
+    ],
+    "changed_files": [
+        "src/Model/Extension/BasicExtension.php"
+    ]
+}
