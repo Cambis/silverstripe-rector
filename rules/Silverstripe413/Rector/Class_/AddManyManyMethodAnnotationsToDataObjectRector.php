@@ -22,7 +22,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddManyManyMethodAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -53,17 +52,14 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-
         $manyManyMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
             SilverstripeConstants::PROPERTY_MANY_MANY,
         );
-
         // List types from Silverstan are generic, transform them into the `DataList|Item[]` format
         foreach ($manyManyMethods as $name => $type) {
             if (!$type instanceof GenericObjectType) {
@@ -73,7 +69,6 @@ CODE_SAMPLE
             $arrayType = new ArrayType(new IntegerType(), $type->getTypes()[0]);
             $manyManyMethods[$name] = TypeCombinator::union(new FullyQualifiedObjectType($type->getClassName()), $arrayType);
         }
-
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             $manyManyMethods
         );

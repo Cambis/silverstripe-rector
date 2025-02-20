@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerIn
 use Cambis\SilverstripeRector\StaticTypeMapper\ValueObject\Type\ExtensionOwnerUnionType;
 use Cambis\SilverstripeRector\TypeResolver\AbstractConfigurationPropertyTypeResolver;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
-use Override;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\StaticType;
 use PHPStan\Type\Type;
@@ -39,20 +38,13 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
      * @param class-string<DataList<DataObject>> $listName
      * @return Type[]
      */
-    #[Override]
-    public function resolveMethodTypesFromManyRelation(
-        string $className,
-        string $relationName,
-        string $listName = DataList::class
-    ): array {
+    public function resolveMethodTypesFromManyRelation(string $className, string $relationName, string $listName = DataList::class): array
+    {
         $properties = [];
-
         $relation = $this->getConfig($className, $relationName) ?? [];
-
         if (!is_array($relation) || $relation === []) {
             return $properties;
         }
-
         /** @var array<string|string[]> $relation */
         foreach ($relation as $fieldName => $fieldType) {
             $relationFieldType = $this->resolveRelationFieldType($fieldType);
@@ -73,27 +65,22 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 [$relationFieldType],
             );
         }
-
         return $properties;
     }
 
     /**
      * @param class-string $className extension name
      */
-    #[Override]
     public function resolveOwnerTypeFromOwners(string $className, bool $isIntersection): Type
     {
         /** @var array<class-string> $owners */
         $owners = array_filter(ClassInfo::allClasses(), static function (string $owner) use ($className): bool {
             return ViewableData::has_extension($owner, $className, true);
         });
-
         $classReflection = $this->reflectionProvider->getClass($className);
-
         if ($owners === []) {
             return new ExtensionGenericObjectType('SilverStripe\Core\Extension', [new StaticType($classReflection)]);
         }
-
         $owners = array_filter($owners, function (string $owner) use ($className): bool {
             /** @var class-string[] $extensions */
             $extensions = $this->getConfig($owner, SilverstripeConstants::PROPERTY_EXTENSIONS) ?? [];
@@ -107,13 +94,10 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 true
             );
         });
-
         if ($owners === []) {
             return new ExtensionGenericObjectType('SilverStripe\Core\Extension', [new StaticType($classReflection)]);
         }
-
         $types = [];
-
         foreach ($owners as $owner) {
             if ($isIntersection) {
                 $types[] = new ExtensionOwnerIntersectionType([new FullyQualifiedObjectType($owner), new StaticType($classReflection)]);
@@ -121,11 +105,9 @@ final class ConfigurationPropertyTypeResolver extends AbstractConfigurationPrope
                 $types[] = new FullyQualifiedObjectType($owner);
             }
         }
-
         if (!$isIntersection) {
             $types[] = new StaticType($classReflection);
         }
-
         return new ExtensionGenericObjectType('SilverStripe\Core\Extension', [count($types) === 1 ? array_pop($types) : new ExtensionOwnerUnionType($types)]);
     }
 }

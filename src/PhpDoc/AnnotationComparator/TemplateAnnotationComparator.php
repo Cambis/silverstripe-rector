@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
 
 use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
-use Override;
 use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
@@ -15,21 +14,27 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 /**
  * @implements AnnotationComparatorInterface<TemplateTagValueNode>
  */
-final readonly class TemplateAnnotationComparator implements AnnotationComparatorInterface
+final class TemplateAnnotationComparator implements AnnotationComparatorInterface
 {
-    public function __construct(
-        private StaticTypeMapper $staticTypeMapper,
-        private TypeComparator $typeComparator
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    /**
+     * @readonly
+     */
+    private TypeComparator $typeComparator;
+    public function __construct(StaticTypeMapper $staticTypeMapper, TypeComparator $typeComparator)
+    {
+        $this->staticTypeMapper = $staticTypeMapper;
+        $this->typeComparator = $typeComparator;
     }
 
-    #[Override]
     public function getTagValueNodeClass(): string
     {
         return TemplateTagValueNode::class;
     }
 
-    #[Override]
     public function areTagValueNodeNamesEqual(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
     {
         return $this->typeComparator->areTypesEqual(
@@ -44,7 +49,6 @@ final readonly class TemplateAnnotationComparator implements AnnotationComparato
         );
     }
 
-    #[Override]
     public function shouldUpdateTagValueNode(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
     {
         return false;
