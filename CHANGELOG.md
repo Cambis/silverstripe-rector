@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 0.8.3
+
+### Patch Changes
+
+- 1b4e970: Use RelatedConfigInterface to import required services
+
 ## 0.8.2
 
 ### Patch Changes
