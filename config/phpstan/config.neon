@@ -128,10 +128,10 @@ services:
             configurationPropertyName: 'has_one'
             excludeMiddleware: 5
     -
-        class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\DependencyInjectionPropertyTypeResolver
+        class: Cambis\SilverstripeRector\TypeResolver\DependencyInjectionPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
     -
-        class: Cambis\SilverstripeRector\TypeResolver\TypeResolver\ExtensibleOwnsMetaPropertyTypeResolver
+        class: Cambis\SilverstripeRector\TypeResolver\ExtensibleOwnsMetaPropertyTypeResolver
         tags: [silverstan.typeResolver.propertyTypeResolver]
     -
         class: Composer\ClassMapGenerator\ClassMapGenerator

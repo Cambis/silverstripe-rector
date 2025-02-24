@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;

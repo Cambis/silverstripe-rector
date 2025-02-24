@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
+use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withImportNames()
@@ -17,14 +16,18 @@ return RectorConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-    ->withSets([
-        LevelSetList::UP_TO_PHP_83,
-        SetList::CODE_QUALITY,
-        SetList::CODING_STYLE,
-        SetList::DEAD_CODE,
-        SetList::EARLY_RETURN,
-        SetList::PRIVATIZATION,
-        SilverstripeSetList::SILVERSTRIPE_53,
+    ->withPhpSets()
+    ->withPreparedSets(
+        codeQuality: true,
+        codingStyle: true,
+        deadCode: true,
+        earlyReturn: true,
+        privatization: true,
+        phpunit: true,
+        phpunitCodeQuality: true
+    )
+    ->withRules([
+        DeclareStrictTypesRector::class,
     ])
     ->withSkip([
         '*/Rector/*/Fixture/*',
@@ -34,4 +37,9 @@ return RectorConfig::configure()
         AddTypeToConstRector::class,
         // Some rectors use FQN names
         StringClassNameToClassConstantRector::class,
+        // Skip false postive in AbstractRector::test()
+        AddDoesNotPerformAssertionToNonAssertingTestRector::class => [
+            __DIR__ . '/tests/rules/**/Rector/**/*RectorTest.php',
+            __DIR__ . '/tests/src/Set/**/Silverstripe**Test.php',
+        ],
     ]);

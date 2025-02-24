@@ -11,8 +11,6 @@ use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddHasManyMethodAnno
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddHasOnePropertyAndMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddManyManyMethodAnnotationsToDataObjectRector;
 use Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector;
-use Cambis\SilverstripeRector\Silverstripe413\TypeResolver\ConfigurationPropertyTypeResolver;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -28,8 +26,4 @@ return static function (RectorConfig $rectorConfig): void {
         AddExtensionMixinAnnotationsToExtensibleRector::class,
         CompleteDynamicInjectablePropertiesRector::class,
     ]);
-    $rectorConfig->singleton(
-        ConfigurationPropertyTypeResolverInterface::class,
-        ConfigurationPropertyTypeResolver::class
-    );
 };

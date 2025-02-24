@@ -5,16 +5,14 @@ declare(strict_types=1);
 use Cambis\Silverstan\Autoloader\Autoloader;
 use Cambis\Silverstan\ClassManifest\ClassManifest;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\ExtendsAnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\MethodAnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\MixinAnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\PropertyAnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\TemplateAnnotationComparator;
+use Cambis\SilverstripeRector\AnnotationComparator\Contract\AnnotationComparatorInterface;
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\ExtendsAnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\MethodAnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\MixinAnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\PropertyAnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\AnnotationComparator\TemplateAnnotationComparator;
-use Cambis\SilverstripeRector\PhpDoc\Contract\AnnotationComparatorInterface;
-use Cambis\SilverstripeRector\Silverstripe413\TypeResolver\ConfigurationPropertyTypeResolver;
-use Cambis\SilverstripeRector\TypeResolver\Contract\ConfigurationPropertyTypeResolverInterface;
 use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\DependencyInjection\PHPStanServicesFactory;
 
@@ -29,12 +27,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     /** @phpstan-ignore-next-line */
     $rectorConfig->when(AnnotationComparator::class)->needs('$annotationComparators')->giveTagged(AnnotationComparatorInterface::class);
-
-    // Register base type resolver
-    $rectorConfig->singleton(
-        ConfigurationPropertyTypeResolverInterface::class,
-        ConfigurationPropertyTypeResolver::class
-    );
 
     // Register Silverstan services
     $rectorConfig->phpstanConfig(SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH);

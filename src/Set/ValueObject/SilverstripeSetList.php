@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Set\ValueObject;
 
-use Rector\Set\Contract\SetListInterface;
-
-final class SilverstripeSetList implements SetListInterface
+final class SilverstripeSetList
 {
     public const CODE_QUALITY = __DIR__ . '/../../../config/set/code-quality.php';
 
@@ -23,13 +21,6 @@ final class SilverstripeSetList implements SetListInterface
     public const SILVERSTRIPE_54 = __DIR__ . '/../../../config/set/silverstripe54.php';
 
     public const SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/silverstripe60.php';
-
-    /**
-     * Provides access to the Injector and Configuration APIs.
-     *
-     * @deprecated since 0.8.0
-     */
-    public const WITH_SILVERSTRIPE_API = __DIR__ . '/../../../config/silverstripe-api.php';
 
     /**
      * Provides all the custom services that are required in order to run all the rules.
