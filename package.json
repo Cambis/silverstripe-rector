@@ -1,6 +1,6 @@
 {
   "name": "@cambis/silverstripe-rector",
-  "version": "0.8.3",
+  "version": "1.0.0",
   "description": "Rector rules for Silverstripe.",
   "author": "Cameron Bryers",
   "license": "MIT",

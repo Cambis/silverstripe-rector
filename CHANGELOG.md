@@ -1,5 +1,14 @@
 # silverstripe-rector
 
+## 1.0.0
+
+### Major Changes
+
+- 2f2de72:
+  - Remove deprecated code as of 0.8.0
+  - Drop silverstripe/framework as a dependency
+  - Drop webmozart/assert as a dependency
+
 ## 0.8.3
 
 ### Patch Changes
