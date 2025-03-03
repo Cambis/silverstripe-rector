@@ -1,7 +1,0 @@
-Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture\BelongsManyMany:
-  belongs_many_many:
-    BelongsManyManyRelationship: Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock
-
-Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Fixture\BelongsManyManyComplete:
-  belongs_many_many:
-    BelongsManyManyRelationship: Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddBelongsManyManyMethodAnnotationsToDataObjectRector\Source\RelationMock

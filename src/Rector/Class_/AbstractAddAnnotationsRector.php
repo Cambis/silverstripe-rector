@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\AnnotationUpdater\AnnotationUpdater;
 use Cambis\SilverstripeRector\DataRecordResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\PhpDocHelper\PhpDocHelper;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
@@ -32,6 +31,42 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 abstract class AbstractAddAnnotationsRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    protected AnnotationUpdater $annotationUpdater;
+    /**
+     * @readonly
+     */
+    protected ClassAnalyzer $classAnalyzer;
+    /**
+     * @readonly
+     */
+    protected DataRecordResolver $dataRecordResolver;
+    /**
+     * @readonly
+     */
+    protected DocBlockUpdater $docBlockUpdater;
+    /**
+     * @readonly
+     */
+    protected PhpDocHelper $phpDocHelper;
+    /**
+     * @readonly
+     */
+    protected PhpDocInfoFactory $phpDocInfoFactory;
+    /**
+     * @readonly
+     */
+    protected ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    protected TypeResolver $typeResolver;
+    /**
+     * @readonly
+     */
+    protected StaticTypeMapper $staticTypeMapper;
+    /**
      * @var array<class-string<PhpDocTagValueNode>, string>
      */
     private const TAGS_TYPES_TO_NAMES = [
@@ -43,23 +78,22 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Re
         TemplateTagValueNode::class => '@template',
     ];
 
-    public function __construct(
-        protected readonly AnnotationUpdater $annotationUpdater,
-        protected readonly ClassAnalyzer $classAnalyzer,
-        protected readonly DataRecordResolver $dataRecordResolver,
-        protected readonly DocBlockUpdater $docBlockUpdater,
-        protected readonly PhpDocHelper $phpDocHelper,
-        protected readonly PhpDocInfoFactory $phpDocInfoFactory,
-        protected readonly ReflectionProvider $reflectionProvider,
-        protected readonly TypeResolver $typeResolver,
-        protected readonly StaticTypeMapper $staticTypeMapper,
-    ) {
+    public function __construct(AnnotationUpdater $annotationUpdater, ClassAnalyzer $classAnalyzer, DataRecordResolver $dataRecordResolver, DocBlockUpdater $docBlockUpdater, PhpDocHelper $phpDocHelper, PhpDocInfoFactory $phpDocInfoFactory, ReflectionProvider $reflectionProvider, TypeResolver $typeResolver, StaticTypeMapper $staticTypeMapper)
+    {
+        $this->annotationUpdater = $annotationUpdater;
+        $this->classAnalyzer = $classAnalyzer;
+        $this->dataRecordResolver = $dataRecordResolver;
+        $this->docBlockUpdater = $docBlockUpdater;
+        $this->phpDocHelper = $phpDocHelper;
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
+        $this->reflectionProvider = $reflectionProvider;
+        $this->typeResolver = $typeResolver;
+        $this->staticTypeMapper = $staticTypeMapper;
     }
 
     /**
      * @return array<class-string<Class_>>
      */
-    #[Override]
     final public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -68,41 +102,30 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Re
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipClass($node)) {
             return null;
         }
-
         $newDocTagValueNodes = $this->getNewDocTagValueNodes($node);
-
         if ($newDocTagValueNodes === []) {
             return null;
         }
-
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
-
         $this->annotationUpdater->updateExistingAnnotations($node, $phpDocInfo, $newDocTagValueNodes);
-
         $newDocTagValueNodes = $this->annotationUpdater->filterOutExistingAnnotations($phpDocInfo, $newDocTagValueNodes, $node);
-
         if ($newDocTagValueNodes === []) {
             return null;
         }
-
         foreach ($newDocTagValueNodes as $newDocTagValueNode) {
             $tagName = $this->resolveNameForPhpDocTagValueNode($newDocTagValueNode);
             $phpDocTagNode = new PhpDocTagNode($tagName, $newDocTagValueNode);
             $phpDocInfo->addPhpDocTagNode($phpDocTagNode);
         }
-
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
@@ -120,7 +143,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Re
             }
         }
 
-        throw new NotImplementedYetException(__METHOD__ . ' not yet implemented for ' . $phpDocTagValueNode::class);
+        throw new NotImplementedYetException(__METHOD__ . ' not yet implemented for ' . get_class($phpDocTagValueNode));
     }
 
     /**

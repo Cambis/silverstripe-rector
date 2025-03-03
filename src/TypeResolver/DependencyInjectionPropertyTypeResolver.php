@@ -11,7 +11,6 @@ use Cambis\Silverstan\TypeResolver\Contract\LazyTypeResolverInterface;
 use Cambis\Silverstan\TypeResolver\Contract\PropertyTypeResolverInterface;
 use Cambis\Silverstan\TypeResolver\Contract\TypeResolverAwareInterface;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
-use Override;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
@@ -22,17 +21,32 @@ use function is_string;
 
 final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResolverInterface, TypeResolverAwareInterface, LazyTypeResolverInterface
 {
+    /**
+     * @readonly
+     */
+    private ClassReflectionAnalyser $classReflectionAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private Normaliser $normaliser;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
     private TypeResolver $typeResolver;
 
-    public function __construct(
-        private readonly ClassReflectionAnalyser $classReflectionAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly Normaliser $normaliser,
-        private readonly ReflectionProvider $reflectionProvider
-    ) {
+    public function __construct(ClassReflectionAnalyser $classReflectionAnalyser, ConfigurationResolver $configurationResolver, Normaliser $normaliser, ReflectionProvider $reflectionProvider)
+    {
+        $this->classReflectionAnalyser = $classReflectionAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->normaliser = $normaliser;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
-    #[Override]
     public function getConfigurationPropertyName(): string
     {
         return 'dependencies';
@@ -40,27 +54,23 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
 
     /**
      * @phpstan-ignore return.unusedType
+     * @return int|true
      */
-    #[Override]
-    public function getExcludeMiddleware(): true|int
+    public function getExcludeMiddleware()
     {
         return ConfigurationResolver::EXCLUDE_INHERITED | ConfigurationResolver::EXCLUDE_EXTRA_SOURCES;
     }
 
-    #[Override]
     public function resolve(ClassReflection $classReflection): array
     {
         if (!$this->classReflectionAnalyser->isInjectable($classReflection)) {
             return [];
         }
-
         $types = [];
         $dependencies = $this->configurationResolver->get($classReflection->getName(), $this->getConfigurationPropertyName(), $this->getExcludeMiddleware());
-
         if (!is_array($dependencies) || $dependencies === []) {
             return $types;
         }
-
         /** @var array<array<mixed>|bool|int|string> $dependencies */
         foreach ($dependencies as $fieldName => $fieldType) {
             if (is_string($fieldType)) {
@@ -71,15 +81,15 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
 
             $types[$fieldName] = $type;
         }
-
         return $types;
     }
 
-    #[Override]
-    public function setTypeResolver(TypeResolver $typeResolver): static
+    /**
+     * @return static
+     */
+    public function setTypeResolver(TypeResolver $typeResolver)
     {
         $this->typeResolver = $typeResolver;
-
         return $this;
     }
 
