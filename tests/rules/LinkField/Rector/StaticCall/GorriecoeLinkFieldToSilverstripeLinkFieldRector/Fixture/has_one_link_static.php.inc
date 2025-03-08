@@ -2,7 +2,7 @@
 
 namespace Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector\Fixture;
 
-class HasOneLink extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOneLinkStatic extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
     private static array $has_one = [
         'CtaLink' => \gorriecoe\Link\Models\Link::class,
@@ -14,7 +14,7 @@ class HasOneLink extends \SilverStripe\ORM\DataObject implements \SilverStripe\D
             ->removeByName(['CtaLinkID'])
             ->addFieldToTab(
                 'Root.Main',
-                new \gorriecoe\LinkField\LinkField('CtaLinks', 'Links', $this, ['types' => ['SiteTree'], 'title_display' => true])
+                \gorriecoe\LinkField\LinkField::create('CtaLinks', 'Links', $this, ['types' => ['SiteTree'], 'title_display' => true])
             );
     }
 }
@@ -25,7 +25,7 @@ class HasOneLink extends \SilverStripe\ORM\DataObject implements \SilverStripe\D
 
 namespace Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector\Fixture;
 
-class HasOneLink extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
+class HasOneLinkStatic extends \SilverStripe\ORM\DataObject implements \SilverStripe\Dev\TestOnly
 {
     private static array $has_one = [
         'CtaLink' => \gorriecoe\Link\Models\Link::class,
@@ -37,7 +37,7 @@ class HasOneLink extends \SilverStripe\ORM\DataObject implements \SilverStripe\D
             ->removeByName(['CtaLinkID'])
             ->addFieldToTab(
                 'Root.Main',
-                (new \SilverStripe\LinkField\Form\LinkField('CtaLinks', 'Links'))->setAllowedTypes([\SilverStripe\LinkField\Models\SiteTreeLink::class])->setExcludeLinkTextField(true)
+                \SilverStripe\LinkField\Form\LinkField::create('CtaLinks', 'Links')->setAllowedTypes([\SilverStripe\LinkField\Models\SiteTreeLink::class])->setExcludeLinkTextField(true)
             );
     }
 }

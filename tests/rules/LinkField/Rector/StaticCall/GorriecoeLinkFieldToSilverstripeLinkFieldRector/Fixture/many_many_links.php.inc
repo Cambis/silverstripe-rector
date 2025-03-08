@@ -14,7 +14,7 @@ class ManyManyLinks extends \SilverStripe\ORM\DataObject implements \SilverStrip
             ->removeByName(['CtaLinks'])
             ->addFieldToTab(
                 'Root.Main',
-                \gorriecoe\LinkField\LinkField::create('CtaLinks', 'Links', $this, ['types' => ['SiteTree'], 'title_display' => true])
+                new \gorriecoe\LinkField\LinkField('CtaLinks', 'Links', $this, ['types' => ['SiteTree'], 'title_display' => true])
             );
     }
 }
@@ -37,7 +37,7 @@ class ManyManyLinks extends \SilverStripe\ORM\DataObject implements \SilverStrip
             ->removeByName(['CtaLinks'])
             ->addFieldToTab(
                 'Root.Main',
-                \SilverStripe\LinkField\Form\MultiLinkField::create('CtaLinks', 'Links')->setAllowedTypes([\SilverStripe\LinkField\Models\SiteTreeLink::class])->setExcludeLinkTextField(true)
+                (new \SilverStripe\LinkField\Form\MultiLinkField('CtaLinks', 'Links'))->setAllowedTypes([\SilverStripe\LinkField\Models\SiteTreeLink::class])->setExcludeLinkTextField(true)
             );
     }
 }

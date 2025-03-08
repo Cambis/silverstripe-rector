@@ -6,10 +6,12 @@ namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
+use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Reflection\ClassReflection;
@@ -67,11 +69,11 @@ CODE_SAMPLE
     #[Override]
     public function getNodeTypes(): array
     {
-        return [StaticCall::class];
+        return [New_::class, StaticCall::class];
     }
 
     /**
-     * @param StaticCall $node
+     * @param New_|StaticCall $node
      */
     #[Override]
     public function refactor(Node $node): ?Node
@@ -84,7 +86,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if (!$this->isName($node->name, 'create')) {
+        if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
             return null;
         }
 
@@ -127,15 +129,15 @@ CODE_SAMPLE
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
      */
-    private function resolveFormFieldClass(StaticCall $staticCall): FullyQualified
+    private function resolveFormFieldClass(New_|StaticCall $node): FullyQualified
     {
-        $name = $staticCall->getArgs()[0] ?? null;
+        $name = $node->getArgs()[0] ?? null;
 
         if (!$name instanceof Arg) {
             return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
         }
 
-        $parent = $staticCall->getArgs()[2] ?? null;
+        $parent = $node->getArgs()[2] ?? null;
 
         if (!$parent instanceof Arg) {
             return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
@@ -172,7 +174,7 @@ CODE_SAMPLE
         return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
     }
 
-    private function refactorLinkConfig(StaticCall $node): Node
+    private function refactorLinkConfig(New_|StaticCall $node): Node
     {
         $linkConfigArg = $node->getArgs()[3] ?? null;
 
