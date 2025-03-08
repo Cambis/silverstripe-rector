@@ -30,6 +30,8 @@ use function is_array;
 use function is_string;
 
 /**
+ * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/02_gorriecoe-migration.md
+ *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\GorriecoeLinkToSilverstripeLinkRectorTest
  */
 final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
@@ -181,6 +183,8 @@ CODE_SAMPLE
 
             // Rename the link class
             $item->value = $newValue;
+
+            $this->hasChanged = true;
 
             if (!$item->key instanceof Expr) {
                 continue;
