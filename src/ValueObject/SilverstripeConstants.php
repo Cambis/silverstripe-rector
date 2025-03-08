@@ -22,6 +22,10 @@ final class SilverstripeConstants
 
     public const PROPERTY_MANY_MANY = 'many_many';
 
+    public const PROPERTY_MANY_MANY_EXTRA_FIELDS = 'many_many_extraFields';
+
+    public const PROPERTY_OWNS = 'owns';
+
     public const METHOD_ADD_FIELD_TO_TAB = 'addFieldToTab';
 
     public const METHOD_ADD_FIELDS_TO_TAB = 'addFieldsToTab';

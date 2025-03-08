@@ -24,6 +24,8 @@ use function is_bool;
 use function is_string;
 
 /**
+ * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/02_gorriecoe-migration.md
+ *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector\GorriecoeLinkFieldToSilverstripeLinkFieldRectorTest
  */
 final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
