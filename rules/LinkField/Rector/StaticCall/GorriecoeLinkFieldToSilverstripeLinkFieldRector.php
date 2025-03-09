@@ -33,6 +33,14 @@ use function is_string;
 final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    /**
      * @var array<string, string>
      */
     private const LINK_TYPES = [
@@ -43,13 +51,12 @@ final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRect
         'SiteTree' => 'SilverStripe\LinkField\Models\SiteTreeLink',
     ];
 
-    public function __construct(
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly ValueResolver $valueResolver
-    ) {
+    public function __construct(ConfigurationResolver $configurationResolver, ValueResolver $valueResolver)
+    {
+        $this->configurationResolver = $configurationResolver;
+        $this->valueResolver = $valueResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `gorriecoe\LinkField\LinkField` to `SilverStripe\LinkField\Form\LinkField`.', [
@@ -66,7 +73,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [New_::class, StaticCall::class];
@@ -75,36 +81,28 @@ CODE_SAMPLE
     /**
      * @param New_|StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($node->isFirstClassCallable()) {
             return null;
         }
-
         if (!$this->isName($node->class, 'gorriecoe\LinkField\LinkField')) {
             return null;
         }
-
         if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
             return null;
         }
-
         $node->class = $this->resolveFormFieldClass($node);
-
         // Remove parent argument
         if (isset($node->args[2])) {
             unset($node->args[2]);
         }
-
         if (isset($node->args[3])) {
             return $this->refactorLinkConfig($node);
         }
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
@@ -128,8 +126,9 @@ CODE_SAMPLE
 
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
      */
-    private function resolveFormFieldClass(New_|StaticCall $node): FullyQualified
+    private function resolveFormFieldClass($node): FullyQualified
     {
         $name = $node->getArgs()[0] ?? null;
 
@@ -174,7 +173,10 @@ CODE_SAMPLE
         return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
     }
 
-    private function refactorLinkConfig(New_|StaticCall $node): Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorLinkConfig($node): Node
     {
         $linkConfigArg = $node->getArgs()[3] ?? null;
 

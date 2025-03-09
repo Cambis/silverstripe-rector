@@ -36,17 +36,32 @@ use function is_string;
  */
 final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
 {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
     private bool $hasChanged = false;
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly ValueResolver $valueResolver
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser, ConfigurationResolver $configurationResolver, PropertyFactory $propertyFactory, ValueResolver $valueResolver)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->valueResolver = $valueResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
@@ -97,7 +112,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -106,42 +120,32 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->classAnalyser->isDataObject($node)) {
             return null;
         }
-
         $hasOne = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_ONE);
-
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
             $node = $this->refactorHasOne($node, $hasOne);
         }
-
         $manyMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_MANY_MANY);
-
         // Migrate many_many to has_many
         if ($manyMany instanceof Property) {
             $node = $this->refactorManyMany($node, $manyMany);
         }
-
         $hasMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_MANY);
-
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {
             $node = $this->refactorHasMany($node, $hasMany);
         }
-
         if (!$this->hasChanged) {
             return null;
         }
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
