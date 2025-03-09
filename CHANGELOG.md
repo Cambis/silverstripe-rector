@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 1.1.0
+
+### Minor Changes
+
+- 90417f5: Add rectors to migrate gorriecoe link to silverstripe linkfield
+
 ## 1.0.0
 
 ### Major Changes
