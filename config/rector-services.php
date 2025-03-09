@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Cambis\Silverstan\Autoloader\Autoloader;
 use Cambis\Silverstan\ClassManifest\ClassManifest;
+use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator;
 use Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator\ExtendsAnnotationComparator;
@@ -34,6 +35,7 @@ return static function (RectorConfig $rectorConfig): void {
     $silverstanServices = [
         Autoloader::class,
         ClassManifest::class,
+        ConfigurationResolver::class,
         TypeResolver::class,
     ];
 

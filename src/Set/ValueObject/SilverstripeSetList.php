@@ -26,4 +26,6 @@ final class SilverstripeSetList
      * Provides all the custom services that are required in order to run all the rules.
      */
     public const WITH_RECTOR_SERVICES = __DIR__ . '/../../../config/rector-services.php';
+
+    public const GORRIECOE_LINK_TO_SILVERSTRIPE_LINKFIELD = __DIR__ . '/../../../config/set/gorriecoe-link-to-silverstripe-linkfield.php';
 }

@@ -1,10 +1,12 @@
-# 20 Rules Overview
+# 22 Rules Overview
 
 <br>
 
 ## Categories
 
 - [CodeQuality](#codequality) (3)
+
+- [LinkField](#linkfield) (2)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -60,6 +62,60 @@ Transforms static property fetch into `$this->config->get()`.
 -        return self::$singular_name;
 +        return $this->config()->get('singular_name');
      }
+ }
+```
+
+<br>
+
+## LinkField
+
+### GorriecoeLinkFieldToSilverstripeLinkFieldRector
+
+Migrate `gorriecoe\LinkField\LinkField` to `SilverStripe\LinkField\Form\LinkField`.
+
+- class: [`Cambis\SilverstripeRector\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector`](../rules/LinkField/Rector/StaticCall/GorriecoeLinkFieldToSilverstripeLinkFieldRector.php)
+
+```diff
+-\gorriecoe\LinkField\LinkField::create('Link', 'Link', $this, ['types' => ['SiteTree']]);
++\SilverStripe\LinkField\Form\LinkField::create('Link', 'Link')
++    ->setAllowedTypes([\SilverStripe\LinkField\Models\SiteTreeLink::class]);
+```
+
+<br>
+
+### GorriecoeLinkToSilverstripeLinkRector
+
+Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.
+
+- class: [`Cambis\SilverstripeRector\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector`](../rules/LinkField/Rector/Class_/GorriecoeLinkToSilverstripeLinkRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $has_one = [
+-        'HasOneLink' => \gorriecoe\Link\Models\Link::class,
++        'HasOneLink' => \SilverStripe\LinkField\Models\Link::class,
+     ];
+
+     private static array $has_many = [
+-        'HasManyLinks' => \gorriecoe\Link\Models\Link::class,
++        'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
++        'ManyManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
+     ];
+
+-    private static array $many_many = [
+-        'ManyManyLinks' => \gorriecoe\Link\Models\Link::class,
+-    ];
+-
+-    private static array $many_many_extraFields = [
+-        'ManyManyLinks' => [
+-            'Sort' => 'Int',
+-        ],
++    private static array $owns = [
++        'HasOneLink',
++        'HasManyLinks',
++        'ManyManyLinks',
+     ];
  }
 ```
 
@@ -151,8 +207,6 @@ Add missing dynamic annotations.
 ### AddGetOwnerMethodAnnotationToExtensionRector
 
 Add missing dynamic annotations.
-
-:wrench: **configure it!**
 
 - class: [`Cambis\SilverstripeRector\Silverstripe413\Rector\Class_\AddGetOwnerMethodAnnotationToExtensionRector`](../rules/Silverstripe413/Rector/Class_/AddGetOwnerMethodAnnotationToExtensionRector.php)
 
@@ -326,8 +380,6 @@ Add missing dynamic annotations.
 ### AddExtendsAnnotationToExtensionRector
 
 Add missing dynamic annotations.
-
-:wrench: **configure it!**
 
 - class: [`Cambis\SilverstripeRector\Silverstripe52\Rector\Class_\AddExtendsAnnotationToExtensionRector`](../rules/Silverstripe52/Rector/Class_/AddExtendsAnnotationToExtensionRector.php)
 
