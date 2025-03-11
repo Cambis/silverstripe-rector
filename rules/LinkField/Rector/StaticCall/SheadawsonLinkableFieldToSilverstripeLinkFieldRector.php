@@ -6,18 +6,15 @@ namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\Normaliser\Normaliser;
+use Cambis\SilverstripeRector\NodeFactory\NewFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
-use PhpParser\BuilderHelpers;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Name;
-use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Type;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
@@ -41,6 +38,7 @@ final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends Abstrac
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
         private readonly ConfigurationResolver $configurationResolver,
+        private readonly NewFactory $newFactory,
         private readonly Normaliser $normaliser,
         private readonly ValueResolver $valueResolver
     ) {
@@ -132,17 +130,10 @@ CODE_SAMPLE
             $args[] = $fieldTitleArg;
         }
 
-        if ($node instanceof New_) {
-            return $this->createNew(
-                new FullyQualified('SilverStripe\LinkField\Form\LinkField'),
-                $this->nodeFactory->createArgs($args),
-            );
-        }
-
-        return $this->nodeFactory->createStaticCall(
+        return $this->newFactory->createInjectable(
             'SilverStripe\LinkField\Form\LinkField',
-            'create',
-            $this->nodeFactory->createArgs($args)
+            $args,
+            $node instanceof StaticCall
         );
     }
 
@@ -203,27 +194,11 @@ CODE_SAMPLE
             $args[] = $fieldTitleArg;
         }
 
-        if ($node instanceof New_) {
-            return $this->createNew(
-                new FullyQualified('SilverStripe\LinkField\Form\MultiLinkField'),
-                $this->nodeFactory->createArgs($args),
-            );
-        }
-
-        return $this->nodeFactory->createStaticCall(
+        return $this->newFactory->createInjectable(
             'SilverStripe\LinkField\Form\MultiLinkField',
-            'create',
-            $this->nodeFactory->createArgs($args)
+            $args,
+            $node instanceof StaticCall
         );
-    }
-
-    /**
-     * @param Expr|Name|string $class
-     * @param Arg[] $args
-     */
-    private function createNew(mixed $class, array $args): New_
-    {
-        return new New_(BuilderHelpers::normalizeNameOrExpr($class), $args);
     }
 
     /**
