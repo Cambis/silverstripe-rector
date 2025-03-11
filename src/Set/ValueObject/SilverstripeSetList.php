@@ -28,4 +28,6 @@ final class SilverstripeSetList
     public const WITH_RECTOR_SERVICES = __DIR__ . '/../../../config/rector-services.php';
 
     public const GORRIECOE_LINK_TO_SILVERSTRIPE_LINKFIELD = __DIR__ . '/../../../config/set/gorriecoe-link-to-silverstripe-linkfield.php';
+
+    public const SHEADAWSON_LINKABLE_TO_SILVERSTRIPE_LINKFIELD = __DIR__ . '/../../../config/set/sheadawson-linkable-to-silverstripe-linkfield.php';
 }

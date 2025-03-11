@@ -1,4 +1,4 @@
-# 23 Rules Overview
+# 25 Rules Overview
 
 <br>
 
@@ -6,7 +6,7 @@
 
 - [CodeQuality](#codequality) (3)
 
-- [LinkField](#linkfield) (3)
+- [LinkField](#linkfield) (5)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -105,6 +105,60 @@ Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Mo
 
 -    private static array $many_many = [
 -        'ManyManyLinks' => \gorriecoe\Link\Models\Link::class,
+-    ];
+-
+-    private static array $many_many_extraFields = [
+-        'ManyManyLinks' => [
+-            'Sort' => 'Int',
+-        ],
++    private static array $owns = [
++        'HasOneLink',
++        'HasManyLinks',
++        'ManyManyLinks',
+     ];
+ }
+```
+
+<br>
+
+### SheadawsonLinkableFieldToSilverstripeLinkFieldRector
+
+Migrate `Sheadawson\Linkable\Forms\LinkField` to `SilverStripe\LinkField\Form\LinkField`.
+
+- class: [`Cambis\SilverstripeRector\LinkField\Rector\StaticCall\SheadawsonLinkableFieldToSilverstripeLinkFieldRector`](../rules/LinkField/Rector/StaticCall/SheadawsonLinkableFieldToSilverstripeLinkFieldRector.php)
+
+```diff
+-\Sheadawson\Linkable\Forms\LinkField::create('LinkID', 'Link');
++\SilverStripe\LinkField\Form\LinkField::create('Link', 'Link');
+
+-\SilverStripe\Forms\GridField\GridField::create('Links', 'Links', $this->Links());
++\SilverStripe\LinkField\Form\MultiLinkField::create('Links', 'Links');
+```
+
+<br>
+
+### SheadawsonLinkableToSilverstripeLinkRector
+
+Migrate `Sheadawson\Linkable\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.
+
+- class: [`Cambis\SilverstripeRector\LinkField\Rector\Class_\SheadawsonLinkableToSilverstripeLinkRector`](../rules/LinkField/Rector/Class_/SheadawsonLinkableToSilverstripeLinkRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $has_one = [
+-        'HasOneLink' => \Sheadawson\Linkable\Models\Link::class,
++        'HasOneLink' => \SilverStripe\LinkField\Models\Link::class,
+     ];
+
+     private static array $has_many = [
+-        'HasManyLinks' => \Sheadawson\Linkable\Models\Link::class,
++        'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
++        'ManyManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
+     ];
+
+-    private static array $many_many = [
+-        'ManyManyLinks' => \Sheadawson\Linkable\Models\Link::class,
 -    ];
 -
 -    private static array $many_many_extraFields = [
