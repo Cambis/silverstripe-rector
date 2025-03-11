@@ -49,6 +49,7 @@ jobs:
             build \
             e2e \
             patches \
+            stubs \
             package.json \
             CHANGELOG.md \
             CONTRIBUTING.md

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabDeprecatedNonArrayArgumentRector;
+use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 
@@ -33,4 +34,7 @@ return static function (RectorConfig $rectorConfig): void {
             'SilverStripe\ORM\DataExtension' => 'SilverStripe\Core\Extension',
         ]
     );
+
+    // https://github.com/symbiote/silverstripe-queuedjobs/commit/b6c1c4ffe3f4a577bf98cfcac4a7fb8fba94c0c0
+    $rectorConfig->rule(ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector::class);
 };

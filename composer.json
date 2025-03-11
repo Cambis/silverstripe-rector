@@ -47,7 +47,10 @@
                 "tests/src/",
                 "tests/rules/"
             ]
-        }
+        },
+        "classmap": [
+            "stubs"
+        ]
     },
     "config": {
         "allow-plugins": {

@@ -1,4 +1,4 @@
-# 25 Rules Overview
+# 26 Rules Overview
 
 <br>
 
@@ -14,7 +14,7 @@
 
 - [Silverstripe52](#silverstripe52) (6)
 
-- [Silverstripe53](#silverstripe53) (1)
+- [Silverstripe53](#silverstripe53) (2)
 
 <br>
 
@@ -548,6 +548,27 @@ Rename `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` to `
  \SilverStripe\Forms\FieldList::create()
 -    ->removeFieldsFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
 +    ->removeFieldFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
+```
+
+<br>
+
+### ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector
+
+Migrate `ProcessJobQueueTask::getQueue()` to `AbstractQueuedJob::getQueue()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector`](../rules/Silverstripe53/Rector/MethodCall/ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector.php)
+
+```diff
+ class FooTask extends \Symbiote\QueuedJobs\Tasks\ProcessJobQueueTask
+ {
+     public function run($request): void
+     {
+        // ...
+-       $queue = $this->getQueue($request);
++       $queue = \Symbiote\QueuedJobs\Services\AbstractQueuedJob::getQueue($request->getVar('queue') ?? 'Queued');
+        // ...
+     }
+ }
 ```
 
 <br>
