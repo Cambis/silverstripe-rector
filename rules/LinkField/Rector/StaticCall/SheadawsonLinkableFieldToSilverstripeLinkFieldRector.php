@@ -15,8 +15,7 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
-use PHPStan\Reflection\ClassReflection;
-use PHPStan\Type\Type;
+use PHPStan\Type\ObjectType;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\PhpParser\Node\Value\ValueResolver;
@@ -157,9 +156,16 @@ CODE_SAMPLE
             return null;
         }
 
-        $parentClass = $this->resolveParentClass($this->getType($relationArg->value->var));
+        // Check that $this is a DataObject
+        if (!$this->isObjectType($relationArg->value->var, new ObjectType('SilverStripe\ORM\DataObject'))) {
+            return null;
+        }
 
-        if (!$parentClass instanceof ClassReflection) {
+        // Grab the type of $this
+        $parentClass = $this->getType($relationArg->value->var);
+
+        // Safety check
+        if ($parentClass->getObjectClassNames() === []) {
             return null;
         }
 
@@ -169,8 +175,10 @@ CODE_SAMPLE
             return null;
         }
 
-        $manyMany = $this->configurationResolver->get($parentClass->getName(), 'many_many');
+        // Grab the `many_many` config
+        $manyMany = $this->configurationResolver->get($parentClass->getObjectClassNames()[0], 'many_many');
 
+        // Safety check
         if (!is_array($manyMany) || $manyMany === []) {
             return null;
         }
@@ -199,21 +207,5 @@ CODE_SAMPLE
             $args,
             $node instanceof StaticCall
         );
-    }
-
-    /**
-     * Resolve the parent.
-     */
-    private function resolveParentClass(Type $type): ?ClassReflection
-    {
-        foreach ($type->getObjectClassReflections() as $classReflection) {
-            if (!$classReflection->is('SilverStripe\ORM\DataObject')) {
-                continue;
-            }
-
-            return $classReflection;
-        }
-
-        return null;
     }
 }

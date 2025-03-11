@@ -23,7 +23,7 @@ final readonly class NewFactory
     /**
      * @param Expr|Name|string $class
      * @param mixed[] $args
-     * @param use $useCreate `Injectable::create()` rather than `new Injectable()`.
+     * @param bool $useCreate `Injectable::create()` rather than `new Injectable()`.
      */
     public function createInjectable(mixed $class, array $args, bool $useCreate): New_|StaticCall
     {
