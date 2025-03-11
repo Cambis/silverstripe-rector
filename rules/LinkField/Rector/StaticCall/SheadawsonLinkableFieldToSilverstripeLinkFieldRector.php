@@ -21,6 +21,7 @@ use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Type;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
+use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -38,6 +39,7 @@ use function rtrim;
 final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
 {
     public function __construct(
+        private readonly ArgsAnalyzer $argsAnalyzer,
         private readonly ConfigurationResolver $configurationResolver,
         private readonly Normaliser $normaliser,
         private readonly ValueResolver $valueResolver
@@ -81,6 +83,10 @@ CODE_SAMPLE
         }
 
         if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
+            return null;
+        }
+
+        if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
         }
 
