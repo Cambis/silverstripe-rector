@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
+use Cambis\SilverstripeRector\NodeFactory\NewFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Type;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
+use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use function array_filter;
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -43,7 +44,19 @@ final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRect
         'SiteTree' => 'SilverStripe\LinkField\Models\SiteTreeLink',
     ];
 
+    /**
+     * @var string
+     */
+    private const LINK_FIELD_CLASS = 'SilverStripe\LinkField\Form\LinkField';
+
+    /**
+     * @var string
+     */
+    private const MULTI_LINK_FIELD_CLASS = 'SilverStripe\LinkField\Form\MultiLinkField';
+
     public function __construct(
+        private readonly ArgsAnalyzer $argsAnalyzer,
+        private readonly NewFactory $newFactory,
         private readonly ConfigurationResolver $configurationResolver,
         private readonly ValueResolver $valueResolver
     ) {
@@ -90,15 +103,57 @@ CODE_SAMPLE
             return null;
         }
 
-        $node->class = $this->resolveFormFieldClass($node);
-
-        // Remove parent argument
-        if (isset($node->args[2])) {
-            unset($node->args[2]);
+        if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
+            return null;
         }
 
-        if (isset($node->args[3])) {
-            return $this->refactorLinkConfig($node);
+        $formFieldClass = $this->resolveFormFieldClass($node);
+        $args = $node->getArgs();
+
+        $node = $this->newFactory->createInjectable(
+            $formFieldClass,
+            array_filter([$args[0] ?? null, $args[1]]),
+            $node instanceof StaticCall
+        );
+
+        $linkConfigArg = $args[3] ?? null;
+
+        if (!$linkConfigArg instanceof Arg) {
+            return $node;
+        }
+
+        $linkConfig = $this->getLinkConfig($linkConfigArg);
+
+        // Migrate types to LinkField::setAllowedTypes()
+        if (isset($linkConfig['types']) && is_array($linkConfig['types'])) {
+            $allowedTypes = [];
+
+            foreach ($linkConfig['types'] as $allowedType) {
+                if (!isset(self::LINK_TYPES[$allowedType])) {
+                    continue;
+                }
+
+                $allowedTypes[] = $this->nodeFactory->createClassConstReference(self::LINK_TYPES[$allowedType]);
+            }
+
+            $node = $this->nodeFactory->createMethodCall(
+                $node,
+                'setAllowedTypes',
+                [$this->nodeFactory->createArray($allowedTypes)]
+            );
+        }
+
+        // Migrate title_display to LinkField::setExcludeLinkTextField()
+        if (isset($linkConfig['title_display'])) {
+            $titleDisplay = $linkConfig['title_display'];
+
+            if (is_bool($titleDisplay)) {
+                $node = $this->nodeFactory->createMethodCall(
+                    $node,
+                    'setExcludeLinkTextField',
+                    [$titleDisplay]
+                );
+            }
         }
 
         return $node;
@@ -129,18 +184,18 @@ CODE_SAMPLE
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
      */
-    private function resolveFormFieldClass(New_|StaticCall $node): FullyQualified
+    private function resolveFormFieldClass(New_|StaticCall $node): string
     {
         $name = $node->getArgs()[0] ?? null;
 
         if (!$name instanceof Arg) {
-            return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
+            return self::LINK_FIELD_CLASS;
         }
 
         $parent = $node->getArgs()[2] ?? null;
 
         if (!$parent instanceof Arg) {
-            return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
+            return self::LINK_FIELD_CLASS;
         }
 
         $nameValue = $this->valueResolver->getValue($name);
@@ -148,82 +203,44 @@ CODE_SAMPLE
 
         // Couldn't resolve name, fallback
         if (!is_string($nameValue)) {
-            return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
+            return self::LINK_FIELD_CLASS;
         }
 
         // Couldn't resolve parent, fallback
         if (!$parentClass instanceof ClassReflection) {
-            return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
+            return self::LINK_FIELD_CLASS;
         }
 
-        $hasMany = $this->configurationResolver->get($parentClass->getName(), 'has_many');
+        $hasMany = $this->configurationResolver->get($parentClass->getName(), SilverstripeConstants::PROPERTY_HAS_MANY);
 
         // Check if link is a has many
         if (is_array($hasMany) && isset($hasMany[$nameValue])) {
-            return new FullyQualified('SilverStripe\LinkField\Form\MultiLinkField');
+            return self::MULTI_LINK_FIELD_CLASS;
         }
 
-        $manyMany = $this->configurationResolver->get($parentClass->getName(), 'many_many');
+        $manyMany = $this->configurationResolver->get($parentClass->getName(), SilverstripeConstants::PROPERTY_MANY_MANY);
 
         // Check if link is a many many
         if (is_array($manyMany) && isset($manyMany[$nameValue])) {
-            return new FullyQualified('SilverStripe\LinkField\Form\MultiLinkField');
+            return self::MULTI_LINK_FIELD_CLASS;
         }
 
         // Fallback
-        return new FullyQualified('SilverStripe\LinkField\Form\LinkField');
+        return self::LINK_FIELD_CLASS;
     }
 
-    private function refactorLinkConfig(New_|StaticCall $node): Node
+    /**
+     * @return mixed[]
+     */
+    private function getLinkConfig(Arg $linkConfigArg): array
     {
-        $linkConfigArg = $node->getArgs()[3] ?? null;
-
-        if (!$linkConfigArg instanceof Arg) {
-            return $node;
-        }
-
         // Get the value of linkConfig
         $linkConfig = $this->valueResolver->getValue($linkConfigArg);
 
-        // Remove linkConfig argument
-        unset($node->args[3]);
-
         if (!is_array($linkConfig)) {
-            return $node;
+            return [];
         }
 
-        // Migrate types to LinkField::setAllowedTypes()
-        if (isset($linkConfig['types']) && is_array($linkConfig['types'])) {
-            $allowedTypes = [];
-
-            foreach ($linkConfig['types'] as $allowedType) {
-                if (!isset(self::LINK_TYPES[$allowedType])) {
-                    continue;
-                }
-
-                $allowedTypes[] = new ClassConstFetch(new FullyQualified(self::LINK_TYPES[$allowedType]), 'class');
-            }
-
-            $node = $this->nodeFactory->createMethodCall(
-                $node,
-                'setAllowedTypes',
-                [$this->nodeFactory->createArray($allowedTypes)]
-            );
-        }
-
-        // Migrate title_display to LinkField::setExcludeLinkTextField()
-        if (isset($linkConfig['title_display'])) {
-            $titleDisplay = $linkConfig['title_display'];
-
-            if (is_bool($titleDisplay)) {
-                $node = $this->nodeFactory->createMethodCall(
-                    $node,
-                    'setExcludeLinkTextField',
-                    [$titleDisplay]
-                );
-            }
-        }
-
-        return $node;
+        return $linkConfig;
     }
 }

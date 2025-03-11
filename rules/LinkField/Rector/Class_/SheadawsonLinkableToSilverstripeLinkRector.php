@@ -22,16 +22,16 @@ use function in_array;
 use function is_array;
 
 /**
- * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/02_gorriecoe-migration.md
+ * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/01_linkable-migration.md
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\GorriecoeLinkToSilverstripeLinkRectorTest
  */
-final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
+final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
      * @var string
      */
-    private const LEGACY_LINK_CLASS = 'gorriecoe\Link\Models\Link';
+    private const LEGACY_LINK_CLASS = 'Sheadawson\Linkable\Models\Link';
 
     public function __construct(
         private readonly ClassAnalyser $classAnalyser,
@@ -44,21 +44,21 @@ final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector impleme
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
+        return new RuleDefinition('Migrate `Sheadawson\Linkable\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
 class Foo extends \SilverStripe\ORM\DataObject
 {
     private static array $has_one = [
-        'HasOneLink' => \gorriecoe\Link\Models\Link::class,
+        'HasOneLink' => \Sheadawson\Linkable\Models\Link::class,
     ];
 
     private static array $has_many = [
-        'HasManyLinks' => \gorriecoe\Link\Models\Link::class,
+        'HasManyLinks' => \Sheadawson\Linkable\Models\Link::class,
     ];
 
     private static array $many_many = [
-        'ManyManyLinks' => \gorriecoe\Link\Models\Link::class,
+        'ManyManyLinks' => \Sheadawson\Linkable\Models\Link::class,
     ];
 
     private static array $many_many_extraFields = [
@@ -147,11 +147,11 @@ CODE_SAMPLE
     }
 
     /**
-     * Return false if the class is in `SilverStripe\LinkField\Tasks\GorriecoeMigrationTask::$classes_that_are_not_link_owners`.
+     * Return false if the class is in `SilverStripe\LinkField\Tasks\LinkableMigrationTask::$classes_that_are_not_link_owners`.
      */
     private function shouldAddMemberToOwns(Class_ $class): bool
     {
-        $notOwners = $this->configurationResolver->get('SilverStripe\LinkField\Tasks\GorriecoeMigrationTask', 'classes_that_are_not_link_owners');
+        $notOwners = $this->configurationResolver->get('SilverStripe\LinkField\Tasks\LinkableMigrationTask', 'classes_that_are_not_link_owners');
 
         if (!is_array($notOwners) || $notOwners === []) {
             return true;

@@ -22,17 +22,12 @@ use function in_array;
 use function is_array;
 
 /**
- * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/02_gorriecoe-migration.md
+ * @changelog https://github.com/silverstripe/silverstripe-linkfield/blob/4/docs/en/09_migrating/00_upgrading.md
  *
- * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\GorriecoeLinkToSilverstripeLinkRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\SilverstripeLinkLegacyRector\SilverstripeLinkLegacyRectorTest
  */
-final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
+final class SilverstripeLinkLegacyRector extends AbstractRector implements RelatedConfigInterface
 {
-    /**
-     * @var string
-     */
-    private const LEGACY_LINK_CLASS = 'gorriecoe\Link\Models\Link';
-
     public function __construct(
         private readonly ClassAnalyser $classAnalyser,
         private readonly ConfigurationResolver $configurationResolver,
@@ -44,27 +39,17 @@ final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector impleme
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
+        return new RuleDefinition('Migrate legacy `SilverStripe\LinkField\Model\Link` configuration to `SilverStripe\LinkField\Models\Link` v4 configuration.', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
 class Foo extends \SilverStripe\ORM\DataObject
 {
     private static array $has_one = [
-        'HasOneLink' => \gorriecoe\Link\Models\Link::class,
+        'HasOneLink' => \SilverStripe\LinkField\Models\Link::class,
     ];
 
     private static array $has_many = [
-        'HasManyLinks' => \gorriecoe\Link\Models\Link::class,
-    ];
-
-    private static array $many_many = [
-        'ManyManyLinks' => \gorriecoe\Link\Models\Link::class,
-    ];
-
-    private static array $many_many_extraFields = [
-        'ManyManyLinks' => [
-            'Sort' => 'Int',
-        ],
+        'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class,
     ];
 }
 CODE_SAMPLE
@@ -78,13 +63,11 @@ class Foo extends \SilverStripe\ORM\DataObject
 
     private static array $has_many = [
         'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
-        'ManyManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
     ];
 
     private static array $owns = [
         'HasOneLink',
         'HasManyLinks',
-        'ManyManyLinks',
     ];
 }
 CODE_SAMPLE
@@ -115,24 +98,16 @@ CODE_SAMPLE
 
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
-            $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
-        }
-
-        $manyMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_MANY_MANY);
-
-        // Migrate many_many to has_many
-        if ($manyMany instanceof Property) {
-            $node = $this->propertyManipulator->refactorManyMany($node, $manyMany, self::LEGACY_LINK_CLASS, $hasChanged);
+            $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, 'SilverStripe\LinkField\Models\Link', $this->shouldAddMemberToOwns($node), $hasChanged);
         }
 
         $hasMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_MANY);
 
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {
-            $node = $this->propertyManipulator->refactorHasMany($node, $hasMany, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
+            $node = $this->propertyManipulator->refactorHasMany($node, $hasMany, 'SilverStripe\LinkField\Models\Link', $this->shouldAddMemberToOwns($node), $hasChanged);
         }
 
-        // No change? Return null
         if (!$hasChanged) {
             return null;
         }
@@ -147,11 +122,11 @@ CODE_SAMPLE
     }
 
     /**
-     * Return false if the class is in `SilverStripe\LinkField\Tasks\GorriecoeMigrationTask::$classes_that_are_not_link_owners`.
+     * Return false if the class is in `SilverStripe\LinkField\Tasks\LinkFieldMigrationTask::$classes_that_are_not_link_owners`.
      */
     private function shouldAddMemberToOwns(Class_ $class): bool
     {
-        $notOwners = $this->configurationResolver->get('SilverStripe\LinkField\Tasks\GorriecoeMigrationTask', 'classes_that_are_not_link_owners');
+        $notOwners = $this->configurationResolver->get('SilverStripe\LinkField\Tasks\LinkFieldMigrationTask', 'classes_that_are_not_link_owners');
 
         if (!is_array($notOwners) || $notOwners === []) {
             return true;
