@@ -1,4 +1,4 @@
-# 22 Rules Overview
+# 23 Rules Overview
 
 <br>
 
@@ -6,7 +6,7 @@
 
 - [CodeQuality](#codequality) (3)
 
-- [LinkField](#linkfield) (2)
+- [LinkField](#linkfield) (3)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -115,6 +115,33 @@ Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Mo
 +        'HasOneLink',
 +        'HasManyLinks',
 +        'ManyManyLinks',
+     ];
+ }
+```
+
+<br>
+
+### SilverstripeLinkLegacyRector
+
+Migrate legacy `SilverStripe\LinkField\Model\Link` configuration to `SilverStripe\LinkField\Models\Link` v4 configuration.
+
+- class: [`Cambis\SilverstripeRector\LinkField\Rector\Class_\SilverstripeLinkLegacyRector`](../rules/LinkField/Rector/Class_/SilverstripeLinkLegacyRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static array $has_one = [
+         'HasOneLink' => \SilverStripe\LinkField\Models\Link::class,
+     ];
+
+     private static array $has_many = [
+-        'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class,
++        'HasManyLinks' => \SilverStripe\LinkField\Models\Link::class . '.Owner',
++    ];
++
++    private static array $owns = [
++        'HasOneLink',
++        'HasManyLinks',
      ];
  }
 ```
