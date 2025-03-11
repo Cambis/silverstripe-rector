@@ -6,6 +6,7 @@ use App\Model\Block;
 use Sheadawson\Linkable\Models\Link;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
+
 final class LinkCollectionBlock extends Block
 {
     private static string $table_name = 'LinkCollectionBlock';

@@ -3,8 +3,8 @@
 namespace App\Model\Block;
 
 use App\Model\Block;
-use Sheadawson\Linkable\Models\Link;
 use Sheadawson\Linkable\Forms\LinkField;
+use Sheadawson\Linkable\Models\Link;
 use SilverStripe\Forms\FieldList;
 
 final class LinkBlock extends Block
