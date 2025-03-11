@@ -16,6 +16,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
 use Rector\NodeNameResolver\NodeNameResolver;
+use Rector\PhpParser\Comparing\NodeComparator;
 use Rector\PhpParser\Node\NodeFactory;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use function in_array;
@@ -25,6 +26,7 @@ use function is_string;
 final readonly class PropertyManipulator
 {
     public function __construct(
+        private NodeComparator $nodeComparator,
         private NodeFactory $nodeFactory,
         private NodeNameResolver $nodeNameResolver,
         private PropertyFactory $propertyFactory,
@@ -70,7 +72,9 @@ final readonly class PropertyManipulator
             }
 
             // Rename the link class
-            $item->value = $newValue;
+            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+                $item->value = $newValue;
+            }
 
             if (!$item->key instanceof Expr) {
                 continue;
@@ -172,7 +176,9 @@ final readonly class PropertyManipulator
                 continue;
             }
 
-            $item->value = $newValue;
+            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+                $item->value = $newValue;
+            }
 
             if (!$item->key instanceof Expr) {
                 continue;
