@@ -1,0 +1,28 @@
+{
+    "totals": {
+        "changed_files": 2,
+        "errors": 0
+    },
+    "file_diffs": [
+        {
+            "file": "app/src/Model/Block/LinkBlock.php",
+            "diff": "--- Original\n+++ New\n@@ -2,9 +2,9 @@\n \n namespace App\\Model\\Block;\n \n+use SilverStripe\\LinkField\\Models\\Link;\n+use SilverStripe\\LinkField\\Form\\LinkField;\n use App\\Model\\Block;\n-use Sheadawson\\Linkable\\Models\\Link;\n-use Sheadawson\\Linkable\\Forms\\LinkField;\n use SilverStripe\\Forms\\FieldList;\n \n final class LinkBlock extends Block\n@@ -14,6 +14,7 @@\n     private static array $has_one = [\n         'Link' => Link::class,\n     ];\n+    private static array $owns = ['Link'];\n \n     public function getCMSFields(): FieldList\n     {\n@@ -21,7 +22,7 @@\n             ->removeByName(['LinkID'])\n             ->addFieldToTab(\n                 'Root.Main',\n-                LinkField::create('LinkID', 'Link'),\n+                LinkField::create('Link', 'Link'),\n             );\n     }\n }\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\LinkField\\Rector\\Class_\\SheadawsonLinkableToSilverstripeLinkRector",
+                "Cambis\\SilverstripeRector\\LinkField\\Rector\\StaticCall\\SheadawsonLinkableFieldToSilverstripeLinkFieldRector"
+            ]
+        },
+        {
+            "file": "app/src/Model/Block/LinkCollectionBlock.php",
+            "diff": "--- Original\n+++ New\n@@ -2,23 +2,17 @@\n \n namespace App\\Model\\Block;\n \n+use SilverStripe\\LinkField\\Models\\Link;\n+use SilverStripe\\LinkField\\Form\\MultiLinkField;\n use App\\Model\\Block;\n-use Sheadawson\\Linkable\\Models\\Link;\n use SilverStripe\\Forms\\FieldList;\n-use SilverStripe\\Forms\\GridField\\GridField;\n final class LinkCollectionBlock extends Block\n {\n     private static string $table_name = 'LinkCollectionBlock';\n \n-    private static array $many_many = [\n-        'Links' => Link::class,\n-    ];\n+    private static array $owns = ['Links'];\n \n-    private static array $many_many_extraFields = [\n-        'Links' => [\n-            'Sort' => 'Int',\n-        ],\n-    ];\n+    private static array $has_many = ['Links' => Link::class . '.Owner'];\n \n     public function getCMSFields(): FieldList\n     {\n@@ -26,7 +20,7 @@\n             ->removeByName(['Links'])\n             ->addFieldToTab(\n                 'Root.Main',\n-                GridField::create('Links', 'Links', $this->Links())\n+                MultiLinkField::create('Links', 'Links')\n             );\n     }\n }\n",
+            "applied_rectors": [
+                "Cambis\\SilverstripeRector\\LinkField\\Rector\\Class_\\SheadawsonLinkableToSilverstripeLinkRector",
+                "Cambis\\SilverstripeRector\\LinkField\\Rector\\StaticCall\\SheadawsonLinkableFieldToSilverstripeLinkFieldRector"
+            ]
+        }
+    ],
+    "changed_files": [
+        "app/src/Model/Block/LinkBlock.php",
+        "app/src/Model/Block/LinkCollectionBlock.php"
+    ]
+}
