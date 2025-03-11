@@ -33,3 +33,8 @@ parameters:
       # Ignore this message until there is an alternative way to check if a type is generic
       -
         message: "#^Doing instanceof PHPStan\\\\Type\\\\Generic\\\\GenericObjectType is error\\-prone and deprecated\\.$#"
+
+      -
+        message: '#^Use explicit return value over magic &reference$#'
+        count: 3
+        path: rules/LinkField/NodeManipulator/PropertyManipulator.php
