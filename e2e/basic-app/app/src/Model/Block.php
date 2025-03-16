@@ -11,4 +11,9 @@ class Block extends DataObject
     private static array $db = [
         'Title' => 'Varchar(255)',
     ];
+
+    public function doSomething(): void
+    {
+        $this->cachedCall('foo', [], null);
+    }
 }

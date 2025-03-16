@@ -1,4 +1,4 @@
-# 26 Rules Overview
+# 29 Rules Overview
 
 <br>
 
@@ -15,6 +15,8 @@
 - [Silverstripe52](#silverstripe52) (6)
 
 - [Silverstripe53](#silverstripe53) (2)
+
+- [Silverstripe54](#silverstripe54) (3)
 
 <br>
 
@@ -569,6 +571,57 @@ Migrate `ProcessJobQueueTask::getQueue()` to `AbstractQueuedJob::getQueue()`.
         // ...
      }
  }
+```
+
+<br>
+
+## Silverstripe54
+
+### FormFieldExtendValidationResultToExtendRector
+
+Migrate `FormField::extendValidationResult()` to `FormField::extend()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector`](../rules/Silverstripe54/Rector/MethodCall/FormFieldExtendValidationResultToExtendRector.php)
+
+```diff
+ class FooField extends \SilverStripe\Forms\FormField
+ {
+     public function validate($validator): bool
+     {
+-        return $this->extendValidationResult(true, $validator);
++        $result = true;
++
++        $this->extend('updateValidationResult', true, $validator);
++
++        return $result;
+     }
+ }
+```
+
+<br>
+
+### SSViewerGetBaseTagRector
+
+Migrate `SSViewer::get_base_tag()` to `SSViewer::getBaseTag()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall\SSViewerGetBaseTagRector`](../rules/Silverstripe54/Rector/StaticCall/SSViewerGetBaseTagRector.php)
+
+```diff
+-\SilverStripe\View\SSViewer::get_base_tag('some content');
++\SilverStripe\View\SSViewer::getBaseTag(preg_match('/<!DOCTYPE[^>]+xhtml/i', 'some content') === 1);
+```
+
+<br>
+
+### ViewableDataCachedCallToObjRector
+
+Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector`](../rules/Silverstripe54/Rector/MethodCall/ViewableDataCachedCallToObjRector.php)
+
+```diff
+-\SilverStripe\View\ViewableData::create()->cachedCall('Foo', [], null);
++\SilverStripe\View\ViewableData::create()->obj('Foo', [], true, null);
 ```
 
 <br>
