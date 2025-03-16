@@ -22,6 +22,8 @@ use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_filter;
+use function array_is_list;
+use function array_keys;
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -124,11 +126,23 @@ CODE_SAMPLE
 
         $linkConfig = $this->getLinkConfig($linkConfigArg);
 
+        if ($linkConfig === []) {
+            return $node;
+        }
+
+        $legacyAllowedTypes = $linkConfig['types'] ?? [];
+
         // Migrate types to LinkField::setAllowedTypes()
-        if (isset($linkConfig['types']) && is_array($linkConfig['types'])) {
+        if (is_array($legacyAllowedTypes) && $legacyAllowedTypes !== []) {
+
+            // Turn into list if it is not, new config is a list
+            if (!array_is_list($legacyAllowedTypes)) {
+                $legacyAllowedTypes = array_keys($legacyAllowedTypes);
+            }
+
             $allowedTypes = [];
 
-            foreach ($linkConfig['types'] as $allowedType) {
+            foreach ($legacyAllowedTypes as $allowedType) {
                 if (!isset(self::LINK_TYPES[$allowedType])) {
                     continue;
                 }
