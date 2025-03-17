@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 1.2.0
+
+### Minor Changes
+
+- 458217b: Add migration rectors for sheadawson/silverstripe-linkable and legacy silverstripe/linkfield
+
 ## 1.1.0
 
 ### Minor Changes
