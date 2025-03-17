@@ -34,16 +34,35 @@ use function rtrim;
  */
 final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly NewFactory $newFactory,
-        private readonly Normaliser $normaliser,
-        private readonly ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private NewFactory $newFactory;
+    /**
+     * @readonly
+     */
+    private Normaliser $normaliser;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, ConfigurationResolver $configurationResolver, NewFactory $newFactory, Normaliser $normaliser, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->configurationResolver = $configurationResolver;
+        $this->newFactory = $newFactory;
+        $this->normaliser = $normaliser;
+        $this->valueResolver = $valueResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `Sheadawson\Linkable\Forms\LinkField` to `SilverStripe\LinkField\Form\LinkField`.', [
@@ -63,7 +82,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [New_::class, StaticCall::class];
@@ -72,39 +90,35 @@ CODE_SAMPLE
     /**
      * @param New_|StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($node->isFirstClassCallable()) {
             return null;
         }
-
         if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
             return null;
         }
-
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
         }
-
         if ($this->isName($node->class, 'Sheadawson\Linkable\Forms\LinkField')) {
             return $this->refactorLinkField($node);
         }
-
         if ($this->isName($node->class, 'SilverStripe\Forms\GridField\GridField')) {
             return $this->refactorMultiLinkField($node);
         }
-
         return null;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
-    private function refactorLinkField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorLinkField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;
@@ -136,7 +150,10 @@ CODE_SAMPLE
         );
     }
 
-    private function refactorMultiLinkField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorMultiLinkField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;
