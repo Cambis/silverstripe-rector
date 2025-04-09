@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector;
+use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall\SSViewerGetBaseTagRector;
 use Rector\Arguments\Rector\ClassMethod\ReplaceArgumentDefaultValueRector;
@@ -60,8 +61,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     https://github.com/silverstripe/silverstripe-framework/commit/5b16f7de82037e9363f5ff6402d40652dae42614
     $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
-        new RenameProperty('SilverStripe\CMS\Model\SiteTree', 'description', 'class_description'),
-        new RenameProperty('DNADesign\Elemental\Models\BaseElement', 'description', 'class_description'),
+        new RenameProperty('SilverStripe\ORM\DataObject', 'description', 'class_description'),
     ]);
 
     // https://github.com/silverstripe/silverstripe-framework/commit/15683cfd9839a2af012999e28a577592c6cdcab9
@@ -72,9 +72,16 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallToStaticCall('SilverStripe\Subsites\Extensions\LeftAndMainSubsites', 'ListSubsites', 'SilverStripe\Subsites\Extensions\LeftAndMainSubsites', 'SubsiteSwitchList'),
     ]);
 
-    // $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
-    //     new MethodCallRename('SilverStripe\AssetAdmin\Extensions\RemoteFileModalExtension', 'getRequest', 'getOwner,getRequest'),
-    // ]);
+    // https://github.com/silverstripe/silverstripe-asset-admin/commit/e8bd854105ec44de0e4b1432d081cc5fc0a77b07
+    $rectorConfig->rule(RemoteFileModalExtensionGetMethodsRector::class);
+
+    // https://github.com/silverstripe/silverstripe-admin/commit/0517656dbb9c6ba38522a11c379a64c11f640162
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('SilverStripe\Admin\LeftAndMain', 'currentPageID', 'currentRecordID'),
+        new MethodCallRename('SilverStripe\Admin\LeftAndMain', 'setCurrentPageID', 'setCurrentRecordID'),
+        new MethodCallRename('SilverStripe\Admin\LeftAndMain', 'currentPage', 'currentRecord'),
+        new MethodCallRename('SilverStripe\Admin\LeftAndMain', 'isCurrentPage', 'isCurrentRecord'),
+    ]);
 
     // https://github.com/silverstripe/silverstripe-cms/commit/5c1f28ac701eae3b59bc30b30b90418d0a01d840
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
@@ -89,6 +96,24 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallRename('SilverStripe\CMS\Controllers\CMSMain', 'CanOrganiseSiteTree', 'canOrganiseTree'),
     ]);
 
+    // https://github.com/silverstripe/silverstripe-cms/commit/5c1f28ac701eae3b59bc30b30b90418d0a01d840
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('SilverStripe\CMS\Controllers\LeftAndMainPageIconsExtension', 'generatePageIconsCss', 'generateRecordIconsCss'),
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        // https://github.com/silverstripe/silverstripe-framework/commit/f51b4f7c39a02c93cf4cc72c77b229397b04350c
+        new MethodCallRename('SilverStripe\Forms\Form', 'validationResult', 'validate'),
+        // https://github.com/silverstripe/silverstripe-framework/commit/06240b62fa3681707139b66c18cbcad182bbcd82
+        new MethodCallRename('SilverStripe\Control\Director', 'get_session_environment_type', 'get_environment_type'),
+    ]);
+
+    // https://github.com/silverstripe/silverstripe-framework/commit/3518d8ae0349929b4f1e843e3629a2120c84405a
+    $rectorConfig->ruleWithConfiguration(ReplaceArgumentDefaultValueRector::class, [
+        new ReplaceArgumentDefaultValue('SilverStripe\Forms\Form', 'loadDataFrom', 1, true, 'SilverStripe\Forms\Form::MERGE_CLEAR_MISSING'),
+        new ReplaceArgumentDefaultValue('SilverStripe\Forms\Form', 'loadDataFrom', 1, false, 0),
+    ]);
+
     // https://github.com/silverstripe/silverstripe-framework/commit/70ed6566b3ef9e894de834ee1d26ee13032803ff
     $rectorConfig->ruleWithConfiguration(ReplaceArgumentDefaultValueRector::class, [
         new ReplaceArgumentDefaultValue('SilverStripe\ORM\ValidationResult', 'sessionMessage', 2, null, 'SilverStripe\ORM\ValidationResult::CAST_TEXT'),
@@ -97,5 +122,11 @@ return static function (RectorConfig $rectorConfig): void {
         new ReplaceArgumentDefaultValue('SilverStripe\ORM\ValidationResult', 'addFieldError', 4, null, 'SilverStripe\ORM\ValidationResult::CAST_TEXT'),
         new ReplaceArgumentDefaultValue('SilverStripe\ORM\ValidationResult', 'addMessage', 3, null, 'SilverStripe\ORM\ValidationResult::CAST_TEXT'),
         new ReplaceArgumentDefaultValue('SilverStripe\ORM\ValidationResult', 'addFieldMessage', 4, null, 'SilverStripe\ORM\ValidationResult::CAST_TEXT'),
+    ]);
+
+    // https://github.com/silverstripe/silverstripe-framework/commit/9b13feead4036b6251f97a44306722ea20a98c56
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('SilverStripe\ORM\ListDecorator', 'TotalItems', 'getTotalItems'),
+        new MethodCallRename('SilverStripe\ORM\PaginatedList', 'TotalItems', 'getTotalItems'),
     ]);
 };

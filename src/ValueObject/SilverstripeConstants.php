@@ -48,6 +48,10 @@ final class SilverstripeConstants
 
     public const METHOD_GET_OWNER = 'getOwner';
 
+    public const METHOD_GET_REQUEST = 'getRequest';
+
+    public const METHOD_GET_SCHEMA_RESPONSE = 'getSchemaResponse';
+
     public const METHOD_OBJ = 'obj';
 
     public const METHOD_REMOVE_FIELD_FROM_TAB = 'removeFieldFromTab';
