@@ -1,4 +1,4 @@
-# 29 Rules Overview
+# 30 Rules Overview
 
 <br>
 
@@ -16,7 +16,7 @@
 
 - [Silverstripe53](#silverstripe53) (2)
 
-- [Silverstripe54](#silverstripe54) (3)
+- [Silverstripe54](#silverstripe54) (4)
 
 <br>
 
@@ -594,6 +594,27 @@ Migrate `FormField::extendValidationResult()` to `FormField::extend()`.
 +        $this->extend('updateValidationResult', true, $validator);
 +
 +        return $result;
+     }
+ }
+```
+
+<br>
+
+### RemoteFileModalExtensionGetMethodsRector
+
+Migrate `RemoteModalFileExtension::getRequest()` to `RemoteModalFileExtension::getOwner()->getRequest()` and `RemoteModalFileExtension::getSchemaResponse()` to `RemoteModalFileExtension::getOwner()->getSchemaResponse()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector`](../rules/Silverstripe54/Rector/MethodCall/RemoteFileModalExtensionGetMethodsRector.php)
+
+```diff
+ class FooExtension extends \SilverStripe\AssetAdmin\Extensions\RemoteModalFileExtension
+ {
+     public function doSomething(): void
+     {
+-        $this->getRequest();
+-        $this->getSchemaResponse('schema');
++        $this->getOwner()->getRequest();
++        $this->getOwner()->getSchemaRespons('schema');
      }
  }
 ```
