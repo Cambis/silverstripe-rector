@@ -18,6 +18,7 @@ use Rector\Transform\Rector\MethodCall\MethodCallToStaticCallRector;
 use Rector\Transform\ValueObject\MethodCallToStaticCall;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
+// See: https://docs.silverstripe.org/en/5/changelogs/5.4.0/
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../config.php');
 
