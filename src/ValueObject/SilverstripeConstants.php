@@ -32,15 +32,31 @@ final class SilverstripeConstants
 
     public const METHOD_BY_ID = 'byID';
 
+    public const METHOD_CACHED_CALL = 'cachedCall';
+
     public const METHOD_CREATE = 'create';
 
+    public const METHOD_EXTEND = 'extend';
+
+    public const METHOD_EXTEND_VALIDATION_RESULT = 'extendValidationResult';
+
     public const METHOD_GET = 'get';
+
+    public const METHOD_GET_BASE_TAG = 'getBaseTag';
 
     public const METHOD_GET_BY_ID = 'get_by_id';
 
     public const METHOD_GET_OWNER = 'getOwner';
 
+    public const METHOD_GET_REQUEST = 'getRequest';
+
+    public const METHOD_GET_SCHEMA_RESPONSE = 'getSchemaResponse';
+
+    public const METHOD_OBJ = 'obj';
+
     public const METHOD_REMOVE_FIELD_FROM_TAB = 'removeFieldFromTab';
 
     public const METHOD_REMOVE_FIELDS_FROM_TAB = 'removeFieldsFromTab';
+
+    public const METHOD_UPDATE_VALIDATION_RESULT = 'updateValidationResult';
 }

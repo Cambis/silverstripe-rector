@@ -1,4 +1,4 @@
-# 25 Rules Overview
+# 30 Rules Overview
 
 <br>
 
@@ -14,7 +14,9 @@
 
 - [Silverstripe52](#silverstripe52) (6)
 
-- [Silverstripe53](#silverstripe53) (1)
+- [Silverstripe53](#silverstripe53) (2)
+
+- [Silverstripe54](#silverstripe54) (4)
 
 <br>
 
@@ -548,6 +550,99 @@ Rename `FieldList::addFieldsToTab()` and `FieldList::removeFieldsFromTab()` to `
  \SilverStripe\Forms\FieldList::create()
 -    ->removeFieldsFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
 +    ->removeFieldFromTab('Root.Main', \SilverStripe\Forms\TextField::create('Field'));
+```
+
+<br>
+
+### ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector
+
+Migrate `ProcessJobQueueTask::getQueue()` to `AbstractQueuedJob::getQueue()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector`](../rules/Silverstripe53/Rector/MethodCall/ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector.php)
+
+```diff
+ class FooTask extends \Symbiote\QueuedJobs\Tasks\ProcessJobQueueTask
+ {
+     public function run($request): void
+     {
+        // ...
+-       $queue = $this->getQueue($request);
++       $queue = \Symbiote\QueuedJobs\Services\AbstractQueuedJob::getQueue($request->getVar('queue') ?? 'Queued');
+        // ...
+     }
+ }
+```
+
+<br>
+
+## Silverstripe54
+
+### FormFieldExtendValidationResultToExtendRector
+
+Migrate `FormField::extendValidationResult()` to `FormField::extend()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector`](../rules/Silverstripe54/Rector/MethodCall/FormFieldExtendValidationResultToExtendRector.php)
+
+```diff
+ class FooField extends \SilverStripe\Forms\FormField
+ {
+     public function validate($validator): bool
+     {
+-        return $this->extendValidationResult(true, $validator);
++        $result = true;
++
++        $this->extend('updateValidationResult', true, $validator);
++
++        return $result;
+     }
+ }
+```
+
+<br>
+
+### RemoteFileModalExtensionGetMethodsRector
+
+Migrate `RemoteModalFileExtension::getRequest()` to `RemoteModalFileExtension::getOwner()->getRequest()` and `RemoteModalFileExtension::getSchemaResponse()` to `RemoteModalFileExtension::getOwner()->getSchemaResponse()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector`](../rules/Silverstripe54/Rector/MethodCall/RemoteFileModalExtensionGetMethodsRector.php)
+
+```diff
+ class FooExtension extends \SilverStripe\AssetAdmin\Extensions\RemoteModalFileExtension
+ {
+     public function doSomething(): void
+     {
+-        $this->getRequest();
+-        $this->getSchemaResponse('schema');
++        $this->getOwner()->getRequest();
++        $this->getOwner()->getSchemaRespons('schema');
+     }
+ }
+```
+
+<br>
+
+### SSViewerGetBaseTagRector
+
+Migrate `SSViewer::get_base_tag()` to `SSViewer::getBaseTag()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall\SSViewerGetBaseTagRector`](../rules/Silverstripe54/Rector/StaticCall/SSViewerGetBaseTagRector.php)
+
+```diff
+-\SilverStripe\View\SSViewer::get_base_tag('some content');
++\SilverStripe\View\SSViewer::getBaseTag(preg_match('/<!DOCTYPE[^>]+xhtml/i', 'some content') === 1);
+```
+
+<br>
+
+### ViewableDataCachedCallToObjRector
+
+Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector`](../rules/Silverstripe54/Rector/MethodCall/ViewableDataCachedCallToObjRector.php)
+
+```diff
+-\SilverStripe\View\ViewableData::create()->cachedCall('Foo', [], null);
++\SilverStripe\View\ViewableData::create()->obj('Foo', [], true, null);
 ```
 
 <br>
