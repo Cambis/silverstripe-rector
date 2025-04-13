@@ -2,6 +2,9 @@
 
 namespace SilverStripe\ORM;
 
+use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Extensible;
+use SilverStripe\Core\Injector\Injectable;
 use function class_exists;
 
 if (class_exists('SilverStripe\ORM\DataObject')) {
@@ -10,4 +13,7 @@ if (class_exists('SilverStripe\ORM\DataObject')) {
 
 class DataObject
 {
+    use Configurable;
+    use Extensible;
+    use Injectable;
 }

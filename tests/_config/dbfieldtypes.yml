@@ -1,0 +1,36 @@
+---
+Name: dbfieldtypes
+Except:
+  moduleexists: silverstripe/framework # try not to overload if possible
+---
+SilverStripe\Core\Injector\Injector:
+  Boolean:
+    class: SilverStripe\ORM\FieldType\DBBoolean
+  Currency:
+    class: SilverStripe\ORM\FieldType\DBCurrency
+  Date:
+    class: SilverStripe\ORM\FieldType\DBDate
+  Datetime:
+    class: SilverStripe\ORM\FieldType\DBDatetime
+  Decimal:
+    class: SilverStripe\ORM\FieldType\DBDecimal
+  Double:
+    class: SilverStripe\ORM\FieldType\DBDouble
+  Enum:
+    class: SilverStripe\ORM\FieldType\DBEnum
+  Float:
+    class: SilverStripe\ORM\FieldType\DBFloat
+  HTMLText:
+    class: SilverStripe\ORM\FieldType\DBHTMLText
+  HTMLVarchar:
+    class: SilverStripe\ORM\FieldType\DBHTMLVarchar
+  Int:
+    class: SilverStripe\ORM\FieldType\DBInt
+  Percentage:
+    class: SilverStripe\ORM\FieldType\DBPercentage
+  Text:
+    class: SilverStripe\ORM\FieldType\DBText
+  Time:
+    class: SilverStripe\ORM\FieldType\DBTime
+  Varchar:
+    class: SilverStripe\ORM\FieldType\DBVarchar
