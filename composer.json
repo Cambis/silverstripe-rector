@@ -48,6 +48,9 @@
         },
         "classmap": [
             "stubs"
+        ],
+        "exclude-from-classmap": [
+            "**.php.inc"
         ]
     },
     "config": {
@@ -65,6 +68,9 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "patches": {
+            "cambis/silverstan": [
+                "patches/cambis-silverstan-src-filefinder-filefinder-php.patch"
+            ],
             "rector/rector": [
                 "patches/rector-rector-src-testing-phpunit-abstractrectortestcase-php.patch"
             ],
