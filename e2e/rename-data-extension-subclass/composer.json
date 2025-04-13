@@ -15,6 +15,7 @@
       "url": "../../"
     }
   ],
+  "minimum-stability": "dev",
   "config": {
     "allow-plugins": {
       "composer/installers": true,

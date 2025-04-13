@@ -16,7 +16,7 @@ jobs:
   end-to-end:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
           - directory: e2e/basic-app
@@ -84,6 +84,9 @@ jobs:
       - if: ${{ matrix.framework-version && !matrix.cms-version }}
         run: composer require php:^${{ matrix.php-version }} silverstripe/framework:~${{ matrix.framework-version }}
         working-directory: ${{ matrix.directory }}
+
+      # Make sure we have the latest changes
+      - run: composer update
 
       # Run rector on the e2e directory
       - run: vendor/bin/rector process --dry-run --ansi --config rector-${SILVERSTRIPE_RECTOR_SET//./}.php --clear-cache --output-format json >> output.txt
