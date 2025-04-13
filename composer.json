@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "cambis/silverstan": "^1.0.7",
+        "cambis/silverstan": "dev-feature/add-optional-override-for-app-dir as 1.0.8",
         "rector/rector": "^1.2"
     },
     "require-dev": {
@@ -68,9 +68,6 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "cambis/silverstan": [
-                "patches/cambis-silverstan-src-filefinder-filefinder-php.patch"
-            ],
             "rector/rector": [
                 "patches/rector-rector-src-testing-phpunit-abstractrectortestcase-php.patch"
             ],

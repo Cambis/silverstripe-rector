@@ -1,11 +1,13 @@
 parametersSchema:
     silverstripeRector: structure([
+        appRootDir: schema(string(), nullable())
         includeTestOnly: bool()
     ])
 parameters:
     bootstrapFiles:
         - vendor/cambis/silverstan/silverstripe-autoloader.php
     silverstripeRector:
+        appRootDir: null
         includeTestOnly: false
 services:
     - 
@@ -53,6 +55,7 @@ services:
     -
         class: Cambis\Silverstan\FileFinder\FileFinder
         arguments:
+            appRootDir: %silverstripeRector.appRootDir%
             includeTestOnly: %silverstripeRector.includeTestOnly%
     -
         class: Cambis\Silverstan\NodeVisitor\TestOnlyFinderVisitor
