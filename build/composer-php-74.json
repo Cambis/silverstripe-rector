@@ -9,7 +9,7 @@
   ],
   "require": {
       "php": "^7.4 || ^8.0",
-      "cambis/silverstan": "^1.0.8",
+      "cambis/silverstan": "^1.1",
       "rector/rector": "^1.2"
   },
   "minimum-stability": "dev",

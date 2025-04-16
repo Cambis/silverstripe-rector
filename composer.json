@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "cambis/silverstan": "dev-feature/add-optional-override-for-app-dir as 1.0.8",
+        "cambis/silverstan": "^1.1",
         "rector/rector": "^1.2"
     },
     "require-dev": {
