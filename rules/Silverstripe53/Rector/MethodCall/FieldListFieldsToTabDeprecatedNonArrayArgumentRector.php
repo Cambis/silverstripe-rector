@@ -19,6 +19,7 @@ use function array_keys;
 
 /**
  * @changelog https://github.com/silverstripe/silverstripe-framework/pull/11236
+ *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabDeprecatedNonArrayArgumentRector\FieldListFieldsToTabDeprecatedNonArrayArgumentRectorTest
  */
 final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends AbstractRector implements DocumentedRuleInterface
