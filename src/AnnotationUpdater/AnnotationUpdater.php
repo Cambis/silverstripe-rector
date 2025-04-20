@@ -13,24 +13,31 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use function array_filter;
 
-final readonly class AnnotationUpdater
+final class AnnotationUpdater
 {
-    public function __construct(
-        private AnnotationComparator $annotationComparator,
-        private DocBlockUpdater $docBlockUpdater,
-    ) {
+    /**
+     * @readonly
+     */
+    private AnnotationComparator $annotationComparator;
+    /**
+     * @readonly
+     */
+    private DocBlockUpdater $docBlockUpdater;
+    public function __construct(AnnotationComparator $annotationComparator, DocBlockUpdater $docBlockUpdater)
+    {
+        $this->annotationComparator = $annotationComparator;
+        $this->docBlockUpdater = $docBlockUpdater;
     }
-
     /**
      * @param PhpDocTagValueNode[] $newDocTagValueNodes
      */
     public function updateExistingAnnotations(Node $node, PhpDocInfo $phpDocInfo, array $newDocTagValueNodes): void
     {
         // Create a copy of the current child nodes
-        $unmodified = [...$phpDocInfo->getPhpDocNode()->children];
+        $unmodified = array_merge($phpDocInfo->getPhpDocNode()->children);
 
         // These will the new child nodes
-        $modified = [...$unmodified];
+        $modified = array_merge($unmodified);
 
         $hasChanged = false;
 
@@ -76,7 +83,7 @@ final readonly class AnnotationUpdater
      */
     public function filterOutExistingAnnotations(PhpDocInfo $phpDocInfo, array $newDocTagValueNodes, Node $node): array
     {
-        $childrenMap = [...$phpDocInfo->getPhpDocNode()->children];
+        $childrenMap = array_merge($phpDocInfo->getPhpDocNode()->children);
 
         return array_filter(
             $newDocTagValueNodes,

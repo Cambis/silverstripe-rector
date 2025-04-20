@@ -6,26 +6,27 @@ namespace Cambis\SilverstripeRector\NodeFactory;
 
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use PhpParser\BuilderFactory;
-use PhpParser\Node\Expr;
-use PhpParser\Node\Expr\New_;
-use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use function is_string;
 
-final readonly class NewFactory
+final class NewFactory
 {
-    public function __construct(
-        private BuilderFactory $builderFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private BuilderFactory $builderFactory;
+    public function __construct(BuilderFactory $builderFactory)
+    {
+        $this->builderFactory = $builderFactory;
     }
 
     /**
-     * @param Expr|Name|string $class
+     * @param mixed $class
      * @param mixed[] $args
      * @param bool $useCreate `Injectable::create()` rather than `new Injectable()`.
+     * @return \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall
      */
-    public function createInjectable(mixed $class, array $args, bool $useCreate): New_|StaticCall
+    public function createInjectable($class, array $args, bool $useCreate)
     {
         if (is_string($class)) {
             $class = new FullyQualified($class);
