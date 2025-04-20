@@ -7,12 +7,11 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\AddBelon
 use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class AddBelongsToPropertyAndMethodAnnotationsToDataObjectRectorTest extends AbstractSilverstripeRectorTestCase
 {
-    /**
-     * @dataProvider provideData
-     */
+    #[DataProvider('provideData')]
     public function test(string $filePath): void
     {
         $this->doTestFile($filePath);

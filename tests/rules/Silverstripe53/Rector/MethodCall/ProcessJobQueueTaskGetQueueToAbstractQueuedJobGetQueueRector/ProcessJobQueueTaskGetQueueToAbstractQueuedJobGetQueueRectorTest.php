@@ -7,12 +7,11 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe53\Rector\MethodCall\Proce
 use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRectorTest extends AbstractSilverstripeRectorTestCase
 {
-    /**
-     * @dataProvider provideData
-     */
+    #[DataProvider('provideData')]
     public function test(string $filePath): void
     {
         $this->doTestFile($filePath);
