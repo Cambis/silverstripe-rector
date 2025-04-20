@@ -1,5 +1,12 @@
 # silverstripe-rector
 
+## 1.3.0
+
+### Minor Changes
+
+- c47e754: Drop silverstripe/framework and silverstripe/cms from dev dependencies
+- 3baa08c: Add Silverstripe 5.4 set
+
 ## 1.2.0
 
 ### Minor Changes
