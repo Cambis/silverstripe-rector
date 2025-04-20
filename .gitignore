@@ -25,5 +25,6 @@ packages/
 phpstan.phar
 
 # Tests
+.phpunit.cache
 .phpunit.result.cache
 coverage/
