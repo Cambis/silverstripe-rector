@@ -1,4 +1,4 @@
-# 30 Rules Overview
+# 31 Rules Overview
 
 <br>
 
@@ -17,6 +17,8 @@
 - [Silverstripe53](#silverstripe53) (2)
 
 - [Silverstripe54](#silverstripe54) (4)
+
+- [Silverstripe60](#silverstripe60) (1)
 
 <br>
 
@@ -643,6 +645,23 @@ Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
 ```diff
 -\SilverStripe\View\ViewableData::create()->cachedCall('Foo', [], null);
 +\SilverStripe\View\ViewableData::create()->obj('Foo', [], true, null);
+```
+
+<br>
+
+## Silverstripe60
+
+### ControllerHasCurrToInstanceofRector
+
+Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Controller`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceOfRector.php)
+
+```diff
+-if (\SilverStripe\Control\Controller::has_curr()) {
++if (\SilverStripe\Control\Controller::curr() instanceof \SilverStripe\Control\Controller) {
+    // ...
+ }
 ```
 
 <br>
