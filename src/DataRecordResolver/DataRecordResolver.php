@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\DataRecordResolver;
 
+use Cambis\Silverstan\FileFinder\FileFinder;
 use PhpParser\Node\Stmt\ClassLike;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeNameResolver\NodeNameResolver;
@@ -12,12 +13,12 @@ use Rector\PhpParser\Parser\RectorParser;
 use function dirname;
 use function glob;
 use function str_replace;
-use const BASE_PATH;
 
 final readonly class DataRecordResolver
 {
     public function __construct(
         private BetterNodeFinder $betterNodeFinder,
+        private FileFinder $fileFinder,
         private NodeNameResolver $nodeNameResolver,
         private RectorParser $rectorParser,
         private ReflectionProvider $reflectionProvider
@@ -49,7 +50,7 @@ final readonly class DataRecordResolver
         // traverse up, until first class appears
         $dataRecordFiles = [];
 
-        while ($dataRecordFiles === [] && $controllerDirectory !== BASE_PATH) {
+        while ($dataRecordFiles === [] && $controllerDirectory !== $this->fileFinder->getAppRootDirectory()) {
             $dataRecordFiles = (array) glob($controllerDirectory . '/**/' . $dataRecordShortName . '.php');
             $controllerDirectory = dirname($controllerDirectory);
         }

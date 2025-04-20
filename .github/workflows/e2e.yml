@@ -16,7 +16,7 @@ jobs:
   end-to-end:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         include:
           - directory: e2e/basic-app
