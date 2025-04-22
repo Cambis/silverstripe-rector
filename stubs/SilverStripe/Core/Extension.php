@@ -13,4 +13,10 @@ if (class_exists('SilverStripe\Core\Extension')) {
  */
 abstract class Extension
 {
+    /**
+     * @return T
+     */
+    public function getOwner()
+    {
+    }
 }
