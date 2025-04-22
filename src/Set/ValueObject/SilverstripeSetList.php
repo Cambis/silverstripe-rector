@@ -30,4 +30,9 @@ final class SilverstripeSetList
     public const GORRIECOE_LINK_TO_SILVERSTRIPE_LINKFIELD = __DIR__ . '/../../../config/set/gorriecoe-link-to-silverstripe-linkfield.php';
 
     public const SHEADAWSON_LINKABLE_TO_SILVERSTRIPE_LINKFIELD = __DIR__ . '/../../../config/set/sheadawson-linkable-to-silverstripe-linkfield.php';
+
+    /**
+     * Change the visibility of public extension hook methods to protected.
+     */
+    public const PROTECT_EXTENSION_HOOKS = __DIR__ . '/../../../config/set/protect-extension-hooks.php';
 }

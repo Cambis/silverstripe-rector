@@ -28,7 +28,7 @@
         },
         {
             "file": "app/src/Page/Extension/AlternativeTitleExtension.php",
-            "diff": "--- Original\n+++ New\n@@ -6,6 +6,10 @@\n use SilverStripe\\Forms\\FieldList;\n use SilverStripe\\Forms\\TextField;\n \n+/**\n+ * @property ?string $AlternativeTitle\n+ * @method (\\Page & static) getOwner()\n+ */\n final class AlternativeTitleExtension extends Extension\n {\n     private static array $db = [\n",
+            "diff": "--- Original\n+++ New\n@@ -7,6 +7,10 @@\n use SilverStripe\\Forms\\TextField;\n use SilverStripe\\ORM\\ValidationResult;\n \n+/**\n+ * @property ?string $AlternativeTitle\n+ * @method (\\Page & static) getOwner()\n+ */\n final class AlternativeTitleExtension extends Extension\n {\n     private static array $db = [\n",
             "applied_rectors": [
                 "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddDBFieldPropertyAnnotationsToDataObjectRector",
                 "Cambis\\SilverstripeRector\\Silverstripe413\\Rector\\Class_\\AddGetOwnerMethodAnnotationToExtensionRector"

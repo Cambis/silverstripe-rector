@@ -1,4 +1,4 @@
-# 30 Rules Overview
+# 32 Rules Overview
 
 <br>
 
@@ -7,6 +7,8 @@
 - [CodeQuality](#codequality) (3)
 
 - [LinkField](#linkfield) (5)
+
+- [Renaming](#renaming) (1)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -17,6 +19,8 @@
 - [Silverstripe53](#silverstripe53) (2)
 
 - [Silverstripe54](#silverstripe54) (4)
+
+- [Silverstripe60](#silverstripe60) (1)
 
 <br>
 
@@ -199,6 +203,29 @@ Migrate legacy `SilverStripe\LinkField\Model\Link` configuration to `SilverStrip
 +        'HasOneLink',
 +        'HasManyLinks',
      ];
+ }
+```
+
+<br>
+
+## Renaming
+
+### RenameExtensionHookMethodRector
+
+Rename an extension hook method definition if the extension is applied to a given class. This rector only applies to instances of `SilverStripe\Core\Extension`, for all other use cases use `RenameMethodRector` instead.
+
+:wrench: **configure it!**
+
+- class: [`Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameExtensionHookMethodRector`](../rules/Renaming/Rector/Class_/RenameExtensionHookMethodRector.php)
+
+```diff
+ class FooExtension extends \SilverStripe\Core\Extension
+ {
+-    protected function updateDoSomething(): void
++    protected function updateDoSomethingElse(): void
+     {
+        // ...
+     }
  }
 ```
 
@@ -643,6 +670,23 @@ Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
 ```diff
 -\SilverStripe\View\ViewableData::create()->cachedCall('Foo', [], null);
 +\SilverStripe\View\ViewableData::create()->obj('Foo', [], true, null);
+```
+
+<br>
+
+## Silverstripe60
+
+### ControllerHasCurrToInstanceofRector
+
+Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Controller`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceOfRector.php)
+
+```diff
+-if (\SilverStripe\Control\Controller::has_curr()) {
++if (\SilverStripe\Control\Controller::curr() instanceof \SilverStripe\Control\Controller) {
+    // ...
+ }
 ```
 
 <br>
