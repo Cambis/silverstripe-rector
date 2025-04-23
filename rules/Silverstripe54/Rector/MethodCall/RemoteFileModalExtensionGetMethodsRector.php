@@ -11,6 +11,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -19,7 +20,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector\RemoteFileModalExtensionGetMethodsRectorTest
  */
-final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector
+final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
      * @var list<SilverstripeConstants::METHOD_*>

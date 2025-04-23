@@ -28,8 +28,9 @@ use Rector\Exception\NotImplementedYetException;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 
-abstract class AbstractAddAnnotationsRector extends AbstractRector implements RelatedConfigInterface
+abstract class AbstractAddAnnotationsRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
      * @var array<class-string<PhpDocTagValueNode>, string>

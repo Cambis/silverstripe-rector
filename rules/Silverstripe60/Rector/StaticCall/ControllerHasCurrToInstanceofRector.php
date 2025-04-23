@@ -12,6 +12,7 @@ use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name\FullyQualified;
 use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -20,7 +21,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector\ControllerHasCurrToInstanceofRectorTest
  */
-final class ControllerHasCurrToInstanceofRector extends AbstractRector
+final class ControllerHasCurrToInstanceofRector extends AbstractRector implements DocumentedRuleInterface
 {
     #[Override]
     public function getRuleDefinition(): RuleDefinition

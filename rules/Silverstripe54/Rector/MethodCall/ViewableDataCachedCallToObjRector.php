@@ -11,6 +11,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_filter;
@@ -20,7 +21,7 @@ use function array_filter;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector\ViewableDataCachedCallToObjRectorTest
  */
-final class ViewableDataCachedCallToObjRector extends AbstractRector
+final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer

@@ -13,6 +13,7 @@ use PHPStan\Reflection\PropertyReflection;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
 use Rector\Reflection\ReflectionResolver;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function is_string;
@@ -21,7 +22,7 @@ use function str_contains;
 /**
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\StaticPropertyFetchToConfigGetRectorTest
  */
-final class StaticPropertyFetchToConfigGetRector extends AbstractRector
+final class StaticPropertyFetchToConfigGetRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ReflectionResolver $reflectionResolver,

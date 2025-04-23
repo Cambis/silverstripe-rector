@@ -20,6 +20,7 @@ use Rector\Naming\Naming\VariableNaming;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_filter;
@@ -29,7 +30,7 @@ use function array_filter;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector\FormFieldExtendValidationResultToExtendRectorTest
  */
-final class FormFieldExtendValidationResultToExtendRector extends AbstractRector
+final class FormFieldExtendValidationResultToExtendRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,

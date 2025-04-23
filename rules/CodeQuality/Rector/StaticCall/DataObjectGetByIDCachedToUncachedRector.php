@@ -10,6 +10,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
@@ -19,7 +20,7 @@ use function is_string;
  * @changelog https://github.com/silverstripe/silverstripe-framework/issues/5976
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector\DataObjectGetByIDCachedToUncachedRectorTest
  */
-final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector
+final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ReflectionProvider $reflectionProvider,
