@@ -7,7 +7,6 @@ namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -91,7 +90,7 @@ CODE_SAMPLE
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         /** @var array<string, Type> $dependencyProperties */
-        $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, SilverstripeConstants::PROPERTY_DEPENDENCIES);
+        $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, 'dependencies');
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,

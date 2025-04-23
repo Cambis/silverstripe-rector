@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -139,9 +138,9 @@ CODE_SAMPLE
             new Expression(
                 $this->nodeFactory->createMethodCall(
                     $methodCall->var,
-                    SilverstripeConstants::METHOD_EXTEND,
+                    'extend',
                     array_filter([
-                        SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT,
+                        'updateValidationResult',
                         $var,
                         $methodCall->getArgs()[1] ?? null,
                     ])
@@ -160,9 +159,9 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createMethodCall(
             $methodCall->var,
-            SilverstripeConstants::METHOD_EXTEND,
+            'extend',
             [
-                SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT,
+                'updateValidationResult',
                 ...$methodCall->getArgs(),
             ]
         );
@@ -174,7 +173,7 @@ CODE_SAMPLE
             return true;
         }
 
-        if (!$this->isName($methodCall->name, SilverstripeConstants::METHOD_EXTEND_VALIDATION_RESULT)) {
+        if (!$this->isName($methodCall->name, 'extendValidationResult')) {
             return true;
         }
 

@@ -8,7 +8,6 @@ use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\Normaliser\Normaliser;
 use Cambis\SilverstripeRector\NodeFactory\NewFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -80,7 +79,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
+        if ($node instanceof StaticCall && !$this->isName($node->name, 'create')) {
             return null;
         }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BinaryOp\Identical;
@@ -61,7 +60,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createStaticCall(
             'SilverStripe\View\SSViewer',
-            SilverstripeConstants::METHOD_GET_BASE_TAG,
+            'getBaseTag',
             [
                 new Identical(
                     $this->nodeFactory->createFuncCall('preg_match', ['/<!DOCTYPE[^>]+xhtml/i', $node->getArgs()[0] ?? '']),

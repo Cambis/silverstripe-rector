@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -86,7 +85,7 @@ CODE_SAMPLE
                 return null;
             }
 
-            if ($node->value->methodName !== SilverstripeConstants::METHOD_GET_OWNER) {
+            if ($node->value->methodName !== 'getOwner') {
                 return null;
             }
 

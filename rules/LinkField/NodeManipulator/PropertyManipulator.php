@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\LinkField\NodeManipulator;
 
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -188,10 +187,10 @@ final readonly class PropertyManipulator
 
     private function addMemberToHasMany(Class_ $class, ArrayItem $arrayItem): void
     {
-        $hasMany = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_HAS_MANY);
+        $hasMany = $this->propertyFactory->findConfigurationProperty($class, 'has_many');
 
         if (!$hasMany instanceof Property) {
-            $hasMany = $this->propertyFactory->createArrayConfigurationProperty($class, SilverstripeConstants::PROPERTY_HAS_MANY);
+            $hasMany = $this->propertyFactory->createArrayConfigurationProperty($class, 'has_many');
             $hasMany->props[0]->default = new Array_([]);
         }
 
@@ -211,7 +210,7 @@ final readonly class PropertyManipulator
             return;
         }
 
-        $manyManyExtraFields = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_MANY_MANY_EXTRA_FIELDS);
+        $manyManyExtraFields = $this->propertyFactory->findConfigurationProperty($class, 'many_many_extraFields');
 
         // Skip if there is no property
         if (!$manyManyExtraFields instanceof Property) {
@@ -264,10 +263,10 @@ final readonly class PropertyManipulator
 
     private function addMemberToOwns(Class_ $class, string $memberName, bool &$hasChanged): void
     {
-        $owns = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_OWNS);
+        $owns = $this->propertyFactory->findConfigurationProperty($class, 'owns');
 
         if (!$owns instanceof Property) {
-            $owns = $this->propertyFactory->createArrayConfigurationProperty($class, SilverstripeConstants::PROPERTY_OWNS);
+            $owns = $this->propertyFactory->createArrayConfigurationProperty($class, 'owns');
             $owns->props[0]->default = new Array_([]);
         }
 

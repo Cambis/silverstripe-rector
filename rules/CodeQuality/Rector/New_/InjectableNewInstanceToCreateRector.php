@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\New_;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
@@ -66,7 +65,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createStaticCall(
             $className,
-            SilverstripeConstants::METHOD_CREATE,
+            'create',
             $node->args
         );
     }

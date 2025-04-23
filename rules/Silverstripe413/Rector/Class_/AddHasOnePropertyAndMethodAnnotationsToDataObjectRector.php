@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -58,7 +57,7 @@ CODE_SAMPLE
         $newDocTagValueNodes = [];
         $hasOneProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
             $classReflection,
-            SilverstripeConstants::PROPERTY_HAS_ONE
+            'has_one'
         );
 
         $newDocTagValueNodes = [
@@ -70,7 +69,7 @@ CODE_SAMPLE
 
         $hasOneMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
-            SilverstripeConstants::PROPERTY_HAS_ONE
+            'has_one'
         );
 
         return [

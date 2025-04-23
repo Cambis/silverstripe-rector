@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
@@ -60,7 +59,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if (!$this->isName($node->name, SilverstripeConstants::METHOD_CACHED_CALL)) {
+        if (!$this->isName($node->name, 'cachedCall')) {
             return null;
         }
 
@@ -70,7 +69,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createMethodCall(
             $node->var,
-            SilverstripeConstants::METHOD_OBJ,
+            'obj',
             array_filter([
                 $node->getArgs()[0] ?? '',
                 $node->getArgs()[1] ?? [],

@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\LinkField\NodeManipulator\PropertyManipulator;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -95,14 +94,14 @@ CODE_SAMPLE
         // Variable to track if any actual change has been made
         $hasChanged = false;
 
-        $hasOne = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_ONE);
+        $hasOne = $this->propertyFactory->findConfigurationProperty($node, 'has_one');
 
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
             $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, 'SilverStripe\LinkField\Models\Link', $this->shouldAddMemberToOwns($node), $hasChanged);
         }
 
-        $hasMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_MANY);
+        $hasMany = $this->propertyFactory->findConfigurationProperty($node, 'has_many');
 
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {

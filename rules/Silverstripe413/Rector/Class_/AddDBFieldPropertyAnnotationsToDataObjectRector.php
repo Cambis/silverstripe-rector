@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\OutOfClassScope;
@@ -59,7 +58,7 @@ CODE_SAMPLE
 
         $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
             $classReflection,
-            SilverstripeConstants::PROPERTY_DB
+            'db'
         );
 
         foreach ($types as $name => $type) {

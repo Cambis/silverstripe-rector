@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -61,7 +60,7 @@ CODE_SAMPLE
 
         $hasManyMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
-            SilverstripeConstants::PROPERTY_HAS_MANY,
+            'has_many',
         );
 
         // List types from Silverstan are generic, transform them into the `DataList|Item[]` format

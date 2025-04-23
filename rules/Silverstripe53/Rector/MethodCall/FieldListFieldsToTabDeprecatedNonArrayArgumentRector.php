@@ -28,8 +28,8 @@ final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends Abstrac
      * @var array<SilverstripeConstants::*, SilverstripeConstants::*>
      */
     private const METHOD_NAMES = [
-        SilverstripeConstants::METHOD_ADD_FIELDS_TO_TAB => SilverstripeConstants::METHOD_ADD_FIELD_TO_TAB,
-        SilverstripeConstants::METHOD_REMOVE_FIELDS_FROM_TAB => SilverstripeConstants::METHOD_REMOVE_FIELD_FROM_TAB,
+        'addFieldsToTab' => 'addFieldToTab',
+        'removeFieldsFromTab' => 'removeFieldFromTab',
     ];
 
     #[Override]

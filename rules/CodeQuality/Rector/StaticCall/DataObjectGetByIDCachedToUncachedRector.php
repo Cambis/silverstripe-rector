@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
@@ -63,7 +62,7 @@ CODE_SAMPLE
         }
 
         $className = (string) $this->getName($node->class);
-        $dataListCall = $this->nodeFactory->createStaticCall($className, SilverstripeConstants::METHOD_GET, []);
+        $dataListCall = $this->nodeFactory->createStaticCall($className, 'get', []);
         $args = $node->args;
 
         // Get the second argument if more than one is present
@@ -71,12 +70,12 @@ CODE_SAMPLE
             $args = [$node->args[1]];
         }
 
-        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::METHOD_BY_ID, $args);
+        return $this->nodeFactory->createMethodCall($dataListCall, 'byID', $args);
     }
 
     private function shouldSkipStaticCall(StaticCall $staticCall): bool
     {
-        if (!$this->isName($staticCall->name, SilverstripeConstants::METHOD_GET_BY_ID)) {
+        if (!$this->isName($staticCall->name, 'get_by_id')) {
             return true;
         }
 

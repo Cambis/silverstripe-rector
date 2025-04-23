@@ -26,8 +26,8 @@ final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector impl
      * @var list<SilverstripeConstants::METHOD_*>
      */
     private const METHOD_NAMES = [
-        SilverstripeConstants::METHOD_GET_REQUEST,
-        SilverstripeConstants::METHOD_GET_SCHEMA_RESPONSE,
+        'getRequest',
+        'getSchemaResponse',
     ];
 
     public function __construct(
@@ -89,7 +89,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, SilverstripeConstants::METHOD_GET_OWNER);
+        $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, 'getOwner');
         $methodName = $this->nodeNameResolver->getName($node->name);
 
         if ($methodName === null) {

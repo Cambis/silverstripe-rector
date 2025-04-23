@@ -7,7 +7,6 @@ namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\SilverstripeRector\NodeFactory\NewFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -102,7 +101,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
+        if ($node instanceof StaticCall && !$this->isName($node->name, 'create')) {
             return null;
         }
 
@@ -226,14 +225,14 @@ CODE_SAMPLE
             return self::LINK_FIELD_CLASS;
         }
 
-        $hasMany = $this->configurationResolver->get($parentClass->getName(), SilverstripeConstants::PROPERTY_HAS_MANY);
+        $hasMany = $this->configurationResolver->get($parentClass->getName(), 'has_many');
 
         // Check if link is a has many
         if (is_array($hasMany) && isset($hasMany[$nameValue])) {
             return self::MULTI_LINK_FIELD_CLASS;
         }
 
-        $manyMany = $this->configurationResolver->get($parentClass->getName(), SilverstripeConstants::PROPERTY_MANY_MANY);
+        $manyMany = $this->configurationResolver->get($parentClass->getName(), 'many_many');
 
         // Check if link is a many many
         if (is_array($manyMany) && isset($manyMany[$nameValue])) {
