@@ -97,6 +97,6 @@ CODE_SAMPLE
             return true;
         }
 
-        return !$classReflection->isSubclassOf('SilverStripe\ORM\DataObject');
+        return !$classReflection->is('SilverStripe\ORM\DataObject');
     }
 }

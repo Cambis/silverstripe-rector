@@ -46,11 +46,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
             }
@@ -114,11 +109,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $key => $item) {
-            // Safety check
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             // Not a gorriecoe link, skip
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
@@ -156,11 +146,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
             }
@@ -241,11 +226,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $key => $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if (!$item->key instanceof Expr) {
                 continue;
             }

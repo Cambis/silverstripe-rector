@@ -30,7 +30,7 @@ final readonly class ClassAnalyser
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+        if ($classReflection->is('SilverStripe\Core\Extension')) {
             return true;
         }
 
@@ -47,6 +47,32 @@ final readonly class ClassAnalyser
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return $classReflection->isSubclassOf('SilverStripe\Core\Extension');
+        return $classReflection->is('SilverStripe\Core\Extension');
+    }
+
+    public function isExtensible(Class_ $class): bool
+    {
+        $className = (string) $this->nodeNameResolver->getName($class);
+
+        if (!$this->reflectionProvider->hasClass($className)) {
+            return false;
+        }
+
+        $classReflection = $this->reflectionProvider->getClass($className);
+
+        return !$classReflection->hasTraitUse('SilverStripe\Core\Extensible');
+    }
+
+    public function isInjectable(Class_ $class): bool
+    {
+        $className = (string) $this->nodeNameResolver->getName($class);
+
+        if (!$this->reflectionProvider->hasClass($className)) {
+            return false;
+        }
+
+        $classReflection = $this->reflectionProvider->getClass($className);
+
+        return !$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
     }
 }

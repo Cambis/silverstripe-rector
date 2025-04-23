@@ -4,6 +4,8 @@ includes:
   - phar://phpstan.phar/conf/bleedingEdge.neon
 parameters:
   level: max
+  bootstrapFiles:
+    - vendor/rector/rector/vendor/autoload.php
   reportUnmatchedIgnoredErrors: true
   paths:
     - rules
@@ -19,11 +21,6 @@ parameters:
     - '*tests/*/config/*'
     - e2e
   ignoreErrors:
-      -
-        message: "#^Use value object over return of values$#"
-        count: 1
-        path: src/Rector/Class_/AbstractAddAnnotationsToExtensionRector.php
-
       - '#Parameter \#1 \$node (.*?) of method Cambis\\SilverstripeRector\\(.*?)\:\:(refactor|refactorWithScope)\(\) should be contravariant with parameter \$node \(PhpParser\\Node\) of method Rector\\Contract\\Rector\\(RectorInterface|ScopeAwareRectorInterface)\:\:(refactor|refactorWithScope)\(\)#'
 
       # We use instanceof checks to verify an object is not null

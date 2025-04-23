@@ -12,26 +12,10 @@ abstract class AbstractAddAnnotationsToDataObjectRector extends AbstractAddAnnot
     #[Override]
     final protected function shouldSkipClass(Class_ $class): bool
     {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
+        if ($class->isAnonymous()) {
             return true;
         }
 
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
-            return false;
-        }
-
-        return !$classReflection->isSubclassOf('SilverStripe\ORM\DataObject');
+        return !$this->classAnalyser->isDataObject($class);
     }
 }

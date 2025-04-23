@@ -113,7 +113,7 @@ CODE_SAMPLE
 
     private function shouldSkipClass(ClassReflection $classReflection): bool
     {
-        if ($classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+        if ($classReflection->is('SilverStripe\Core\Extension')) {
             return false;
         }
 

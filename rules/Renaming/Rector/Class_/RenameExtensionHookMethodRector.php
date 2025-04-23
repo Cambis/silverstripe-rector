@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Renaming\Rector\Class_;
 
+use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use InvalidArgumentException;
@@ -32,6 +33,11 @@ final class RenameExtensionHookMethodRector extends AbstractRector implements Co
      * @var list<RenameExtensionHookMethod>
      */
     private array $hookMethodRenames = [];
+
+    public function __construct(
+        private readonly ClassAnalyser $classAnalyser
+    ) {
+    }
 
     #[Override]
     public function getRuleDefinition(): RuleDefinition
@@ -82,9 +88,7 @@ CODE_SAMPLE,
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-
-        if (!$classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+        if (!$this->classAnalyser->isExtension($node)) {
             return null;
         }
 
@@ -98,7 +102,7 @@ CODE_SAMPLE,
             }
 
             foreach ($this->hookMethodRenames as $hookMethodRename) {
-                if ($this->shouldSkipRename($methodName, $hookMethodRename, $classMethod, $classReflection, $scope)) {
+                if ($this->shouldSkipRename($methodName, $hookMethodRename, $classMethod, $scope->getClassReflection(), $scope)) {
                     continue;
                 }
 

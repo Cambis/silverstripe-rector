@@ -7,6 +7,7 @@ namespace Cambis\SilverstripeRector\Rector\Class_;
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\AnnotationUpdater\AnnotationUpdater;
 use Cambis\SilverstripeRector\DataRecordResolver\DataRecordResolver;
+use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\PhpDocHelper\PhpDocHelper;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
@@ -25,7 +26,6 @@ use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Exception\NotImplementedYetException;
-use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
@@ -46,7 +46,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
 
     public function __construct(
         protected readonly AnnotationUpdater $annotationUpdater,
-        protected readonly ClassAnalyzer $classAnalyzer,
+        protected readonly ClassAnalyser $classAnalyser,
         protected readonly DataRecordResolver $dataRecordResolver,
         protected readonly DocBlockUpdater $docBlockUpdater,
         protected readonly PhpDocHelper $phpDocHelper,

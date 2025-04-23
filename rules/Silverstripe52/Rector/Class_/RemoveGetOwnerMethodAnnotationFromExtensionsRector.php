@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
+use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
@@ -11,10 +12,8 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\Node as AstNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use PHPStan\Reflection\ReflectionProvider;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
-use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\PhpDocParser\PhpDocParser\PhpDocNodeTraverser;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
@@ -27,10 +26,9 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RemoveGetOwnerMethodAnnotationFromExtensionsRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
-        private readonly ClassAnalyzer $classAnalyzer,
+        private readonly ClassAnalyser $classAnalyser,
         private readonly DocBlockUpdater $docBlockUpdater,
-        private readonly PhpDocInfoFactory $phpDocInfoFactory,
-        private readonly ReflectionProvider $reflectionProvider,
+        private readonly PhpDocInfoFactory $phpDocInfoFactory
     ) {
     }
 
@@ -71,7 +69,7 @@ CODE_SAMPLE
     #[Override]
     public function refactor(Node $node): ?Node
     {
-        if ($this->shouldSkipClass($node)) {
+        if (!$this->classAnalyser->isExtension($node)) {
             return null;
         }
 
@@ -104,26 +102,5 @@ CODE_SAMPLE
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
 
         return $node;
-    }
-
-    private function shouldSkipClass(Class_ $class): bool
-    {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
-            return true;
-        }
-
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        return !$classReflection->isSubclassOf('SilverStripe\Core\Extension');
     }
 }

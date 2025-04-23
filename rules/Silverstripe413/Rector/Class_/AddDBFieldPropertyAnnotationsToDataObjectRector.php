@@ -84,7 +84,7 @@ CODE_SAMPLE
 
         $fieldClassReflection = $type->getObjectClassReflections()[0];
 
-        if (!$fieldClassReflection->isSubclassOf('SilverStripe\ORM\FieldType\DBField')) {
+        if (!$fieldClassReflection->is('SilverStripe\ORM\FieldType\DBField')) {
             return $type;
         }
 

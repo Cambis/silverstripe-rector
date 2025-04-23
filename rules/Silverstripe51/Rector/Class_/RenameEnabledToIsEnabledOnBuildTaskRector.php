@@ -98,6 +98,6 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf('SilverStripe\Dev\BuildTask');
+        return !$classReflection->is('SilverStripe\Dev\BuildTask');
     }
 }
