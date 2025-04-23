@@ -67,8 +67,10 @@ final readonly class PropertyManipulator
             }
 
             // Rename the link class
-            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+            if (!$this->nodeComparator->areNodesEqual($newValue, $item->value)) {
                 $item->value = $newValue;
+
+                $hasChanged = true;
             }
 
             if (!$item->key instanceof Expr) {
@@ -83,10 +85,8 @@ final readonly class PropertyManipulator
 
             // Add this member to the owns configuration
             if ($shouldAddMemberToOwns) {
-                $this->addMemberToOwns($class, $memberName);
+                $this->addMemberToOwns($class, $memberName, $hasChanged);
             }
-
-            $hasChanged = true;
         }
 
         return $class;
@@ -161,8 +161,10 @@ final readonly class PropertyManipulator
                 continue;
             }
 
-            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+            if (!$this->nodeComparator->areNodesEqual($newValue, $item->value)) {
                 $item->value = $newValue;
+
+                $hasChanged = true;
             }
 
             if (!$item->key instanceof Expr) {
@@ -177,10 +179,8 @@ final readonly class PropertyManipulator
 
             // Add this member to the owns configuration
             if ($shouldAddMemberToOwns) {
-                $this->addMemberToOwns($class, $memberName);
+                $this->addMemberToOwns($class, $memberName, $hasChanged);
             }
-
-            $hasChanged = true;
         }
 
         return $class;
@@ -245,7 +245,7 @@ final readonly class PropertyManipulator
     }
 
     /**
-     * Skip if the array item does not reference the legacy linl class.
+     * Skip if the array item does not reference the legacy link class.
      */
     private function shouldSkipArrayItem(ArrayItem $arrayItem, string $legacyLinkClassName): bool
     {
@@ -262,7 +262,7 @@ final readonly class PropertyManipulator
         return true;
     }
 
-    private function addMemberToOwns(Class_ $class, string $memberName): void
+    private function addMemberToOwns(Class_ $class, string $memberName, bool &$hasChanged): void
     {
         $owns = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_OWNS);
 
@@ -293,6 +293,8 @@ final readonly class PropertyManipulator
 
         // Add the member to the array
         $value->items[] = new ArrayItem(new String_($memberName));
+
+        $hasChanged = true;
     }
 
     private function removeProperty(Class_ $class, string $propertyName): void

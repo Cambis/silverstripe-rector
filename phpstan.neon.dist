@@ -33,5 +33,5 @@ parameters:
 
       -
         message: '#^Use explicit return value over magic &reference$#'
-        count: 3
+        count: 4
         path: rules/LinkField/NodeManipulator/PropertyManipulator.php

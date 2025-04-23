@@ -18,11 +18,7 @@ final readonly class ClassAnalyser
 
     public function isDataObject(Class_ $class): bool
     {
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return false;
-        }
+        $className = (string) $this->nodeNameResolver->getName($class);
 
         if (!$this->reflectionProvider->hasClass($className)) {
             return false;
@@ -60,7 +56,7 @@ final readonly class ClassAnalyser
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->hasTraitUse('SilverStripe\Core\Extensible');
+        return $classReflection->hasTraitUse('SilverStripe\Core\Extensible');
     }
 
     public function isInjectable(Class_ $class): bool
@@ -73,6 +69,6 @@ final readonly class ClassAnalyser
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
+        return $classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
     }
 }
