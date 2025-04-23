@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\NodeFactory;
 
+use PhpParser\Modifiers;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
 use PHPStan\Type\ArrayType;
@@ -52,8 +53,7 @@ final readonly class PropertyFactory
             new ArrayType(new IntegerType(), new StringType())
         );
 
-        /** @phpstan-ignore-next-line classConstant.deprecated TODO: address in rector 2.0 */
-        $property->flags = Class_::MODIFIER_PRIVATE | Class_::MODIFIER_STATIC;
+        $property->flags = Modifiers::PRIVATE | Modifiers::STATIC;
 
         $this->classInsertManipulator->addAsFirstMethod($class, $property);
 
