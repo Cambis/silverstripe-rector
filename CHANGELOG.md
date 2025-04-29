@@ -1,5 +1,12 @@
 # silverstripe-rector
 
+## 1.4.0
+
+### Minor Changes
+
+- 5354f4a: Upgrade dev dependencies
+- c31a51a: Update Silverstripe 6.0 set
+
 ## 1.3.0
 
 ### Minor Changes
