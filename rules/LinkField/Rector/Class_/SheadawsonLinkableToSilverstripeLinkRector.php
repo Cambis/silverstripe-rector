@@ -29,19 +29,34 @@ use function is_array;
 final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private PropertyManipulator $propertyManipulator;
+    /**
      * @var string
      */
     private const LEGACY_LINK_CLASS = 'Sheadawson\Linkable\Models\Link';
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly PropertyManipulator $propertyManipulator
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser, ConfigurationResolver $configurationResolver, PropertyFactory $propertyFactory, PropertyManipulator $propertyManipulator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->propertyManipulator = $propertyManipulator;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `Sheadawson\Linkable\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
@@ -92,7 +107,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -101,46 +115,35 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->classAnalyser->isDataObject($node)) {
             return null;
         }
-
         // Variable to track if any actual change has been made
         $hasChanged = false;
-
         $hasOne = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_ONE);
-
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
             $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
         }
-
         $manyMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_MANY_MANY);
-
         // Migrate many_many to has_many
         if ($manyMany instanceof Property) {
             $node = $this->propertyManipulator->refactorManyMany($node, $manyMany, self::LEGACY_LINK_CLASS, $hasChanged);
         }
-
         $hasMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_MANY);
-
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {
             $node = $this->propertyManipulator->refactorHasMany($node, $hasMany, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
         }
-
         // No change? Return null
         if (!$hasChanged) {
             return null;
         }
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
