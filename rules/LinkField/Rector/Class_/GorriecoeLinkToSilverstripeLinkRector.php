@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\LinkField\NodeManipulator\PropertyManipulator;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
@@ -29,19 +28,34 @@ use function is_array;
 final class GorriecoeLinkToSilverstripeLinkRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private PropertyManipulator $propertyManipulator;
+    /**
      * @var string
      */
     private const LEGACY_LINK_CLASS = 'gorriecoe\Link\Models\Link';
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly PropertyManipulator $propertyManipulator
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser, ConfigurationResolver $configurationResolver, PropertyFactory $propertyFactory, PropertyManipulator $propertyManipulator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->propertyManipulator = $propertyManipulator;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `gorriecoe\Link\Models\Link` configuration to `SilverStripe\LinkField\Models\Link` configuration.', [
@@ -92,7 +106,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -101,46 +114,35 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->classAnalyser->isDataObject($node)) {
             return null;
         }
-
         // Variable to track if any actual change has been made
         $hasChanged = false;
-
         $hasOne = $this->propertyFactory->findConfigurationProperty($node, 'has_one');
-
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
             $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
         }
-
         $manyMany = $this->propertyFactory->findConfigurationProperty($node, 'many_many');
-
         // Migrate many_many to has_many
         if ($manyMany instanceof Property) {
             $node = $this->propertyManipulator->refactorManyMany($node, $manyMany, self::LEGACY_LINK_CLASS, $hasChanged);
         }
-
         $hasMany = $this->propertyFactory->findConfigurationProperty($node, 'has_many');
-
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {
             $node = $this->propertyManipulator->refactorHasMany($node, $hasMany, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
         }
-
         // No change? Return null
         if (!$hasChanged) {
             return null;
         }
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\New_;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PHPStan\Reflection\ReflectionProvider;
@@ -20,13 +19,20 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class InjectableNewInstanceToCreateRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ClassAnalyzer $classAnalyzer,
-        private readonly ReflectionProvider $reflectionProvider
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyzer $classAnalyzer;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(ClassAnalyzer $classAnalyzer, ReflectionProvider $reflectionProvider)
+    {
+        $this->classAnalyzer = $classAnalyzer;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change `new Injectable()` to use Injectable::create() instead.', [
@@ -45,7 +51,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [New_::class];
@@ -54,15 +59,12 @@ CODE_SAMPLE
     /**
      * @param New_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipNew($node)) {
             return null;
         }
-
         $className = (string) $this->nodeNameResolver->getName($node->class);
-
         return $this->nodeFactory->createStaticCall(
             $className,
             'create',

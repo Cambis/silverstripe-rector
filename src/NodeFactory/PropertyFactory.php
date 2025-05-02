@@ -13,12 +13,20 @@ use PHPStan\Type\StringType;
 use Rector\NodeManipulator\ClassInsertManipulator;
 use Rector\PhpParser\Node\NodeFactory;
 
-final readonly class PropertyFactory
+final class PropertyFactory
 {
-    public function __construct(
-        private ClassInsertManipulator $classInsertManipulator,
-        private NodeFactory $nodeFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassInsertManipulator $classInsertManipulator;
+    /**
+     * @readonly
+     */
+    private NodeFactory $nodeFactory;
+    public function __construct(ClassInsertManipulator $classInsertManipulator, NodeFactory $nodeFactory)
+    {
+        $this->classInsertManipulator = $classInsertManipulator;
+        $this->nodeFactory = $nodeFactory;
     }
 
     public function findConfigurationProperty(Class_ $class, string $propertyName): ?Property
