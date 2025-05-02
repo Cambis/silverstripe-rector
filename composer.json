@@ -80,12 +80,14 @@
     "scripts": {
         "docs": "vendor/bin/rule-doc-generator generate rules --output-file docs/rector_rules_overview.md --categorize 3 --ansi",
         "lint": [
-            "vendor/bin/parallel-lint src rules tests --colors --blame",
+            "vendor/bin/parallel-lint src tests --colors --blame",
+            "vendor/bin/rector process --dry-run --ansi",
             "vendor/bin/ecs check --ansi",
             "vendor/bin/phpstan analyse --ansi --memory-limit=-1"
         ],
         "lint:fix": [
-            "vendor/bin/ecs check --fix --ansi"
+            "vendor/bin/rector process --ansi",
+            "vendor/bin/ecs check --fix"
         ]
     }
 }
