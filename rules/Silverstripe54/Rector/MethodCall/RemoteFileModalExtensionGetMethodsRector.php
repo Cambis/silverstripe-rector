@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
@@ -23,7 +22,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
-     * @var list<SilverstripeConstants::METHOD_*>
+     * @var list<string>
      */
     private const METHOD_NAMES = [
         'getRequest',

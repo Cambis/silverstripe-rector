@@ -19,6 +19,7 @@ abstract class AbstractSilverstripeRectorTestCase extends AbstractRectorTestCase
     protected function setUp(): void
     {
         // Set these parameters here as they don't seem to persist correctly otherwise
+        /** @phpstan-ignore-next-line classConstant.internal */
         SimpleParameterProvider::setParameter(Option::PHPSTAN_FOR_RECTOR_PATHS, [
             SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
             SilverstripeOption::PHPSTAN_FOR_RECTOR_INCLUDE_TEST_ONLY_PATH,

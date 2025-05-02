@@ -35,3 +35,8 @@ parameters:
         message: '#^Use explicit return value over magic &reference$#'
         count: 4
         path: rules/LinkField/NodeManipulator/PropertyManipulator.php
+
+      # We use RelatedConfigInterface to include required services for several rules
+      -
+        message: '#^Class Cambis\\SilverstripeRector\\(.*?) implements internal interface Rector\\Contract\\DependencyInjection\\RelatedConfigInterface\.$#'
+        identifier: class.implementsInternalInterface
