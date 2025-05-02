@@ -1,13 +1,13 @@
 {
   "name": "cambis/silverstripe-rector-rename-data-extension-subclass",
-  "type": "silverstripe-vendormodule",
   "description": "",
+  "type": "silverstripe-vendormodule",
   "require": {
     "php": "^8.1",
     "silverstripe/framework": "^5.3"
   },
   "require-dev": {
-    "cambis/silverstripe-rector": "dev-main"
+    "cambis/silverstripe-rector": "@dev"
   },
   "repositories": [
     {
