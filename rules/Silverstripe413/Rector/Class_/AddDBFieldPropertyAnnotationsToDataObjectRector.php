@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToDataObjectRector;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\OutOfClassScope;
@@ -59,7 +58,7 @@ CODE_SAMPLE
 
         $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
             $classReflection,
-            SilverstripeConstants::PROPERTY_DB
+            'db'
         );
 
         foreach ($types as $name => $type) {
@@ -84,7 +83,7 @@ CODE_SAMPLE
 
         $fieldClassReflection = $type->getObjectClassReflections()[0];
 
-        if (!$fieldClassReflection->isSubclassOf('SilverStripe\ORM\FieldType\DBField')) {
+        if (!$fieldClassReflection->is('SilverStripe\ORM\FieldType\DBField')) {
             return $type;
         }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\LinkField\NodeManipulator;
 
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -46,11 +45,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
             }
@@ -72,8 +66,10 @@ final readonly class PropertyManipulator
             }
 
             // Rename the link class
-            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+            if (!$this->nodeComparator->areNodesEqual($newValue, $item->value)) {
                 $item->value = $newValue;
+
+                $hasChanged = true;
             }
 
             if (!$item->key instanceof Expr) {
@@ -88,10 +84,8 @@ final readonly class PropertyManipulator
 
             // Add this member to the owns configuration
             if ($shouldAddMemberToOwns) {
-                $this->addMemberToOwns($class, $memberName);
+                $this->addMemberToOwns($class, $memberName, $hasChanged);
             }
-
-            $hasChanged = true;
         }
 
         return $class;
@@ -114,11 +108,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $key => $item) {
-            // Safety check
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             // Not a gorriecoe link, skip
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
@@ -156,11 +145,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if ($this->shouldSkipArrayItem($item, $legacyLinkClassName)) {
                 continue;
             }
@@ -176,8 +160,10 @@ final readonly class PropertyManipulator
                 continue;
             }
 
-            if (!$this->nodeComparator->areSameNode($newValue, $item->value)) {
+            if (!$this->nodeComparator->areNodesEqual($newValue, $item->value)) {
                 $item->value = $newValue;
+
+                $hasChanged = true;
             }
 
             if (!$item->key instanceof Expr) {
@@ -192,10 +178,8 @@ final readonly class PropertyManipulator
 
             // Add this member to the owns configuration
             if ($shouldAddMemberToOwns) {
-                $this->addMemberToOwns($class, $memberName);
+                $this->addMemberToOwns($class, $memberName, $hasChanged);
             }
-
-            $hasChanged = true;
         }
 
         return $class;
@@ -203,10 +187,10 @@ final readonly class PropertyManipulator
 
     private function addMemberToHasMany(Class_ $class, ArrayItem $arrayItem): void
     {
-        $hasMany = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_HAS_MANY);
+        $hasMany = $this->propertyFactory->findConfigurationProperty($class, 'has_many');
 
         if (!$hasMany instanceof Property) {
-            $hasMany = $this->propertyFactory->createArrayConfigurationProperty($class, SilverstripeConstants::PROPERTY_HAS_MANY);
+            $hasMany = $this->propertyFactory->createArrayConfigurationProperty($class, 'has_many');
             $hasMany->props[0]->default = new Array_([]);
         }
 
@@ -226,7 +210,7 @@ final readonly class PropertyManipulator
             return;
         }
 
-        $manyManyExtraFields = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_MANY_MANY_EXTRA_FIELDS);
+        $manyManyExtraFields = $this->propertyFactory->findConfigurationProperty($class, 'many_many_extraFields');
 
         // Skip if there is no property
         if (!$manyManyExtraFields instanceof Property) {
@@ -241,11 +225,6 @@ final readonly class PropertyManipulator
         }
 
         foreach ($value->items as $key => $item) {
-            // Safety checks...
-            if (!$item instanceof ArrayItem) {
-                continue;
-            }
-
             if (!$item->key instanceof Expr) {
                 continue;
             }
@@ -265,7 +244,7 @@ final readonly class PropertyManipulator
     }
 
     /**
-     * Skip if the array item does not reference the legacy linl class.
+     * Skip if the array item does not reference the legacy link class.
      */
     private function shouldSkipArrayItem(ArrayItem $arrayItem, string $legacyLinkClassName): bool
     {
@@ -282,12 +261,12 @@ final readonly class PropertyManipulator
         return true;
     }
 
-    private function addMemberToOwns(Class_ $class, string $memberName): void
+    private function addMemberToOwns(Class_ $class, string $memberName, bool &$hasChanged): void
     {
-        $owns = $this->propertyFactory->findConfigurationProperty($class, SilverstripeConstants::PROPERTY_OWNS);
+        $owns = $this->propertyFactory->findConfigurationProperty($class, 'owns');
 
         if (!$owns instanceof Property) {
-            $owns = $this->propertyFactory->createArrayConfigurationProperty($class, SilverstripeConstants::PROPERTY_OWNS);
+            $owns = $this->propertyFactory->createArrayConfigurationProperty($class, 'owns');
             $owns->props[0]->default = new Array_([]);
         }
 
@@ -313,6 +292,8 @@ final readonly class PropertyManipulator
 
         // Add the member to the array
         $value->items[] = new ArrayItem(new String_($memberName));
+
+        $hasChanged = true;
     }
 
     private function removeProperty(Class_ $class, string $propertyName): void

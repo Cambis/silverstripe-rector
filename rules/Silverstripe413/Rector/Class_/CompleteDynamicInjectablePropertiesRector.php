@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\Silverstan\TypeResolver\TypeResolver;
+use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\Type;
 use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
-use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\PostRector\ValueObject\PropertyMetadata;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_keys;
@@ -26,10 +27,10 @@ use function array_keys;
 /**
  * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
-final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements RelatedConfigInterface
+final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     public function __construct(
-        private readonly ClassAnalyzer $classAnalyzer,
+        private readonly ClassAnalyser $classAnalyser,
         private readonly MissingPropertiesFactory $missingPropertiesFactory,
         private readonly PropertyPresenceChecker $propertyPresenceChecker,
         private readonly ReflectionProvider $reflectionProvider,
@@ -82,13 +83,14 @@ CODE_SAMPLE
     #[Override]
     public function refactor(Node $node): ?Node
     {
-        if ($this->shouldSkipClass($node)) {
+        if (!$this->classAnalyser->isInjectable($node)) {
             return null;
         }
 
         $className = (string) $this->nodeNameResolver->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
-        $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, SilverstripeConstants::PROPERTY_DEPENDENCIES);
+        /** @var array<string, Type> $dependencyProperties */
+        $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, 'dependencies');
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,
@@ -110,27 +112,6 @@ CODE_SAMPLE
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
-    }
-
-    private function shouldSkipClass(Class_ $class): bool
-    {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
-            return true;
-        }
-
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        return !$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
     }
 
     /**

@@ -14,7 +14,7 @@ services:
         class: Cambis\Silverstan\ConfigurationResolver\Contract\MiddlewareRegistryProviderInterface
         factory: Cambis\Silverstan\ConfigurationResolver\MiddlewareRegistryProvider\LazyMiddlewareRegistryProvider
     configCollectionFactory:
-        class: Cambis\Silverstan\ConfigurationResolver\ConfigCollectionFactory\ExperimentalLazyConfigCollectionFactory
+        class: Cambis\Silverstan\ConfigurationResolver\ConfigCollectionFactory\LazyConfigCollectionFactory
     -
         class: Cambis\Silverstan\ConfigurationResolver\Middleware\PrivateStaticMiddleware
         tags: [silverstan.configurationResolver.middleware]
@@ -37,18 +37,6 @@ services:
         class: Cambis\Silverstan\ConfigurationResolver\Contract\ConfigCollectionFactoryInterface
         factory: @configCollectionFactory
     -
-        class: Cambis\Silverstan\Extension\ClassPropertiesNode\ConfigurationPropertiesExtension
-        tags: [phpstan.properties.readWriteExtension]
-    -
-        class: Cambis\Silverstan\Extension\PhpDoc\DataObjectTypeNodeResolverExtension
-        tags: [phpstan.phpDoc.typeNodeResolverExtension]
-    -
-        class: Cambis\Silverstan\Extension\PhpDoc\ExtensionOwnerTypeNodeResolverExtension
-        tags: [phpstan.phpDoc.typeNodeResolverExtension]
-    -
-        class: Cambis\Silverstan\Extension\PhpDoc\SilverstripeStubFilesExtension
-        tags: [phpstan.stubFilesExtension]
-    -
         class: Cambis\Silverstan\FileCleaner\FileCleaner
     -
         class: Cambis\Silverstan\FileFinder\FileFinder
@@ -59,6 +47,15 @@ services:
     -
         class: Cambis\Silverstan\Normaliser\Normaliser
     -
+        class: Cambis\Silverstan\PhpDoc\TypeNodeResolverExtension\DataObjectTypeNodeResolverExtension
+        tags: [phpstan.phpDoc.typeNodeResolverExtension]
+    -
+        class: Cambis\Silverstan\PhpDoc\TypeNodeResolverExtension\ExtensionOwnerTypeNodeResolverExtension
+        tags: [phpstan.phpDoc.typeNodeResolverExtension]
+    -
+        class: Cambis\Silverstan\PhpDoc\StubFilesExtension\SilverstripeStubFilesExtension
+        tags: [phpstan.stubFilesExtension]
+    -
         class: Cambis\Silverstan\ReflectionAnalyser\ClassReflectionAnalyser
     -
         class: Cambis\Silverstan\ReflectionAnalyser\PropertyReflectionAnalyser
@@ -67,6 +64,9 @@ services:
     -
         class: Cambis\Silverstan\ReflectionResolver\Contract\ReflectionResolverRegistryProviderInterface
         factory: Cambis\Silverstan\ReflectionResolver\ReflectionResolverRegistryProvider\LazyReflectionResolverRegistryProvider
+    -
+        class: Cambis\Silverstan\Rule\ClassPropertiesNode\ReadWritePropertiesExtension\ConfigurationPropertiesExtension
+        tags: [phpstan.properties.readWriteExtension]
     -
         class: Cambis\Silverstan\TypeFactory\TypeFactory
     -

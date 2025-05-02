@@ -8,7 +8,6 @@ use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\Normaliser\Normaliser;
 use Cambis\SilverstripeRector\NodeFactory\NewFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -20,6 +19,7 @@ use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_key_exists;
@@ -32,7 +32,7 @@ use function rtrim;
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\SheadawsonLinkableFieldToSilverstripeLinkFieldRector\SheadawsonLinkableFieldToSilverstripeLinkFieldRectorTest
  */
-final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
+final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
@@ -79,7 +79,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
+        if ($node instanceof StaticCall && !$this->isName($node->name, 'create')) {
             return null;
         }
 

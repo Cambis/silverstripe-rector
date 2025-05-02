@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Renaming\Rector\Class_;
 
+use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use InvalidArgumentException;
@@ -17,19 +18,26 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\ObjectType;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Rector\AbstractScopeAwareRector;
+use Rector\PHPStan\ScopeFetcher;
+use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\Renaming\Rector\Class_\RenameExtensionHookMethodRector\RenameExtensionHookMethodRectorTest
  */
-final class RenameExtensionHookMethodRector extends AbstractScopeAwareRector implements ConfigurableRectorInterface, RelatedConfigInterface
+final class RenameExtensionHookMethodRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
      * @var list<RenameExtensionHookMethod>
      */
     private array $hookMethodRenames = [];
+
+    public function __construct(
+        private readonly ClassAnalyser $classAnalyser
+    ) {
+    }
 
     #[Override]
     public function getRuleDefinition(): RuleDefinition
@@ -72,15 +80,15 @@ CODE_SAMPLE,
      * @param Class_ $node
      */
     #[Override]
-    public function refactorWithScope(Node $node, Scope $scope): ?Node
+    public function refactor(Node $node): ?Node
     {
+        $scope = ScopeFetcher::fetch($node);
+
         if (!$scope->isInClass()) {
             return null;
         }
 
-        $classReflection = $scope->getClassReflection();
-
-        if (!$classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+        if (!$this->classAnalyser->isExtension($node)) {
             return null;
         }
 
@@ -94,7 +102,7 @@ CODE_SAMPLE,
             }
 
             foreach ($this->hookMethodRenames as $hookMethodRename) {
-                if ($this->shouldSkipRename($methodName, $hookMethodRename, $classMethod, $classReflection, $scope)) {
+                if ($this->shouldSkipRename($methodName, $hookMethodRename, $classMethod, $scope->getClassReflection(), $scope)) {
                     continue;
                 }
 

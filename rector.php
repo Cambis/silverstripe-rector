@@ -6,7 +6,6 @@ use Rector\Config\RectorConfig;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
-use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
@@ -23,7 +22,6 @@ return RectorConfig::configure()
         deadCode: true,
         earlyReturn: true,
         privatization: true,
-        phpunit: true,
         phpunitCodeQuality: true
     )
     ->withRules([
@@ -37,9 +35,4 @@ return RectorConfig::configure()
         AddTypeToConstRector::class,
         // Some rectors use FQN names
         StringClassNameToClassConstantRector::class,
-        // Skip false postive in AbstractRector::test()
-        AddDoesNotPerformAssertionToNonAssertingTestRector::class => [
-            __DIR__ . '/tests/rules/**/Rector/**/*RectorTest.php',
-            __DIR__ . '/tests/src/Set/**/Silverstripe**Test.php',
-        ],
     ]);

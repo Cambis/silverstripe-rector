@@ -76,7 +76,7 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
 
             $classReflection = $this->reflectionProvider->getClass($extensionClassName);
 
-            if (!$classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+            if (!$classReflection->is('SilverStripe\Core\Extension')) {
                 continue;
             }
 

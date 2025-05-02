@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
@@ -69,7 +68,7 @@ CODE_SAMPLE
 
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             [
-                SilverstripeConstants::METHOD_GET_OWNER => $type,
+                'getOwner' => $type,
             ],
         );
     }

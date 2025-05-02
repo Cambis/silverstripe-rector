@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -19,14 +19,14 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector\RemoteFileModalExtensionGetMethodsRectorTest
  */
-final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector
+final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
-     * @var list<SilverstripeConstants::METHOD_*>
+     * @var list<string>
      */
     private const METHOD_NAMES = [
-        SilverstripeConstants::METHOD_GET_REQUEST,
-        SilverstripeConstants::METHOD_GET_SCHEMA_RESPONSE,
+        'getRequest',
+        'getSchemaResponse',
     ];
 
     public function __construct(
@@ -88,7 +88,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, SilverstripeConstants::METHOD_GET_OWNER);
+        $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, 'getOwner');
         $methodName = $this->nodeNameResolver->getName($node->name);
 
         if ($methodName === null) {

@@ -85,7 +85,7 @@ CODE_SAMPLE
         $tagValueNodes = [];
 
         // Fallback to Page if no data record was found
-        if ($dataRecordClassName === null && $classReflection->isSubclassOf('PageController')) {
+        if ($dataRecordClassName === null && $classReflection->is('PageController')) {
             $dataRecordClassName = 'Page';
         }
 
@@ -131,7 +131,7 @@ CODE_SAMPLE
     #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
+        if ($class->isAnonymous()) {
             return true;
         }
 
@@ -154,7 +154,7 @@ CODE_SAMPLE
 
         $classReflection = $this->reflectionProvider->getClass($className);
 
-        return !$classReflection->isSubclassOf('SilverStripe\\CMS\\Controllers\\ContentController');
+        return !$classReflection->is('SilverStripe\\CMS\\Controllers\\ContentController');
     }
 
     /**

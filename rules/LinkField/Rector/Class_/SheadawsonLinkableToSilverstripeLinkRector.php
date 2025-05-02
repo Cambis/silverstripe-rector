@@ -9,13 +9,13 @@ use Cambis\SilverstripeRector\LinkField\NodeManipulator\PropertyManipulator;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function in_array;
@@ -26,7 +26,7 @@ use function is_array;
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\GorriecoeLinkToSilverstripeLinkRectorTest
  */
-final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements RelatedConfigInterface
+final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
      * @var string
@@ -111,21 +111,21 @@ CODE_SAMPLE
         // Variable to track if any actual change has been made
         $hasChanged = false;
 
-        $hasOne = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_ONE);
+        $hasOne = $this->propertyFactory->findConfigurationProperty($node, 'has_one');
 
         // Migrate has_one configuration
         if ($hasOne instanceof Property) {
             $node = $this->propertyManipulator->refactorHasOne($node, $hasOne, self::LEGACY_LINK_CLASS, $this->shouldAddMemberToOwns($node), $hasChanged);
         }
 
-        $manyMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_MANY_MANY);
+        $manyMany = $this->propertyFactory->findConfigurationProperty($node, 'many_many');
 
         // Migrate many_many to has_many
         if ($manyMany instanceof Property) {
             $node = $this->propertyManipulator->refactorManyMany($node, $manyMany, self::LEGACY_LINK_CLASS, $hasChanged);
         }
 
-        $hasMany = $this->propertyFactory->findConfigurationProperty($node, SilverstripeConstants::PROPERTY_HAS_MANY);
+        $hasMany = $this->propertyFactory->findConfigurationProperty($node, 'has_many');
 
         // Migrate has_many configuration
         if ($hasMany instanceof Property) {

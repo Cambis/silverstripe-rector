@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BinaryOp\Identical;
@@ -12,6 +11,7 @@ use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Scalar\LNumber;
 use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -20,7 +20,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\StaticCall\SSViewerGetBaseTagRector\SSViewerGetBaseTagRectorTest
  */
-final class SSViewerGetBaseTagRector extends AbstractRector
+final class SSViewerGetBaseTagRector extends AbstractRector implements DocumentedRuleInterface
 {
     #[Override]
     public function getRuleDefinition(): RuleDefinition
@@ -60,7 +60,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createStaticCall(
             'SilverStripe\View\SSViewer',
-            SilverstripeConstants::METHOD_GET_BASE_TAG,
+            'getBaseTag',
             [
                 new Identical(
                     $this->nodeFactory->createFuncCall('preg_match', ['/<!DOCTYPE[^>]+xhtml/i', $node->getArgs()[0] ?? '']),

@@ -80,22 +80,10 @@ CODE_SAMPLE
     #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
-        if ($this->classAnalyzer->isAnonymousClass($class)) {
+        if ($class->isAnonymous()) {
             return true;
         }
 
-        $className = $this->nodeNameResolver->getName($class);
-
-        if ($className === null) {
-            return true;
-        }
-
-        if (!$this->reflectionProvider->hasClass($className)) {
-            return true;
-        }
-
-        $classReflection = $this->reflectionProvider->getClass($className);
-
-        return !$classReflection->hasTraitUse('SilverStripe\Core\Extensible');
+        return !$this->classAnalyser->isExtensible($class);
     }
 }

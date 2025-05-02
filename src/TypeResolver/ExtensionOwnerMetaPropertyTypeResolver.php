@@ -52,7 +52,7 @@ final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyT
     #[Override]
     public function resolve(ClassReflection $classReflection): array
     {
-        if (!$classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
+        if (!$classReflection->is('SilverStripe\Core\Extension')) {
             return [];
         }
 

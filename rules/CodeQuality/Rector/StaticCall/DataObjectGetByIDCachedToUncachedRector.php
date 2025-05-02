@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function count;
@@ -19,7 +19,7 @@ use function is_string;
  * @changelog https://github.com/silverstripe/silverstripe-framework/issues/5976
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector\DataObjectGetByIDCachedToUncachedRectorTest
  */
-final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector
+final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ReflectionProvider $reflectionProvider,
@@ -62,7 +62,7 @@ CODE_SAMPLE
         }
 
         $className = (string) $this->getName($node->class);
-        $dataListCall = $this->nodeFactory->createStaticCall($className, SilverstripeConstants::METHOD_GET, []);
+        $dataListCall = $this->nodeFactory->createStaticCall($className, 'get', []);
         $args = $node->args;
 
         // Get the second argument if more than one is present
@@ -70,12 +70,12 @@ CODE_SAMPLE
             $args = [$node->args[1]];
         }
 
-        return $this->nodeFactory->createMethodCall($dataListCall, SilverstripeConstants::METHOD_BY_ID, $args);
+        return $this->nodeFactory->createMethodCall($dataListCall, 'byID', $args);
     }
 
     private function shouldSkipStaticCall(StaticCall $staticCall): bool
     {
-        if (!$this->isName($staticCall->name, SilverstripeConstants::METHOD_GET_BY_ID)) {
+        if (!$this->isName($staticCall->name, 'get_by_id')) {
             return true;
         }
 
@@ -96,6 +96,6 @@ CODE_SAMPLE
             return true;
         }
 
-        return !$classReflection->isSubclassOf('SilverStripe\ORM\DataObject');
+        return !$classReflection->is('SilverStripe\ORM\DataObject');
     }
 }

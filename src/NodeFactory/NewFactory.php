@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\NodeFactory;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use PhpParser\BuilderFactory;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\New_;
@@ -34,7 +33,7 @@ final readonly class NewFactory
         if ($useCreate) {
             return $this->builderFactory->staticCall(
                 $class,
-                SilverstripeConstants::METHOD_CREATE,
+                'create',
                 $args
             );
         }

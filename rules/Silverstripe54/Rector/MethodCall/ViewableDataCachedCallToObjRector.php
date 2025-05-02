@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_filter;
@@ -20,7 +20,7 @@ use function array_filter;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector\ViewableDataCachedCallToObjRectorTest
  */
-final class ViewableDataCachedCallToObjRector extends AbstractRector
+final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer
@@ -59,7 +59,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if (!$this->isName($node->name, SilverstripeConstants::METHOD_CACHED_CALL)) {
+        if (!$this->isName($node->name, 'cachedCall')) {
             return null;
         }
 
@@ -69,7 +69,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createMethodCall(
             $node->var,
-            SilverstripeConstants::METHOD_OBJ,
+            'obj',
             array_filter([
                 $node->getArgs()[0] ?? '',
                 $node->getArgs()[1] ?? [],

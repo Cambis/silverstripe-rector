@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\AnnotationComparator\AnnotationComparator;
 
 use Cambis\SilverstripeRector\AnnotationComparator\Contract\AnnotationComparatorInterface;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -83,10 +82,10 @@ final readonly class MethodAnnotationComparator implements AnnotationComparatorI
             return false;
         }
 
-        if ($originalNode->methodName !== SilverstripeConstants::METHOD_GET_OWNER) {
+        if ($originalNode->methodName !== 'getOwner') {
             return false;
         }
 
-        return $newNode->methodName === SilverstripeConstants::METHOD_GET_OWNER;
+        return $newNode->methodName === 'getOwner';
     }
 }

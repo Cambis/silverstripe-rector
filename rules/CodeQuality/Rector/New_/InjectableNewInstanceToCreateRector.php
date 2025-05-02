@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\New_;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
@@ -12,13 +11,14 @@ use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
 use Rector\ValueObject\MethodName;
+use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\InjectableNewInstanceToCreateRectorTest
  */
-final class InjectableNewInstanceToCreateRector extends AbstractRector
+final class InjectableNewInstanceToCreateRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ClassAnalyzer $classAnalyzer,
@@ -65,7 +65,7 @@ CODE_SAMPLE
 
         return $this->nodeFactory->createStaticCall(
             $className,
-            SilverstripeConstants::METHOD_CREATE,
+            'create',
             $node->args
         );
     }

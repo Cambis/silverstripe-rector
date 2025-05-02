@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall;
 
-use Cambis\SilverstripeRector\ValueObject\SilverstripeConstants;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -25,11 +24,11 @@ use function array_keys;
 final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
-     * @var array<SilverstripeConstants::*, SilverstripeConstants::*>
+     * @var array<string, string>
      */
     private const METHOD_NAMES = [
-        SilverstripeConstants::METHOD_ADD_FIELDS_TO_TAB => SilverstripeConstants::METHOD_ADD_FIELD_TO_TAB,
-        SilverstripeConstants::METHOD_REMOVE_FIELDS_FROM_TAB => SilverstripeConstants::METHOD_REMOVE_FIELD_FROM_TAB,
+        'addFieldsToTab' => 'addFieldToTab',
+        'removeFieldsFromTab' => 'removeFieldFromTab',
     ];
 
     #[Override]
