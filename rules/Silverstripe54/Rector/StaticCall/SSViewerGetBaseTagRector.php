@@ -22,7 +22,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class SSViewerGetBaseTagRector extends AbstractRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `SSViewer::get_base_tag()` to `SSViewer::getBaseTag()`.', [
@@ -38,7 +37,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticCall::class];
@@ -47,17 +45,14 @@ CODE_SAMPLE
     /**
      * @param StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->class, new ObjectType('SilverStripe\View\SSViewer'))) {
             return null;
         }
-
         if (!$this->isName($node->name, 'get_base_tag')) {
             return null;
         }
-
         return $this->nodeFactory->createStaticCall(
             'SilverStripe\View\SSViewer',
             SilverstripeConstants::METHOD_GET_BASE_TAG,

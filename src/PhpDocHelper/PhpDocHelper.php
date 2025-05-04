@@ -26,11 +26,15 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use function str_starts_with;
 
-final readonly class PhpDocHelper
+final class PhpDocHelper
 {
-    public function __construct(
-        private StaticTypeMapper $staticTypeMapper
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    public function __construct(StaticTypeMapper $staticTypeMapper)
+    {
+        $this->staticTypeMapper = $staticTypeMapper;
     }
 
     /**
@@ -59,7 +63,7 @@ final readonly class PhpDocHelper
 
             $result[] = new PropertyTagValueNode(
                 $typeNode,
-                str_starts_with('$', $name) ? $name : '$' . $name,
+                strncmp('$', $name, strlen($name)) === 0 ? $name : '$' . $name,
                 ''
             );
         }
@@ -150,8 +154,9 @@ final readonly class PhpDocHelper
     /**
      * `\Rector\PHPStanStaticTypeMapper\TypeMapper\IntersectionTypeMapper::mapToPHPStanPhpDocTypeNode()` will turn `static` into `\static`.
      * Remove the leading slash from `\static`.
+     * @param \PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode|\PHPStan\PhpDocParser\Ast\Type\UnionTypeNode $typeNode
      */
-    private function fixCompoundTypeNode(IntersectionTypeNode|UnionTypeNode $typeNode): TypeNode
+    private function fixCompoundTypeNode($typeNode): TypeNode
     {
         $phpDocNodeTraverser = new PhpDocNodeTraverser();
         $phpDocNodeTraverser->traverseWithCallable($typeNode, '', static function (Node $astNode): ?IdentifierTypeNode {
