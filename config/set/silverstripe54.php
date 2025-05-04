@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector;
@@ -20,6 +21,12 @@ use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 // See: https://docs.silverstripe.org/en/5/changelogs/5.4.0/
 return static function (RectorConfig $rectorConfig): void {
+    // Add Silverstripe53 PHPStan patch
+    $rectorConfig->phpstanConfigs([
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH,
+    ]);
+
     $rectorConfig->import(__DIR__ . '/../config.php');
 
     $rectorConfig->ruleWithConfiguration(MethodCallToStaticCallRector::class, [

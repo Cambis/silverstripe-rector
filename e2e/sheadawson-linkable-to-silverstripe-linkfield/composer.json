@@ -9,7 +9,7 @@
     "silverstripe/linkfield": "^4.0"
   },
   "require-dev": {
-    "cambis/silverstripe-rector": "dev-main"
+    "cambis/silverstripe-rector": "@dev"
   },
   "repositories": [
     {

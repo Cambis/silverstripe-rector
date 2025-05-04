@@ -48,6 +48,9 @@ jobs:
           - directory: e2e/rename-data-extension-subclass
             php-version: 8.1
             framework-version: 5.3
+          - directory: e2e/rename-data-extension-subclass
+            php-version: 8.3
+            framework-version: 5.4
           - directory: e2e/gorriecoe-link-to-silverstripe-linkfield
             php-version: 8.1
             framework-version: 5.3

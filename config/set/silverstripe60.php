@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameExtensionHookMethodRector;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
 use Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector;
@@ -21,6 +22,12 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 // https://docs.silverstripe.org/en/6/changelogs/6.0.0/
 return static function (RectorConfig $rectorConfig): void {
+    // Add Silverstripe53 PHPStan patch
+    $rectorConfig->phpstanConfigs([
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
+        SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH,
+    ]);
+
     $rectorConfig->import(__DIR__ . '/../config.php');
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
