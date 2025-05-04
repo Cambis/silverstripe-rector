@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Assign;
@@ -31,13 +30,20 @@ use function array_filter;
  */
 final class FormFieldExtendValidationResultToExtendRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly VariableNaming $variableNaming
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private VariableNaming $variableNaming;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, VariableNaming $variableNaming)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->variableNaming = $variableNaming;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `FormField::extendValidationResult()` to `FormField::extend()`.', [
@@ -69,7 +75,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class, Return_::class];
@@ -79,8 +84,7 @@ CODE_SAMPLE
      * @param MethodCall|Return_ $node
      * @return Node|Node[]|null
      */
-    #[Override]
-    public function refactor(Node $node): Node|array|null
+    public function refactor(Node $node)
     {
         if ($node instanceof Return_) {
             if (!$node->getAttribute(AttributeKey::SCOPE) instanceof Scope) {
@@ -89,7 +93,6 @@ CODE_SAMPLE
 
             return $this->refactorReturn($node, $node->getAttribute(AttributeKey::SCOPE));
         }
-
         return $this->refactorMethodCall($node);
     }
 
@@ -133,22 +136,17 @@ CODE_SAMPLE
             ];
         }
 
-        return [
-            ...$extraStmts,
-            new Expression(
-                $this->nodeFactory->createMethodCall(
-                    $methodCall->var,
-                    'extend',
-                    array_filter([
-                        'updateValidationResult',
-                        $var,
-                        $methodCall->getArgs()[1] ?? null,
-                    ])
-                ),
+        return array_merge($extraStmts, [new Expression(
+            $this->nodeFactory->createMethodCall(
+                $methodCall->var,
+                'extend',
+                array_filter([
+                    'updateValidationResult',
+                    $var,
+                    $methodCall->getArgs()[1] ?? null,
+                ])
             ),
-            new Nop(),
-            new Return_($var),
-        ];
+        ), new Nop(), new Return_($var)]);
     }
 
     private function refactorMethodCall(MethodCall $methodCall): ?MethodCall
@@ -160,10 +158,7 @@ CODE_SAMPLE
         return $this->nodeFactory->createMethodCall(
             $methodCall->var,
             'extend',
-            [
-                'updateValidationResult',
-                ...$methodCall->getArgs(),
-            ]
+            array_merge(['updateValidationResult'], $methodCall->getArgs())
         );
     }
 
