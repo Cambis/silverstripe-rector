@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Extension;
+namespace App\Model\BasicModel\Extension;
 
 use SilverStripe\ORM\DataExtension;
 
