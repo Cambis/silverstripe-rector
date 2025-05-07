@@ -1,4 +1,4 @@
-# 32 Rules Overview
+# 33 Rules Overview
 
 <br>
 
@@ -8,7 +8,7 @@
 
 - [LinkField](#linkfield) (5)
 
-- [Renaming](#renaming) (1)
+- [Renaming](#renaming) (2)
 
 - [Silverstripe413](#silverstripe413) (9)
 
@@ -209,6 +209,29 @@ Migrate legacy `SilverStripe\LinkField\Model\Link` configuration to `SilverStrip
 <br>
 
 ## Renaming
+
+### RenameConfigurationPropertyRector
+
+Rename a configuration property.
+
+:wrench: **configure it!**
+
+- class: [`Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameConfigurationPropertyRector`](../rules/Renaming/Rector/Class_/RenameConfigurationPropertyRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+-    private static string $description = '';
++    private static string $class_description = '';
+ }
+
+-\SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'description');
+-Foo::config()->get('description');
++\SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'class_description');
++Foo::config()->get('class_description');
+```
+
+<br>
 
 ### RenameExtensionHookMethodRector
 
@@ -680,7 +703,7 @@ Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
 
 Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Controller`.
 
-- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceOfRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceofRector.php)
 
 ```diff
 -if (\SilverStripe\Control\Controller::has_curr()) {

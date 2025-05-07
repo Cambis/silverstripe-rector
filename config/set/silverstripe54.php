@@ -3,17 +3,17 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
+use Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameConfigurationPropertyRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector;
 use Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall\SSViewerGetBaseTagRector;
+use Cambis\SilverstripeRector\Tests\Renaming\Rector\Class_\RenameConfigurationPropertyRector\Fixture\RenameConfigurationProperty;
 use Rector\Arguments\Rector\ClassMethod\ReplaceArgumentDefaultValueRector;
 use Rector\Arguments\ValueObject\ReplaceArgumentDefaultValue;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
-use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
-use Rector\Renaming\ValueObject\RenameProperty;
 use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
 use Rector\Transform\Rector\MethodCall\MethodCallToStaticCallRector;
 use Rector\Transform\ValueObject\MethodCallToStaticCall;
@@ -85,8 +85,8 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(SSViewerGetBaseTagRector::class);
 
     // https://github.com/silverstripe/silverstripe-framework/commit/5b16f7de82037e9363f5ff6402d40652dae42614
-    $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
-        new RenameProperty('SilverStripe\ORM\DataObject', 'description', 'class_description'),
+    $rectorConfig->ruleWithConfiguration(RenameConfigurationPropertyRector::class, [
+        new RenameConfigurationProperty('SilverStripe\ORM\DataObject', 'description', 'class_description'),
     ]);
 
     // https://github.com/silverstripe/silverstripe-framework/commit/15683cfd9839a2af012999e28a577592c6cdcab9
