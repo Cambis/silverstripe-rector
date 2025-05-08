@@ -63,7 +63,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $staticCall = $this->nodeFactory->createStaticCall($this->getName($node->class) ?? 'SilverStri[e\Control\Controller', 'curr');
+        $staticCall = $this->nodeFactory->createStaticCall($this->getName($node->class) ?? 'SilverStripe\Control\Controller', 'curr');
 
         return $this->createExprInstanceof($staticCall, new ObjectType('SilverStripe\Control\Controller'));
     }
