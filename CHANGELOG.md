@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 1.4.2
+
+### Patch Changes
+
+- a0550dc: Address typo in default classname ControllerHasCurrToInstanceofRector
+
 ## 1.4.1
 
 ### Patch Changes
