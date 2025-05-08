@@ -680,7 +680,7 @@ Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.
 
 Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Controller`.
 
-- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceOfRector.php)
+- class: [`Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector`](../rules/Silverstripe60/Rector/StaticCall/ControllerHasCurrToInstanceofRector.php)
 
 ```diff
 -if (\SilverStripe\Control\Controller::has_curr()) {
