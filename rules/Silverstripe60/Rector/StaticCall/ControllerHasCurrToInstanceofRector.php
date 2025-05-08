@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Instanceof_;
@@ -23,7 +22,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class ControllerHasCurrToInstanceofRector extends AbstractRector implements DocumentedRuleInterface
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Controller`.', [
@@ -43,7 +41,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticCall::class];
@@ -52,19 +49,15 @@ CODE_SAMPLE
     /**
      * @param StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->class, new ObjectType('SilverStripe\Control\Controller'))) {
             return null;
         }
-
         if (!$this->isName($node->name, 'has_curr')) {
             return null;
         }
-
         $staticCall = $this->nodeFactory->createStaticCall($this->getName($node->class) ?? 'SilverStripe\Control\Controller', 'curr');
-
         return $this->createExprInstanceof($staticCall, new ObjectType('SilverStripe\Control\Controller'));
     }
 

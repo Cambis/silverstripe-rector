@@ -9,14 +9,18 @@ use PhpParser\Node;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use function is_a;
 
-final readonly class AnnotationComparator
+final class AnnotationComparator
 {
-    public function __construct(
+    /**
+     * @readonly
+     */
+    private array $annotationComparators;
+    public function __construct(array $annotationComparators)
+    {
         /**
          * @var list<AnnotationComparatorInterface<PhpDocTagValueNode>>
          */
-        private array $annotationComparators
-    ) {
+        $this->annotationComparators = $annotationComparators;
     }
 
     public function areTagValueNodeNamesEqual(PhpDocTagValueNode $originalNode, PhpDocTagValueNode $newNode, Node $node): bool
