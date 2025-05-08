@@ -12,6 +12,7 @@ use PHPStan\Type\IntegerType;
 use PHPStan\Type\StringType;
 use Rector\NodeManipulator\ClassInsertManipulator;
 use Rector\PhpParser\Node\NodeFactory;
+use function str_contains;
 
 final readonly class PropertyFactory
 {
@@ -34,6 +35,10 @@ final readonly class PropertyFactory
         }
 
         if (!$property->isStatic()) {
+            return null;
+        }
+
+        if (str_contains($property->getDocComment()?->getText() ?? '', '@internal')) {
             return null;
         }
 
