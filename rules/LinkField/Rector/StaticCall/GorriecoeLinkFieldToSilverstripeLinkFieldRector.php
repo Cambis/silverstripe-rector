@@ -36,6 +36,22 @@ use function is_string;
 final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRector implements RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private NewFactory $newFactory;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    /**
      * @var array<string, string>
      */
     private const LINK_TYPES = [
@@ -56,15 +72,14 @@ final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRect
      */
     private const MULTI_LINK_FIELD_CLASS = 'SilverStripe\LinkField\Form\MultiLinkField';
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly NewFactory $newFactory,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly ValueResolver $valueResolver
-    ) {
+    public function __construct(ArgsAnalyzer $argsAnalyzer, NewFactory $newFactory, ConfigurationResolver $configurationResolver, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->newFactory = $newFactory;
+        $this->configurationResolver = $configurationResolver;
+        $this->valueResolver = $valueResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `gorriecoe\LinkField\LinkField` to `SilverStripe\LinkField\Form\LinkField`.', [
@@ -81,7 +96,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [New_::class, StaticCall::class];
@@ -90,53 +104,58 @@ CODE_SAMPLE
     /**
      * @param New_|StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($node->isFirstClassCallable()) {
             return null;
         }
-
         if (!$this->isName($node->class, 'gorriecoe\LinkField\LinkField')) {
             return null;
         }
-
         if ($node instanceof StaticCall && !$this->isName($node->name, SilverstripeConstants::METHOD_CREATE)) {
             return null;
         }
-
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
         }
-
         $formFieldClass = $this->resolveFormFieldClass($node);
         $args = $node->getArgs();
-
         $node = $this->newFactory->createInjectable(
             $formFieldClass,
             array_filter([$args[0] ?? null, $args[1]]),
             $node instanceof StaticCall
         );
-
         $linkConfigArg = $args[3] ?? null;
-
         if (!$linkConfigArg instanceof Arg) {
             return $node;
         }
-
         $linkConfig = $this->getLinkConfig($linkConfigArg);
-
         if ($linkConfig === []) {
             return $node;
         }
-
         $legacyAllowedTypes = $linkConfig['types'] ?? [];
-
         // Migrate types to LinkField::setAllowedTypes()
         if (is_array($legacyAllowedTypes) && $legacyAllowedTypes !== []) {
 
             // Turn into list if it is not, new config is a list
-            if (!array_is_list($legacyAllowedTypes)) {
+            $arrayIsListFunction = function (array $array) : bool {
+                if (function_exists('array_is_list')) {
+                    return array_is_list($array);
+                }
+                if ($array === []) {
+                    return true;
+                }
+                $current_key = 0;
+                foreach ($array as $key => $noop) {
+                    if ($key !== $current_key) {
+                        return false;
+                    }
+                    ++$current_key;
+                }
+                return true;
+            };
+            // Turn into list if it is not, new config is a list
+            if (!$arrayIsListFunction($legacyAllowedTypes)) {
                 $legacyAllowedTypes = array_keys($legacyAllowedTypes);
             }
 
@@ -156,7 +175,6 @@ CODE_SAMPLE
                 [$this->nodeFactory->createArray($allowedTypes)]
             );
         }
-
         // Migrate title_display to LinkField::setExcludeLinkTextField()
         if (isset($linkConfig['title_display'])) {
             $titleDisplay = $linkConfig['title_display'];
@@ -169,11 +187,9 @@ CODE_SAMPLE
                 );
             }
         }
-
         return $node;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
@@ -197,8 +213,9 @@ CODE_SAMPLE
 
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
      */
-    private function resolveFormFieldClass(New_|StaticCall $node): string
+    private function resolveFormFieldClass($node): string
     {
         $name = $node->getArgs()[0] ?? null;
 

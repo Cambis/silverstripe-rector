@@ -31,13 +31,20 @@ use function array_filter;
  */
 final class FormFieldExtendValidationResultToExtendRector extends AbstractRector
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly VariableNaming $variableNaming
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private VariableNaming $variableNaming;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, VariableNaming $variableNaming)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->variableNaming = $variableNaming;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `FormField::extendValidationResult()` to `FormField::extend()`.', [
@@ -69,7 +76,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class, Return_::class];
@@ -79,8 +85,7 @@ CODE_SAMPLE
      * @param MethodCall|Return_ $node
      * @return Node|Node[]|null
      */
-    #[Override]
-    public function refactor(Node $node): Node|array|null
+    public function refactor(Node $node)
     {
         if ($node instanceof Return_) {
             if (!$node->getAttribute(AttributeKey::SCOPE) instanceof Scope) {
@@ -89,7 +94,6 @@ CODE_SAMPLE
 
             return $this->refactorReturn($node, $node->getAttribute(AttributeKey::SCOPE));
         }
-
         return $this->refactorMethodCall($node);
     }
 
@@ -133,22 +137,17 @@ CODE_SAMPLE
             ];
         }
 
-        return [
-            ...$extraStmts,
-            new Expression(
-                $this->nodeFactory->createMethodCall(
-                    $methodCall->var,
-                    SilverstripeConstants::METHOD_EXTEND,
-                    array_filter([
-                        SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT,
-                        $var,
-                        $methodCall->getArgs()[1] ?? null,
-                    ])
-                ),
+        return array_merge(is_array($extraStmts) ? $extraStmts : iterator_to_array($extraStmts), [new Expression(
+            $this->nodeFactory->createMethodCall(
+                $methodCall->var,
+                SilverstripeConstants::METHOD_EXTEND,
+                array_filter([
+                    SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT,
+                    $var,
+                    $methodCall->getArgs()[1] ?? null,
+                ])
             ),
-            new Nop(),
-            new Return_($var),
-        ];
+        ), new Nop(), new Return_($var)]);
     }
 
     private function refactorMethodCall(MethodCall $methodCall): ?MethodCall
@@ -160,10 +159,7 @@ CODE_SAMPLE
         return $this->nodeFactory->createMethodCall(
             $methodCall->var,
             SilverstripeConstants::METHOD_EXTEND,
-            [
-                SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT,
-                ...$methodCall->getArgs(),
-            ]
+            array_merge([SilverstripeConstants::METHOD_UPDATE_VALIDATION_RESULT], $methodCall->getArgs())
         );
     }
 
