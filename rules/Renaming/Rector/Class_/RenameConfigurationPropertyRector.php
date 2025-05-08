@@ -94,8 +94,8 @@ CODE_SAMPLE,
 
         $this->hasChanged = false;
 
-        foreach ($this->renameProperties as $renameConfigurationProperty) {
-            $this->renameProperty($node, $renameConfigurationProperty);
+        foreach ($this->renameProperties as $renameProperty) {
+            $this->renameProperty($node, $renameProperty);
         }
 
         if (!$this->hasChanged) {
@@ -162,17 +162,21 @@ CODE_SAMPLE,
         $classNameArg = $methodCall->getArgs()[0] ?? null;
         $propertyNameArg = $methodCall->getArgs()[1] ?? null;
 
+        // Check for required args
         if (!$classNameArg instanceof Arg || !$propertyNameArg instanceof Arg) {
             return null;
         }
 
+        // Resolve the value of the args
         $className = $this->valueResolver->getValue($classNameArg, true);
         $propertyName = $this->valueResolver->getValue($propertyNameArg);
 
+        // Safety check
         if (!is_string($className)) {
             return null;
         }
 
+        // Update the property name if applicable
         foreach ($this->renameProperties as $renameProperty) {
             if ((new ObjectType($renameProperty->extensibleClassName))->isSuperTypeOf(new ObjectType($className))->no()) {
                 continue;
@@ -203,11 +207,11 @@ CODE_SAMPLE,
 
         $propertyNameArg = $methodCall->getArgs()[0] ?? null;
 
+        // Check for required arg
         if (!$propertyNameArg instanceof Arg) {
             return null;
         }
 
-        // Attempt to resolve the type of the var
         if (!$methodCall->var instanceof StaticCall && !$methodCall->var instanceof MethodCall) {
             return null;
         }
@@ -215,6 +219,7 @@ CODE_SAMPLE,
         $type = $methodCall->var instanceof StaticCall ? $this->getType($methodCall->var->class) : $this->getType($methodCall->var->var);
         $propertyName = $this->valueResolver->getValue($propertyNameArg);
 
+        // Update the property name if applicable
         foreach ($this->renameProperties as $renameProperty) {
             if ((new ObjectType($renameProperty->extensibleClassName))->isSuperTypeOf($type)->no()) {
                 continue;
@@ -237,25 +242,26 @@ CODE_SAMPLE,
         return null;
     }
 
-    private function renameProperty(Class_ $class, RenameConfigurationProperty $renameConfigurationProperty): void
+    private function renameProperty(Class_ $class, RenameConfigurationProperty $renameProperty): void
     {
-        if (!$this->isObjectType($class, new ObjectType($renameConfigurationProperty->extensibleClassName))) {
+        if (!$this->isObjectType($class, new ObjectType($renameProperty->extensibleClassName))) {
             return;
         }
 
-        $property = $this->propertyFactory->findConfigurationProperty($class, $renameConfigurationProperty->oldPropertyName);
+        $property = $this->propertyFactory->findConfigurationProperty($class, $renameProperty->oldPropertyName);
 
         if (!$property instanceof Property) {
             return;
         }
 
-        $newProperty = $this->propertyFactory->findConfigurationProperty($class, $renameConfigurationProperty->newPropertyName);
+        $newProperty = $this->propertyFactory->findConfigurationProperty($class, $renameProperty->newPropertyName);
 
         if ($newProperty instanceof Property) {
             return;
         }
 
-        $property->props[0]->name = new VarLikeIdentifier($renameConfigurationProperty->newPropertyName);
+        $property->props[0]->name = new VarLikeIdentifier($renameProperty->newPropertyName);
+
         $this->hasChanged = true;
     }
 }
