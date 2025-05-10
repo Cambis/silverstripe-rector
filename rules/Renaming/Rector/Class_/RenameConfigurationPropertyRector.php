@@ -56,6 +56,7 @@ class Foo extends \SilverStripe\ORM\DataObject
 }
 
 \SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'description');
+
 Foo::config()->get('description');
 CODE_SAMPLE
             ,
@@ -66,6 +67,7 @@ class Foo extends \SilverStripe\ORM\DataObject
 }
 
 \SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'class_description');
+
 Foo::config()->get('class_description');
 CODE_SAMPLE,
             [new RenameConfigurationProperty('SilverStripe\ORM\DataObject', 'description', 'class_description')]

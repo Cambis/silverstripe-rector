@@ -226,8 +226,9 @@ Rename a configuration property.
  }
 
 -\SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'description');
--Foo::config()->get('description');
 +\SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'class_description');
+
+-Foo::config()->get('description');
 +Foo::config()->get('class_description');
 ```
 
