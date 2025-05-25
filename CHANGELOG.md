@@ -1,5 +1,21 @@
 # silverstripe-rector
 
+## 2.0.0
+
+### Major Changes
+
+- 1b66e2e: Rector 2.0 upgrade
+
+### Minor Changes
+
+- c7d7071: Add RenameConfigurationPropertyRector
+- b8ec5df: Fix for infinite loop with RenameClassRector
+
+### Patch Changes
+
+- 5a4c6ca: Update Silverstripe 6 set to include renamed SiteTree properties
+- 366e851: Address typo in default classname ControllerHasCurrToInstanceofRector
+
 ## 1.4.0
 
 ### Minor Changes
