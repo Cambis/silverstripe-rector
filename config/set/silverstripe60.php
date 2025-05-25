@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
+use Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameConfigurationPropertyRector;
 use Cambis\SilverstripeRector\Renaming\Rector\Class_\RenameExtensionHookMethodRector;
+use Cambis\SilverstripeRector\Renaming\ValueObject\RenameConfigurationProperty;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
 use Cambis\SilverstripeRector\Silverstripe60\Rector\StaticCall\ControllerHasCurrToInstanceofRector;
 use PHPStan\Type\ObjectType;
@@ -135,5 +137,11 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallRename('SilverStripe\ORM\DataObject', 'CMSEditLink', 'getCMSEditLink'),
         // https://github.com/silverstripe/silverstripe-elemental/commit/fde6be701703e1cb7e9f3efaed69b2ea34dd5a9b
         new MethodCallRename('DNADesign\Elemental\Models\BaseElement', 'getGraphQLTypeName', 'getTypeName'),
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RenameConfigurationPropertyRector::class, [
+        // https://github.com/silverstripe/silverstripe-cms/pull/3036
+        new RenameConfigurationProperty('SilverStripe\CMS\Model\SiteTree', 'icon', 'cms_icon'),
+        new RenameConfigurationProperty('SilverStripe\CMS\Model\SiteTree', 'icon_class', 'cms_icon_class'),
     ]);
 };
