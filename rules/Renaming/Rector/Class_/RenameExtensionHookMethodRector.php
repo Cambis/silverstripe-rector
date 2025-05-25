@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use InvalidArgumentException;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
@@ -30,16 +29,19 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RenameExtensionHookMethodRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
      * @var list<RenameExtensionHookMethod>
      */
     private array $hookMethodRenames = [];
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser)
+    {
+        $this->classAnalyser = $classAnalyser;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Rename an extension hook method definition if the extension is applied to a given class. This rector only applies to instances of `SilverStripe\Core\Extension`, for all other use cases use `RenameMethodRector` instead.', [new ConfiguredCodeSample(
@@ -70,7 +72,6 @@ CODE_SAMPLE,
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -79,21 +80,16 @@ CODE_SAMPLE,
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         $scope = ScopeFetcher::fetch($node);
-
         if (!$scope->isInClass()) {
             return null;
         }
-
         if (!$this->classAnalyser->isExtension($node)) {
             return null;
         }
-
         $hasChanged = false;
-
         foreach ($node->getMethods() as $classMethod) {
             $methodName = $this->getName($classMethod->name);
 
@@ -112,15 +108,12 @@ CODE_SAMPLE,
                 continue 2;
             }
         }
-
         if (!$hasChanged) {
             return null;
         }
-
         return $node;
     }
 
-    #[Override]
     public function configure(array $configuration): void
     {
         foreach ($configuration as $value) {
@@ -128,12 +121,10 @@ CODE_SAMPLE,
                 throw new InvalidArgumentException(self::class . ' only accepts ' . RenameExtensionHookMethod::class);
             }
         }
-
         /** @var list<RenameExtensionHookMethod> $configuration */
         $this->hookMethodRenames = $configuration;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;

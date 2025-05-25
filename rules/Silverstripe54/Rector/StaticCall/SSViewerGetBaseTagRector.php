@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\StaticCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BinaryOp\Identical;
 use PhpParser\Node\Expr\StaticCall;
@@ -22,7 +21,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class SSViewerGetBaseTagRector extends AbstractRector implements DocumentedRuleInterface
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `SSViewer::get_base_tag()` to `SSViewer::getBaseTag()`.', [
@@ -38,7 +36,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticCall::class];
@@ -47,17 +44,14 @@ CODE_SAMPLE
     /**
      * @param StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->class, new ObjectType('SilverStripe\View\SSViewer'))) {
             return null;
         }
-
         if (!$this->isName($node->name, 'get_base_tag')) {
             return null;
         }
-
         return $this->nodeFactory->createStaticCall(
             'SilverStripe\View\SSViewer',
             'getBaseTag',
