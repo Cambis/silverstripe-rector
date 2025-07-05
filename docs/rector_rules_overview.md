@@ -1,4 +1,4 @@
-# 33 Rules Overview
+# 35 Rules Overview
 
 <br>
 
@@ -21,6 +21,8 @@
 - [Silverstripe54](#silverstripe54) (4)
 
 - [Silverstripe60](#silverstripe60) (1)
+
+- [Silverstripe61](#silverstripe61) (2)
 
 <br>
 
@@ -711,6 +713,40 @@ Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Control
 +if (\SilverStripe\Control\Controller::curr() instanceof \SilverStripe\Control\Controller) {
     // ...
  }
+```
+
+<br>
+
+## Silverstripe61
+
+### DataObjectGetByIdCachedRector
+
+Migrate `DataObject::get_by_id()` call to `DataObject::get()->setUseCache()->byID()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetByIdCachedRector.php)
+
+```diff
+-Foo::get_by_id(1);
++Foo::get()->setUseCache(true)->byId(1);
+
+-\SilverStripe\ORM\DataObject::get_by_id(Foo::class, 1);
++Foo::get()->setUseCache(true)->byId(1);
+```
+
+<br>
+
+### DataObjectGetOneCachedRector
+
+Migrate `DataObject::get_one()` call to `DataObject::get()->setUseCache()->first()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetOneCachedRector.php)
+
+```diff
+-Foo::get_one();
++Foo::get()->setUseCache(true)->first();
+
+-\SilverStripe\ORM\DataObject::get_one(Foo::class);
++Foo::get()->setUseCache(true)->first();
 ```
 
 <br>
