@@ -1,11 +1,11 @@
 --- /dev/null
 +++ ../src/Testing/PHPUnit/AbstractRectorTestCase.php
-@@ -135,6 +135,8 @@
+@@ -123,6 +123,8 @@
          }
          // write temp file
          FileSystem::write($inputFilePath, $inputFileContents, null);
 +        $classManifest = self::getContainer()->has('Cambis\Silverstan\ClassManifest\ClassManifest') ? $this->make('Cambis\Silverstan\ClassManifest\ClassManifest') : null;
 +        \Cambis\SilverstripeRector\Testing\Fixture\FixtureManifestUpdater::addInputFileToClassManifest($inputFilePath, $classManifest);
-         $this->doTestFileMatchesExpectedContent($inputFilePath, $inputFileContents, $expectedFileContents, $fixtureFilePath);
+         $this->doTestFileMatchesExpectedContent($inputFilePath, $inputFileContents, $expectedFileContents, $fixtureFilePath, $includeFixtureDirectoryAsSource);
      }
-     private function forgetRectorsRules() : void
+     protected function doTestFileExpectingWarningAboutRuleApplied(string $fixtureFilePath, string $expectedRuleApplied) : void
