@@ -1,10 +1,10 @@
-# 35 Rules Overview
+# 34 Rules Overview
 
 <br>
 
 ## Categories
 
-- [CodeQuality](#codequality) (3)
+- [CodeQuality](#codequality) (2)
 
 - [LinkField](#linkfield) (5)
 
@@ -27,19 +27,6 @@
 <br>
 
 ## CodeQuality
-
-### DataObjectGetByIDCachedToUncachedRector
-
-Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
-
-- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
-
-```diff
--$foo = \SilverStripe\Assets\File::get_by_id(1);
-+$foo = \SilverStripe\Assets\File::get()->byID(1);
-```
-
-<br>
 
 ### InjectableNewInstanceToCreateRector
 

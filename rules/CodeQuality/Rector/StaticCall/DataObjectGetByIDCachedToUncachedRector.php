@@ -16,7 +16,10 @@ use function count;
 use function is_string;
 
 /**
+ * @deprecated since 2.1.0
+ *
  * @changelog https://github.com/silverstripe/silverstripe-framework/issues/5976
+ *
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector\DataObjectGetByIDCachedToUncachedRectorTest
  */
 final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector implements DocumentedRuleInterface
