@@ -61,7 +61,7 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
             return $types;
         }
 
-        /** @var array<array<mixed>|bool|int|string> $dependencies */
+        /** @var array<non-empty-string, array<mixed>|bool|int|string> $dependencies */
         foreach ($dependencies as $fieldName => $fieldType) {
             if (is_string($fieldType)) {
                 $type = $this->resolveDependencyObjectType($fieldType);
