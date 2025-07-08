@@ -708,7 +708,7 @@ Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Control
 
 ### DataObjectGetByIdCachedRector
 
-Migrate `DataObject::get_by_id()` call to `DataObject::get()->setUseCache()->byID()`.
+Migrate `DataObject::get_by_id()` to `DataObject::get()->setUseCache()->byID()`.
 
 - class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetByIdCachedRector.php)
 
@@ -724,7 +724,7 @@ Migrate `DataObject::get_by_id()` call to `DataObject::get()->setUseCache()->byI
 
 ### DataObjectGetOneCachedRector
 
-Migrate `DataObject::get_one()` call to `DataObject::get()->setUseCache()->first()`.
+Migrate `DataObject::get_one()` to `DataObject::get()->setUseCache()->first()`.
 
 - class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetOneCachedRector.php)
 

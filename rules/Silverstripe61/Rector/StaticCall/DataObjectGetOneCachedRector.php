@@ -33,7 +33,7 @@ final class DataObjectGetOneCachedRector extends AbstractRector implements Docum
 
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Migrate `DataObject::get_one()` call to `DataObject::get()->setUseCache()->first()`.', [
+        return new RuleDefinition('Migrate `DataObject::get_one()` to `DataObject::get()->setUseCache()->first()`.', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
 Foo::get_one();

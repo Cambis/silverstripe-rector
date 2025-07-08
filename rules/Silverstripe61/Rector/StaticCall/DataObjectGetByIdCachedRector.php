@@ -33,7 +33,7 @@ final class DataObjectGetByIdCachedRector extends AbstractRector implements Docu
 
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Migrate `DataObject::get_by_id()` call to `DataObject::get()->setUseCache()->byID()`.', [
+        return new RuleDefinition('Migrate `DataObject::get_by_id()` to `DataObject::get()->setUseCache()->byID()`.', [
             new CodeSample(
                 <<<'CODE_SAMPLE'
 Foo::get_by_id(1);
