@@ -1,4 +1,4 @@
-# 34 Rules Overview
+# 35 Rules Overview
 
 <br>
 
@@ -22,7 +22,7 @@
 
 - [Silverstripe60](#silverstripe60) (1)
 
-- [Silverstripe61](#silverstripe61) (2)
+- [Silverstripe61](#silverstripe61) (3)
 
 <br>
 
@@ -705,6 +705,19 @@ Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Control
 <br>
 
 ## Silverstripe61
+
+### DataObjectDeleteByIdCachedRector
+
+Migrate `DataObject::delete_by_id()` to `DataObject::get()->setUseCache()->byID()->delete()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectDeleteByIdCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectDeleteByIdCachedRector.php)
+
+```diff
+-\SilverStripe\ORM\DataObject::delete_by_id(Foo::class, 1);
++Foo::get()->setUseCache(true)->byID(1)?->delete();
+```
+
+<br>
 
 ### DataObjectGetByIdCachedRector
 

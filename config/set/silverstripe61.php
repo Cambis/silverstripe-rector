@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
+use Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectDeleteByIdCachedRector;
 use Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector;
 use Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector;
 use Rector\Config\RectorConfig;
@@ -20,6 +21,7 @@ return static function (RectorConfig $rectorConfig): void {
     // https://github.com/silverstripe/silverstripe-framework/issues/11767
     $rectorConfig->rules([
         DataObjectGetByIdCachedRector::class,
+        DataObjectDeleteByIdCachedRector::class,
         DataObjectGetOneCachedRector::class,
     ]);
 };
