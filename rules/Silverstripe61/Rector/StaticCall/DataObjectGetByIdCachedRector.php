@@ -42,9 +42,9 @@ Foo::get_by_id(1);
 CODE_SAMPLE
                 ,
                 <<<'CODE_SAMPLE'
-Foo::get()->setUseCache(true)->byId(1);
+Foo::get()->setUseCache(true)->byID(1);
 
-Foo::get()->setUseCache(true)->byId(1);
+Foo::get()->setUseCache(true)->byID(1);
 CODE_SAMPLE
             ),
         ]);

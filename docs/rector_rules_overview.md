@@ -727,10 +727,10 @@ Migrate `DataObject::get_by_id()` to `DataObject::get()->setUseCache()->byID()`.
 
 ```diff
 -Foo::get_by_id(1);
-+Foo::get()->setUseCache(true)->byId(1);
++Foo::get()->setUseCache(true)->byID(1);
 
 -\SilverStripe\ORM\DataObject::get_by_id(Foo::class, 1);
-+Foo::get()->setUseCache(true)->byId(1);
++Foo::get()->setUseCache(true)->byID(1);
 ```
 
 <br>
