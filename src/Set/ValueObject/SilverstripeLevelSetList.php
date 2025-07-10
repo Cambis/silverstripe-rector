@@ -19,4 +19,6 @@ final class SilverstripeLevelSetList
     public const UP_TO_SILVERSTRIPE_54 = __DIR__ . '/../../../config/set/level/up-to-silverstripe54.php';
 
     public const UP_TO_SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/level/up-to-silverstripe60.php';
+
+    public const UP_TO_SILVERSTRIPE_61 = __DIR__ . '/../../../config/set/level/up-to-silverstripe61.php';
 }

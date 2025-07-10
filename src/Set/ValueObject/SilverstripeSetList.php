@@ -22,6 +22,8 @@ final class SilverstripeSetList
 
     public const SILVERSTRIPE_60 = __DIR__ . '/../../../config/set/silverstripe60.php';
 
+    public const SILVERSTRIPE_61 = __DIR__ . '/../../../config/set/silverstripe61.php';
+
     /**
      * Provides all the custom services that are required in order to run all the rules.
      */

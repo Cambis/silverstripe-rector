@@ -1,10 +1,10 @@
-# 33 Rules Overview
+# 35 Rules Overview
 
 <br>
 
 ## Categories
 
-- [CodeQuality](#codequality) (3)
+- [CodeQuality](#codequality) (2)
 
 - [LinkField](#linkfield) (5)
 
@@ -22,22 +22,11 @@
 
 - [Silverstripe60](#silverstripe60) (1)
 
+- [Silverstripe61](#silverstripe61) (3)
+
 <br>
 
 ## CodeQuality
-
-### DataObjectGetByIDCachedToUncachedRector
-
-Change `DataObject::get_by_id()` to use `DataObject::get()->byID()` instead.
-
-- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall\DataObjectGetByIDCachedToUncachedRector`](../rules/CodeQuality/Rector/StaticCall/DataObjectGetByIDCachedToUncachedRector.php)
-
-```diff
--$foo = \SilverStripe\Assets\File::get_by_id(1);
-+$foo = \SilverStripe\Assets\File::get()->byID(1);
-```
-
-<br>
 
 ### InjectableNewInstanceToCreateRector
 
@@ -711,6 +700,53 @@ Migrate `Controller::has_curr()` check to `Controller::curr() instanceof Control
 +if (\SilverStripe\Control\Controller::curr() instanceof \SilverStripe\Control\Controller) {
     // ...
  }
+```
+
+<br>
+
+## Silverstripe61
+
+### DataObjectDeleteByIdCachedRector
+
+Migrate `DataObject::delete_by_id()` to `DataObject::get()->setUseCache()->byID()->delete()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectDeleteByIdCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectDeleteByIdCachedRector.php)
+
+```diff
+-\SilverStripe\ORM\DataObject::delete_by_id(Foo::class, 1);
++Foo::get()->setUseCache(true)->byID(1)?->delete();
+```
+
+<br>
+
+### DataObjectGetByIdCachedRector
+
+Migrate `DataObject::get_by_id()` to `DataObject::get()->setUseCache()->byID()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetByIdCachedRector.php)
+
+```diff
+-Foo::get_by_id(1);
++Foo::get()->setUseCache(true)->byID(1);
+
+-\SilverStripe\ORM\DataObject::get_by_id(Foo::class, 1);
++Foo::get()->setUseCache(true)->byID(1);
+```
+
+<br>
+
+### DataObjectGetOneCachedRector
+
+Migrate `DataObject::get_one()` to `DataObject::get()->setUseCache()->first()`.
+
+- class: [`Cambis\SilverstripeRector\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector`](../rules/Silverstripe61/Rector/StaticCall/DataObjectGetOneCachedRector.php)
+
+```diff
+-Foo::get_one();
++Foo::get()->setUseCache(true)->first();
+
+-\SilverStripe\ORM\DataObject::get_one(Foo::class);
++Foo::get()->setUseCache(true)->first();
 ```
 
 <br>
