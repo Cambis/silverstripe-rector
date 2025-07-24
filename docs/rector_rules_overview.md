@@ -228,6 +228,9 @@ Rename a configuration property.
 
 -Foo::config()->get('description');
 +Foo::config()->get('class_description');
+
+-Foo::config()->description;
++Foo::config()->class_description;
 ```
 
 <br>

@@ -11,6 +11,7 @@ use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Stmt\Class_;
@@ -58,6 +59,8 @@ class Foo extends \SilverStripe\ORM\DataObject
 \SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'description');
 
 Foo::config()->get('description');
+
+Foo::config()->description;
 CODE_SAMPLE
             ,
             <<<'CODE_SAMPLE'
@@ -69,6 +72,8 @@ class Foo extends \SilverStripe\ORM\DataObject
 \SilverStripe\Config\Collections\MemoryConfigCollection::get('Foo', 'class_description');
 
 Foo::config()->get('class_description');
+
+Foo::config()->class_description;
 CODE_SAMPLE,
             [new RenameConfigurationProperty('SilverStripe\ORM\DataObject', 'description', 'class_description')]
         ),
@@ -78,11 +83,11 @@ CODE_SAMPLE,
     #[Override]
     public function getNodeTypes(): array
     {
-        return [Class_::class,  MethodCall::class, StaticPropertyFetch::class];
+        return [Class_::class,  MethodCall::class, StaticPropertyFetch::class, PropertyFetch::class];
     }
 
     /**
-     * @param Class_|MethodCall|StaticPropertyFetch $node
+     * @param Class_|MethodCall|StaticPropertyFetch|PropertyFetch $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -92,6 +97,10 @@ CODE_SAMPLE,
 
         if ($node instanceof StaticPropertyFetch) {
             return $this->refactorStaticPropertyFetch($node);
+        }
+
+        if ($node instanceof PropertyFetch) {
+            return $this->refactorPropertyFetch($node);
         }
 
         $this->hasChanged = false;
@@ -239,6 +248,39 @@ CODE_SAMPLE,
                 $this->getName($methodCall->name) ?? 'get',
                 $args
             );
+        }
+
+        return null;
+    }
+
+    private function refactorPropertyFetch(PropertyFetch $propertyFetch): ?PropertyFetch
+    {
+        if (!$this->isObjectType($propertyFetch->var, new ObjectType('SilverStripe\Core\Config\Config_ForClass'))) {
+            return null;
+        }
+
+        if (!$propertyFetch->var instanceof StaticCall && !$propertyFetch->var instanceof MethodCall) {
+            return null;
+        }
+
+        $type = $propertyFetch->var instanceof StaticCall ? $this->getType($propertyFetch->var->class) : $this->getType($propertyFetch->var->var);
+        $propertyName = $this->getName($propertyFetch->name) ?? '';
+
+        if ($propertyName === '') {
+            return null;
+        }
+
+        // Update the property name if applicable
+        foreach ($this->renameProperties as $renameProperty) {
+            if ((new ObjectType($renameProperty->extensibleClassName))->isSuperTypeOf($type)->no()) {
+                continue;
+            }
+
+            if ($propertyName !== $renameProperty->oldPropertyName) {
+                continue;
+            }
+
+            return $this->nodeFactory->createPropertyFetch($propertyFetch->var, $renameProperty->newPropertyName);
         }
 
         return null;
