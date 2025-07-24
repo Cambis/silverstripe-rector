@@ -20,6 +20,8 @@ use function is_string;
 use function str_contains;
 
 /**
+ * @deprecated 2.1.0 use Cambis\SilverstripeRector\CodeQuality\Rector\Assign\ConfigurationPropertyFetchToMethodCallRector instead.
+ *
  * @see \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector\StaticPropertyFetchToConfigGetRectorTest
  */
 final class StaticPropertyFetchToConfigGetRector extends AbstractRector implements DocumentedRuleInterface

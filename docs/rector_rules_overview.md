@@ -28,6 +28,36 @@
 
 ## CodeQuality
 
+### ConfigurationPropertyFetchToMethodCallRector
+
+Transforms a property fetch on a configuration property into an appropriate getter/setter call.
+
+- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\Assign\ConfigurationPropertyFetchToMethodCallRector`](../rules/CodeQuality/Rector/Assign/ConfigurationPropertyFetchToMethodCallRector.php)
+
+```diff
+ class Foo extends \SilverStripe\ORM\DataObject
+ {
+     private static string $bar = '';
+
+     public function doSomething(): void
+     {
+-        self::$bar = 'baz';
++        self::config()->set('bar', 'baz');
+
+-        echo self::$bar;
++        echo self::config()->get('bar');
+     }
+ }
+
+-Foo::config()->bar = 'baz';
++Foo::config()->set('bar', 'baz');
+
+-echo Foo::config()->bar;
++echo Foo::config()->get('bar');
+```
+
+<br>
+
 ### InjectableNewInstanceToCreateRector
 
 Change `new Injectable()` to use `Injectable::create()` instead.
@@ -37,27 +67,6 @@ Change `new Injectable()` to use `Injectable::create()` instead.
 ```diff
 -$foo = new \SilverStripe\ORM\ArrayList();
 +$foo = \SilverStripe\ORM\ArrayList::create();
-```
-
-<br>
-
-### StaticPropertyFetchToConfigGetRector
-
-Transforms static property fetch into `$this->config->get()`.
-
-- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\StaticPropertyFetch\StaticPropertyFetchToConfigGetRector`](../rules/CodeQuality/Rector/StaticPropertyFetch/StaticPropertyFetchToConfigGetRector.php)
-
-```diff
- class Foo extends \SilverStripe\ORM\DataObject
- {
-     private static string $singular_name = 'Foo';
-
-     public function getType(): string
-     {
--        return self::$singular_name;
-+        return $this->config()->get('singular_name');
-     }
- }
 ```
 
 <br>
