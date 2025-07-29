@@ -24,7 +24,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_keys;
 
 /**
- * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
+ * @see \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
 final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements RelatedConfigInterface
 {
