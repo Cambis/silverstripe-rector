@@ -25,10 +25,18 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class ConfigurationPropertyFetchToMethodCallRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ClassReflectionAnalyser $classReflectionAnalyser,
-        private readonly PropertyReflectionAnalyser $propertyReflectionAnalyser
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassReflectionAnalyser $classReflectionAnalyser;
+    /**
+     * @readonly
+     */
+    private PropertyReflectionAnalyser $propertyReflectionAnalyser;
+    public function __construct(ClassReflectionAnalyser $classReflectionAnalyser, PropertyReflectionAnalyser $propertyReflectionAnalyser)
+    {
+        $this->classReflectionAnalyser = $classReflectionAnalyser;
+        $this->propertyReflectionAnalyser = $propertyReflectionAnalyser;
     }
 
     public function getRuleDefinition(): RuleDefinition

@@ -8,12 +8,20 @@ use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeNameResolver\NodeNameResolver;
 
-final readonly class ClassAnalyser
+final class ClassAnalyser
 {
-    public function __construct(
-        private NodeNameResolver $nodeNameResolver,
-        private ReflectionProvider $reflectionProvider
-    ) {
+    /**
+     * @readonly
+     */
+    private NodeNameResolver $nodeNameResolver;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(NodeNameResolver $nodeNameResolver, ReflectionProvider $reflectionProvider)
+    {
+        $this->nodeNameResolver = $nodeNameResolver;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     public function isDataObject(Class_ $class): bool

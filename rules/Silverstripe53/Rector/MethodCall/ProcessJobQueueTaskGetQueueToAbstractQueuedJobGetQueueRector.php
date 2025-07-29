@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\BinaryOp\Coalesce;
@@ -23,7 +22,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector extends AbstractRector implements DocumentedRuleInterface
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `ProcessJobQueueTask::getQueue()` to `AbstractQueuedJob::getQueue()`.', [
@@ -55,7 +53,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class];
@@ -64,27 +61,21 @@ CODE_SAMPLE
     /**
      * @param MethodCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->var, new ObjectType('Symbiote\QueuedJobs\Tasks\ProcessJobQueueTask'))) {
             return null;
         }
-
         if (!$this->isName($node->name, 'getQueue')) {
             return null;
         }
-
         $arg = $node->getArgs()[0] ?? null;
-
         if (!$arg instanceof Arg) {
             return null;
         }
-
         if (!$this->isObjectType($arg->value, new ObjectType('SilverStripe\Control\HTTPRequest'))) {
             return null;
         }
-
         return $this->nodeFactory->createStaticCall(
             'Symbiote\QueuedJobs\Services\AbstractQueuedJob',
             'getQueue',
