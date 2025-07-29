@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 1.4.3
+
+### Patch Changes
+
+- 71dcef1: Resolve service names in DependencyInjectionPropertyTypeResolver
+
 ## 1.4.2
 
 ### Patch Changes
