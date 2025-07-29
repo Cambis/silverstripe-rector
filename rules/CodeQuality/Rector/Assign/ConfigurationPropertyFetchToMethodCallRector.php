@@ -186,6 +186,10 @@ CODE_SAMPLE
             return true;
         }
 
+        if (!$classReflection->hasProperty($propertyName)) {
+            return true;
+        }
+
         $propertyReflection = $classReflection->getProperty($propertyName, $scope);
 
         return !$this->propertyReflectionAnalyser->isConfigurationProperty($propertyReflection);
