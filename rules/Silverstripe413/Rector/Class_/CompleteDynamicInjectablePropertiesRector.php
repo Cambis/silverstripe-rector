@@ -12,17 +12,15 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ReflectionProvider;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
+use Rector\CodeQuality\ValueObject\DefinedPropertyWithType;
 use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
-use Rector\PostRector\ValueObject\PropertyMetadata;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use function array_keys;
 
 /**
  * @see Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
@@ -94,10 +92,10 @@ CODE_SAMPLE
         $propertiesToComplete = $this->filterOutExistingProperties(
             $node,
             $classReflection,
-            array_keys($dependencyProperties)
+            $dependencyProperties
         );
 
-        $newProperties = $this->missingPropertiesFactory->create($dependencyProperties, $propertiesToComplete);
+        $newProperties = $this->missingPropertiesFactory->create($propertiesToComplete);
 
         if ($newProperties === []) {
             return null;
@@ -115,23 +113,22 @@ CODE_SAMPLE
     }
 
     /**
-     * @param string[] $propertiesToComplete
-     * @return string[]
+     * @param Type[] $propertiesToComplete
+     * @return DefinedPropertyWithType[]
      */
     private function filterOutExistingProperties(
         Class_ $class,
         ClassReflection $classReflection,
         array $propertiesToComplete
     ): array {
-        $missingPropertyNames = [];
-        $className = $classReflection->getName();
+        $missingProperties = [];
         // remove other properties that are accessible from this scope
-        foreach ($propertiesToComplete as $propertyToComplete) {
-            if ($classReflection->hasProperty($propertyToComplete)) {
+        foreach ($propertiesToComplete as $propertyName => $propertyToComplete) {
+            if ($classReflection->hasProperty($propertyName)) {
                 continue;
             }
 
-            $propertyMetadata = new PropertyMetadata($propertyToComplete, new ObjectType($className));
+            $propertyMetadata = new DefinedPropertyWithType($propertyName, $propertyToComplete, null);
             $hasClassContextProperty = $this->propertyPresenceChecker->hasClassContextProperty(
                 $class,
                 $propertyMetadata
@@ -141,9 +138,9 @@ CODE_SAMPLE
                 continue;
             }
 
-            $missingPropertyNames[] = $propertyToComplete;
+            $missingProperties[] = $propertyMetadata;
         }
 
-        return $missingPropertyNames;
+        return $missingProperties;
     }
 }
