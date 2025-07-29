@@ -15,7 +15,19 @@ Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInj
 SilverStripe\Core\Injector\Injector:
   Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyInterface:
     class: Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyInterfaceImplementor
+  Dependency:
+    class: Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock
+  Dependency.dotNotated:
+    class: Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyMock
 
 Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableInterface:
   dependencies:
     dependency: '%$Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Source\DependencyInterface'
+
+Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableServiceName:
+  dependencies:
+    dependency: '%$Dependency'
+
+Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\Fixture\InjectableServiceNameDotNotated:
+  dependencies:
+    dependency: '%$Dependency.dotNotated'

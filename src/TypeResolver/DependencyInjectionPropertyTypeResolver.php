@@ -94,9 +94,12 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
         // Remove leading backslash
         $name = $this->normaliser->normaliseNamespace($name);
 
-        // Remove dot notation
-        $name = $this->normaliser->normaliseDotNotation($name);
+        // Check if the classname exists, if not resolve it
+        if (!$this->reflectionProvider->hasClass($name)) {
+            $name = $this->configurationResolver->resolveClassName($name);
+        }
 
+        // Fallback to string
         if (!$this->reflectionProvider->hasClass($name)) {
             return new StringType();
         }
