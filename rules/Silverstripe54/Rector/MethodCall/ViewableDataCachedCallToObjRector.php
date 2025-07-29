@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Silverstripe54\Rector\MethodCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
@@ -22,12 +21,15 @@ use function array_filter;
  */
 final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    public function __construct(ArgsAnalyzer $argsAnalyzer)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `ViewableData::cachedCall()` to `ViewableData::obj()`.', [
@@ -43,7 +45,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class];
@@ -52,21 +53,17 @@ CODE_SAMPLE
     /**
      * @param MethodCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->var, new ObjectType('SilverStripe\View\ViewableData'))) {
             return null;
         }
-
         if (!$this->isName($node->name, 'cachedCall')) {
             return null;
         }
-
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
         }
-
         return $this->nodeFactory->createMethodCall(
             $node->var,
             'obj',

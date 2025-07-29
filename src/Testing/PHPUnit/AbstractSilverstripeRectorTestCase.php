@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Testing\PHPUnit;
 
 use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
-use Override;
 use Rector\Configuration\Option;
 use Rector\Configuration\Parameter\SimpleParameterProvider;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
@@ -15,7 +14,6 @@ use Rector\Testing\PHPUnit\AbstractRectorTestCase;
  */
 abstract class AbstractSilverstripeRectorTestCase extends AbstractRectorTestCase
 {
-    #[Override]
     protected function setUp(): void
     {
         // Set these parameters here as they don't seem to persist correctly otherwise
@@ -24,7 +22,6 @@ abstract class AbstractSilverstripeRectorTestCase extends AbstractRectorTestCase
             SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
             SilverstripeOption::PHPSTAN_FOR_RECTOR_INCLUDE_TEST_ONLY_PATH,
         ]);
-
         parent::setUp();
     }
 }
