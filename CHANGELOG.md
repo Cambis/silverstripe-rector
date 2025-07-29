@@ -1,5 +1,18 @@
 # silverstripe-rector
 
+## 2.1.0
+
+### Minor Changes
+
+- d2309e4: - Add ConfigurationPropertyFetchToMethodCallRector
+  - Rename property fetch on Config_ForClass in RenameConfigurationPropertyRector
+- 79cd5c6: Add Silverstripe 6.1; Bump minimum rector version to 2.1
+
+### Patch Changes
+
+- f46b75a: Resolve service names in DependencyInjectionPropertyTypeResolver
+- 18787a0: Add check for class reflection property in ConfigurationPropertyFetchToMethodCallRector
+
 ## 2.0.0
 
 ### Major Changes
