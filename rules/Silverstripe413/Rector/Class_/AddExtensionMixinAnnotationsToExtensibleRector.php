@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsRector;
-use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\Type\UnionType;
@@ -18,7 +17,6 @@ use function array_key_exists;
  */
 final class AddExtensionMixinAnnotationsToExtensibleRector extends AbstractAddAnnotationsRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -49,41 +47,31 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, '__silverstan_owns');
-
         if ($types === []) {
             return [];
         }
-
         if (!array_key_exists('__getOwns', $types)) {
             return [];
         }
-
         $type = $types['__getOwns'];
-
         if ($type instanceof UnionType) {
             $types = $type->getTypes();
         }
-
-        return [
-            ...$this->phpDocHelper->convertTypesToMixinTagValueNodes(
-                $types,
-            ),
-        ];
+        return array_merge($this->phpDocHelper->convertTypesToMixinTagValueNodes(
+            $types,
+        ));
     }
 
-    #[Override]
     protected function shouldSkipClass(Class_ $class): bool
     {
         if ($class->isAnonymous()) {
             return true;
         }
-
         return !$this->classAnalyser->isExtensible($class);
     }
 }

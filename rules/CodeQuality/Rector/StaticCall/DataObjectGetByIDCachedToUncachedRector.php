@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\StaticCall;
 
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ReflectionProvider;
@@ -24,12 +23,15 @@ use function is_string;
  */
 final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(ReflectionProvider $reflectionProvider)
+    {
+        $this->reflectionProvider = $reflectionProvider;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change DataObject::get_by_id() to use DataObject::get()->byID() instead.', [
@@ -48,7 +50,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [StaticCall::class];
@@ -57,22 +58,18 @@ CODE_SAMPLE
     /**
      * @param StaticCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if ($this->shouldSkipStaticCall($node)) {
             return null;
         }
-
         $className = (string) $this->getName($node->class);
         $dataListCall = $this->nodeFactory->createStaticCall($className, 'get', []);
         $args = $node->args;
-
         // Get the second argument if more than one is present
         if (count($args) > 1) {
             $args = [$node->args[1]];
         }
-
         return $this->nodeFactory->createMethodCall($dataListCall, 'byID', $args);
     }
 
