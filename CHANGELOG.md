@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.1
+
+### Patch Changes
+
+- b9c2c5b: Add weekly workflow
+
 ## 2.1.0
 
 ### Minor Changes
