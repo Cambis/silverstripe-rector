@@ -1,12 +1,18 @@
 {
     "name": "cambis/silverstripe-rector",
-    "description": "Rector rules for Silverstripe.",
+    "description": "Rector rules for Silverstripe CMS.",
     "license": "MIT",
     "keywords": [
         "silverstripe",
         "rector",
         "dev"
     ],
+    "authors": [
+        {
+            "name": "Cameron Bryers"
+        }
+    ],
+    "homepage": "https://github.com/Cambis/silverstripe-rector",
     "require": {
         "php": "^8.3",
         "cambis/silverstan": "^1.1",
