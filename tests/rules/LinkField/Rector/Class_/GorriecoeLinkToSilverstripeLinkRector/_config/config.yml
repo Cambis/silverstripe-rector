@@ -1,3 +1,0 @@
-SilverStripe\LinkField\Tasks\GorriecoeMigrationTask:
-  classes_that_are_not_link_owners:
-    - Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\Fixture\DoesNotOwnLinks

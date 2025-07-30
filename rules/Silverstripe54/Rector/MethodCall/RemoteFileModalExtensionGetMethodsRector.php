@@ -22,6 +22,10 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector
 {
     /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
      * @var list<SilverstripeConstants::METHOD_*>
      */
     private const METHOD_NAMES = [
@@ -29,12 +33,11 @@ final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector
         SilverstripeConstants::METHOD_GET_SCHEMA_RESPONSE,
     ];
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer
-    ) {
+    public function __construct(ArgsAnalyzer $argsAnalyzer)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Migrate `RemoteModalFileExtension::getRequest()` to `RemoteModalFileExtension::getOwner()->getRequest()` and `RemoteModalFileExtension::getSchemaResponse()` to `RemoteModalFileExtension::getOwner()->getSchemaResponse()`.', [
@@ -64,7 +67,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [MethodCall::class];
@@ -73,28 +75,22 @@ CODE_SAMPLE
     /**
      * @param MethodCall $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->isObjectType($node->var, new ObjectType('SilverStripe\AssetAdmin\Extensions\RemoteModalFileExtension'))) {
             return null;
         }
-
         if (!$this->isNames($node->name, self::METHOD_NAMES)) {
             return null;
         }
-
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
         }
-
         $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, SilverstripeConstants::METHOD_GET_OWNER);
         $methodName = $this->nodeNameResolver->getName($node->name);
-
         if ($methodName === null) {
             return null;
         }
-
         return $this->nodeFactory->createMethodCall(
             $getOwnerCall,
             $methodName,

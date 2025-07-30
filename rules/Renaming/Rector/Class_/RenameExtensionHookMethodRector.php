@@ -31,7 +31,6 @@ final class RenameExtensionHookMethodRector extends AbstractScopeAwareRector imp
      */
     private array $hookMethodRenames = [];
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Rename an extension hook method definition if the extension is applied to a given class. This rector only applies to instances of `SilverStripe\Core\Extension`, for all other use cases use `RenameMethodRector` instead.', [new ConfiguredCodeSample(
@@ -62,7 +61,6 @@ CODE_SAMPLE,
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -71,21 +69,16 @@ CODE_SAMPLE,
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactorWithScope(Node $node, Scope $scope): ?Node
     {
         if (!$scope->isInClass()) {
             return null;
         }
-
         $classReflection = $scope->getClassReflection();
-
         if (!$classReflection->isSubclassOf('SilverStripe\Core\Extension')) {
             return null;
         }
-
         $hasChanged = false;
-
         foreach ($node->getMethods() as $classMethod) {
             $methodName = $this->getName($classMethod->name);
 
@@ -104,15 +97,12 @@ CODE_SAMPLE,
                 continue 2;
             }
         }
-
         if (!$hasChanged) {
             return null;
         }
-
         return $node;
     }
 
-    #[Override]
     public function configure(array $configuration): void
     {
         foreach ($configuration as $value) {
@@ -120,12 +110,10 @@ CODE_SAMPLE,
                 throw new InvalidArgumentException(self::class . ' only accepts ' . RenameExtensionHookMethod::class);
             }
         }
-
         /** @var list<RenameExtensionHookMethod> $configuration */
         $this->hookMethodRenames = $configuration;
     }
 
-    #[Override]
     public static function getConfigFile(): string
     {
         return SilverstripeSetList::WITH_RECTOR_SERVICES;

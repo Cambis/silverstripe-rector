@@ -20,7 +20,6 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class AddDBFieldPropertyAnnotationsToDataObjectRector extends AbstractAddAnnotationsToDataObjectRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -51,21 +50,17 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
-
         $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(
             $classReflection,
             SilverstripeConstants::PROPERTY_DB
         );
-
         foreach ($types as $name => $type) {
             $types[$name] = $this->getReadableType($classReflection, $type, $name);
         }
-
         return $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
             $types
         );
