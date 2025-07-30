@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - main
+      - 1.x
+  schedule:
+    - cron: 0 0 * * 0
 
 env:
   # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
