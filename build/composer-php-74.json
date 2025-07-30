@@ -1,32 +1,38 @@
 {
   "name": "cambis/silverstripe-rector",
-  "description": "Rector rules for Silverstripe.",
+  "description": "Rector rules for Silverstripe CMS.",
   "license": "MIT",
   "keywords": [
-      "silverstripe",
-      "rector",
-      "dev"
+    "silverstripe",
+    "rector",
+    "dev"
   ],
+  "authors": [
+    {
+      "name": "Cameron Bryers"
+    }
+  ],
+  "homepage": "https://github.com/Cambis/silverstripe-rector",
   "require": {
-      "php": "^7.4 || ^8.0",
-      "cambis/silverstan": "^1.1",
-      "rector/rector": "^1.2"
+    "php": "^7.4 || ^8.0",
+    "cambis/silverstan": "^1.1",
+    "rector/rector": "^1.2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
-      "psr-4": {
-          "Cambis\\SilverstripeRector\\": [
-              "src/",
-              "rules/"
-          ]
-      }
+    "psr-4": {
+      "Cambis\\SilverstripeRector\\": [
+        "src/",
+        "rules/"
+      ]
+    }
   },
   "config": {
-      "allow-plugins": {
-          "composer/installers": true,
-          "silverstripe/vendor-plugin": true
-      },
-      "sort-packages": true
+    "allow-plugins": {
+      "composer/installers": true,
+      "silverstripe/vendor-plugin": true
+    },
+    "sort-packages": true
   }
 }
