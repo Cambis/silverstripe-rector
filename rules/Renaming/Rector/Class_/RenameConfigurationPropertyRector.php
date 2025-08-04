@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Renaming\Rector\Class_;
 
+use Cambis\SilverstripeRector\NodeAnalyser\StaticPropertyFetchAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameConfigurationProperty;
 use InvalidArgumentException;
@@ -42,6 +43,7 @@ final class RenameConfigurationPropertyRector extends AbstractRector implements 
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
         private readonly PropertyFactory $propertyFactory,
+        private readonly StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser,
         private readonly ValueResolver $valueResolver
     ) {
     }
@@ -130,6 +132,10 @@ CODE_SAMPLE,
 
     private function refactorStaticPropertyFetch(StaticPropertyFetch $staticPropertyFetch): ?StaticPropertyFetch
     {
+        if (!$this->staticPropertyFetchAnalyser->isConfigurationProperty($staticPropertyFetch)) {
+            return null;
+        }
+
         foreach ($this->renameProperties as $renameProperty) {
             if (!$this->isName($staticPropertyFetch, $renameProperty->oldPropertyName)) {
                 continue;
