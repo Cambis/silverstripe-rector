@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\CodeQuality\Rector\Assign;
 
-use Cambis\Silverstan\ReflectionAnalyser\ClassReflectionAnalyser;
-use Cambis\Silverstan\ReflectionAnalyser\PropertyReflectionAnalyser;
+use Cambis\SilverstripeRector\NodeAnalyser\StaticPropertyFetchAnalyser;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\MethodCall;
@@ -26,8 +25,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class ConfigurationPropertyFetchToMethodCallRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
-        private readonly ClassReflectionAnalyser $classReflectionAnalyser,
-        private readonly PropertyReflectionAnalyser $propertyReflectionAnalyser
+        private readonly StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser
     ) {
     }
 
@@ -127,7 +125,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if ($this->shouldSkipStaticPropertyFetch($assign->var)) {
+        if (!$this->staticPropertyFetchAnalyser->isConfigurationProperty($assign->var)) {
             return null;
         }
 
@@ -155,7 +153,7 @@ CODE_SAMPLE
 
     private function refactorStaticPropertyFetch(StaticPropertyFetch $staticPropertyFetch): ?MethodCall
     {
-        if ($this->shouldSkipStaticPropertyFetch($staticPropertyFetch)) {
+        if (!$this->staticPropertyFetchAnalyser->isConfigurationProperty($staticPropertyFetch)) {
             return null;
         }
 
@@ -164,35 +162,6 @@ CODE_SAMPLE
         $configCall = $this->nodeFactory->createStaticCall($this->getName($staticPropertyFetch->class) ?? $this->getFallbackName($staticPropertyFetch), 'config');
 
         return $this->nodeFactory->createMethodCall($configCall, 'get', [$propertyName]);
-    }
-
-    private function shouldSkipStaticPropertyFetch(StaticPropertyFetch $staticPropertyFetch): bool
-    {
-        $scope = ScopeFetcher::fetch($staticPropertyFetch);
-
-        if (!$scope->isInClass()) {
-            return true;
-        }
-
-        $classReflection = $scope->getClassReflection();
-
-        if (!$this->classReflectionAnalyser->isConfigurable($classReflection)) {
-            return true;
-        }
-
-        $propertyName = $this->getName($staticPropertyFetch->name) ?? '';
-
-        if ($propertyName === '') {
-            return true;
-        }
-
-        if (!$classReflection->hasProperty($propertyName)) {
-            return true;
-        }
-
-        $propertyReflection = $classReflection->getProperty($propertyName, $scope);
-
-        return !$this->propertyReflectionAnalyser->isConfigurationProperty($propertyReflection);
     }
 
     private function getFallbackName(StaticPropertyFetch $staticPropertyFetch): string
