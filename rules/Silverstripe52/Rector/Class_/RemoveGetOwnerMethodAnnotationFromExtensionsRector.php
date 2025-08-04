@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe52\Rector\Class_;
 
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\Node as AstNode;
@@ -24,14 +23,25 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class RemoveGetOwnerMethodAnnotationFromExtensionsRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly DocBlockUpdater $docBlockUpdater,
-        private readonly PhpDocInfoFactory $phpDocInfoFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private DocBlockUpdater $docBlockUpdater;
+    /**
+     * @readonly
+     */
+    private PhpDocInfoFactory $phpDocInfoFactory;
+    public function __construct(ClassAnalyser $classAnalyser, DocBlockUpdater $docBlockUpdater, PhpDocInfoFactory $phpDocInfoFactory)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->docBlockUpdater = $docBlockUpdater;
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Remove getOwner() method annotation.', [new CodeSample(
@@ -56,7 +66,6 @@ CODE_SAMPLE
     /**
      * @return array<class-string<Node>>
      */
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class];
@@ -65,17 +74,14 @@ CODE_SAMPLE
     /**
      * @param Class_ $node
      */
-    #[Override]
     public function refactor(Node $node): ?Node
     {
         if (!$this->classAnalyser->isExtension($node)) {
             return null;
         }
-
         $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($node);
         $hasChanged = false;
         $phpDocNodeTraverser = new PhpDocNodeTraverser();
-
         $phpDocNodeTraverser->traverseWithCallable($phpDocInfo->getPhpDocNode(), '', static function (AstNode $node) use (&$hasChanged): ?int {
             if (!$node instanceof PhpDocTagNode) {
                 return null;
@@ -93,13 +99,10 @@ CODE_SAMPLE
 
             return PhpDocNodeTraverser::NODE_REMOVE;
         });
-
         if (!$hasChanged) {
             return null;
         }
-
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
-
         return $node;
     }
 }

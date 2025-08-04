@@ -9,7 +9,6 @@ use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\TypeFactory\TypeFactory;
 use Cambis\Silverstan\TypeResolver\Contract\LazyTypeResolverInterface;
 use Cambis\Silverstan\TypeResolver\Contract\PropertyTypeResolverInterface;
-use Override;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Generic\GenericObjectType;
 use PHPStan\Type\ObjectType;
@@ -25,16 +24,27 @@ use function in_array;
  *
  * Only returns `SilverStripe\Core\Extension` - no subclasses. Renaming `SilverStripe\Core\Extension` subclasses while adding the annotation can cause an inifinite loop.
  */
-final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
+final class ExtensionOwnerMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
 {
-    public function __construct(
-        private ConfigurationResolver $configurationResolver,
-        private ClassManifest $classManifest,
-        private TypeFactory $typeFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ClassManifest $classManifest;
+    /**
+     * @readonly
+     */
+    private TypeFactory $typeFactory;
+    public function __construct(ConfigurationResolver $configurationResolver, ClassManifest $classManifest, TypeFactory $typeFactory)
+    {
+        $this->configurationResolver = $configurationResolver;
+        $this->classManifest = $classManifest;
+        $this->typeFactory = $typeFactory;
     }
 
-    #[Override]
     public function getConfigurationPropertyName(): string
     {
         return '__silverstan_owners';
@@ -42,20 +52,18 @@ final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyT
 
     /**
      * @phpstan-ignore-next-line return.unusedType
+     * @return int|true
      */
-    #[Override]
-    public function getExcludeMiddleware(): true|int
+    public function getExcludeMiddleware()
     {
         return ConfigurationResolver::EXCLUDE_INHERITED | ConfigurationResolver::EXCLUDE_EXTRA_SOURCES;
     }
 
-    #[Override]
     public function resolve(ClassReflection $classReflection): array
     {
         if (!$classReflection->is('SilverStripe\Core\Extension')) {
             return [];
         }
-
         // Loop over class manifest and find owners of this extension
         $owners = array_filter(array_values($this->classManifest->getClasses()), function (string $owner) use ($classReflection): bool {
             /** @var array<class-string|null> $extensions */
@@ -75,26 +83,21 @@ final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyT
                 true
             );
         });
-
         // Type to represent the extension itself
         $staticType = $this->typeFactory->createExtensibleTypeFromType(new StaticType($classReflection));
-
         // No owners
         if ($owners === []) {
             return [
                 '__getOwners' => new GenericObjectType('SilverStripe\Core\Extension', [$staticType]),
             ];
         }
-
         $types = [];
-
         foreach ($owners as $owner) {
             $types[] = TypeCombinator::intersect(
                 $this->typeFactory->createExtensibleTypeFromType(new ObjectType($owner)),
                 $staticType
             );
         }
-
         return [
             '__getOwners' => new GenericObjectType('SilverStripe\Core\Extension', [TypeCombinator::union(...$types)]),
         ];

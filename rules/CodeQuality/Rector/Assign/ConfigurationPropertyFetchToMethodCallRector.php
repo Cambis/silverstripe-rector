@@ -24,9 +24,13 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class ConfigurationPropertyFetchToMethodCallRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser;
+    public function __construct(StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser)
+    {
+        $this->staticPropertyFetchAnalyser = $staticPropertyFetchAnalyser;
     }
 
     public function getRuleDefinition(): RuleDefinition

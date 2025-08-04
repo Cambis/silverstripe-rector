@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\SilverstripeRector\Rector\Class_\AbstractAddAnnotationsToExtensionRector;
-use Override;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
 use PHPStan\Type\Generic\GenericObjectType;
@@ -18,7 +17,6 @@ use function array_key_exists;
  */
 final class AddGetOwnerMethodAnnotationToExtensionRector extends AbstractAddAnnotationsToExtensionRector
 {
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add missing dynamic annotations.', [new CodeSample(
@@ -42,7 +40,6 @@ CODE_SAMPLE
     /**
      * @return PhpDocTagValueNode[]
      */
-    #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
         $className = (string) $this->nodeNameResolver->getName($class);
@@ -51,21 +48,16 @@ CODE_SAMPLE
             $classReflection,
             '__silverstan_owners'
         );
-
         if ($types === []) {
             return [];
         }
-
         if (!array_key_exists('__getOwners', $types)) {
             return [];
         }
-
         $type = $types['__getOwners'];
-
         if ($type instanceof GenericObjectType) {
             $type = $type->getTypes()[0];
         }
-
         return $this->phpDocHelper->convertTypesToMethodTagValueNodes(
             [
                 'getOwner' => $type,

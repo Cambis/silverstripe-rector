@@ -8,7 +8,6 @@ use Cambis\SilverstripeRector\NodeAnalyser\StaticPropertyFetchAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameConfigurationProperty;
 use InvalidArgumentException;
-use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
@@ -34,21 +33,36 @@ use function is_string;
 final class RenameConfigurationPropertyRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface
 {
     /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    /**
      * @var list<RenameConfigurationProperty>
      */
     private array $renameProperties = [];
 
     private bool $hasChanged = false;
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser,
-        private readonly ValueResolver $valueResolver
-    ) {
+    public function __construct(ArgsAnalyzer $argsAnalyzer, PropertyFactory $propertyFactory, StaticPropertyFetchAnalyser $staticPropertyFetchAnalyser, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->propertyFactory = $propertyFactory;
+        $this->staticPropertyFetchAnalyser = $staticPropertyFetchAnalyser;
+        $this->valueResolver = $valueResolver;
     }
 
-    #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Rename a configuration property.', [new ConfiguredCodeSample(
@@ -82,7 +96,6 @@ CODE_SAMPLE,
         ]);
     }
 
-    #[Override]
     public function getNodeTypes(): array
     {
         return [Class_::class,  MethodCall::class, StaticPropertyFetch::class, PropertyFetch::class];
@@ -203,7 +216,7 @@ CODE_SAMPLE,
                 continue;
             }
 
-            $args = [...$methodCall->getArgs()];
+            $args = array_merge($methodCall->getArgs());
             $args[1] = $this->nodeFactory->createArg($renameProperty->newPropertyName);
 
             return $this->nodeFactory->createMethodCall(
@@ -246,7 +259,7 @@ CODE_SAMPLE,
                 continue;
             }
 
-            $args = [...$methodCall->getArgs()];
+            $args = array_merge($methodCall->getArgs());
             $args[0] = $this->nodeFactory->createArg($renameProperty->newPropertyName);
 
             return $this->nodeFactory->createMethodCall(
