@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.2
+
+### Patch Changes
+
+- b828627: Don't rename public static properties in RenameConfigurationPropertyRector
+
 ## 2.1.1
 
 ### Patch Changes
