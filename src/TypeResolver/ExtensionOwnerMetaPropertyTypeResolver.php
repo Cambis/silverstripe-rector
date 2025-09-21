@@ -25,13 +25,25 @@ use function in_array;
  *
  * Only returns `SilverStripe\Core\Extension` - no subclasses. Renaming `SilverStripe\Core\Extension` subclasses while adding the annotation can cause an inifinite loop.
  */
-final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
+final class ExtensionOwnerMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
 {
-    public function __construct(
-        private ConfigurationResolver $configurationResolver,
-        private ClassManifest $classManifest,
-        private TypeFactory $typeFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ClassManifest $classManifest;
+    /**
+     * @readonly
+     */
+    private TypeFactory $typeFactory;
+    public function __construct(ConfigurationResolver $configurationResolver, ClassManifest $classManifest, TypeFactory $typeFactory)
+    {
+        $this->configurationResolver = $configurationResolver;
+        $this->classManifest = $classManifest;
+        $this->typeFactory = $typeFactory;
     }
 
     #[Override]
@@ -42,9 +54,10 @@ final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyT
 
     /**
      * @phpstan-ignore-next-line return.unusedType
+     * @return int|true
      */
     #[Override]
-    public function getExcludeMiddleware(): true|int
+    public function getExcludeMiddleware()
     {
         return ConfigurationResolver::EXCLUDE_INHERITED | ConfigurationResolver::EXCLUDE_EXTRA_SOURCES;
     }

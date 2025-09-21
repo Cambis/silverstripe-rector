@@ -22,14 +22,30 @@ use function is_string;
 
 final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResolverInterface, TypeResolverAwareInterface, LazyTypeResolverInterface
 {
+    /**
+     * @readonly
+     */
+    private ClassReflectionAnalyser $classReflectionAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private Normaliser $normaliser;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
     private TypeResolver $typeResolver;
 
-    public function __construct(
-        private readonly ClassReflectionAnalyser $classReflectionAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly Normaliser $normaliser,
-        private readonly ReflectionProvider $reflectionProvider
-    ) {
+    public function __construct(ClassReflectionAnalyser $classReflectionAnalyser, ConfigurationResolver $configurationResolver, Normaliser $normaliser, ReflectionProvider $reflectionProvider)
+    {
+        $this->classReflectionAnalyser = $classReflectionAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->normaliser = $normaliser;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     #[Override]
@@ -40,9 +56,10 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
 
     /**
      * @phpstan-ignore return.unusedType
+     * @return int|true
      */
     #[Override]
-    public function getExcludeMiddleware(): true|int
+    public function getExcludeMiddleware()
     {
         return ConfigurationResolver::EXCLUDE_INHERITED | ConfigurationResolver::EXCLUDE_EXTRA_SOURCES;
     }
@@ -75,8 +92,11 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
         return $types;
     }
 
+    /**
+     * @return static
+     */
     #[Override]
-    public function setTypeResolver(TypeResolver $typeResolver): static
+    public function setTypeResolver(TypeResolver $typeResolver)
     {
         $this->typeResolver = $typeResolver;
 

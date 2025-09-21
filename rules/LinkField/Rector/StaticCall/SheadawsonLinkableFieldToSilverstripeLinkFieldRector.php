@@ -34,13 +34,33 @@ use function rtrim;
  */
 final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly NewFactory $newFactory,
-        private readonly Normaliser $normaliser,
-        private readonly ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private NewFactory $newFactory;
+    /**
+     * @readonly
+     */
+    private Normaliser $normaliser;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, ConfigurationResolver $configurationResolver, NewFactory $newFactory, Normaliser $normaliser, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->configurationResolver = $configurationResolver;
+        $this->newFactory = $newFactory;
+        $this->normaliser = $normaliser;
+        $this->valueResolver = $valueResolver;
     }
 
     #[Override]
@@ -104,7 +124,10 @@ CODE_SAMPLE
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
-    private function refactorLinkField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorLinkField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;
@@ -136,7 +159,10 @@ CODE_SAMPLE
         );
     }
 
-    private function refactorMultiLinkField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorMultiLinkField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;

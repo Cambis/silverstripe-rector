@@ -10,13 +10,25 @@ use PhpParser\Node\Expr\StaticPropertyFetch;
 use Rector\NodeNameResolver\NodeNameResolver;
 use Rector\PHPStan\ScopeFetcher;
 
-final readonly class StaticPropertyFetchAnalyser
+final class StaticPropertyFetchAnalyser
 {
-    public function __construct(
-        private ClassReflectionAnalyser $classReflectionAnalyser,
-        private NodeNameResolver $nodeNameResolver,
-        private PropertyReflectionAnalyser $propertyReflectionAnalyser
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassReflectionAnalyser $classReflectionAnalyser;
+    /**
+     * @readonly
+     */
+    private NodeNameResolver $nodeNameResolver;
+    /**
+     * @readonly
+     */
+    private PropertyReflectionAnalyser $propertyReflectionAnalyser;
+    public function __construct(ClassReflectionAnalyser $classReflectionAnalyser, NodeNameResolver $nodeNameResolver, PropertyReflectionAnalyser $propertyReflectionAnalyser)
+    {
+        $this->classReflectionAnalyser = $classReflectionAnalyser;
+        $this->nodeNameResolver = $nodeNameResolver;
+        $this->propertyReflectionAnalyser = $propertyReflectionAnalyser;
     }
 
     public function isConfigurationProperty(StaticPropertyFetch $staticPropertyFetch): bool
