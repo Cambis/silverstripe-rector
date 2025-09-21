@@ -143,6 +143,7 @@ CODE_SAMPLE
             $allowedTypes = [];
 
             foreach ($legacyAllowedTypes as $allowedType) {
+                // @phpstan-ignore-next-line offsetAccess.invalidOffset
                 if (!isset(self::LINK_TYPES[$allowedType])) {
                     continue;
                 }

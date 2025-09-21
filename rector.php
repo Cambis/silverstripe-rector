@@ -17,17 +17,18 @@ return RectorConfig::configure()
     ])
     ->withPhpSets()
     ->withPreparedSets(
+        deadCode: true,
         codeQuality: true,
         codingStyle: true,
-        deadCode: true,
-        earlyReturn: true,
         privatization: true,
+        earlyReturn: true,
         phpunitCodeQuality: true
     )
     ->withRules([
         DeclareStrictTypesRector::class,
     ])
     ->withSkip([
+        __DIR__ . '/stubs',
         '*/Rector/*/Fixture/*',
         '*/Source/*',
         ClosureToArrowFunctionRector::class,

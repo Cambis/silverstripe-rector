@@ -14,4 +14,8 @@ abstract class DBField
      * @var mixed
      */
     protected $value;
+
+    public function __get($name)
+    {
+    }
 }

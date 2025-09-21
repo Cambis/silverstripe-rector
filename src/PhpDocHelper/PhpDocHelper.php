@@ -34,7 +34,7 @@ final readonly class PhpDocHelper
     }
 
     /**
-     * @param Type[] $paramsNameToType
+     * @param array<string, Type> $paramsNameToType
      * @return PhpDocTagValueNode[]
      */
     public function convertTypesToPropertyTagValueNodes(array $paramsNameToType): array
