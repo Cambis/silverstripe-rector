@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.3
+
+### Patch Changes
+
+- 5fae54c: Add support for PHPStan 2.1.28
+
 ## 2.1.2
 
 ### Patch Changes
