@@ -15,8 +15,8 @@
   "homepage": "https://github.com/Cambis/silverstripe-rector",
   "require": {
     "php": "^7.4 || ^8.0",
-    "cambis/silverstan": "^2.1",
-    "rector/rector": "^2.1.2"
+    "cambis/silverstan": "^2.1.7",
+    "rector/rector": "^2.1.7"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

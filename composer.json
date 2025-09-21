@@ -15,8 +15,8 @@
     "homepage": "https://github.com/Cambis/silverstripe-rector",
     "require": {
         "php": "^8.3",
-        "cambis/silverstan": "^2.1",
-        "rector/rector": "^2.1.2"
+        "cambis/silverstan": "^2.1.7",
+        "rector/rector": "^2.1.7"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7",
@@ -34,6 +34,9 @@
         "symplify/phpstan-rules": "^14.0",
         "symplify/rule-doc-generator": "^12.2",
         "symplify/vendor-patches": "^11.3"
+    },
+    "conflict": {
+        "squizlabs/php_codesniffer": ">=4.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

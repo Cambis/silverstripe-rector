@@ -11,7 +11,6 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PHPStan\Type\ObjectType;
-use Rector\Configuration\Parameter\FeatureFlags;
 use Rector\Enum\ObjectReference;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Rector\AbstractRector;
@@ -174,6 +173,6 @@ CODE_SAMPLE
 
         $classReflection = $scope->getClassReflection();
 
-        return $classReflection->isFinal() || FeatureFlags::treatClassesAsFinal() ? ObjectReference::SELF : ObjectReference::STATIC;
+        return $classReflection->isFinal() ? ObjectReference::SELF : ObjectReference::STATIC;
     }
 }

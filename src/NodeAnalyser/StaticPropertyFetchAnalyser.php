@@ -39,11 +39,11 @@ final readonly class StaticPropertyFetchAnalyser
             return false;
         }
 
-        if (!$classReflection->hasProperty($propertyName)) {
+        if (!$classReflection->hasStaticProperty($propertyName)) {
             return false;
         }
 
-        $propertyReflection = $classReflection->getProperty($propertyName, $scope);
+        $propertyReflection = $classReflection->getStaticProperty($propertyName);
 
         return $this->propertyReflectionAnalyser->isConfigurationProperty($propertyReflection);
     }

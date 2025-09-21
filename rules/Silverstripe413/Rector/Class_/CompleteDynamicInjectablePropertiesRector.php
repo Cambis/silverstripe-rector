@@ -124,7 +124,7 @@ CODE_SAMPLE
         $missingProperties = [];
         // remove other properties that are accessible from this scope
         foreach ($propertiesToComplete as $propertyName => $propertyToComplete) {
-            if ($classReflection->hasProperty($propertyName)) {
+            if ($classReflection->hasInstanceProperty($propertyName)) {
                 continue;
             }
 

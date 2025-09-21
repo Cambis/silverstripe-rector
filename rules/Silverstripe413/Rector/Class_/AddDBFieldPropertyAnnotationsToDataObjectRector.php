@@ -93,8 +93,8 @@ CODE_SAMPLE
         }
 
         // Attempt to return the type from the value property
-        if ($fieldClassReflection->hasProperty('value')) {
-            return $fieldClassReflection->getProperty('value', new OutOfClassScope())->getReadableType();
+        if ($fieldClassReflection->hasInstanceProperty('value')) {
+            return $fieldClassReflection->getInstanceProperty('value', new OutOfClassScope())->getReadableType();
         }
 
         // Fallback, return the original type
