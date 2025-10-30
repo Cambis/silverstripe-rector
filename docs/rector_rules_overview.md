@@ -1,10 +1,10 @@
-# 35 Rules Overview
+# 36 Rules Overview
 
 <br>
 
 ## Categories
 
-- [CodeQuality](#codequality) (2)
+- [CodeQuality](#codequality) (3)
 
 - [LinkField](#linkfield) (5)
 
@@ -54,6 +54,25 @@ Transforms a property fetch on a configuration property into an appropriate gett
 
 -echo Foo::config()->bar;
 +echo Foo::config()->get('bar');
+```
+
+<br>
+
+### ExtensionOwnerToGetOwnerRector
+
+Change `Extension::$owner` to use `Extension::getOwner()` instead.
+
+- class: [`Cambis\SilverstripeRector\CodeQuality\Rector\PropertyFetch\ExtensionOwnerToGetOwnerRector`](../rules/CodeQuality/Rector/PropertyFetch/ExtensionOwnerToGetOwnerRector.php)
+
+```diff
+ class FooExtension extends \SilverStripe\Core\Extension
+ {
+     protected function doSomething(): void
+     {
+-        $this->owner->doSomethingElse();
++        $this->getOwner()->doSomethingElse();
+     }
+ }
 ```
 
 <br>
