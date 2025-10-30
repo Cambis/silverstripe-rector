@@ -36,6 +36,22 @@ use function is_string;
 final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private NewFactory $newFactory;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    /**
      * @var array<string, string>
      */
     private const LINK_TYPES = [
@@ -56,12 +72,12 @@ final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRect
      */
     private const MULTI_LINK_FIELD_CLASS = 'SilverStripe\LinkField\Form\MultiLinkField';
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly NewFactory $newFactory,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly ValueResolver $valueResolver
-    ) {
+    public function __construct(ArgsAnalyzer $argsAnalyzer, NewFactory $newFactory, ConfigurationResolver $configurationResolver, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->newFactory = $newFactory;
+        $this->configurationResolver = $configurationResolver;
+        $this->valueResolver = $valueResolver;
     }
 
     #[Override]
@@ -136,7 +152,24 @@ CODE_SAMPLE
         if (is_array($legacyAllowedTypes) && $legacyAllowedTypes !== []) {
 
             // Turn into list if it is not, new config is a list
-            if (!array_is_list($legacyAllowedTypes)) {
+            $arrayIsListFunction = function (array $array): bool {
+                if (function_exists('array_is_list')) {
+                    return array_is_list($array);
+                }
+                if ($array === []) {
+                    return true;
+                }
+                $current_key = 0;
+                foreach ($array as $key => $noop) {
+                    if ($key !== $current_key) {
+                        return false;
+                    }
+                    ++$current_key;
+                }
+                return true;
+            };
+            // Turn into list if it is not, new config is a list
+            if (!$arrayIsListFunction($legacyAllowedTypes)) {
                 $legacyAllowedTypes = array_keys($legacyAllowedTypes);
             }
 
@@ -198,8 +231,9 @@ CODE_SAMPLE
 
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
      */
-    private function resolveFormFieldClass(New_|StaticCall $node): string
+    private function resolveFormFieldClass($node): string
     {
         $name = $node->getArgs()[0] ?? null;
 
