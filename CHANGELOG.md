@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.4
+
+### Patch Changes
+
+- 7e16b64: Replace deprecated PropertyFetchToMethodCallRector
+
 ## 2.1.3
 
 ### Patch Changes
