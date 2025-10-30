@@ -14,10 +14,8 @@ use Rector\Arguments\ValueObject\ReplaceArgumentDefaultValue;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
-use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
 use Rector\Transform\Rector\MethodCall\MethodCallToStaticCallRector;
 use Rector\Transform\ValueObject\MethodCallToStaticCall;
-use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 // See: https://docs.silverstripe.org/en/5/changelogs/5.4.0/
 return static function (RectorConfig $rectorConfig): void {
@@ -36,11 +34,6 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallToStaticCall('SilverStripe\ContentReview\Tasks\ContentReviewEmails', 'isValidEmail', 'SilverStripe\Control\Email\Email', 'is_valid_email'),
         // https://github.com/silverstripe/silverstripe-subsites/commit/11f4ebcb45685660354fbc401b9675b96e69ba85
         new MethodCallToStaticCall('SilverStripe\Subsites\Extensions\LeftAndMainSubsites', 'ListSubsites', 'SilverStripe\Subsites\Extensions\LeftAndMainSubsites', 'SubsiteSwitchList'),
-    ]);
-
-    // https://github.com/silverstripe/silverstripe-framework/commit/8ec068f3fdfd8e062b5d54058bf629dbde034e0a
-    $rectorConfig->ruleWithConfiguration(PropertyFetchToMethodCallRector::class, [
-        new PropertyFetchToMethodCall('SilverStripe\ORM\FieldType\DBField', 'defaultVal', 'getDefaultValue', 'setDefaultValue'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
