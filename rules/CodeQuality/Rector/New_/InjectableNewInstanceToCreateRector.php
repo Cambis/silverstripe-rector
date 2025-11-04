@@ -10,7 +10,6 @@ use PhpParser\Node\Expr\New_;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\NodeAnalyzer\ClassAnalyzer;
 use Rector\Rector\AbstractRector;
-use Rector\ValueObject\MethodName;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -61,7 +60,11 @@ CODE_SAMPLE
             return null;
         }
 
-        $className = (string) $this->nodeNameResolver->getName($node->class);
+        $className = $this->getName($node->class);
+
+        if ($className === null || $className === '') {
+            return null;
+        }
 
         return $this->nodeFactory->createStaticCall(
             $className,
@@ -72,7 +75,11 @@ CODE_SAMPLE
 
     private function shouldSkipNew(New_ $new): bool
     {
-        $className = (string) $this->nodeNameResolver->getName($new->class);
+        $className = $this->getName($new->class);
+
+        if ($className === null || $className === '') {
+            return true;
+        }
 
         if (!$this->reflectionProvider->hasClass($className)) {
             return true;
@@ -84,10 +91,6 @@ CODE_SAMPLE
             return true;
         }
 
-        if (!$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable')) {
-            return true;
-        }
-
-        return !$classReflection->hasMethod(MethodName::TO_STRING);
+        return !$classReflection->hasTraitUse('SilverStripe\Core\Injector\Injectable');
     }
 }
