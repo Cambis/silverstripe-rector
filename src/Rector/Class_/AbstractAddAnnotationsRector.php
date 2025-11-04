@@ -33,6 +33,42 @@ use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 abstract class AbstractAddAnnotationsRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    protected AnnotationUpdater $annotationUpdater;
+    /**
+     * @readonly
+     */
+    protected ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    protected DataRecordResolver $dataRecordResolver;
+    /**
+     * @readonly
+     */
+    protected DocBlockUpdater $docBlockUpdater;
+    /**
+     * @readonly
+     */
+    protected PhpDocHelper $phpDocHelper;
+    /**
+     * @readonly
+     */
+    protected PhpDocInfoFactory $phpDocInfoFactory;
+    /**
+     * @readonly
+     */
+    protected ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    protected TypeResolver $typeResolver;
+    /**
+     * @readonly
+     */
+    protected StaticTypeMapper $staticTypeMapper;
+    /**
      * @var array<class-string<PhpDocTagValueNode>, string>
      */
     private const TAGS_TYPES_TO_NAMES = [
@@ -44,17 +80,17 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
         TemplateTagValueNode::class => '@template',
     ];
 
-    public function __construct(
-        protected readonly AnnotationUpdater $annotationUpdater,
-        protected readonly ClassAnalyser $classAnalyser,
-        protected readonly DataRecordResolver $dataRecordResolver,
-        protected readonly DocBlockUpdater $docBlockUpdater,
-        protected readonly PhpDocHelper $phpDocHelper,
-        protected readonly PhpDocInfoFactory $phpDocInfoFactory,
-        protected readonly ReflectionProvider $reflectionProvider,
-        protected readonly TypeResolver $typeResolver,
-        protected readonly StaticTypeMapper $staticTypeMapper,
-    ) {
+    public function __construct(AnnotationUpdater $annotationUpdater, ClassAnalyser $classAnalyser, DataRecordResolver $dataRecordResolver, DocBlockUpdater $docBlockUpdater, PhpDocHelper $phpDocHelper, PhpDocInfoFactory $phpDocInfoFactory, ReflectionProvider $reflectionProvider, TypeResolver $typeResolver, StaticTypeMapper $staticTypeMapper)
+    {
+        $this->annotationUpdater = $annotationUpdater;
+        $this->classAnalyser = $classAnalyser;
+        $this->dataRecordResolver = $dataRecordResolver;
+        $this->docBlockUpdater = $docBlockUpdater;
+        $this->phpDocHelper = $phpDocHelper;
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
+        $this->reflectionProvider = $reflectionProvider;
+        $this->typeResolver = $typeResolver;
+        $this->staticTypeMapper = $staticTypeMapper;
     }
 
     /**
@@ -121,7 +157,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
             }
         }
 
-        throw new NotImplementedYetException(__METHOD__ . ' not yet implemented for ' . $phpDocTagValueNode::class);
+        throw new NotImplementedYetException(__METHOD__ . ' not yet implemented for ' . get_class($phpDocTagValueNode));
     }
 
     /**

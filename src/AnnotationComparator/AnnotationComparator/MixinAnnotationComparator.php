@@ -15,12 +15,20 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 /**
  * @implements AnnotationComparatorInterface<MixinTagValueNode>
  */
-final readonly class MixinAnnotationComparator implements AnnotationComparatorInterface
+final class MixinAnnotationComparator implements AnnotationComparatorInterface
 {
-    public function __construct(
-        private StaticTypeMapper $staticTypeMapper,
-        private TypeComparator $typeComparator
-    ) {
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    /**
+     * @readonly
+     */
+    private TypeComparator $typeComparator;
+    public function __construct(StaticTypeMapper $staticTypeMapper, TypeComparator $typeComparator)
+    {
+        $this->staticTypeMapper = $staticTypeMapper;
+        $this->typeComparator = $typeComparator;
     }
 
     #[Override]

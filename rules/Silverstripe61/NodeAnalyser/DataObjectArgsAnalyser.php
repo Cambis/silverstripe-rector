@@ -11,12 +11,20 @@ use function is_bool;
 use function is_numeric;
 use function is_string;
 
-final readonly class DataObjectArgsAnalyser
+final class DataObjectArgsAnalyser
 {
-    public function __construct(
-        private ReflectionProvider $reflectionProvider,
-        private ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    public function __construct(ReflectionProvider $reflectionProvider, ValueResolver $valueResolver)
+    {
+        $this->reflectionProvider = $reflectionProvider;
+        $this->valueResolver = $valueResolver;
     }
 
     /**

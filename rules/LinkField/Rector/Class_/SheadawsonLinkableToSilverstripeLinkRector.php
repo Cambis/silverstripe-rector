@@ -29,16 +29,32 @@ use function is_array;
 final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private PropertyManipulator $propertyManipulator;
+    /**
      * @var string
      */
     private const LEGACY_LINK_CLASS = 'Sheadawson\Linkable\Models\Link';
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly PropertyManipulator $propertyManipulator
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser, ConfigurationResolver $configurationResolver, PropertyFactory $propertyFactory, PropertyManipulator $propertyManipulator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->propertyManipulator = $propertyManipulator;
     }
 
     #[Override]
