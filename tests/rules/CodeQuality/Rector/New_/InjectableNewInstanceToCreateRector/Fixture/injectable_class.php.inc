@@ -2,7 +2,7 @@
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Fixture;
 
-$list = new \SilverStripe\ORM\ArrayList();
+$list = new \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Source\Foo();
 
 ?>
 -----
@@ -10,6 +10,6 @@ $list = new \SilverStripe\ORM\ArrayList();
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Fixture;
 
-$list = \SilverStripe\ORM\ArrayList::create();
+$list = \Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Source\Foo::create();
 
 ?>

@@ -13,7 +13,7 @@ trait Injectable
     /**
      * @return static
      */
-    public function create(...$args)
+    public static function create(...$args)
     {
     }
 }
