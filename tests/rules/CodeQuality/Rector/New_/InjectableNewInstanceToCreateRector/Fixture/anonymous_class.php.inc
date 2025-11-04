@@ -2,4 +2,6 @@
 
 namespace Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Fixture;
 
-$list = new class extends \SilverStripe\ORM\ArrayList {};
+use Cambis\SilverstripeRector\Tests\CodeQuality\Rector\New_\InjectableNewInstanceToCreateRector\Source\Foo;
+
+$list = new class extends Foo {};
