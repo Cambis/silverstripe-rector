@@ -52,7 +52,6 @@ final readonly class PropertyFactory
             new ArrayType(new IntegerType(), new StringType())
         );
 
-        /** @phpstan-ignore-next-line classConstant.deprecated TODO: address in rector 2.0 */
         $property->flags = Class_::MODIFIER_PRIVATE | Class_::MODIFIER_STATIC;
 
         $this->classInsertManipulator->addAsFirstMethod($class, $property);
