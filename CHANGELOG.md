@@ -1,5 +1,12 @@
 # silverstripe-rector
 
+## 1.4.5
+
+### Patch Changes
+
+- 9ff0dec: Don't check for stringable in InjectableNewInstanceToCreateRector
+- 483035b: Update gorriecoe link migration set
+
 ## 1.4.4
 
 ### Patch Changes
