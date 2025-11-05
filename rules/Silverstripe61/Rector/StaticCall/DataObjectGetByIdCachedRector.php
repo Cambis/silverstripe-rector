@@ -60,6 +60,10 @@ CODE_SAMPLE
      */
     public function refactor(Node $node): ?Node
     {
+        if ($node->isFirstClassCallable()) {
+            return null;
+        }
+
         // Not supporting named arguments
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
             return null;
