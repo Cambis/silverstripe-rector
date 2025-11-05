@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.6
+
+### Patch Changes
+
+- 1ec39b9: Skip first class callables
+
 ## 2.1.5
 
 ### Patch Changes
