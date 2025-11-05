@@ -23,10 +23,18 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly VisibilityManipulator $visibilityManipulator
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private VisibilityManipulator $visibilityManipulator;
+    public function __construct(ReflectionProvider $reflectionProvider, VisibilityManipulator $visibilityManipulator)
+    {
+        $this->reflectionProvider = $reflectionProvider;
+        $this->visibilityManipulator = $visibilityManipulator;
     }
 
     #[Override]

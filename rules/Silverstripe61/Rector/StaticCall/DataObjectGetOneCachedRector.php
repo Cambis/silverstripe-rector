@@ -24,11 +24,23 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class DataObjectGetOneCachedRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly DataObjectArgsAnalyser $dataObjectArgsAnalyser,
-        private readonly ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    private DataObjectArgsAnalyser $dataObjectArgsAnalyser;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, DataObjectArgsAnalyser $dataObjectArgsAnalyser, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->dataObjectArgsAnalyser = $dataObjectArgsAnalyser;
+        $this->valueResolver = $valueResolver;
     }
 
     public function getRuleDefinition(): RuleDefinition

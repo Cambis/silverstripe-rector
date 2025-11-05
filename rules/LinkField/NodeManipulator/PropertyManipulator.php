@@ -22,15 +22,35 @@ use function in_array;
 use function is_array;
 use function is_string;
 
-final readonly class PropertyManipulator
+final class PropertyManipulator
 {
-    public function __construct(
-        private NodeComparator $nodeComparator,
-        private NodeFactory $nodeFactory,
-        private NodeNameResolver $nodeNameResolver,
-        private PropertyFactory $propertyFactory,
-        private ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private NodeComparator $nodeComparator;
+    /**
+     * @readonly
+     */
+    private NodeFactory $nodeFactory;
+    /**
+     * @readonly
+     */
+    private NodeNameResolver $nodeNameResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private ValueResolver $valueResolver;
+    public function __construct(NodeComparator $nodeComparator, NodeFactory $nodeFactory, NodeNameResolver $nodeNameResolver, PropertyFactory $propertyFactory, ValueResolver $valueResolver)
+    {
+        $this->nodeComparator = $nodeComparator;
+        $this->nodeFactory = $nodeFactory;
+        $this->nodeNameResolver = $nodeNameResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->valueResolver = $valueResolver;
     }
 
     /**
