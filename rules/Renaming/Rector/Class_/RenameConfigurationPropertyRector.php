@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
+use PhpParser\Node\Expr\CallLike;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
@@ -93,6 +94,10 @@ CODE_SAMPLE,
      */
     public function refactor(Node $node): ?Node
     {
+        if ($node instanceof CallLike && $node->isFirstClassCallable()) {
+            return null;
+        }
+
         if ($node instanceof MethodCall) {
             return $this->refactorMethodCall($node);
         }
