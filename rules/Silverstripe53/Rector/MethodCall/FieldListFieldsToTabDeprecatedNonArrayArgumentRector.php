@@ -71,7 +71,7 @@ CODE_SAMPLE
             return null;
         }
 
-        if (!$this->nodeNameResolver->isNames($node->name, array_keys(self::METHOD_NAMES))) {
+        if (!$this->isNames($node->name, array_keys(self::METHOD_NAMES))) {
             return null;
         }
 
@@ -88,7 +88,7 @@ CODE_SAMPLE
         }
 
         foreach (self::METHOD_NAMES as $originalName => $newName) {
-            if (!$this->nodeNameResolver->isName($node->name, $originalName)) {
+            if (!$this->isName($node->name, $originalName)) {
                 continue;
             }
 

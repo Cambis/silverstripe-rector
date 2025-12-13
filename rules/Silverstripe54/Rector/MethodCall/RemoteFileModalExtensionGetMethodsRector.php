@@ -89,7 +89,7 @@ CODE_SAMPLE
         }
 
         $getOwnerCall = $this->nodeFactory->createMethodCall($node->var, 'getOwner');
-        $methodName = $this->nodeNameResolver->getName($node->name);
+        $methodName = $this->getName($node->name);
 
         if ($methodName === null) {
             return null;

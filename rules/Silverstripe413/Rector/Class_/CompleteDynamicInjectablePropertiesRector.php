@@ -85,7 +85,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $className = (string) $this->nodeNameResolver->getName($node);
+        $className = (string) $this->getName($node);
         $classReflection = $this->reflectionProvider->getClass($className);
         /** @var array<string, Type> $dependencyProperties */
         $dependencyProperties = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty($classReflection, 'dependencies');

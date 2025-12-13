@@ -47,7 +47,7 @@ CODE_SAMPLE
     #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
-        $className = (string) $this->nodeNameResolver->getName($class);
+        $className = (string) $this->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
 
         $types = $this->typeResolver->resolveInjectedPropertyTypesFromConfigurationProperty(

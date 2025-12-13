@@ -86,7 +86,7 @@ CODE_SAMPLE
 
     private function shouldSkipClass(Class_ $class): bool
     {
-        $className = $this->nodeNameResolver->getName($class);
+        $className = $this->getName($class);
 
         if ($className === null) {
             return true;
