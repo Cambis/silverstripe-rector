@@ -96,7 +96,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $propertyName = $this->nodeNameResolver->getName($node->name);
+        $propertyName = $this->getName($node->name);
 
         if (!is_string($propertyName)) {
             return null;

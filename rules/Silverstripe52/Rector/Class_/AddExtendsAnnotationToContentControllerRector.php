@@ -79,7 +79,7 @@ CODE_SAMPLE
     #[Override]
     protected function getNewDocTagValueNodes(Class_ $class): array
     {
-        $className = (string) $this->nodeNameResolver->getName($class);
+        $className = (string) $this->getName($class);
         $classReflection = $this->reflectionProvider->getClass($className);
         $dataRecordClassName = $this->dataRecordResolver->resolveFullyQualifiedDataRecordClassNameFromControllerClassName($className);
         $tagValueNodes = [];
@@ -142,7 +142,7 @@ CODE_SAMPLE
             return true;
         }
 
-        $className = $this->nodeNameResolver->getName($class);
+        $className = $this->getName($class);
 
         if ($className === null) {
             return true;
