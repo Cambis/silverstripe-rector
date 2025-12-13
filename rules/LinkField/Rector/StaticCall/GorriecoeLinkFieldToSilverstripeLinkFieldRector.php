@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 
-use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
-use Cambis\SilverstripeRector\NodeFactory\NewFactory;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -14,11 +11,6 @@ use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Type;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
-use Rector\NodeAnalyzer\ArgsAnalyzer;
-use Rector\PhpParser\Node\Value\ValueResolver;
-use Rector\Rector\AbstractRector;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function array_filter;
@@ -33,7 +25,7 @@ use function is_string;
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector\GorriecoeLinkFieldToSilverstripeLinkFieldRectorTest
  */
-final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractLinkFieldRector
 {
     /**
      * @var array<string, string>
@@ -56,14 +48,6 @@ final class GorriecoeLinkFieldToSilverstripeLinkFieldRector extends AbstractRect
      */
     private const MULTI_LINK_FIELD_CLASS = 'SilverStripe\LinkField\Form\MultiLinkField';
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly NewFactory $newFactory,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly ValueResolver $valueResolver
-    ) {
-    }
-
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
@@ -81,12 +65,6 @@ CODE_SAMPLE
         ]);
     }
 
-    #[Override]
-    public function getNodeTypes(): array
-    {
-        return [New_::class, StaticCall::class];
-    }
-
     /**
      * @param New_|StaticCall $node
      */
@@ -97,15 +75,19 @@ CODE_SAMPLE
             return null;
         }
 
-        if (!$this->isName($node->class, 'gorriecoe\LinkField\LinkField')) {
-            return null;
-        }
-
         if ($node instanceof StaticCall && !$this->isName($node->name, 'create')) {
             return null;
         }
 
         if ($this->argsAnalyzer->hasNamedArg($node->getArgs())) {
+            return null;
+        }
+
+        if ($this->isName($node->class, 'Silverstripe\Forms\GridField\GridField')) {
+            return $this->refactorGridField($node);
+        }
+
+        if (!$this->isName($node->class, 'gorriecoe\LinkField\LinkField')) {
             return null;
         }
 
@@ -172,12 +154,6 @@ CODE_SAMPLE
         }
 
         return $node;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     /**

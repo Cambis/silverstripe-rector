@@ -4,26 +4,13 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 
-use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
-use Cambis\Silverstan\Normaliser\Normaliser;
-use Cambis\SilverstripeRector\NodeFactory\NewFactory;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
-use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
-use PHPStan\Type\ObjectType;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
-use Rector\NodeAnalyzer\ArgsAnalyzer;
-use Rector\PhpParser\Node\Value\ValueResolver;
-use Rector\Rector\AbstractRector;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use function array_key_exists;
-use function is_array;
 use function is_string;
 use function rtrim;
 
@@ -32,17 +19,8 @@ use function rtrim;
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\StaticCall\SheadawsonLinkableFieldToSilverstripeLinkFieldRector\SheadawsonLinkableFieldToSilverstripeLinkFieldRectorTest
  */
-final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+final class SheadawsonLinkableFieldToSilverstripeLinkFieldRector extends AbstractLinkFieldRector
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly NewFactory $newFactory,
-        private readonly Normaliser $normaliser,
-        private readonly ValueResolver $valueResolver
-    ) {
-    }
-
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {
@@ -61,12 +39,6 @@ CODE_SAMPLE
 CODE_SAMPLE
             ),
         ]);
-    }
-
-    #[Override]
-    public function getNodeTypes(): array
-    {
-        return [New_::class, StaticCall::class];
     }
 
     /**
@@ -92,16 +64,10 @@ CODE_SAMPLE
         }
 
         if ($this->isName($node->class, 'SilverStripe\Forms\GridField\GridField')) {
-            return $this->refactorMultiLinkField($node);
+            return $this->refactorGridField($node);
         }
 
         return null;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     private function refactorLinkField(New_|StaticCall $node): ?Node
@@ -131,79 +97,6 @@ CODE_SAMPLE
 
         return $this->newFactory->createInjectable(
             'SilverStripe\LinkField\Form\LinkField',
-            $args,
-            $node instanceof StaticCall
-        );
-    }
-
-    private function refactorMultiLinkField(New_|StaticCall $node): ?Node
-    {
-        $fieldNameArg = $node->getArgs()[0] ?? null;
-        $fieldTitleArg = $node->getArgs()[1] ?? null;
-        $relationArg = $node->getArgs()[2] ?? null;
-
-        // Safety checks...
-        if (!$fieldNameArg instanceof Arg) {
-            return null;
-        }
-
-        if (!$relationArg instanceof Arg) {
-            return null;
-        }
-
-        // Resolve the parent from $this->RelationName()
-        if (!$relationArg->value instanceof MethodCall) {
-            return null;
-        }
-
-        // Check that $this is a DataObject
-        if (!$this->isObjectType($relationArg->value->var, new ObjectType('SilverStripe\ORM\DataObject'))) {
-            return null;
-        }
-
-        // Grab the type of $this
-        $parentClass = $this->getType($relationArg->value->var);
-
-        // Safety check
-        if ($parentClass->getObjectClassNames() === []) {
-            return null;
-        }
-
-        $fieldName = $this->valueResolver->getValue($fieldNameArg);
-
-        if (!is_string($fieldName)) {
-            return null;
-        }
-
-        // Grab the `many_many` config
-        $manyMany = $this->configurationResolver->get($parentClass->getObjectClassNames()[0], 'many_many');
-
-        // Safety check
-        if (!is_array($manyMany) || $manyMany === []) {
-            return null;
-        }
-
-        // Check that the relation is in `many_many`
-        if (!array_key_exists($fieldName, $manyMany)) {
-            return null;
-        }
-
-        // Verify that the relation object is as expected
-        /** @var string[] $manyMany */
-        if ($this->normaliser->normaliseDotNotation($manyMany[$fieldName]) !== 'Sheadawson\Linkable\Models\Link') {
-            return null;
-        }
-
-        // Build the args
-        $args = [$fieldNameArg];
-
-        // Add the title arg if it exists
-        if ($fieldTitleArg instanceof Arg) {
-            $args[] = $fieldTitleArg;
-        }
-
-        return $this->newFactory->createInjectable(
-            'SilverStripe\LinkField\Form\MultiLinkField',
             $args,
             $node instanceof StaticCall
         );
