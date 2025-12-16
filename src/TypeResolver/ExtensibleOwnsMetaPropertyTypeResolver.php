@@ -20,14 +20,30 @@ use function is_array;
 /**
  * This resolver tracks extensible extensions and saves them in a meta property `__getOwns`.
  */
-final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
+final class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyTypeResolverInterface, LazyTypeResolverInterface
 {
-    public function __construct(
-        private ClassReflectionAnalyser $classReflectionAnalyser,
-        private ConfigurationResolver $configurationResolver,
-        private ReflectionProvider $reflectionProvider,
-        private TypeFactory $typeFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassReflectionAnalyser $classReflectionAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private TypeFactory $typeFactory;
+    public function __construct(ClassReflectionAnalyser $classReflectionAnalyser, ConfigurationResolver $configurationResolver, ReflectionProvider $reflectionProvider, TypeFactory $typeFactory)
+    {
+        $this->classReflectionAnalyser = $classReflectionAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->reflectionProvider = $reflectionProvider;
+        $this->typeFactory = $typeFactory;
     }
 
     #[Override]
@@ -38,9 +54,10 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
 
     /**
      * @phpstan-ignore-next-line return.unusedType
+     * @return int|true
      */
     #[Override]
-    public function getExcludeMiddleware(): true|int
+    public function getExcludeMiddleware()
     {
         return ConfigurationResolver::EXCLUDE_INHERITED;
     }

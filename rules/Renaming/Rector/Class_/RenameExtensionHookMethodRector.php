@@ -30,13 +30,17 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RenameExtensionHookMethodRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface, RelatedConfigInterface
 {
     /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
      * @var list<RenameExtensionHookMethod>
      */
     private array $hookMethodRenames = [];
 
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser
-    ) {
+    public function __construct(ClassAnalyser $classAnalyser)
+    {
+        $this->classAnalyser = $classAnalyser;
     }
 
     #[Override]

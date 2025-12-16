@@ -28,12 +28,28 @@ use function is_array;
  */
 final class SilverstripeLinkLegacyRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly ConfigurationResolver $configurationResolver,
-        private readonly PropertyFactory $propertyFactory,
-        private readonly PropertyManipulator $propertyManipulator
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    private PropertyFactory $propertyFactory;
+    /**
+     * @readonly
+     */
+    private PropertyManipulator $propertyManipulator;
+    public function __construct(ClassAnalyser $classAnalyser, ConfigurationResolver $configurationResolver, PropertyFactory $propertyFactory, PropertyManipulator $propertyManipulator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->configurationResolver = $configurationResolver;
+        $this->propertyFactory = $propertyFactory;
+        $this->propertyManipulator = $propertyManipulator;
     }
 
     #[Override]
