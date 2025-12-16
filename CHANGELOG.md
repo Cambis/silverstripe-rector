@@ -1,5 +1,12 @@
 # silverstripe-rector
 
+## 2.1.7
+
+### Patch Changes
+
+- 5a58355: Migrate gorriecoe link gridfield to multilinkfield
+- 2c89d21: Address linting issues, add scheduled lint job
+
 ## 2.1.6
 
 ### Patch Changes
