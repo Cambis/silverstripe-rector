@@ -42,7 +42,7 @@ return static function (RectorConfig $rectorConfig): void {
     ];
 
     foreach ($silverstanServices as $silverstanService) {
-        $rectorConfig->singleton($silverstanService, static function (RectorConfig $rectorConfig) use ($silverstanService): mixed {
+        $rectorConfig->singleton($silverstanService, static function (RectorConfig $rectorConfig) use ($silverstanService) {
             $phpStanServicesFactory = $rectorConfig->make(PHPStanServicesFactory::class);
 
             return $phpStanServicesFactory->getByType($silverstanService);

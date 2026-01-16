@@ -26,13 +26,33 @@ use function is_string;
 
 abstract class AbstractLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
-    public function __construct(
-        protected readonly ArgsAnalyzer $argsAnalyzer,
-        protected readonly ConfigurationResolver $configurationResolver,
-        protected readonly NewFactory $newFactory,
-        protected readonly Normaliser $normaliser,
-        protected readonly ValueResolver $valueResolver
-    ) {
+    /**
+     * @readonly
+     */
+    protected ArgsAnalyzer $argsAnalyzer;
+    /**
+     * @readonly
+     */
+    protected ConfigurationResolver $configurationResolver;
+    /**
+     * @readonly
+     */
+    protected NewFactory $newFactory;
+    /**
+     * @readonly
+     */
+    protected Normaliser $normaliser;
+    /**
+     * @readonly
+     */
+    protected ValueResolver $valueResolver;
+    public function __construct(ArgsAnalyzer $argsAnalyzer, ConfigurationResolver $configurationResolver, NewFactory $newFactory, Normaliser $normaliser, ValueResolver $valueResolver)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
+        $this->configurationResolver = $configurationResolver;
+        $this->newFactory = $newFactory;
+        $this->normaliser = $normaliser;
+        $this->valueResolver = $valueResolver;
     }
 
     final public function getNodeTypes(): array
@@ -45,7 +65,10 @@ abstract class AbstractLinkFieldRector extends AbstractRector implements Documen
         return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
-    final protected function refactorGridField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    final protected function refactorGridField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;

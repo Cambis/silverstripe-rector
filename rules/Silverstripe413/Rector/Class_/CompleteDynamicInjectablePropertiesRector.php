@@ -27,13 +27,33 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
 {
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly MissingPropertiesFactory $missingPropertiesFactory,
-        private readonly PropertyPresenceChecker $propertyPresenceChecker,
-        private readonly ReflectionProvider $reflectionProvider,
-        private readonly TypeResolver $typeResolver
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private MissingPropertiesFactory $missingPropertiesFactory;
+    /**
+     * @readonly
+     */
+    private PropertyPresenceChecker $propertyPresenceChecker;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    /**
+     * @readonly
+     */
+    private TypeResolver $typeResolver;
+    public function __construct(ClassAnalyser $classAnalyser, MissingPropertiesFactory $missingPropertiesFactory, PropertyPresenceChecker $propertyPresenceChecker, ReflectionProvider $reflectionProvider, TypeResolver $typeResolver)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->missingPropertiesFactory = $missingPropertiesFactory;
+        $this->propertyPresenceChecker = $propertyPresenceChecker;
+        $this->reflectionProvider = $reflectionProvider;
+        $this->typeResolver = $typeResolver;
     }
 
     #[Override]
@@ -101,7 +121,7 @@ CODE_SAMPLE
             return null;
         }
 
-        $node->stmts = [...$newProperties, ...$node->stmts];
+        $node->stmts = array_merge($newProperties, $node->stmts);
 
         return $node;
     }

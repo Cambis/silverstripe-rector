@@ -60,23 +60,17 @@ CODE_SAMPLE
             'has_one'
         );
 
-        $newDocTagValueNodes = [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
-                $hasOneProperties
-            ),
-        ];
+        $newDocTagValueNodes = array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
+            $hasOneProperties
+        ));
 
         $hasOneMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
             'has_one'
         );
 
-        return [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
-                $hasOneMethods
-            ),
-        ];
+        return array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToMethodTagValueNodes(
+            $hasOneMethods
+        ));
     }
 }

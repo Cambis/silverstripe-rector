@@ -70,7 +70,10 @@ CODE_SAMPLE
         return null;
     }
 
-    private function refactorLinkField(New_|StaticCall $node): ?Node
+    /**
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
+     */
+    private function refactorLinkField($node): ?Node
     {
         $fieldNameArg = $node->getArgs()[0] ?? null;
         $fieldTitleArg = $node->getArgs()[1] ?? null;
