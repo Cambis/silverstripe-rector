@@ -8,10 +8,8 @@ use Cambis\SilverstripeRector\Silverstripe61\NodeAnalyser\DataObjectArgsAnalyser
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Expr\Variable;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
-use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -26,8 +24,7 @@ final class DataObjectGetByIdCachedRector extends AbstractRector implements Docu
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
-        private readonly DataObjectArgsAnalyser $dataObjectArgsAnalyser,
-        private readonly ValueResolver $valueResolver
+        private readonly DataObjectArgsAnalyser $dataObjectArgsAnalyser
     ) {
     }
 
@@ -82,13 +79,13 @@ CODE_SAMPLE
             return null;
         }
 
-        $dataClass = $this->dataObjectArgsAnalyser->getDataClassNameFromArgs($node->getArgs()) ?? $this->getName($node->class);
+        $dataClass = $this->dataObjectArgsAnalyser->getDataClassName($node);
 
         if ($dataClass === null || $dataClass === '') {
             return null;
         }
 
-        $id = $this->dataObjectArgsAnalyser->getIdFromArgs($node->getArgs());
+        $id = $this->dataObjectArgsAnalyser->getId($node);
 
         // This shouldn't happen in reality but we'll fail silently just in case
         if (!$id instanceof Arg) {
@@ -98,21 +95,11 @@ CODE_SAMPLE
         // Call to `DataObject::get()`
         $dataListCall = $this->nodeFactory->createStaticCall($dataClass, 'get');
 
-        $isCachedArg = $this->dataObjectArgsAnalyser->getIsCachedFromArgs($node->getArgs());
-        $isCached = false;
-
-        if (!$isCachedArg instanceof Arg) {
-            $isCached = true;
-        } elseif ($isCachedArg->value instanceof Variable) {
-            $isCached = $isCachedArg;
-        } else {
-            $isCached = $this->valueResolver->getValue($isCachedArg);
-        }
-
-        // Add the call to `DataList::setUseCache()`, skip if the original argument was a constant `false`
-        if ($isCached !== false) {
-            $dataListCall = $this->nodeFactory->createMethodCall($dataListCall, 'setUseCache', [$isCached]);
-        }
+        $dataListCall = $this->nodeFactory->createMethodCall(
+            $dataListCall,
+            'setUseCache',
+            [$this->dataObjectArgsAnalyser->getIsCached($node) ?? true]
+        );
 
         return $this->nodeFactory->createMethodCall($dataListCall, 'byID', [$id]);
     }

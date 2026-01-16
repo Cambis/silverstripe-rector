@@ -20,8 +20,8 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataO
 
 $cached = false;
 
-\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector\Source\Foo::get()->first();
+\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector\Source\Foo::get()->setUseCache(false)->filter('')->first();
 
-\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector\Source\Foo::get()->setUseCache($cached)->first();
+\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetOneCachedRector\Source\Foo::get()->setUseCache($cached)->filter('')->first();
 
 ?>

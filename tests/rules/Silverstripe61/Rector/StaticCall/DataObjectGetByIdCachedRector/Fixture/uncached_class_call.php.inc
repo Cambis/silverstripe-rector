@@ -20,7 +20,7 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataO
 
 $cached = false;
 
-\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector\Source\Foo::get()->byID(1);
+\Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector\Source\Foo::get()->setUseCache(false)->byID(1);
 
 \Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectGetByIdCachedRector\Source\Foo::get()->setUseCache($cached)->byID(1);
 
