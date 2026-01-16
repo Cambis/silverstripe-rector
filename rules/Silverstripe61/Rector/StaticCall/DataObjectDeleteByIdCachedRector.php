@@ -74,13 +74,13 @@ CODE_SAMPLE
             return null;
         }
 
-        $dataClass = $this->dataObjectArgsAnalyser->getDataClassNameFromArgs($node->getArgs()) ?? '';
+        $dataClass = $this->dataObjectArgsAnalyser->getDataClassName($node) ?? '';
 
         if ($dataClass === '') {
             return null;
         }
 
-        $id = $this->dataObjectArgsAnalyser->getIdFromArgs($node->getArgs());
+        $id = $this->dataObjectArgsAnalyser->getId($node);
 
         // This shouldn't happen in reality but we'll fail silently just in case
         if (!$id instanceof Arg) {
