@@ -1,5 +1,11 @@
 # silverstripe-rector
 
+## 2.1.8
+
+### Patch Changes
+
+- 1a9d842: Handle filtering and sort for DataList::setUseCache()
+
 ## 2.1.7
 
 ### Patch Changes
