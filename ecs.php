@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
@@ -27,6 +28,16 @@ return ECSConfig::configure()
         [
             'allowFallbackGlobalFunctions' => false,
             'allowFallbackGlobalConstants' => false,
+        ]
+    )
+    ->withConfiguredRule(
+        OrderedImportsFixer::class,
+        [
+            'imports_order' => [
+                'class',
+                'function',
+                'const',
+            ],
         ]
     )
     ->withPreparedSets(common: true, psr12: true)
