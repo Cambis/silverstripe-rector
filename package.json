@@ -8,11 +8,11 @@
     "@commitlint/cli": "^18.4.3",
     "@commitlint/types": "^18.4.3",
     "commitlint-config-gitmoji": "^2.3.1",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.0"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.1"
