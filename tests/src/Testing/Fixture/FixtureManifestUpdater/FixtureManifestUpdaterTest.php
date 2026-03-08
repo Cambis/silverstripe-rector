@@ -17,11 +17,9 @@ final class FixtureManifestUpdaterTest extends AbstractSilverstripeRectorTestCas
 {
     private ?string $inputFilePath = null;
 
-    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
-
         if ($this->inputFilePath !== null) {
             FileSystem::delete($this->inputFilePath);
         }
