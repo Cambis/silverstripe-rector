@@ -23,6 +23,7 @@
     "allow-plugins": {
       "composer/installers": true,
       "silverstripe/vendor-plugin": true
-    }
+    },
+    "policy": false
   }
 }

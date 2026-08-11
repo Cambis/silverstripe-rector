@@ -39,7 +39,7 @@ final class SilverstripeSetList
     public const PROTECT_EXTENSION_HOOKS = __DIR__ . '/../../../config/set/protect-extension-hooks.php';
 
     /**
-     * Add phpdoc annotations to magic properties and methods.
+     * Add phpdoc annotations to magic properties and methods. Run with `--composer-based` flag.
      */
     public const TYPE_DECLARATION_DOCBLOCKS = __DIR__ . '/../../../config/set/type-declaration-docblocks.php';
 }

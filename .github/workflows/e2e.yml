@@ -89,7 +89,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
 
       # Run rector on the e2e directory
-      - run: vendor/bin/rector process --dry-run --ansi --config rector-${SILVERSTRIPE_RECTOR_SET//./}.php --clear-cache --output-format json >> output.txt
+      - run: vendor/bin/rector process --dry-run --ansi --composer-based --config rector-${SILVERSTRIPE_RECTOR_SET//./}.php --clear-cache --output-format json >> output.txt
         working-directory: ${{ matrix.directory }}
         continue-on-error: true
         env:
