@@ -53,7 +53,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
         protected readonly TypeResolver $typeResolver,
-        protected readonly StaticTypeMapper $staticTypeMapper,
+        protected readonly StaticTypeMapper $staticTypeMapper
     ) {
     }
 

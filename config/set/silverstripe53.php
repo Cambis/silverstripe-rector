@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Cambis\SilverstripeRector\Configuration\SilverstripeOption;
 use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabDeprecatedNonArrayArgumentRector;
 use Cambis\SilverstripeRector\Silverstripe53\Rector\MethodCall\ProcessJobQueueTaskGetQueueToAbstractQueuedJobGetQueueRector;
 use Rector\Config\RectorConfig;
@@ -12,12 +11,6 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 
 // See: https://docs.silverstripe.org/en/5/changelogs/5.3.0/
 return static function (RectorConfig $rectorConfig): void {
-    // Add Silverstripe53 PHPStan patch
-    $rectorConfig->phpstanConfigs([
-        SilverstripeOption::PHPSTAN_FOR_RECTOR_PATH,
-        SilverstripeOption::PHPSTAN_FOR_RECTOR_SILVERSTRIPE_53_PATH,
-    ]);
-
     $rectorConfig->import(__DIR__ . '/../config.php');
 
     // https://github.com/silverstripe/silverstripe-framework/pull/11236

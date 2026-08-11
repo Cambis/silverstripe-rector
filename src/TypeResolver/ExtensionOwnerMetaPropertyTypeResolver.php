@@ -41,7 +41,8 @@ final readonly class ExtensionOwnerMetaPropertyTypeResolver implements PropertyT
     }
 
     /**
-     * @phpstan-ignore-next-line return.unusedType
+     * @return int-mask<ConfigurationResolver::EXCLUDE_*>|true
+     * @phpstan-ignore return.unusedType
      */
     #[Override]
     public function getExcludeMiddleware(): true|int

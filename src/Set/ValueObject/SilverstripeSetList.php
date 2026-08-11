@@ -37,4 +37,9 @@ final class SilverstripeSetList
      * Change the visibility of public extension hook methods to protected.
      */
     public const PROTECT_EXTENSION_HOOKS = __DIR__ . '/../../../config/set/protect-extension-hooks.php';
+
+    /**
+     * Add phpdoc annotations to magic properties and methods.
+     */
+    public const TYPE_DECLARATION_DOCBLOCKS = __DIR__ . '/../../../config/set/type-declaration-docblocks.php';
 }

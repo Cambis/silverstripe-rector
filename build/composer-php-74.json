@@ -16,7 +16,7 @@
   "require": {
     "php": "^7.4 || ^8.0",
     "cambis/silverstan": "^2.1.7",
-    "rector/rector": "^2.1.7"
+    "rector/rector": "^2.6"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

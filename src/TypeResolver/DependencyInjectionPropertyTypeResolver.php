@@ -39,6 +39,7 @@ final class DependencyInjectionPropertyTypeResolver implements PropertyTypeResol
     }
 
     /**
+     * @return int-mask<ConfigurationResolver::EXCLUDE_*>|true
      * @phpstan-ignore return.unusedType
      */
     #[Override]

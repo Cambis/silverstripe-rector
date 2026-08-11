@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeLevelSetList;
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
@@ -11,4 +12,5 @@ return RectorConfig::configure()
     ])
     ->withSets([
         SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_54,
+        SilverstripeSetList::TYPE_DECLARATION_DOCBLOCKS,
     ]);
