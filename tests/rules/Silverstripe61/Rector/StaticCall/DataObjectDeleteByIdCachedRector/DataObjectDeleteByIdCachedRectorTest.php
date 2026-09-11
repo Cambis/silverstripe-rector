@@ -6,6 +6,7 @@ namespace Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataO
 
 use Cambis\SilverstripeRector\Testing\PHPUnit\AbstractSilverstripeRectorTestCase;
 use Iterator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class DataObjectDeleteByIdCachedRectorTest extends AbstractSilverstripeRectorTestCase
@@ -24,5 +25,11 @@ final class DataObjectDeleteByIdCachedRectorTest extends AbstractSilverstripeRec
     public function provideConfigFilePath(): string
     {
         return __DIR__ . '/config/configured_rule.php';
+    }
+
+    #[Override]
+    protected function provideComposerJsonFilePath(): string
+    {
+        return __DIR__ . '/config/composer.json';
     }
 }

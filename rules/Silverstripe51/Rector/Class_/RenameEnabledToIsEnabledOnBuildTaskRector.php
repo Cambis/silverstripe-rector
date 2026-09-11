@@ -13,6 +13,8 @@ use PhpParser\Node\VarLikeIdentifier;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Privatization\NodeManipulator\VisibilityManipulator;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -21,12 +23,17 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe51\Rector\Class_\RenameEnabledToIsEnabledOnBuildTaskRector\RenameEnabledToIsEnabledOnBuildTaskRectorTest
  * @changelog https://docs.silverstripe.org/en/5/changelogs/5.1.0/#api-changes-framework
  */
-final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector implements DocumentedRuleInterface
+final class RenameEnabledToIsEnabledOnBuildTaskRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     public function __construct(
         private readonly ReflectionProvider $reflectionProvider,
         private readonly VisibilityManipulator $visibilityManipulator
     ) {
+    }
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.1');
     }
 
     #[Override]

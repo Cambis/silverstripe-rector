@@ -10,6 +10,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -19,7 +21,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\RemoteFileModalExtensionGetMethodsRector\RemoteFileModalExtensionGetMethodsRectorTest
  */
-final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface
+final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     /**
      * @var list<string>
@@ -32,6 +34,11 @@ final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector impl
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer
     ) {
+    }
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.4');
     }
 
     #[Override]

@@ -12,6 +12,8 @@ use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -19,12 +21,17 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe61\Rector\StaticCall\DataObjectDeleteByIdCachedRector\DataObjectDeleteByIdCachedRectorTest
  */
-final class DataObjectDeleteByIdCachedRector extends AbstractRector implements DocumentedRuleInterface
+final class DataObjectDeleteByIdCachedRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
         private readonly DataObjectArgsAnalyser $dataObjectArgsAnalyser
     ) {
+    }
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=6.1');
     }
 
     public function getRuleDefinition(): RuleDefinition
