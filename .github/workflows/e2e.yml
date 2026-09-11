@@ -21,40 +21,40 @@ jobs:
         include:
           - directory: e2e/basic-app
             php-version: 7.4
-            framework-version: 4.13
-            cms-version: 4.13
+            framework-version: 4.13.0
+            cms-version: 4.13.0
           - directory: e2e/basic-app
             php-version: 8.1
-            framework-version: 5.4
-            cms-version: 5.4
+            framework-version: 5.4.0
+            cms-version: 5.4.0
           - directory: e2e/basic-app
             php-version: 8.3
-            framework-version: 6.0
-            cms-version: 6.0
+            framework-version: 6.0.0
+            cms-version: 6.0.0
           - directory: e2e/basic-module
             php-version: 7.4
-            framework-version: 4.13
-            cms-version: 4.13
+            framework-version: 4.13.0
+            cms-version: 4.13.0
           - directory: e2e/basic-module
             php-version: 8.1
-            framework-version: 5.4
-            cms-version: 5.4
+            framework-version: 5.4.0
+            cms-version: 5.4.0
           - directory: e2e/basic-module
             php-version: 8.3
-            framework-version: 6.0
-            cms-version: 6.0
+            framework-version: 6.0.0
+            cms-version: 6.0.0
           - directory: e2e/rename-data-extension-subclass
             php-version: 8.1
-            framework-version: 5.3
+            framework-version: 5.3.0
           - directory: e2e/rename-data-extension-subclass
             php-version: 8.3
-            framework-version: 5.4
+            framework-version: 5.4.0
           - directory: e2e/gorriecoe-link-to-silverstripe-linkfield
             php-version: 8.1
-            framework-version: 5.3
+            framework-version: 5.3.0
           - directory: e2e/sheadawson-linkable-to-silverstripe-linkfield
             php-version: 8.1
-            framework-version: 5.3
+            framework-version: 5.3.0
     steps:
       # Build source code
       - uses: actions/checkout@v4
@@ -89,7 +89,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
 
       # Run rector on the e2e directory
-      - run: vendor/bin/rector process --dry-run --ansi --composer-based --config rector-${SILVERSTRIPE_RECTOR_SET//./}.php --clear-cache --output-format json >> output.txt
+      - run: vendor/bin/rector process --dry-run --ansi --config rector.php --clear-cache --output-format json >> output.txt
         working-directory: ${{ matrix.directory }}
         continue-on-error: true
         env:
