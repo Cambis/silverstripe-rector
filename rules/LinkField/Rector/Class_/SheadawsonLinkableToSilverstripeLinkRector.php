@@ -8,12 +8,10 @@ use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\SilverstripeRector\LinkField\NodeManipulator\PropertyManipulator;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\NodeFactory\PropertyFactory;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -26,7 +24,7 @@ use function is_array;
  *
  * @see \Cambis\SilverstripeRector\Tests\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector\GorriecoeLinkToSilverstripeLinkRectorTest
  */
-final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+final class SheadawsonLinkableToSilverstripeLinkRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
      * @var string
@@ -138,12 +136,6 @@ CODE_SAMPLE
         }
 
         return $node;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     /**

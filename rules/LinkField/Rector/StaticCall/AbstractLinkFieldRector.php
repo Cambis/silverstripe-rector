@@ -7,14 +7,12 @@ namespace Cambis\SilverstripeRector\LinkField\Rector\StaticCall;
 use Cambis\Silverstan\ConfigurationResolver\ConfigurationResolver;
 use Cambis\Silverstan\Normaliser\Normaliser;
 use Cambis\SilverstripeRector\NodeFactory\NewFactory;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PHPStan\Type\ObjectType;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
@@ -24,7 +22,7 @@ use function in_array;
 use function is_array;
 use function is_string;
 
-abstract class AbstractLinkFieldRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+abstract class AbstractLinkFieldRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         protected readonly ArgsAnalyzer $argsAnalyzer,
@@ -38,11 +36,6 @@ abstract class AbstractLinkFieldRector extends AbstractRector implements Documen
     final public function getNodeTypes(): array
     {
         return [New_::class, StaticCall::class];
-    }
-
-    final public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     final protected function refactorGridField(New_|StaticCall $node): ?Node

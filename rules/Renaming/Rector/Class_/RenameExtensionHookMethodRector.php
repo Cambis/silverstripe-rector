@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\Renaming\Rector\Class_;
 
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\Renaming\ValueObject\RenameExtensionHookMethod;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use InvalidArgumentException;
 use Override;
 use PhpParser\Node;
@@ -16,7 +15,6 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\ObjectType;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Rector\AbstractRector;
@@ -27,7 +25,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * @see \Cambis\SilverstripeRector\Tests\Renaming\Rector\Class_\RenameExtensionHookMethodRector\RenameExtensionHookMethodRectorTest
  */
-final class RenameExtensionHookMethodRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface, RelatedConfigInterface
+final class RenameExtensionHookMethodRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface
 {
     /**
      * @var list<RenameExtensionHookMethod>
@@ -131,12 +129,6 @@ CODE_SAMPLE,
 
         /** @var list<RenameExtensionHookMethod> $configuration */
         $this->hookMethodRenames = $configuration;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     private function shouldSkipRename(string $methodName, RenameExtensionHookMethod $hookMethodRename, ClassMethod $classMethod, ClassReflection $classReflection, Scope $scope): bool

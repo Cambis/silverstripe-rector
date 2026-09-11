@@ -13,4 +13,5 @@ return RectorConfig::configure()
     ->withSets([
         SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_54,
         SilverstripeSetList::TYPE_DECLARATION_DOCBLOCKS,
-    ]);
+    ])
+    ->withComposerBased();

@@ -24,6 +24,7 @@ return RectorConfig::configure()
         earlyReturn: true,
         phpunitCodeQuality: true
     )
+    ->withComposerBased(phpunit: true)
     ->withRules([
         DeclareStrictTypesRector::class,
     ])

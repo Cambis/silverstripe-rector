@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Cambis\SilverstripeRector\LinkField\Rector\Class_\GorriecoeLinkToSilverstripeLinkRector;
 use Cambis\SilverstripeRector\LinkField\Rector\StaticCall\GorriecoeLinkFieldToSilverstripeLinkFieldRector;
 use Rector\Config\RectorConfig;
@@ -10,6 +12,7 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\Renaming\ValueObject\RenameProperty;
 
 return RectorConfig::configure()
+    ->withSets([__DIR__ . '/../../config/config.php'])
     ->withRules([
         GorriecoeLinkToSilverstripeLinkRector::class,
         GorriecoeLinkFieldToSilverstripeLinkFieldRector::class,
