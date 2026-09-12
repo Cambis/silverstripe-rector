@@ -117,8 +117,24 @@ CODE_SAMPLE
         // Migrate types to LinkField::setAllowedTypes()
         if (is_array($legacyAllowedTypes) && $legacyAllowedTypes !== []) {
 
+            $arrayIsListFunction = function (array $array): bool {
+                if (function_exists('array_is_list')) {
+                    return array_is_list($array);
+                }
+                if ($array === []) {
+                    return true;
+                }
+                $current_key = 0;
+                foreach ($array as $key => $noop) {
+                    if ($key !== $current_key) {
+                        return false;
+                    }
+                    ++$current_key;
+                }
+                return true;
+            };
             // Turn into list if it is not, new config is a list
-            if (!array_is_list($legacyAllowedTypes)) {
+            if (!$arrayIsListFunction($legacyAllowedTypes)) {
                 $legacyAllowedTypes = array_keys($legacyAllowedTypes);
             }
 
@@ -174,8 +190,9 @@ CODE_SAMPLE
 
     /**
      * Resolve the class of form field to use. Single relations should use `LinkField`, while multi relations should use `MultiLinkField`.
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\StaticCall $node
      */
-    private function resolveFormFieldClass(New_|StaticCall $node): string
+    private function resolveFormFieldClass($node): string
     {
         $name = $node->getArgs()[0] ?? null;
 

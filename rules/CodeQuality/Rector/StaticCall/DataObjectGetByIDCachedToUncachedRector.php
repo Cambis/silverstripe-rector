@@ -24,9 +24,13 @@ use function is_string;
  */
 final class DataObjectGetByIDCachedToUncachedRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ReflectionProvider $reflectionProvider,
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(ReflectionProvider $reflectionProvider)
+    {
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     #[Override]

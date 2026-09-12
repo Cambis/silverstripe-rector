@@ -26,11 +26,23 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class RemoveGetOwnerMethodAnnotationFromExtensionsRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
-    public function __construct(
-        private readonly ClassAnalyser $classAnalyser,
-        private readonly DocBlockUpdater $docBlockUpdater,
-        private readonly PhpDocInfoFactory $phpDocInfoFactory
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private DocBlockUpdater $docBlockUpdater;
+    /**
+     * @readonly
+     */
+    private PhpDocInfoFactory $phpDocInfoFactory;
+    public function __construct(ClassAnalyser $classAnalyser, DocBlockUpdater $docBlockUpdater, PhpDocInfoFactory $phpDocInfoFactory)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->docBlockUpdater = $docBlockUpdater;
+        $this->phpDocInfoFactory = $phpDocInfoFactory;
     }
 
     public function provideComposerPackageConstraint(): ComposerPackageConstraint

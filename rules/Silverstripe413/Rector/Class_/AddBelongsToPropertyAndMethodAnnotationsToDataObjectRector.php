@@ -60,23 +60,17 @@ CODE_SAMPLE
             'belongs_to'
         );
 
-        $newDocTagValueNodes = [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToPropertyTagValueNodes(
-                $belongsToProperties
-            ),
-        ];
+        $newDocTagValueNodes = array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToPropertyTagValueNodes(
+            $belongsToProperties
+        ));
 
         $belongsToMethods = $this->typeResolver->resolveInjectedMethodTypesFromConfigurationProperty(
             $classReflection,
             'belongs_to'
         );
 
-        return [
-            ...$newDocTagValueNodes,
-            ...$this->phpDocHelper->convertTypesToMethodTagValueNodes(
-                $belongsToMethods
-            ),
-        ];
+        return array_merge($newDocTagValueNodes, $this->phpDocHelper->convertTypesToMethodTagValueNodes(
+            $belongsToMethods
+        ));
     }
 }

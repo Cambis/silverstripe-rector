@@ -20,14 +20,30 @@ use Rector\StaticTypeMapper\StaticTypeMapper;
 /**
  * @implements AnnotationComparatorInterface<MethodTagValueNode>
  */
-final readonly class MethodAnnotationComparator implements AnnotationComparatorInterface
+final class MethodAnnotationComparator implements AnnotationComparatorInterface
 {
-    public function __construct(
-        private ClassAnalyser $classAnalyser,
-        private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard,
-        private StaticTypeMapper $staticTypeMapper,
-        private TypeComparator $typeComparator
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyser $classAnalyser;
+    /**
+     * @readonly
+     */
+    private NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard;
+    /**
+     * @readonly
+     */
+    private StaticTypeMapper $staticTypeMapper;
+    /**
+     * @readonly
+     */
+    private TypeComparator $typeComparator;
+    public function __construct(ClassAnalyser $classAnalyser, NewPhpDocFromPHPStanTypeGuard $newPhpDocFromPHPStanTypeGuard, StaticTypeMapper $staticTypeMapper, TypeComparator $typeComparator)
+    {
+        $this->classAnalyser = $classAnalyser;
+        $this->newPhpDocFromPHPStanTypeGuard = $newPhpDocFromPHPStanTypeGuard;
+        $this->staticTypeMapper = $staticTypeMapper;
+        $this->typeComparator = $typeComparator;
     }
 
     #[Override]

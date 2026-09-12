@@ -24,6 +24,10 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    /**
      * @var list<string>
      */
     private const METHOD_NAMES = [
@@ -31,9 +35,9 @@ final class RemoteFileModalExtensionGetMethodsRector extends AbstractRector impl
         'getSchemaResponse',
     ];
 
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer
-    ) {
+    public function __construct(ArgsAnalyzer $argsAnalyzer)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
     }
 
     public function provideComposerPackageConstraint(): ComposerPackageConstraint

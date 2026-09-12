@@ -24,9 +24,13 @@ use function array_filter;
  */
 final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
-    public function __construct(
-        private readonly ArgsAnalyzer $argsAnalyzer
-    ) {
+    /**
+     * @readonly
+     */
+    private ArgsAnalyzer $argsAnalyzer;
+    public function __construct(ArgsAnalyzer $argsAnalyzer)
+    {
+        $this->argsAnalyzer = $argsAnalyzer;
     }
 
     public function provideComposerPackageConstraint(): ComposerPackageConstraint

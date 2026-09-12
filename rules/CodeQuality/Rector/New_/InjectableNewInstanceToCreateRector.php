@@ -19,10 +19,18 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class InjectableNewInstanceToCreateRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ClassAnalyzer $classAnalyzer,
-        private readonly ReflectionProvider $reflectionProvider
-    ) {
+    /**
+     * @readonly
+     */
+    private ClassAnalyzer $classAnalyzer;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(ClassAnalyzer $classAnalyzer, ReflectionProvider $reflectionProvider)
+    {
+        $this->classAnalyzer = $classAnalyzer;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     #[Override]

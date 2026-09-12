@@ -17,7 +17,6 @@ use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function is_string;
-use function str_contains;
 
 /**
  * @deprecated 2.1.0 use Cambis\SilverstripeRector\CodeQuality\Rector\Assign\ConfigurationPropertyFetchToMethodCallRector instead.
@@ -26,9 +25,13 @@ use function str_contains;
  */
 final class StaticPropertyFetchToConfigGetRector extends AbstractRector implements DocumentedRuleInterface
 {
-    public function __construct(
-        private readonly ReflectionResolver $reflectionResolver,
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionResolver $reflectionResolver;
+    public function __construct(ReflectionResolver $reflectionResolver)
+    {
+        $this->reflectionResolver = $reflectionResolver;
     }
 
     #[Override]
@@ -132,6 +135,6 @@ CODE_SAMPLE
             return true;
         }
 
-        return str_contains((string) $propertyReflection->getDocComment(), '@internal');
+        return strpos((string) $propertyReflection->getDocComment(), '@internal') !== false;
     }
 }

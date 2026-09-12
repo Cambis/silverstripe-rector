@@ -14,15 +14,35 @@ use function dirname;
 use function glob;
 use function str_replace;
 
-final readonly class DataRecordResolver
+final class DataRecordResolver
 {
-    public function __construct(
-        private BetterNodeFinder $betterNodeFinder,
-        private FileFinder $fileFinder,
-        private NodeNameResolver $nodeNameResolver,
-        private RectorParser $rectorParser,
-        private ReflectionProvider $reflectionProvider
-    ) {
+    /**
+     * @readonly
+     */
+    private BetterNodeFinder $betterNodeFinder;
+    /**
+     * @readonly
+     */
+    private FileFinder $fileFinder;
+    /**
+     * @readonly
+     */
+    private NodeNameResolver $nodeNameResolver;
+    /**
+     * @readonly
+     */
+    private RectorParser $rectorParser;
+    /**
+     * @readonly
+     */
+    private ReflectionProvider $reflectionProvider;
+    public function __construct(BetterNodeFinder $betterNodeFinder, FileFinder $fileFinder, NodeNameResolver $nodeNameResolver, RectorParser $rectorParser, ReflectionProvider $reflectionProvider)
+    {
+        $this->betterNodeFinder = $betterNodeFinder;
+        $this->fileFinder = $fileFinder;
+        $this->nodeNameResolver = $nodeNameResolver;
+        $this->rectorParser = $rectorParser;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
     /**

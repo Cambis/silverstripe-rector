@@ -70,11 +70,9 @@ CODE_SAMPLE
             $types = $type->getTypes();
         }
 
-        return [
-            ...$this->phpDocHelper->convertTypesToMixinTagValueNodes(
-                $types,
-            ),
-        ];
+        return array_merge($this->phpDocHelper->convertTypesToMixinTagValueNodes(
+            $types,
+        ));
     }
 
     #[Override]
