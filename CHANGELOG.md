@@ -1,5 +1,18 @@
 # silverstripe-rector
 
+## 2.2.0
+
+### Minor Changes
+
+- 16d728c:
+  - Add composer based sets
+  - Compatibility with rector/rector:^2.6.6
+
+### Patch Changes
+
+- 9764e3d: Upgrade phpunit
+- adbc9bf: Address linting issue
+
 ## 2.1.8
 
 ### Patch Changes
