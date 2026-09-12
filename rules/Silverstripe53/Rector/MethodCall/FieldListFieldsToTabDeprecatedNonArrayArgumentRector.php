@@ -11,6 +11,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -21,7 +23,7 @@ use function array_keys;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe53\Rector\MethodCall\FieldListFieldsToTabDeprecatedNonArrayArgumentRector\FieldListFieldsToTabDeprecatedNonArrayArgumentRectorTest
  */
-final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends AbstractRector implements DocumentedRuleInterface
+final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     /**
      * @var array<string, string>
@@ -30,6 +32,11 @@ final class FieldListFieldsToTabDeprecatedNonArrayArgumentRector extends Abstrac
         'addFieldsToTab' => 'addFieldToTab',
         'removeFieldsFromTab' => 'removeFieldFromTab',
     ];
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.3');
+    }
 
     #[Override]
     public function getRuleDefinition(): RuleDefinition

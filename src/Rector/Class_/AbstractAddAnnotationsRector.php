@@ -9,7 +9,6 @@ use Cambis\SilverstripeRector\AnnotationUpdater\AnnotationUpdater;
 use Cambis\SilverstripeRector\DataRecordResolver\DataRecordResolver;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
 use Cambis\SilverstripeRector\PhpDocHelper\PhpDocHelper;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -24,13 +23,12 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\Exception\NotImplementedYetException;
 use Rector\Rector\AbstractRector;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 
-abstract class AbstractAddAnnotationsRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+abstract class AbstractAddAnnotationsRector extends AbstractRector implements DocumentedRuleInterface
 {
     /**
      * @var array<class-string<PhpDocTagValueNode>, string>
@@ -53,7 +51,7 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
         protected readonly PhpDocInfoFactory $phpDocInfoFactory,
         protected readonly ReflectionProvider $reflectionProvider,
         protected readonly TypeResolver $typeResolver,
-        protected readonly StaticTypeMapper $staticTypeMapper,
+        protected readonly StaticTypeMapper $staticTypeMapper
     ) {
     }
 
@@ -101,12 +99,6 @@ abstract class AbstractAddAnnotationsRector extends AbstractRector implements Do
         $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
 
         return $node;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     /**

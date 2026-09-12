@@ -37,7 +37,8 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
     }
 
     /**
-     * @phpstan-ignore-next-line return.unusedType
+     * @return int-mask<ConfigurationResolver::EXCLUDE_*>|true
+     * @phpstan-ignore return.unusedType
      */
     #[Override]
     public function getExcludeMiddleware(): true|int
@@ -59,7 +60,7 @@ final readonly class ExtensibleOwnsMetaPropertyTypeResolver implements PropertyT
         }
 
         /** @var array<string|null> $extensions */
-        $extensions = array_unique($extensions);
+        $extensions = array_unique($extensions); // @phpstan-ignore argument.type
         $types = [];
 
         foreach ($extensions as $extension) {

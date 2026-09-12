@@ -10,6 +10,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -20,11 +22,16 @@ use function array_filter;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\ViewableDataCachedCallToObjRector\ViewableDataCachedCallToObjRectorTest
  */
-final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface
+final class ViewableDataCachedCallToObjRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer
     ) {
+    }
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.4');
     }
 
     #[Override]

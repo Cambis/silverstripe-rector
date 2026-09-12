@@ -48,7 +48,7 @@ If you do not have an existing `rector.php` file, run the following command and 
 vendor/bin/rector
 ```
 
-Then use the `SilverstripeLevelSetList` and `SilverstripeSetList` sets and pick one of the constants.
+Then use the `SilverstripeSetList` sets and pick one of the constants.
 
 ```php
 <?php
@@ -66,7 +66,11 @@ return RectorConfig::configure()
         __DIR__ . '/app/tests',
     ])
     ->withSets([
-        SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_52,
+        // Automatically applies rules based on your composer.json
+        SilverstripeSetList::COMPOSER_BASED,
+        // Add magic method and property annotations to extensible objects
+        SilverstripeSetList::TYPE_DECLARATIONS_DOCBLOCKS,
+        // Help static analysis tools understand your code
         SilverstripeSetList::CODE_QUALITY,
     ]);
 ```

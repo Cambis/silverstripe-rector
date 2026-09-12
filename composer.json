@@ -16,7 +16,7 @@
     "require": {
         "php": "^8.3",
         "cambis/silverstan": "^2.1.7",
-        "rector/rector": "^2.1.7"
+        "rector/rector": "^2.6.6"
     },
     "require-dev": {
         "cweagans/composer-patches": "^1.7",

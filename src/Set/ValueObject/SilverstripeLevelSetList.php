@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Cambis\SilverstripeRector\Set\ValueObject;
 
+/**
+ * @deprecated since 2.2.0 use `SilverstripeSetList::COMPOSER_BASED` instead.
+ */
 final class SilverstripeLevelSetList
 {
     public const UP_TO_SILVERSTRIPE_413 = __DIR__ . '/../../../config/set/level/up-to-silverstripe413.php';

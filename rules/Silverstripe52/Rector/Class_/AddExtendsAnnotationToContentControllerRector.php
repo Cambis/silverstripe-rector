@@ -15,14 +15,21 @@ use PHPStan\Reflection\ClassReflection;
 use Rector\BetterPhpDocParser\ValueObject\PhpDoc\SpacingAwareTemplateTagValueNode;
 use Rector\Exception\ShouldNotHappenException;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe52\Rector\Class_\AddExtendsAnnotationToContentControllerRector\AddExtendsAnnotationToContentControllerRectorTest
  */
-final class AddExtendsAnnotationToContentControllerRector extends AbstractAddAnnotationsRector
+final class AddExtendsAnnotationToContentControllerRector extends AbstractAddAnnotationsRector implements ComposerPackageConstraintInterface
 {
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.2');
+    }
+
     #[Override]
     public function getRuleDefinition(): RuleDefinition
     {

@@ -6,7 +6,6 @@ namespace Cambis\SilverstripeRector\Silverstripe413\Rector\Class_;
 
 use Cambis\Silverstan\TypeResolver\TypeResolver;
 use Cambis\SilverstripeRector\NodeAnalyser\ClassAnalyser;
-use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Override;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -15,7 +14,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\Type;
 use Rector\CodeQuality\NodeFactory\MissingPropertiesFactory;
 use Rector\CodeQuality\ValueObject\DefinedPropertyWithType;
-use Rector\Contract\DependencyInjection\RelatedConfigInterface;
 use Rector\NodeAnalyzer\PropertyPresenceChecker;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
@@ -25,7 +23,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe413\Rector\Class_\CompleteDynamicInjectablePropertiesRector\CompleteDynamicInjectablePropertiesRectorTest
  */
-final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements DocumentedRuleInterface, RelatedConfigInterface
+final class CompleteDynamicInjectablePropertiesRector extends AbstractRector implements DocumentedRuleInterface
 {
     public function __construct(
         private readonly ClassAnalyser $classAnalyser,
@@ -104,12 +102,6 @@ CODE_SAMPLE
         $node->stmts = [...$newProperties, ...$node->stmts];
 
         return $node;
-    }
-
-    #[Override]
-    public static function getConfigFile(): string
-    {
-        return SilverstripeSetList::WITH_RECTOR_SERVICES;
     }
 
     /**

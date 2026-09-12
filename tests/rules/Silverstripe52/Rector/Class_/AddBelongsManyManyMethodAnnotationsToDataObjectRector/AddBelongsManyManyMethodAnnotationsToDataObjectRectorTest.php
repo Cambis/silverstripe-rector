@@ -27,4 +27,10 @@ final class AddBelongsManyManyMethodAnnotationsToDataObjectRectorTest extends Ab
     {
         return __DIR__ . '/config/configured_rule.php';
     }
+
+    #[Override]
+    protected function provideComposerJsonFilePath(): string
+    {
+        return __DIR__ . '/config/composer.json';
+    }
 }

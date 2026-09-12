@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Cambis\SilverstripeRector\Set\ValueObject\SilverstripeSetList;
 use Rector\Config\RectorConfig;
 
-return RectorConfig::configure();
+return RectorConfig::configure()
+    ->withSets([SilverstripeSetList::WITH_RECTOR_SERVICES]);

@@ -19,6 +19,8 @@ use Rector\Naming\Naming\VariableNaming;
 use Rector\NodeAnalyzer\ArgsAnalyzer;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
+use Rector\VersionBonding\Contract\ComposerPackageConstraintInterface;
+use Rector\VersionBonding\ValueObject\ComposerPackageConstraint;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -29,12 +31,17 @@ use function array_filter;
  *
  * @see \Cambis\SilverstripeRector\Tests\Silverstripe54\Rector\MethodCall\FormFieldExtendValidationResultToExtendRector\FormFieldExtendValidationResultToExtendRectorTest
  */
-final class FormFieldExtendValidationResultToExtendRector extends AbstractRector implements DocumentedRuleInterface
+final class FormFieldExtendValidationResultToExtendRector extends AbstractRector implements DocumentedRuleInterface, ComposerPackageConstraintInterface
 {
     public function __construct(
         private readonly ArgsAnalyzer $argsAnalyzer,
         private readonly VariableNaming $variableNaming
     ) {
+    }
+
+    public function provideComposerPackageConstraint(): ComposerPackageConstraint
+    {
+        return new ComposerPackageConstraint('silverstripe/framework', '>=5.4');
     }
 
     #[Override]
